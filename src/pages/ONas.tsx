@@ -4,24 +4,26 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { MapPin, ArrowRight, CheckCircle, Users } from 'lucide-react';
+import { MapPin, ArrowRight, Users } from 'lucide-react';
+import teamJan from '@/assets/team-jan.jpg';
+import teamWei from '@/assets/team-wei.jpg';
+import teamAnna from '@/assets/team-anna.jpg';
 
 const activities = [
-  'Analizy strategiczne i sektorowe dotyczące Chin',
-  'Research firm, technologii i ekosystemów innowacji',
-  'Weryfikację partnerów biznesowych i technologicznych',
-  'Audyty firm i zakładów w Chinach',
-  'Identyfikację i dobór partnerów',
-  'Wsparcie negocjacji i współpracy',
-  'Organizację misji biznesowych i wizyt studyjnych',
-  'Szkolenia i briefingi dla decydentów',
+  { num: 1, text: 'Analizy strategiczne i sektorowe dotyczące Chin', color: 'bg-lime' },
+  { num: 2, text: 'Research firm, technologii i ekosystemów innowacji', color: 'bg-gray-900' },
+  { num: 3, text: 'Weryfikację partnerów biznesowych i technologicznych', color: 'bg-lime' },
+  { num: 4, text: 'Audyty firm i zakładów w Chinach', color: 'bg-gray-900' },
+  { num: 5, text: 'Identyfikację i dobór partnerów', color: 'bg-lime' },
+  { num: 6, text: 'Wsparcie negocjacji i współpracy', color: 'bg-gray-900' },
+  { num: 7, text: 'Organizację misji biznesowych i wizyt studyjnych', color: 'bg-lime' },
+  { num: 8, text: 'Szkolenia i briefingi dla decydentów', color: 'bg-gray-900' },
 ];
 
 const team = [
-  { name: 'Jan Kowalski', role: 'Founder / Strategy & China Lead', initials: 'JK' },
-  { name: 'Wei Zhang', role: 'China Operations & Research', initials: 'WZ' },
-  { name: 'Anna Nowak', role: 'Business & Project Lead (PL)', initials: 'AN' },
-  { name: 'Zespół ekspertów', role: 'Współpracownicy i konsultanci', initials: '++', isTeam: true },
+  { name: 'Jan Kowalski', role: 'Founder / Strategy & China Lead', image: teamJan },
+  { name: 'Wei Zhang', role: 'China Operations & Research', image: teamWei },
+  { name: 'Anna Nowak', role: 'Business & Project Lead (PL)', image: teamAnna },
 ];
 
 const stats = [
@@ -98,7 +100,7 @@ const ONas = () => {
         </div>
       </section>
 
-      {/* What We Do - With cool effects */}
+      {/* What We Do - Modern Bento Grid */}
       <section className="bg-white py-24 overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -115,33 +117,40 @@ const ONas = () => {
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          {/* Bento Grid Style */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
             {activities.map((activity, index) => (
               <motion.div
-                key={activity}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group relative"
+                key={activity.num}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className={`group relative p-6 rounded-3xl transition-all duration-500 hover:scale-[1.02] cursor-pointer ${
+                  index % 3 === 0 ? 'lg:col-span-2' : ''
+                } ${activity.color === 'bg-lime' ? 'bg-lime' : 'bg-gray-900'}`}
               >
-                <div className="flex items-center gap-4 p-5 rounded-2xl bg-gray-50 hover:bg-gray-900 transition-all duration-500 group-hover:scale-[1.02]">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-lime/10 group-hover:bg-lime flex items-center justify-center transition-colors duration-300">
-                    <span className="font-display font-bold text-lime group-hover:text-gray-900 transition-colors duration-300">
-                      {index + 1}
-                    </span>
-                  </div>
-                  <p className="text-gray-700 group-hover:text-white transition-colors duration-300">
-                    {activity}
-                  </p>
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 ${
+                  activity.color === 'bg-lime' ? 'bg-gray-900' : 'bg-lime'
+                }`}>
+                  <span className={`font-display text-xl font-bold ${
+                    activity.color === 'bg-lime' ? 'text-lime' : 'text-gray-900'
+                  }`}>
+                    {activity.num}
+                  </span>
                 </div>
+                <p className={`font-medium text-lg ${
+                  activity.color === 'bg-lime' ? 'text-gray-900' : 'text-white'
+                }`}>
+                  {activity.text}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Team */}
+      {/* Team - Large Photos */}
       <section className="bg-gray-900 py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -158,7 +167,7 @@ const ONas = () => {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {team.map((member, index) => (
               <motion.div
                 key={member.name}
@@ -168,19 +177,37 @@ const ONas = () => {
                 transition={{ delay: index * 0.1 }}
                 className="group text-center"
               >
-                <div className={`relative w-24 h-24 mx-auto mb-4 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 ${
-                  member.isTeam ? 'bg-gray-800 border-2 border-dashed border-gray-600' : 'bg-gradient-to-br from-lime to-lime-glow'
-                }`}>
-                  <span className={`font-display text-2xl font-bold ${
-                    member.isTeam ? 'text-gray-400' : 'text-gray-900'
-                  }`}>
-                    {member.initials}
-                  </span>
+                <div className="relative mb-6 rounded-3xl overflow-hidden aspect-[3/4]">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent" />
                 </div>
-                <h3 className="font-display font-semibold text-white mb-1">{member.name}</h3>
+                <h3 className="font-display font-bold text-xl text-white mb-1">{member.name}</h3>
                 <p className="text-gray-500 text-sm">{member.role}</p>
               </motion.div>
             ))}
+
+            {/* Expert team placeholder */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="md:col-span-3 lg:col-span-1"
+            >
+              <div className="relative mb-6 rounded-3xl overflow-hidden aspect-[3/4] bg-gray-800 border-2 border-dashed border-gray-700 flex items-center justify-center">
+                <div className="text-center p-8">
+                  <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-10 h-10 text-gray-500" />
+                  </div>
+                  <p className="text-gray-400 font-medium">Zespół ekspertów</p>
+                  <p className="text-gray-500 text-sm mt-2">Współpracownicy i konsultanci</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -301,7 +328,7 @@ const ONas = () => {
         <LogoMarquee />
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - Enhanced */}
       <section className="relative py-32 overflow-hidden bg-gray-900">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div

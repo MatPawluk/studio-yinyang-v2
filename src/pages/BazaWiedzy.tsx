@@ -2,7 +2,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { Clock, ArrowRight } from 'lucide-react';
+import { Clock, Calendar, ArrowRight } from 'lucide-react';
+import articleCompetition from '@/assets/article-competition.jpg';
+import articleInnovation from '@/assets/article-china-innovation.jpg';
+import serviceStrategy from '@/assets/service-strategy.jpg';
 
 const categories = ['Wszystkie', 'Analizy', 'Poradniki', 'Blog / komentarze'];
 
@@ -13,6 +16,7 @@ const articles = [
     description: 'Analiza kluczowych przewag, które pozwalają chińskim firmom dominować w wybranych branżach globalnie.',
     date: '10.01.2025',
     readTime: '12 min',
+    image: articleCompetition,
     featured: true,
   },
   {
@@ -21,6 +25,7 @@ const articles = [
     description: 'Jak chiński ekosystem innowacji wpływa na konkurencyjność europejskich firm i instytucji.',
     date: '5.01.2025',
     readTime: '15 min',
+    image: articleInnovation,
     featured: true,
   },
   {
@@ -29,6 +34,7 @@ const articles = [
     description: 'Praktyczny przewodnik dla firm planujących nawiązanie współpracy z partnerami z Chin.',
     date: '20.12.2024',
     readTime: '8 min',
+    image: serviceStrategy,
   },
   {
     category: 'Poradnik',
@@ -36,6 +42,7 @@ const articles = [
     description: 'Kluczowe aspekty prawne, kulturowe i operacyjne, które należy rozważyć przed finalizacją umowy.',
     date: '15.12.2024',
     readTime: '10 min',
+    image: articleCompetition,
   },
   {
     category: 'Blog',
@@ -43,6 +50,7 @@ const articles = [
     description: 'Komentarz do najnowszych wydarzeń w sektorze technologicznym i ich wpływu na rynek europejski.',
     date: '10.12.2024',
     readTime: '5 min',
+    image: articleInnovation,
   },
   {
     category: 'Analiza',
@@ -50,36 +58,33 @@ const articles = [
     description: 'Jak rozwój automatyzacji w Chinach może wpłynąć na polski sektor produkcyjny.',
     date: '1.12.2024',
     readTime: '14 min',
+    image: serviceStrategy,
   },
 ];
 
 const BazaWiedzy = () => {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-white">
       <Navbar />
       
-      {/* Hero Section - Shorter */}
-      <section className="relative pt-32 pb-12 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-lime/10 blur-[120px] rounded-full" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-6 lg:px-12">
+      {/* Hero Section - Short */}
+      <section className="relative pt-28 pb-8 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-4">
               Baza wiedzy
             </span>
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
               Analizy, poradniki
               <br />
-              <span className="text-lime">i komentarze</span>
+              <span className="text-gray-900">i komentarze</span>
             </h1>
-            <p className="text-lg text-gray-400">
+            <p className="text-lg text-gray-500">
               Materiały dotyczące Chin, technologii oraz współpracy międzynarodowej – przygotowane z perspektywy decyzyjnej.
             </p>
           </motion.div>
@@ -87,7 +92,7 @@ const BazaWiedzy = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-12">
         <div className="container mx-auto px-6 lg:px-12">
           {/* Categories */}
           <motion.div
@@ -110,8 +115,8 @@ const BazaWiedzy = () => {
             ))}
           </motion.div>
 
-          {/* Articles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Articles Grid - Card Style with Images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.map((article, index) => (
               <motion.article
                 key={article.title}
@@ -119,20 +124,34 @@ const BazaWiedzy = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className={`group relative bg-gray-50 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-500 ${
-                  article.featured ? 'md:col-span-2 lg:col-span-1' : ''
-                }`}
+                className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-500"
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-lime/0 to-lime/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                <div className="relative p-8">
+                {/* Image */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                   {/* Category badge */}
-                  <span className="inline-block px-3 py-1 rounded-full bg-lime/10 text-lime text-xs font-medium mb-4">
-                    {article.category}
-                  </span>
+                  <div className="absolute bottom-4 left-4">
+                    <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold ${
+                      article.category === 'Analiza' 
+                        ? 'bg-gray-900 text-white'
+                        : article.category === 'Poradnik'
+                        ? 'bg-lime text-gray-900'
+                        : 'bg-white text-gray-900'
+                    }`}>
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
 
-                  <h3 className="font-display font-semibold text-xl text-gray-900 mb-3 group-hover:text-gray-900 transition-colors duration-300 line-clamp-2">
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className={`font-display font-semibold text-xl mb-3 group-hover:text-gray-700 transition-colors duration-300 line-clamp-2 ${
+                    article.category === 'Analiza' ? 'text-lime' : 'text-gray-900'
+                  }`}>
                     {article.title}
                   </h3>
 
@@ -140,18 +159,15 @@ const BazaWiedzy = () => {
                     {article.description}
                   </p>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-gray-400">
+                  <div className="flex items-center justify-between text-sm text-gray-400">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
                       <span>{article.date}</span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {article.readTime}
-                      </span>
                     </div>
-
-                    <button className="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-lime flex items-center justify-center transition-all duration-300">
-                      <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-gray-900 transition-colors duration-300" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      <span>{article.readTime}</span>
+                    </div>
                   </div>
                 </div>
               </motion.article>
