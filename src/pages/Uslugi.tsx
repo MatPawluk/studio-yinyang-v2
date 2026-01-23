@@ -4,17 +4,16 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { 
-  Target, Search, Rocket, Settings, TrendingUp, Users, 
-  Truck, ClipboardCheck, Plane, GraduationCap, ArrowRight, CheckCircle
-} from 'lucide-react';
+import { Target, ArrowRight } from 'lucide-react';
 import clientPortrait from '@/assets/client-portrait.jpg';
+import serviceStrategy from '@/assets/service-strategy.jpg';
+import serviceAnalysis from '@/assets/service-analysis.jpg';
 
 const services = [
   {
-    icon: <Target className="w-6 h-6" />,
     title: 'Strategia wobec Chin',
     subtitle: 'Poziom zarządczy',
+    image: serviceStrategy,
     items: [
       'Analizy strategiczne wpływu Chin na firmę lub sektor',
       'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji',
@@ -23,9 +22,9 @@ const services = [
     ],
   },
   {
-    icon: <TrendingUp className="w-6 h-6" />,
     title: 'Analizy rynkowe i sektorowe',
     subtitle: 'Badania i insights',
+    image: serviceAnalysis,
     items: [
       'Analizy sektorów i klastrów przemysłowych',
       'Badanie konkurencji lokalnej i międzynarodowej',
@@ -34,9 +33,9 @@ const services = [
     ],
   },
   {
-    icon: <Search className="w-6 h-6" />,
     title: 'Research, Intelligence i Weryfikacja',
     subtitle: 'Due diligence',
+    image: serviceStrategy,
     items: [
       'Research firm chińskich i europejskich',
       'Analiza zaplecza technologicznego i R&D',
@@ -45,9 +44,9 @@ const services = [
     ],
   },
   {
-    icon: <Rocket className="w-6 h-6" />,
     title: 'Wejście na rynek',
     subtitle: 'Polska ↔ Chiny',
+    image: serviceAnalysis,
     items: [
       'Analiza rynku i modelu wejścia',
       'Wsparcie regulacyjne i formalne',
@@ -55,9 +54,9 @@ const services = [
     ],
   },
   {
-    icon: <Settings className="w-6 h-6" />,
     title: 'Marketing i Pozycjonowanie',
     subtitle: 'Strategia komunikacji',
+    image: serviceStrategy,
     items: [
       'Pozycjonowanie marki i oferty (PL i CN)',
       'Strategia komunikacji i adaptacja do realiów lokalnych',
@@ -66,9 +65,9 @@ const services = [
     ],
   },
   {
-    icon: <Users className="w-6 h-6" />,
     title: 'Identyfikacja partnerów',
     subtitle: 'Matchmaking',
+    image: serviceAnalysis,
     items: [
       'Identyfikacja potencjalnych partnerów',
       'Selekcja i ocena dopasowania',
@@ -77,9 +76,9 @@ const services = [
     ],
   },
   {
-    icon: <Truck className="w-6 h-6" />,
     title: 'Handel, Eksport i Import',
     subtitle: 'Wsparcie logistyczne',
+    image: serviceStrategy,
     items: [
       'Doradztwo w zakresie eksportu i importu',
       'Analiza łańcucha dostaw i kosztów logistycznych',
@@ -87,36 +86,14 @@ const services = [
     ],
   },
   {
-    icon: <ClipboardCheck className="w-6 h-6" />,
     title: 'Audyty i Nadzór operacyjny',
     subtitle: 'Kontrola jakości',
+    image: serviceAnalysis,
     items: [
       'Audyty firm i zakładów',
       'Kontrola jakości',
       'Monitoring realizacji ustaleń',
       'Bieżące wsparcie lokalne',
-    ],
-  },
-  {
-    icon: <Plane className="w-6 h-6" />,
-    title: 'Misje biznesowe',
-    subtitle: 'Wizyty studyjne',
-    items: [
-      'Misje biznesowe i technologiczne',
-      'Wizyty studyjne',
-      'Wsparcie delegacji chińskich w Polsce',
-      'Przygotowanie merytoryczne uczestników',
-    ],
-  },
-  {
-    icon: <GraduationCap className="w-6 h-6" />,
-    title: 'Szkolenia i Briefingi',
-    subtitle: 'Dla decydentów',
-    items: [
-      'Szkolenia z systemu gospodarczego Chin',
-      'Szkolenia z kultury biznesowej i negocjacji',
-      'Zamknięte briefingi strategiczne',
-      'Sesje decyzyjne',
     ],
   },
 ];
@@ -130,83 +107,91 @@ const stats = [
 
 const Uslugi = () => {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-white">
       <Navbar />
       
-      {/* Hero Section - Shorter */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-lime/10 blur-[120px] rounded-full" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-6 lg:px-12">
+      {/* Hero Section - Short */}
+      <section className="relative pt-28 pb-12 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-6">
               Usługi
             </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
               Kompleksowe wsparcie
               <br />
-              <span className="text-lime">na linii Polska–Chiny</span>
+              <span className="text-gray-900">na linii Polska–Chiny</span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl">
+            <p className="text-xl text-gray-500 max-w-2xl">
               Zakres współpracy każdorazowo dopasowany jest do kontekstu klienta, etapu relacji z Chinami oraz charakteru podejmowanych decyzji.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="bg-white py-24">
+      {/* Services - Alternating Layout with Large Images */}
+      <section className="bg-white py-16">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-24">
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group relative bg-gray-50 rounded-3xl p-8 hover:bg-gray-900 transition-all duration-500 overflow-hidden"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6 }}
+                className={`grid lg:grid-cols-2 gap-12 items-center ${
+                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                }`}
               >
-                {/* Hover glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-lime/0 to-lime/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="relative z-10">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-gray-900 group-hover:bg-lime flex items-center justify-center text-lime group-hover:text-gray-900 transition-all duration-300 flex-shrink-0">
-                      {service.icon}
-                    </div>
-                    <div>
-                      <span className="text-sm text-gray-500 group-hover:text-lime/70 transition-colors duration-300">
-                        {service.subtitle}
-                      </span>
-                      <h3 className="font-display font-semibold text-xl text-gray-900 group-hover:text-white transition-colors duration-300">
-                        {service.title}
-                      </h3>
+                {/* Image */}
+                <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <div className="relative rounded-3xl overflow-hidden aspect-[4/3]">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Overlay with badge */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
+                    <div className="absolute bottom-6 left-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center">
+                          <Target className="w-6 h-6 text-gray-900" />
+                        </div>
+                        <div>
+                          <p className="text-white/70 text-sm">{service.subtitle}</p>
+                          <p className="text-white font-semibold">{service.title}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                </div>
 
-                  <ul className="space-y-3">
+                {/* Content */}
+                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                  <h2 className="font-display text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                    {service.title}
+                  </h2>
+                  <ul className="space-y-4 mb-8">
                     {service.items.map((item, itemIndex) => (
                       <li 
                         key={itemIndex}
-                        className="flex items-start gap-3 text-gray-600 group-hover:text-gray-300 text-sm transition-colors duration-300"
+                        className="flex items-start gap-3 text-gray-600"
                       >
-                        <CheckCircle className="w-4 h-4 text-lime flex-shrink-0 mt-0.5" />
+                        <div className="w-2 h-2 rounded-full bg-lime flex-shrink-0 mt-2" />
                         {item}
                       </li>
                     ))}
                   </ul>
-
                   <Link
                     to="/kontakt"
-                    className="inline-flex items-center gap-2 mt-6 text-gray-900 group-hover:text-lime font-medium text-sm transition-colors duration-300"
+                    className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-full text-gray-900 font-medium hover:border-lime hover:bg-lime transition-all duration-300"
                   >
                     Dowiedz się więcej
                     <ArrowRight className="w-4 h-4" />

@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { MapPin, Mail, Send } from 'lucide-react';
+import { MapPin, Mail, Send, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
+import worldMap from '@/assets/world-map.jpg';
 
 const topics = [
   'Strategia wobec Chin',
@@ -24,103 +25,42 @@ const Kontakt = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log(formData);
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-white">
       <Navbar />
       
-      {/* Hero + Form Section - Combined for compact view */}
-      <section className="relative pt-28 pb-20 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-lime/10 blur-[120px] rounded-full" />
+      {/* Main Content - Compact header */}
+      <section className="pt-24 pb-20">
+        <div className="container mx-auto px-6 lg:px-12">
+          {/* Header */}
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-1/4 left-1/4 w-[300px] h-[300px] border border-lime/10 rounded-full"
-          />
-        </div>
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-4">
+              Kontakt
+            </span>
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+              Porozmawiajmy
+              <br />
+              <span className="text-gray-900">o Twoich potrzebach</span>
+            </h1>
+          </motion.div>
 
-        <div className="relative z-10 container mx-auto px-6 lg:px-12">
+          {/* Two Column Layout */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            {/* Left side - Info */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-6">
-                  Kontakt
-                </span>
-                <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-                  Porozmawiajmy
-                  <br />
-                  <span className="text-lime">o Twoich potrzebach</span>
-                </h1>
-                <p className="text-lg text-gray-400 mb-12">
-                  Jeśli Chiny mają znaczenie dla Twojej organizacji lub rozważasz współpracę w tym obszarze, zapraszamy do kontaktu.
-                </p>
-              </motion.div>
-
-              {/* Contact Details */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-8"
-              >
-                <h3 className="font-display font-semibold text-xl text-white mb-6">
-                  Dane kontaktowe
-                </h3>
-                
-                <a
-                  href="mailto:contact@yinyang.pl"
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-gray-800/50 hover:bg-gray-800 transition-colors duration-300 group"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-lime/10 flex items-center justify-center group-hover:bg-lime transition-colors duration-300">
-                    <Mail className="w-5 h-5 text-lime group-hover:text-gray-900 transition-colors duration-300" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm">E-mail</p>
-                    <p className="text-white font-medium">contact@yinyang.pl</p>
-                  </div>
-                </a>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-2xl bg-gray-800/50">
-                    <div className="flex items-center gap-2 text-lime mb-3">
-                      <MapPin className="w-4 h-4" />
-                      <span className="font-medium">Warszawa</span>
-                    </div>
-                    <p className="text-gray-400 text-sm">
-                      ul. Chmielna 69<br />
-                      00-801 Warszawa
-                    </p>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-gray-800/50">
-                    <div className="flex items-center gap-2 text-lime mb-3">
-                      <MapPin className="w-4 h-4" />
-                      <span className="font-medium">Shanghai</span>
-                    </div>
-                    <p className="text-gray-400 text-sm">
-                      Zhangyang Road 777<br />
-                      Pudong New Area
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Right side - Form */}
+            {/* Left side - Form */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl">
+              <div className="bg-white rounded-3xl p-8 lg:p-10 border border-gray-200">
                 <h3 className="font-display font-semibold text-xl text-gray-900 mb-2">
                   Formularz kontaktowy
                 </h3>
@@ -129,30 +69,31 @@ const Kontakt = () => {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Imię i nazwisko
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Jan Kowalski"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Firma / instytucja
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Nazwa firmy"
-                      value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
-                    />
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Imię i nazwisko
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Jan Kowalski"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Firma / instytucja
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Nazwa firmy"
+                        value={formData.company}
+                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -199,12 +140,87 @@ const Kontakt = () => {
 
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-lime text-gray-900 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lime"
+                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-xl font-semibold transition-all duration-300 hover:bg-gray-800 hover:scale-[1.02]"
                   >
-                    <Send className="w-5 h-5" />
                     Wyślij wiadomość
+                    <Send className="w-5 h-5" />
                   </button>
                 </form>
+              </div>
+            </motion.div>
+
+            {/* Right side - Contact Details */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-8"
+            >
+              <div>
+                <h3 className="font-display font-semibold text-2xl text-gray-900 mb-6">
+                  Dane kontaktowe
+                </h3>
+                
+                {/* Email Card */}
+                <a
+                  href="mailto:contact@yinyang.pl"
+                  className="flex items-center gap-4 p-5 rounded-2xl border border-gray-200 hover:border-lime transition-colors duration-300 group mb-6"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-lime flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-6 h-6 text-gray-900" />
+                  </div>
+                  <div className="flex-grow">
+                    <p className="text-gray-500 text-sm">E-mail</p>
+                    <p className="text-gray-900 font-semibold text-lg">contact@yinyang.pl</p>
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 text-gray-400 group-hover:text-lime transition-colors duration-300" />
+                </a>
+
+                {/* Location Cards */}
+                <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                  <div className="p-5 rounded-2xl border border-gray-200 hover:border-lime transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center mb-4">
+                      <MapPin className="w-5 h-5 text-lime" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Warszawa</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      ul. Chmielna 69<br />
+                      00-801 Warszawa<br />
+                      Polska
+                    </p>
+                  </div>
+                  <div className="p-5 rounded-2xl border border-gray-200 hover:border-lime transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center mb-4">
+                      <MapPin className="w-5 h-5 text-gray-900" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Shanghai</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      Zhangyang Road 777<br />
+                      Pudong New Area<br />
+                      Shanghai 200120
+                    </p>
+                  </div>
+                </div>
+
+                {/* Map */}
+                <div className="relative rounded-3xl overflow-hidden">
+                  <img
+                    src={worldMap}
+                    alt="Mapa lokalizacji"
+                    className="w-full h-64 object-cover"
+                  />
+                  {/* Map Markers */}
+                  <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2">
+                    <div className="w-8 h-8 bg-lime rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                      <MapPin className="w-4 h-4 text-gray-900" />
+                    </div>
+                  </div>
+                  <div className="absolute top-1/2 right-1/4 -translate-x-1/2 -translate-y-1/2">
+                    <div className="w-8 h-8 bg-lime rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                      <MapPin className="w-4 h-4 text-gray-900" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>

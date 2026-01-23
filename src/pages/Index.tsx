@@ -1,13 +1,15 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown } from 'lucide-react';
+import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import heroBg from '@/assets/hero-bg.jpg';
 import statsBg from '@/assets/stats-bg.jpg';
+import serviceStrategy from '@/assets/service-strategy.jpg';
+import serviceAnalysis from '@/assets/service-analysis.jpg';
 
 const heroServices = [
   { 
@@ -29,6 +31,33 @@ const heroServices = [
     icon: <Settings className="w-6 h-6" />, 
     title: 'Operacje i logistyka', 
     description: 'Audyt, kontrola jakości, nadzór, eksport/import.' 
+  },
+];
+
+const carouselServices = [
+  {
+    icon: <Target className="w-6 h-6" />,
+    title: 'Strategia i decyzje',
+    description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.',
+    image: serviceStrategy,
+  },
+  {
+    icon: <Search className="w-6 h-6" />,
+    title: 'Research i weryfikacja',
+    description: 'Due diligence, analiza partnerów, intelligence.',
+    image: serviceAnalysis,
+  },
+  {
+    icon: <Rocket className="w-6 h-6" />,
+    title: 'Wejście i rozwój',
+    description: 'Model wejścia, struktury, pozycjonowanie.',
+    image: serviceStrategy,
+  },
+  {
+    icon: <Settings className="w-6 h-6" />,
+    title: 'Operacje i logistyka',
+    description: 'Audyt, kontrola jakości, nadzór, eksport/import.',
+    image: serviceAnalysis,
   },
 ];
 
@@ -64,6 +93,8 @@ const stats = [
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
@@ -71,6 +102,14 @@ const Index = () => {
   
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + carouselServices.length) % carouselServices.length);
+  };
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -162,7 +201,7 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {/* Service Cards - Half visible on hero */}
+        {/* Service Cards - Dark themed */}
         <div className="absolute bottom-0 left-0 right-0 translate-y-1/2 z-20">
           <div className="container mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -172,13 +211,13 @@ const Index = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="group relative bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                  className="group relative bg-gray-900 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-800"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center text-lime mb-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-lime group-hover:text-gray-900">
+                  <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center text-gray-900 mb-4 transition-all duration-300 group-hover:scale-110">
                     {service.icon}
                   </div>
-                  <h3 className="font-display font-semibold text-gray-900 mb-2">{service.title}</h3>
-                  <p className="text-gray-500 text-sm">{service.description}</p>
+                  <h3 className="font-display font-semibold text-white mb-2">{service.title}</h3>
+                  <p className="text-gray-400 text-sm">{service.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -186,29 +225,96 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services Carousel Section */}
       <section className="bg-white pt-48 pb-24">
         <div className="container mx-auto px-6 lg:px-12">
+          {/* Header with button */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="flex items-start justify-between mb-12"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-4">
-              Nasze usługi
-            </span>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Kompleksowe wsparcie
-            </h2>
+            <div>
+              <span className="text-lime text-sm font-semibold uppercase tracking-widest mb-2 block">
+                NASZE USŁUGI
+              </span>
+              <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900">
+                Kompleksowe wsparcie
+              </h2>
+            </div>
             <Link 
               to="/uslugi"
-              className="inline-flex items-center gap-2 text-gray-900 font-medium hover:text-lime transition-colors duration-300"
+              className="hidden md:inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-full text-gray-900 font-medium hover:border-lime hover:bg-lime transition-all duration-300"
             >
               Zobacz wszystkie usługi
               <ArrowRight className="w-4 h-4" />
             </Link>
           </motion.div>
+
+          {/* Carousel */}
+          <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-3xl overflow-hidden aspect-[16/9] lg:aspect-[21/9]"
+            >
+              <img
+                src={carouselServices[currentSlide].image}
+                alt={carouselServices[currentSlide].title}
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/50 to-transparent" />
+              
+              {/* Content overlay */}
+              <div className="absolute inset-0 flex items-end p-8 lg:p-12">
+                <div className="max-w-lg">
+                  <div className="w-14 h-14 rounded-2xl bg-lime flex items-center justify-center text-gray-900 mb-6">
+                    {carouselServices[currentSlide].icon}
+                  </div>
+                  <h3 className="font-display text-3xl lg:text-4xl font-bold text-white mb-3">
+                    {carouselServices[currentSlide].title}
+                  </h3>
+                  <p className="text-gray-300 text-lg">
+                    {carouselServices[currentSlide].description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Carousel Controls */}
+            <div className="flex items-center justify-between mt-6">
+              {/* Indicators */}
+              <div className="flex gap-2">
+                {carouselServices.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      index === currentSlide ? 'w-8 bg-lime' : 'w-2 bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Arrows */}
+              <div className="flex gap-2">
+                <button
+                  onClick={prevSlide}
+                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                >
+                  <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                >
+                  <ChevronRight className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

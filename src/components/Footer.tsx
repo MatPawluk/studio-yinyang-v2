@@ -17,9 +17,15 @@ const footerLinks = {
   ],
 };
 
-export const Footer = () => {
+interface FooterProps {
+  variant?: 'dark' | 'light';
+}
+
+export const Footer = ({ variant = 'dark' }: FooterProps) => {
+  const isDark = variant === 'dark';
+  
   return (
-    <footer className="relative bg-gray-900 text-white overflow-hidden">
+    <footer className={`relative overflow-hidden ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-900 text-white'}`}>
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent pointer-events-none" />
       
