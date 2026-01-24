@@ -5,7 +5,8 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { TestimonialsSection } from '@/components/TestimonialsSection';
+import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, TrendingUp, BarChart3, Users, Handshake, Package, ClipboardCheck } from 'lucide-react';
 import heroBg from '@/assets/hero-bg.jpg';
 import statsBg from '@/assets/stats-bg.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
@@ -37,27 +38,59 @@ const heroServices = [
 const carouselServices = [
   {
     icon: <Target className="w-6 h-6" />,
-    title: 'Strategia i decyzje',
-    description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.',
+    title: 'Strategia wobec Chin',
+    description: 'Analizy strategiczne, scenariusze i mapy ryzyk, briefingi dla zarządów.',
     image: serviceStrategy,
+    slug: 'strategia-wobec-chin',
+  },
+  {
+    icon: <BarChart3 className="w-6 h-6" />,
+    title: 'Analizy rynkowe i sektorowe',
+    description: 'Badania sektorów, analiza konkurencji i trendów rynkowych.',
+    image: serviceAnalysis,
+    slug: 'analizy-rynkowe',
   },
   {
     icon: <Search className="w-6 h-6" />,
-    title: 'Research i weryfikacja',
-    description: 'Due diligence, analiza partnerów, intelligence.',
-    image: serviceAnalysis,
+    title: 'Research, Intelligence i Weryfikacja',
+    description: 'Due diligence partnerów biznesowych i technologicznych.',
+    image: serviceStrategy,
+    slug: 'research-intelligence',
   },
   {
     icon: <Rocket className="w-6 h-6" />,
-    title: 'Wejście i rozwój',
-    description: 'Model wejścia, struktury, pozycjonowanie.',
-    image: serviceStrategy,
+    title: 'Wejście na rynek',
+    description: 'Analiza modelu wejścia i struktur handlowych.',
+    image: serviceAnalysis,
+    slug: 'wejscie-na-rynek',
   },
   {
-    icon: <Settings className="w-6 h-6" />,
-    title: 'Operacje i logistyka',
-    description: 'Audyt, kontrola jakości, nadzór, eksport/import.',
+    icon: <TrendingUp className="w-6 h-6" />,
+    title: 'Marketing i Pozycjonowanie',
+    description: 'Strategia komunikacji i Go-To-Market.',
+    image: serviceStrategy,
+    slug: 'marketing-pozycjonowanie',
+  },
+  {
+    icon: <Handshake className="w-6 h-6" />,
+    title: 'Identyfikacja partnerów',
+    description: 'Matchmaking i wsparcie negocjacyjne.',
     image: serviceAnalysis,
+    slug: 'identyfikacja-partnerow',
+  },
+  {
+    icon: <Package className="w-6 h-6" />,
+    title: 'Handel, Eksport i Import',
+    description: 'Doradztwo logistyczne i koordynacja dostaw.',
+    image: serviceStrategy,
+    slug: 'handel-eksport-import',
+  },
+  {
+    icon: <ClipboardCheck className="w-6 h-6" />,
+    title: 'Audyty i Nadzór operacyjny',
+    description: 'Kontrola jakości i monitoring realizacji.',
+    image: serviceAnalysis,
+    slug: 'audyty-nadzor',
   },
 ];
 
@@ -117,7 +150,7 @@ const Index = () => {
       
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-screen overflow-hidden">
-        {/* Background with parallax */}
+        {/* Background with parallax + video overlay effect */}
         <motion.div 
           style={{ y: heroY }}
           className="absolute inset-0"
@@ -127,6 +160,16 @@ const Index = () => {
             style={{ backgroundImage: `url(${heroBg})` }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900" />
+          
+          {/* Animated overlay effects */}
+          <motion.div
+            animate={{ 
+              opacity: [0.3, 0.5, 0.3],
+              scale: [1, 1.05, 1]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 bg-gradient-to-br from-lime/5 via-transparent to-lime/10"
+          />
         </motion.div>
 
         {/* Glow effects */}
@@ -139,16 +182,6 @@ const Index = () => {
           className="relative z-10 container mx-auto px-6 lg:px-12 pt-32 lg:pt-40"
         >
           <div className="max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-8"
-            >
-              <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
-              <span className="text-white/80 text-sm font-medium">Polska – Chiny</span>
-            </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -201,7 +234,7 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {/* Service Cards - Dark themed */}
+        {/* Service Cards - Dark themed with lime accents */}
         <div className="absolute bottom-0 left-0 right-0 translate-y-1/2 z-20">
           <div className="container mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -211,13 +244,21 @@ const Index = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="group relative bg-gray-900 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-800"
+                  className="group relative bg-black/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-lime/20 overflow-hidden"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center text-gray-900 mb-4 transition-all duration-300 group-hover:scale-110">
-                    {service.icon}
+                  {/* Lime accent glow */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-lime/10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="relative z-10">
+                    <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center text-gray-900 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lime-lg">
+                      {service.icon}
+                    </div>
+                    <h3 className="font-display font-semibold text-white mb-2">{service.title}</h3>
+                    <p className="text-gray-400 text-sm">{service.description}</p>
                   </div>
-                  <h3 className="font-display font-semibold text-white mb-2">{service.title}</h3>
-                  <p className="text-gray-400 text-sm">{service.description}</p>
+                  
+                  {/* Bottom lime accent line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-lime/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </motion.div>
               ))}
             </div>
@@ -228,19 +269,16 @@ const Index = () => {
       {/* Services Carousel Section */}
       <section className="bg-white pt-48 pb-24">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header with button */}
+          {/* Header - More prominent */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-start justify-between mb-12"
+            className="flex items-start justify-between mb-16"
           >
             <div>
-              <span className="text-lime text-sm font-semibold uppercase tracking-widest mb-2 block">
-                NASZE USŁUGI
-              </span>
-              <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900">
-                Kompleksowe wsparcie
+              <h2 className="font-display text-4xl lg:text-6xl font-bold text-gray-900">
+                Nasze <span className="text-lime">usługi</span>
               </h2>
             </div>
             <Link 
@@ -276,9 +314,16 @@ const Index = () => {
                   <h3 className="font-display text-3xl lg:text-4xl font-bold text-white mb-3">
                     {carouselServices[currentSlide].title}
                   </h3>
-                  <p className="text-gray-300 text-lg">
+                  <p className="text-gray-300 text-lg mb-6">
                     {carouselServices[currentSlide].description}
                   </p>
+                  <Link
+                    to={`/uslugi/${carouselServices[currentSlide].slug}`}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-gray-900 rounded-full font-medium hover:scale-105 transition-all duration-300"
+                  >
+                    Dowiedz się więcej
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -333,7 +378,7 @@ const Index = () => {
         <LogoMarquee />
       </section>
 
-      {/* Process Section */}
+      {/* Process Section - Staircase Layout */}
       <section className="bg-white py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -353,30 +398,39 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Staircase Layout */}
+          <div className="max-w-5xl mx-auto">
             {processSteps.map((step, index) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.1 }}
-                className="relative"
+                transition={{ delay: index * 0.15 }}
+                className={`relative flex items-start gap-6 mb-8 ${
+                  index % 2 === 1 ? 'lg:ml-24' : ''
+                } ${index % 2 === 0 && index !== 0 ? 'lg:mr-24' : ''}`}
+                style={{ marginLeft: index * 40 }}
               >
-                {/* Connector line */}
-                {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-lime to-transparent -translate-x-8" />
-                )}
+                {/* Step indicator */}
+                <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-lime flex items-center justify-center shadow-lime">
+                  <span className="font-display text-2xl font-bold text-gray-900">{step.number}</span>
+                </div>
                 
-                <div className="relative">
-                  <span className="font-display text-6xl font-bold text-lime/20">{step.number}</span>
-                  <h3 className="font-display font-semibold text-xl text-gray-900 mt-4 mb-3">
+                {/* Content */}
+                <div className="flex-1 bg-gray-50 rounded-2xl p-6 hover:bg-gray-100 transition-colors duration-300">
+                  <h3 className="font-display font-semibold text-xl text-gray-900 mb-2">
                     {step.title}
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
                     {step.description}
                   </p>
                 </div>
+
+                {/* Connector line */}
+                {index < processSteps.length - 1 && (
+                  <div className="hidden lg:block absolute left-8 top-16 w-0.5 h-12 bg-gradient-to-b from-lime to-gray-200" />
+                )}
               </motion.div>
             ))}
           </div>
@@ -391,6 +445,7 @@ const Index = () => {
             backgroundImage: `url(${statsBg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
           }}
         >
           <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" />
@@ -444,6 +499,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
       {/* CTA Section */}
       <section className="relative py-32 overflow-hidden bg-gray-900">
         {/* Animated background elements */}
@@ -478,7 +536,7 @@ const Index = () => {
             </p>
             <Link
               to="/kontakt"
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow-slow"
             >
               Umów rozmowę
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />

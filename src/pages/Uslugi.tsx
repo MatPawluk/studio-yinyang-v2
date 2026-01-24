@@ -4,7 +4,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { Target, ArrowRight } from 'lucide-react';
+import { Target, ArrowRight, BarChart3, Search, Rocket, TrendingUp, Handshake, Package, ClipboardCheck, Users, Briefcase } from 'lucide-react';
 import clientPortrait from '@/assets/client-portrait.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
@@ -13,7 +13,9 @@ const services = [
   {
     title: 'Strategia wobec Chin',
     subtitle: 'Poziom zarządczy',
+    icon: <Target className="w-6 h-6" />,
     image: serviceStrategy,
+    slug: 'strategia-wobec-chin',
     items: [
       'Analizy strategiczne wpływu Chin na firmę lub sektor',
       'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji',
@@ -24,7 +26,9 @@ const services = [
   {
     title: 'Analizy rynkowe i sektorowe',
     subtitle: 'Badania i insights',
+    icon: <BarChart3 className="w-6 h-6" />,
     image: serviceAnalysis,
+    slug: 'analizy-rynkowe',
     items: [
       'Analizy sektorów i klastrów przemysłowych',
       'Badanie konkurencji lokalnej i międzynarodowej',
@@ -35,7 +39,9 @@ const services = [
   {
     title: 'Research, Intelligence i Weryfikacja',
     subtitle: 'Due diligence',
+    icon: <Search className="w-6 h-6" />,
     image: serviceStrategy,
+    slug: 'research-intelligence',
     items: [
       'Research firm chińskich i europejskich',
       'Analiza zaplecza technologicznego i R&D',
@@ -46,7 +52,9 @@ const services = [
   {
     title: 'Wejście na rynek',
     subtitle: 'Polska ↔ Chiny',
+    icon: <Rocket className="w-6 h-6" />,
     image: serviceAnalysis,
+    slug: 'wejscie-na-rynek',
     items: [
       'Analiza rynku i modelu wejścia',
       'Wsparcie regulacyjne i formalne',
@@ -56,7 +64,9 @@ const services = [
   {
     title: 'Marketing i Pozycjonowanie',
     subtitle: 'Strategia komunikacji',
+    icon: <TrendingUp className="w-6 h-6" />,
     image: serviceStrategy,
+    slug: 'marketing-pozycjonowanie',
     items: [
       'Pozycjonowanie marki i oferty (PL i CN)',
       'Strategia komunikacji i adaptacja do realiów lokalnych',
@@ -67,7 +77,9 @@ const services = [
   {
     title: 'Identyfikacja partnerów',
     subtitle: 'Matchmaking',
+    icon: <Handshake className="w-6 h-6" />,
     image: serviceAnalysis,
+    slug: 'identyfikacja-partnerow',
     items: [
       'Identyfikacja potencjalnych partnerów',
       'Selekcja i ocena dopasowania',
@@ -78,7 +90,9 @@ const services = [
   {
     title: 'Handel, Eksport i Import',
     subtitle: 'Wsparcie logistyczne',
+    icon: <Package className="w-6 h-6" />,
     image: serviceStrategy,
+    slug: 'handel-eksport-import',
     items: [
       'Doradztwo w zakresie eksportu i importu',
       'Analiza łańcucha dostaw i kosztów logistycznych',
@@ -88,7 +102,9 @@ const services = [
   {
     title: 'Audyty i Nadzór operacyjny',
     subtitle: 'Kontrola jakości',
+    icon: <ClipboardCheck className="w-6 h-6" />,
     image: serviceAnalysis,
+    slug: 'audyty-nadzor',
     items: [
       'Audyty firm i zakładów',
       'Kontrola jakości',
@@ -107,27 +123,33 @@ const stats = [
 
 const Uslugi = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Hero Section - Short */}
-      <section className="relative pt-28 pb-12 bg-white">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* Hero Section - Dark with header */}
+      <section className="relative pt-28 pb-16 bg-gray-900 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            className="max-w-4xl"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-semibold uppercase tracking-wider mb-6">
               Usługi
             </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-              Kompleksowe wsparcie
+            <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
+              Kompleksowe
               <br />
-              <span className="text-gray-900">na linii Polska–Chiny</span>
+              <span className="text-white">wsparcie</span>
+              <br />
+              <span className="text-lime">na linii Polska–Chiny</span>
             </h1>
-            <p className="text-xl text-gray-500 max-w-2xl">
+            <p className="text-xl text-gray-400 max-w-2xl">
               Zakres współpracy każdorazowo dopasowany jest do kontekstu klienta, etapu relacji z Chinami oraz charakteru podejmowanych decyzji.
             </p>
           </motion.div>
@@ -135,9 +157,9 @@ const Uslugi = () => {
       </section>
 
       {/* Services - Alternating Layout with Large Images */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="space-y-24">
+          <div className="space-y-32">
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
@@ -145,9 +167,7 @@ const Uslugi = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6 }}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
+                className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center`}
               >
                 {/* Image */}
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
@@ -162,7 +182,7 @@ const Uslugi = () => {
                     <div className="absolute bottom-6 left-6">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center">
-                          <Target className="w-6 h-6 text-gray-900" />
+                          {service.icon}
                         </div>
                         <div>
                           <p className="text-white/70 text-sm">{service.subtitle}</p>
@@ -190,8 +210,8 @@ const Uslugi = () => {
                     ))}
                   </ul>
                   <Link
-                    to="/kontakt"
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-full text-gray-900 font-medium hover:border-lime hover:bg-lime transition-all duration-300"
+                    to={`/uslugi/${service.slug}`}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-lime hover:text-gray-900 transition-all duration-300"
                   >
                     Dowiedz się więcej
                     <ArrowRight className="w-4 h-4" />

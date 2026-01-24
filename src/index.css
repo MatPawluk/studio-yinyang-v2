@@ -309,6 +309,20 @@
     animation: pulseGlow 2s ease-in-out infinite;
   }
 
+  /* Slower pulse glow for CTA buttons */
+  @keyframes pulseGlowSlow {
+    0%, 100% {
+      box-shadow: 0 0 20px 5px hsl(75 100% 50% / 0.2);
+    }
+    50% {
+      box-shadow: 0 0 35px 8px hsl(75 100% 50% / 0.4);
+    }
+  }
+
+  .animate-pulse-glow-slow {
+    animation: pulseGlowSlow 4s ease-in-out infinite;
+  }
+
   /* Float animation */
   @keyframes float {
     0%, 100% { transform: translateY(0); }
