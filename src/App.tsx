@@ -8,6 +8,8 @@ import Uslugi from "./pages/Uslugi";
 import BazaWiedzy from "./pages/BazaWiedzy";
 import ONas from "./pages/ONas";
 import Kontakt from "./pages/Kontakt";
+import ServiceDetail from "./pages/ServiceDetail";
+import ArticleDetail from "./pages/ArticleDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,7 +23,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/uslugi" element={<Uslugi />} />
+          <Route path="/uslugi/:serviceSlug" element={<ServiceDetail />} />
           <Route path="/baza-wiedzy" element={<BazaWiedzy />} />
+          <Route path="/baza-wiedzy/:articleSlug" element={<ArticleDetail />} />
           <Route path="/o-nas" element={<ONas />} />
           <Route path="/kontakt" element={<Kontakt />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

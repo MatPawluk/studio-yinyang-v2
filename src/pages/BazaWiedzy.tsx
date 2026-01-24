@@ -17,6 +17,7 @@ const articles = [
     date: '10.01.2025',
     readTime: '12 min',
     image: articleCompetition,
+    slug: 'przewagi-konkurencyjne-chinskich-firm',
     featured: true,
   },
   {
@@ -26,6 +27,7 @@ const articles = [
     date: '5.01.2025',
     readTime: '15 min',
     image: articleInnovation,
+    slug: 'chinski-system-innowacji',
     featured: true,
   },
   {
@@ -35,6 +37,7 @@ const articles = [
     date: '20.12.2024',
     readTime: '8 min',
     image: serviceStrategy,
+    slug: 'przygotowanie-do-wspolpracy',
   },
   {
     category: 'Poradnik',
@@ -43,6 +46,7 @@ const articles = [
     date: '15.12.2024',
     readTime: '10 min',
     image: articleCompetition,
+    slug: 'przed-podpisaniem-umowy',
   },
   {
     category: 'Blog',
@@ -51,6 +55,7 @@ const articles = [
     date: '10.12.2024',
     readTime: '5 min',
     image: articleInnovation,
+    slug: 'chiny-konkurent-technologiczny',
   },
   {
     category: 'Analiza',
@@ -59,6 +64,7 @@ const articles = [
     date: '1.12.2024',
     readTime: '14 min',
     image: serviceStrategy,
+    slug: 'automatyzacja-robotyzacja-chiny',
   },
 ];
 
@@ -68,7 +74,7 @@ const BazaWiedzy = () => {
       <Navbar />
       
       {/* Hero Section - Short */}
-      <section className="relative pt-28 pb-8 bg-white">
+      <section className="relative pt-28 pb-6 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -92,14 +98,14 @@ const BazaWiedzy = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="bg-white py-12">
+      <section className="bg-white py-8">
         <div className="container mx-auto px-6 lg:px-12">
           {/* Categories */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-wrap gap-3 mb-12"
+            className="flex flex-wrap gap-3 mb-10"
           >
             {categories.map((category, index) => (
               <button
@@ -126,50 +132,50 @@ const BazaWiedzy = () => {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-500"
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Category badge */}
-                  <div className="absolute bottom-4 left-4">
-                    <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold ${
-                      article.category === 'Analiza' 
-                        ? 'bg-gray-900 text-white'
-                        : article.category === 'Poradnik'
-                        ? 'bg-lime text-gray-900'
-                        : 'bg-white text-gray-900'
-                    }`}>
-                      {article.category}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className={`font-display font-semibold text-xl mb-3 group-hover:text-gray-700 transition-colors duration-300 line-clamp-2 ${
-                    article.category === 'Analiza' ? 'text-lime' : 'text-gray-900'
-                  }`}>
-                    {article.title}
-                  </h3>
-
-                  <p className="text-gray-500 text-sm mb-6 line-clamp-2">
-                    {article.description}
-                  </p>
-
-                  <div className="flex items-center justify-between text-sm text-gray-400">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>{article.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{article.readTime}</span>
+                <Link to={`/baza-wiedzy/${article.slug}`}>
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    {/* Category badge */}
+                    <div className="absolute bottom-4 left-4">
+                      <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold ${
+                        article.category === 'Analiza' 
+                          ? 'bg-gray-900 text-white'
+                          : article.category === 'Poradnik'
+                          ? 'bg-lime text-gray-900'
+                          : 'bg-white text-gray-900'
+                      }`}>
+                        {article.category}
+                      </span>
                     </div>
                   </div>
-                </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="font-display font-semibold text-xl mb-3 text-gray-900 group-hover:text-lime transition-colors duration-300 line-clamp-2">
+                      {article.title}
+                    </h3>
+
+                    <p className="text-gray-500 text-sm mb-6 line-clamp-2">
+                      {article.description}
+                    </p>
+
+                    <div className="flex items-center justify-between text-sm text-gray-400">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        <span>{article.date}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{article.readTime}</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               </motion.article>
             ))}
           </div>

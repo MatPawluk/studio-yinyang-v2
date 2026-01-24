@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { LanguageSelector } from './LanguageSelector';
+import logo from '@/assets/logo.png';
 
 const navLinks = [
   { name: 'Strona główna', href: '/' },
@@ -48,12 +50,12 @@ export const Navbar = () => {
               to="/" 
               className="relative z-10 flex items-center gap-3 group"
             >
-              <div className="w-10 h-10 rounded-full bg-lime flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                <span className="font-display font-bold text-gray-900 text-lg">陰</span>
-              </div>
-              <span className={`font-display font-bold text-xl transition-colors duration-300 ${
-                isScrolled ? 'text-white' : 'text-white'
-              }`}>
+              <img 
+                src={logo} 
+                alt="Yin Yang" 
+                className="h-10 w-10 transition-transform duration-300 group-hover:scale-110"
+              />
+              <span className="font-display font-bold text-xl text-white">
                 Yin Yang
               </span>
             </Link>
@@ -79,8 +81,9 @@ export const Navbar = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
+            {/* Right Side - Language + CTA */}
+            <div className="hidden lg:flex items-center gap-4">
+              <LanguageSelector />
               <Link
                 to="/kontakt"
                 className="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold bg-lime text-gray-900 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lime"
@@ -133,7 +136,9 @@ export const Navbar = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
+                  className="flex flex-col items-center gap-4"
                 >
+                  <LanguageSelector />
                   <Link
                     to="/kontakt"
                     className="mt-4 inline-flex items-center justify-center px-8 py-4 text-base font-semibold bg-lime text-gray-900 rounded-full"
