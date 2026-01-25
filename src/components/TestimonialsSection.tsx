@@ -1,5 +1,11 @@
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
+import avatar1 from '@/assets/avatar-1.jpg';
+import avatar2 from '@/assets/avatar-2.jpg';
+import avatar3 from '@/assets/avatar-3.jpg';
+import avatar4 from '@/assets/avatar-4.jpg';
+import avatar5 from '@/assets/avatar-5.jpg';
+import avatar6 from '@/assets/avatar-6.jpg';
 
 const testimonials = [
   {
@@ -7,44 +13,47 @@ const testimonials = [
     role: 'CEO, TechPol Industries',
     content: 'Współpraca z Yin Yang pozwoliła nam uniknąć kosztownych błędów przy wyborze dostawcy z Chin. Ich analiza rynku była nieoceniona.',
     rating: 5,
-    color: 'bg-lime',
+    avatar: avatar1,
   },
   {
     name: 'Anna Kowalczyk',
     role: 'Dyrektor Handlowy, EuroAsia Trade',
     content: 'Profesjonalne podejście i głęboka znajomość chińskiego rynku. Polecam każdej firmie planującej ekspansję.',
     rating: 5,
-    color: 'bg-gray-700',
+    avatar: avatar2,
   },
   {
     name: 'Tomasz Nowak',
     role: 'Prezes Zarządu, InnoVest',
     content: 'Dzięki Yin Yang zaoszczędziliśmy ponad 500 tys. PLN na weryfikacji partnerów. Inwestycja, która się zwróciła wielokrotnie.',
     rating: 5,
-    color: 'bg-gray-800',
+    avatar: avatar3,
   },
   {
     name: 'Liu Wei',
     role: 'Managing Director, SinoTrade',
     content: 'Their understanding of both Polish and Chinese business culture is exceptional. A true bridge between our markets.',
     rating: 5,
-    color: 'bg-gray-700',
+    avatar: avatar5,
   },
   {
     name: 'Katarzyna Dąbrowska',
     role: 'VP Operations, GlobalLink',
     content: 'Rzetelne analizy, terminowa realizacja i pełna transparentność. Tak powinna wyglądać profesjonalna współpraca.',
     rating: 5,
-    color: 'bg-lime',
+    avatar: avatar6,
   },
   {
     name: 'Piotr Zieliński',
     role: 'Founder, NexGen Solutions',
     content: 'Od audytu fabryki po negocjacje kontraktu - Yin Yang przeprowadził nas przez cały proces bez żadnych niespodzianek.',
     rating: 5,
-    color: 'bg-gray-800',
+    avatar: avatar4,
   },
 ];
+
+// Duplicate for seamless loop
+const allTestimonials = [...testimonials, ...testimonials];
 
 export const TestimonialsSection = () => {
   return (
@@ -69,72 +78,94 @@ export const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Testimonials Grid with scroll animation */}
-        <div className="relative">
-          <motion.div 
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.1,
-                }
-              }
-            }}
-          >
-            {testimonials.map((testimonial, index) => (
+        {/* Vertical Scrolling Marquee */}
+        <div className="relative h-[600px] overflow-hidden">
+          {/* Gradient overlays */}
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-900 to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent z-10 pointer-events-none" />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
+            {/* Column 1 - scrolls up */}
+            <div className="relative overflow-hidden">
               <motion.div
-                key={testimonial.name}
-                variants={{
-                  hidden: { opacity: 0, y: 50 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className={`group relative p-6 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all duration-500 ${testimonial.color}`}
+                animate={{ y: ['0%', '-50%'] }}
+                transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                className="space-y-6"
               >
-                {/* Quote icon */}
-                <div className="absolute top-4 right-4 opacity-20">
-                  <Quote className={`w-8 h-8 ${testimonial.color === 'bg-lime' ? 'text-gray-900' : 'text-lime'}`} />
-                </div>
-
-                {/* Rating */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className={`w-4 h-4 fill-current ${testimonial.color === 'bg-lime' ? 'text-gray-900' : 'text-lime'}`} 
-                    />
-                  ))}
-                </div>
-
-                {/* Content */}
-                <p className={`text-sm leading-relaxed mb-6 ${testimonial.color === 'bg-lime' ? 'text-gray-900' : 'text-gray-300'}`}>
-                  "{testimonial.content}"
-                </p>
-
-                {/* Author */}
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold ${
-                    testimonial.color === 'bg-lime' ? 'bg-gray-900 text-lime' : 'bg-lime text-gray-900'
-                  }`}>
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className={`font-semibold text-sm ${testimonial.color === 'bg-lime' ? 'text-gray-900' : 'text-white'}`}>
-                      {testimonial.name}
-                    </p>
-                    <p className={`text-xs ${testimonial.color === 'bg-lime' ? 'text-gray-700' : 'text-gray-400'}`}>
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </div>
+                {allTestimonials.map((testimonial, index) => (
+                  <TestimonialCard key={`col1-${index}`} testimonial={testimonial} />
+                ))}
               </motion.div>
-            ))}
-          </motion.div>
+            </div>
+
+            {/* Column 2 - scrolls down (reverse) */}
+            <div className="relative overflow-hidden hidden md:block">
+              <motion.div
+                animate={{ y: ['-50%', '0%'] }}
+                transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+                className="space-y-6"
+              >
+                {[...allTestimonials].reverse().map((testimonial, index) => (
+                  <TestimonialCard key={`col2-${index}`} testimonial={testimonial} />
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Column 3 - scrolls up (slower) */}
+            <div className="relative overflow-hidden hidden lg:block">
+              <motion.div
+                animate={{ y: ['0%', '-50%'] }}
+                transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+                className="space-y-6"
+              >
+                {allTestimonials.slice(2).concat(allTestimonials.slice(0, 2)).map((testimonial, index) => (
+                  <TestimonialCard key={`col3-${index}`} testimonial={testimonial} />
+                ))}
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+  );
+};
+
+interface TestimonialCardProps {
+  testimonial: typeof testimonials[0];
+}
+
+const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
+  return (
+    <div className="group relative p-6 rounded-3xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-lime/30 transition-all duration-500">
+      {/* Quote icon */}
+      <div className="absolute top-4 right-4 opacity-20">
+        <Quote className="w-8 h-8 text-lime" />
+      </div>
+
+      {/* Rating */}
+      <div className="flex gap-1 mb-4">
+        {[...Array(testimonial.rating)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 fill-current text-lime" />
+        ))}
+      </div>
+
+      {/* Content */}
+      <p className="text-sm leading-relaxed mb-6 text-gray-300">
+        "{testimonial.content}"
+      </p>
+
+      {/* Author with avatar */}
+      <div className="flex items-center gap-3">
+        <img
+          src={testimonial.avatar}
+          alt={testimonial.name}
+          className="w-12 h-12 rounded-full object-cover border-2 border-lime/30"
+        />
+        <div>
+          <p className="font-semibold text-sm text-white">{testimonial.name}</p>
+          <p className="text-xs text-gray-400">{testimonial.role}</p>
+        </div>
+      </div>
+    </div>
   );
 };

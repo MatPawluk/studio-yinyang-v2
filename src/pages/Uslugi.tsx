@@ -4,8 +4,8 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { Target, ArrowRight, BarChart3, Search, Rocket, TrendingUp, Handshake, Package, ClipboardCheck, Users, Briefcase } from 'lucide-react';
-import clientPortrait from '@/assets/client-portrait.jpg';
+import { InteractiveCaseStudy } from '@/components/InteractiveCaseStudy';
+import { Target, ArrowRight, BarChart3, Search, Rocket, TrendingUp, Handshake, Package, ClipboardCheck } from 'lucide-react';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
 
@@ -126,10 +126,20 @@ const Uslugi = () => {
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Hero Section - Dark with header */}
+      {/* Hero Section - Dark with effects */}
       <section className="relative pt-28 pb-16 bg-gray-900 overflow-hidden">
+        {/* Background effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: `url(${serviceStrategy})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/90 via-gray-900/95 to-gray-900" />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
@@ -137,19 +147,17 @@ const Uslugi = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-4xl"
+            className="max-w-4xl text-center mx-auto"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-semibold uppercase tracking-wider mb-6">
               Usługi
             </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
-              Kompleksowe
-              <br />
-              <span className="text-white">wsparcie</span>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+              Kompleksowe wsparcie
               <br />
               <span className="text-lime">na linii Polska–Chiny</span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl">
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Zakres współpracy każdorazowo dopasowany jest do kontekstu klienta, etapu relacji z Chinami oraz charakteru podejmowanych decyzji.
             </p>
           </motion.div>
@@ -171,17 +179,17 @@ const Uslugi = () => {
               >
                 {/* Image */}
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <div className="relative rounded-3xl overflow-hidden aspect-[4/3]">
+                  <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group">
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     {/* Overlay with badge */}
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
                     <div className="absolute bottom-6 left-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center shadow-lime">
                           {service.icon}
                         </div>
                         <div>
@@ -194,7 +202,7 @@ const Uslugi = () => {
                 </div>
 
                 {/* Content */}
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} text-center lg:text-left`}>
                   <h2 className="font-display text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
                     {service.title}
                   </h2>
@@ -202,16 +210,16 @@ const Uslugi = () => {
                     {service.items.map((item, itemIndex) => (
                       <li 
                         key={itemIndex}
-                        className="flex items-start gap-3 text-gray-600"
+                        className="flex items-start gap-3 text-gray-600 justify-center lg:justify-start"
                       >
                         <div className="w-2 h-2 rounded-full bg-lime flex-shrink-0 mt-2" />
-                        {item}
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                   <Link
                     to={`/uslugi/${service.slug}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-lime hover:text-gray-900 transition-all duration-300"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-lime hover:text-gray-900 transition-all duration-300 hover:shadow-lime"
                   >
                     Dowiedz się więcej
                     <ArrowRight className="w-4 h-4" />
@@ -223,7 +231,7 @@ const Uslugi = () => {
         </div>
       </section>
 
-      {/* Case Study */}
+      {/* Interactive Case Study */}
       <section className="bg-gray-900 py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -240,62 +248,7 @@ const Uslugi = () => {
             </h2>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="grid lg:grid-cols-3 gap-8 items-center">
-              {/* Client Portrait */}
-              <div className="relative lg:col-span-1">
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="relative"
-                >
-                  <div className="absolute inset-0 bg-lime/20 rounded-3xl blur-2xl" />
-                  <img
-                    src={clientPortrait}
-                    alt="Client"
-                    className="relative rounded-3xl object-cover w-full aspect-[3/4] border-4 border-lime/30"
-                  />
-                  <div className="absolute -bottom-4 -right-4 bg-lime text-gray-900 px-6 py-3 rounded-2xl font-display font-semibold">
-                    Średnia fabryka mebli
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Case Study Content */}
-              <div className="lg:col-span-2 bg-gray-800/50 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-gray-700/50">
-                <div className="space-y-8">
-                  <div>
-                    <h4 className="text-lime font-medium mb-2">Sytuacja</h4>
-                    <p className="text-gray-300">
-                      Plan zakupu robotów lakierniczych z Chin. Obawy o awaryjność, brak części zamiennych i rzetelność dostawcy znalezionego w internecie.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lime font-medium mb-2">Działania Yin Yang</h4>
-                    <p className="text-gray-300">
-                      Przeprowadzono analizę rynku. Zidentyfikowano 3 producentów w klastrze robotyki (Foshan) posiadających stabilną pozycję rynkową. Odrzucono 2 firmy oparte wyłącznie na marketingu (negatywne opinie na chińskich forach inżynierskich). Rekomendowano dostawcę wykorzystującego podzespoły Siemens (łatwy serwis w Polsce).
-                    </p>
-                  </div>
-
-                  <div className="bg-lime/10 rounded-2xl p-6 border border-lime/20">
-                    <h4 className="text-lime font-medium mb-2">Efekt decyzyjny</h4>
-                    <p className="text-white font-medium">
-                      Klient zrezygnował z ryzykownego zakupu od pośrednika i rozpoczął rozmowy z rekomendowanym producentem. 
-                      <span className="text-lime"> Uniknięcie straty szacowanej na ok. 200 tys. PLN.</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <InteractiveCaseStudy />
         </div>
       </section>
 
@@ -373,7 +326,7 @@ const Uslugi = () => {
             </p>
             <Link
               to="/kontakt"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+              className="inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow-slow"
             >
               Umów rozmowę
               <ArrowRight className="w-5 h-5" />
