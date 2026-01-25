@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { MapPin, Mail } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const footerLinks = {
   navigation: [
@@ -22,10 +22,8 @@ interface FooterProps {
 }
 
 export const Footer = ({ variant = 'dark' }: FooterProps) => {
-  const isDark = variant === 'dark';
-  
   return (
-    <footer className={`relative overflow-hidden ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-900 text-white'}`}>
+    <footer className="relative overflow-hidden bg-gray-900 text-white">
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent pointer-events-none" />
       
@@ -34,12 +32,14 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
 
       <div className="relative container mx-auto px-6 lg:px-12 pt-20 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          {/* Brand */}
+          {/* Brand with Logo */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <div className="w-12 h-12 rounded-full bg-lime flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                <span className="font-display font-bold text-gray-900 text-xl">陰</span>
-              </div>
+              <img 
+                src={logo} 
+                alt="Yin Yang Logo" 
+                className="w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110"
+              />
               <span className="font-display font-bold text-2xl">Yin Yang</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">

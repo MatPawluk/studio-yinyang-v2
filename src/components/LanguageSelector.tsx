@@ -1,27 +1,39 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Globe } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Language } from '@/i18n/translations';
 
-const languages = [
+const languages: { code: Language; name: string; flag: string }[] = [
   { code: 'pl', name: 'Polski', flag: '🇵🇱' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'cn', name: '中文', flag: '🇨🇳' },
 ];
 
 export const LanguageSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(languages[0]);
+  const { language, setLanguage } = useLanguage();
+  
+  const selectedLang = languages.find(l => l.code === language) || languages[0];
+
+  const handleSelect = (lang: Language) => {
+    setLanguage(lang);
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:border-lime/50 transition-all duration-300"
+        className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 border border-white/10"
       >
-        <Globe className="w-4 h-4 text-white/70" />
         <span className="text-lg">{selectedLang.flag}</span>
-        <span className="text-white/80 text-sm font-medium hidden sm:inline">{selectedLang.name}</span>
-        <ChevronDown className={`w-4 h-4 text-white/70 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <ChevronDown className="w-4 h-4 text-white/70" />
+        </motion.div>
       </button>
 
       <AnimatePresence>
@@ -38,24 +50,26 @@ export const LanguageSelector = () => {
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className="absolute right-0 top-full mt-2 z-50 bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-gray-700/50 overflow-hidden shadow-xl min-w-[160px]"
+              transition={{ duration: 0.15 }}
+              className="absolute right-0 mt-2 w-40 py-2 bg-gray-900/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl z-50 overflow-hidden"
             >
               {languages.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => {
-                    setSelectedLang(lang);
-                    setIsOpen(false);
-                  }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/10 transition-colors duration-200 ${
-                    selectedLang.code === lang.code ? 'bg-lime/10 text-lime' : 'text-white/80'
+                  onClick={() => handleSelect(lang.code)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-all duration-200 ${
+                    language === lang.code
+                      ? 'bg-lime/20 text-lime'
+                      : 'text-white/80 hover:bg-white/10 hover:text-white'
                   }`}
                 >
-                  <span className="text-xl">{lang.flag}</span>
+                  <span className="text-lg">{lang.flag}</span>
                   <span className="text-sm font-medium">{lang.name}</span>
-                  {selectedLang.code === lang.code && (
-                    <div className="ml-auto w-2 h-2 rounded-full bg-lime" />
+                  {language === lang.code && (
+                    <motion.div 
+                      layoutId="selectedIndicator"
+                      className="ml-auto w-1.5 h-1.5 rounded-full bg-lime"
+                    />
                   )}
                 </button>
               ))}

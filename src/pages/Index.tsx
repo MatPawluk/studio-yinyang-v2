@@ -1,35 +1,39 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
-import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, TrendingUp, BarChart3, Users, Handshake, Package, ClipboardCheck } from 'lucide-react';
-import heroBg from '@/assets/hero-bg.jpg';
+import { RadarAnimation } from '@/components/RadarAnimation';
+import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, TrendingUp, BarChart3, Handshake, Package, ClipboardCheck, Users } from 'lucide-react';
+import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
+import avatar1 from '@/assets/avatar-1.jpg';
+import avatar2 from '@/assets/avatar-2.jpg';
+import avatar3 from '@/assets/avatar-3.jpg';
 
 const heroServices = [
   { 
-    icon: <Target className="w-6 h-6" />, 
+    icon: <Target className="w-8 h-8" />, 
     title: 'Strategia i decyzje', 
     description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.' 
   },
   { 
-    icon: <Search className="w-6 h-6" />, 
+    icon: <Search className="w-8 h-8" />, 
     title: 'Research i weryfikacja', 
     description: 'Due diligence, analiza partnerów, intelligence.' 
   },
   { 
-    icon: <Rocket className="w-6 h-6" />, 
+    icon: <Rocket className="w-8 h-8" />, 
     title: 'Wejście i rozwój', 
     description: 'Model wejścia, struktury, pozycjonowanie.' 
   },
   { 
-    icon: <Settings className="w-6 h-6" />, 
+    icon: <Settings className="w-8 h-8" />, 
     title: 'Operacje i logistyka', 
     description: 'Audyt, kontrola jakości, nadzór, eksport/import.' 
   },
@@ -136,6 +140,14 @@ const Index = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  // Auto-scroll carousel every 2.5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
   };
@@ -148,17 +160,22 @@ const Index = () => {
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Hero Section */}
+      {/* Hero Section with Video Background */}
       <section ref={heroRef} className="relative min-h-screen overflow-hidden">
-        {/* Background with parallax + video overlay effect */}
+        {/* Video Background */}
         <motion.div 
           style={{ y: heroY }}
           className="absolute inset-0"
         >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${heroBg})` }}
-          />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900" />
           
           {/* Animated overlay effects */}
@@ -223,7 +240,7 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-32 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50"
+          className="absolute bottom-44 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50"
         >
           <span className="text-xs uppercase tracking-widest">Scroll</span>
           <motion.div
@@ -234,8 +251,8 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {/* Service Cards - Dark themed with lime accents */}
-        <div className="absolute bottom-0 left-0 right-0 translate-y-1/2 z-20">
+        {/* Service Cards - Fixed dark themed with centered icons */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 pb-8">
           <div className="container mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {heroServices.map((service, index) => (
@@ -244,13 +261,13 @@ const Index = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="group relative bg-black/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-lime/20 overflow-hidden"
+                  className="group relative bg-black/60 backdrop-blur-md rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-lime/20 overflow-hidden"
                 >
                   {/* Lime accent glow */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-lime/10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center text-gray-900 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lime-lg">
+                  <div className="relative z-10 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-lime/20 flex items-center justify-center text-lime mx-auto mb-4 transition-all duration-300 group-hover:bg-lime group-hover:text-gray-900 group-hover:scale-110 group-hover:shadow-lime">
                       {service.icon}
                     </div>
                     <h3 className="font-display font-semibold text-white mb-2">{service.title}</h3>
@@ -262,14 +279,31 @@ const Index = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* Join 720+ clients text with avatars */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              className="flex items-center justify-center gap-4 mt-8"
+            >
+              <div className="flex -space-x-3">
+                <img src={avatar1} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
+                <img src={avatar2} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
+                <img src={avatar3} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
+              </div>
+              <p className="text-white/80 text-sm">
+                <span className="font-semibold text-lime">Dołącz do grona 720+</span> zadowolonych klientów
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Services Carousel Section */}
-      <section className="bg-white pt-48 pb-24">
+      <section className="bg-white pt-24 pb-24">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header - More prominent */}
+          {/* Header - "Nasze usługi" in black */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -278,7 +312,7 @@ const Index = () => {
           >
             <div>
               <h2 className="font-display text-4xl lg:text-6xl font-bold text-gray-900">
-                Nasze <span className="text-lime">usługi</span>
+                Nasze usługi
               </h2>
             </div>
             <Link 
@@ -298,16 +332,26 @@ const Index = () => {
               viewport={{ once: true }}
               className="relative rounded-3xl overflow-hidden aspect-[16/9] lg:aspect-[21/9]"
             >
-              <img
+              <motion.img
+                key={currentSlide}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
                 src={carouselServices[currentSlide].image}
                 alt={carouselServices[currentSlide].title}
-                className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+                className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/50 to-transparent" />
               
               {/* Content overlay */}
               <div className="absolute inset-0 flex items-end p-8 lg:p-12">
-                <div className="max-w-lg">
+                <motion.div 
+                  key={`content-${currentSlide}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="max-w-lg"
+                >
                   <div className="w-14 h-14 rounded-2xl bg-lime flex items-center justify-center text-gray-900 mb-6">
                     {carouselServices[currentSlide].icon}
                   </div>
@@ -324,7 +368,7 @@ const Index = () => {
                     Dowiedz się więcej
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
 
@@ -378,7 +422,7 @@ const Index = () => {
         <LogoMarquee />
       </section>
 
-      {/* Process Section - Staircase Layout */}
+      {/* Process Section - Staircase Layout with Radar */}
       <section className="bg-white py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -403,14 +447,12 @@ const Index = () => {
             {processSteps.map((step, index) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.15 }}
-                className={`relative flex items-start gap-6 mb-8 ${
-                  index % 2 === 1 ? 'lg:ml-24' : ''
-                } ${index % 2 === 0 && index !== 0 ? 'lg:mr-24' : ''}`}
-                style={{ marginLeft: index * 40 }}
+                className="relative flex items-start gap-6 mb-8"
+                style={{ marginLeft: index * 60 }}
               >
                 {/* Step indicator */}
                 <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-lime flex items-center justify-center shadow-lime">
@@ -434,6 +476,16 @@ const Index = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Radar Animation below process */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mt-16"
+          >
+            <RadarAnimation />
+          </motion.div>
         </div>
       </section>
 

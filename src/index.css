@@ -309,18 +309,37 @@
     animation: pulseGlow 2s ease-in-out infinite;
   }
 
-  /* Slower pulse glow for CTA buttons */
+  /* Slower pulse glow for CTA buttons - VERY SLOW */
   @keyframes pulseGlowSlow {
     0%, 100% {
-      box-shadow: 0 0 20px 5px hsl(75 100% 50% / 0.2);
+      box-shadow: 0 0 15px 3px hsl(75 100% 50% / 0.15);
     }
     50% {
-      box-shadow: 0 0 35px 8px hsl(75 100% 50% / 0.4);
+      box-shadow: 0 0 25px 6px hsl(75 100% 50% / 0.3);
     }
   }
 
   .animate-pulse-glow-slow {
-    animation: pulseGlowSlow 4s ease-in-out infinite;
+    animation: pulseGlowSlow 6s ease-in-out infinite;
+  }
+
+  /* Vertical marquee for testimonials */
+  @keyframes scrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+
+  .animate-scroll-up {
+    animation: scrollUp 30s linear infinite;
+  }
+
+  @keyframes scrollDown {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
+  }
+
+  .animate-scroll-down {
+    animation: scrollDown 30s linear infinite;
   }
 
   /* Float animation */

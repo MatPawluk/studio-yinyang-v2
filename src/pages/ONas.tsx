@@ -5,7 +5,7 @@ import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { ConnectionMap } from '@/components/ConnectionMap';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -102,7 +102,7 @@ const ONas = () => {
             transition={{ delay: 0.3 }}
             className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto"
           >
-            {stats.map((stat, index) => (
+            {stats.map((stat) => (
               <div 
                 key={stat.label}
                 className="p-6 rounded-2xl bg-gray-800/50 border border-gray-700/50"
@@ -121,28 +121,7 @@ const ONas = () => {
         </div>
       </section>
 
-      {/* Connection Map Animation */}
-      <section className="bg-white py-24">
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-4">
-              Połączenie
-            </span>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900">
-              Warszawa ↔ Shanghai
-            </h2>
-          </motion.div>
-          
-          <ConnectionMap />
-        </div>
-      </section>
-
-      {/* FAQ Section - Replacing "Co robimy" */}
+      {/* FAQ Section - Two Column Layout */}
       <section className="bg-gray-50 py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -159,9 +138,11 @@ const ONas = () => {
             </h2>
           </motion.div>
 
-          <div className="max-w-3xl mx-auto">
+          {/* Two Column FAQ */}
+          <div className="grid lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+            {/* First Column */}
             <Accordion type="single" collapsible className="space-y-4">
-              {faqItems.map((item, index) => (
+              {faqItems.slice(0, 4).map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -173,15 +154,45 @@ const ONas = () => {
                     value={`item-${index}`}
                     className="bg-white rounded-2xl border border-gray-200 px-6 overflow-hidden data-[state=open]:border-lime"
                   >
-                    <AccordionTrigger className="text-left font-display font-semibold text-gray-900 hover:text-lime py-5 hover:no-underline">
-                      <span className="flex items-center gap-4">
-                        <span className="w-8 h-8 rounded-lg bg-lime text-gray-900 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    <AccordionTrigger className="text-left font-display font-semibold text-gray-900 hover:text-lime py-5 hover:no-underline text-sm">
+                      <span className="flex items-center gap-3">
+                        <span className="w-7 h-7 rounded-lg bg-lime text-gray-900 flex items-center justify-center text-xs font-bold flex-shrink-0">
                           {index + 1}
                         </span>
                         {item.question}
                       </span>
                     </AccordionTrigger>
-                    <AccordionContent className="text-gray-600 pb-5">
+                    <AccordionContent className="text-gray-600 text-sm pb-5">
+                      {item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                </motion.div>
+              ))}
+            </Accordion>
+
+            {/* Second Column */}
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqItems.slice(4).map((item, index) => (
+                <motion.div
+                  key={index + 4}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (index + 4) * 0.05 }}
+                >
+                  <AccordionItem 
+                    value={`item-${index + 4}`}
+                    className="bg-white rounded-2xl border border-gray-200 px-6 overflow-hidden data-[state=open]:border-lime"
+                  >
+                    <AccordionTrigger className="text-left font-display font-semibold text-gray-900 hover:text-lime py-5 hover:no-underline text-sm">
+                      <span className="flex items-center gap-3">
+                        <span className="w-7 h-7 rounded-lg bg-lime text-gray-900 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                          {index + 5}
+                        </span>
+                        {item.question}
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600 text-sm pb-5">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -234,6 +245,27 @@ const ONas = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Connection Map Animation - Below Team */}
+      <section className="bg-white py-24">
+        <div className="container mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-4">
+              Połączenie
+            </span>
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900">
+              Warszawa ↔ Shanghai
+            </h2>
+          </motion.div>
+          
+          <ConnectionMap />
         </div>
       </section>
 
