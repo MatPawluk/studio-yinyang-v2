@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
+import { GradientText } from './GradientText';
 import avatar1 from '@/assets/avatar-1.jpg';
 import avatar2 from '@/assets/avatar-2.jpg';
 import avatar3 from '@/assets/avatar-3.jpg';
@@ -74,7 +75,7 @@ export const TestimonialsSection = () => {
             Opinie klientów
           </span>
           <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-            Co mówią o nas <span className="text-lime">klienci</span>
+            Co mówią o nas <GradientText>klienci</GradientText>
           </h2>
         </motion.div>
 

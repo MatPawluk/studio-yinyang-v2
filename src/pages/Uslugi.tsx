@@ -5,111 +5,98 @@ import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { InteractiveCaseStudy } from '@/components/InteractiveCaseStudy';
-import { Target, ArrowRight, BarChart3, Search, Rocket, TrendingUp, Handshake, Package, ClipboardCheck } from 'lucide-react';
+import { GradientText } from '@/components/GradientText';
+import { ArrowRight } from 'lucide-react';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
+import statsBg from '@/assets/stats-bg.jpg';
 
-const services = [
+// Service categories with sub-services
+const serviceCategories = [
   {
     title: 'Strategia wobec Chin',
-    subtitle: 'Poziom zarządczy',
-    icon: <Target className="w-6 h-6" />,
-    image: serviceStrategy,
     slug: 'strategia-wobec-chin',
-    items: [
-      'Analizy strategiczne wpływu Chin na firmę lub sektor',
-      'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji',
-      'Scenariusze strategiczne i mapy ryzyk',
-      'Briefingi decyzyjne dla zarządów',
+    image: serviceStrategy,
+    subServices: [
+      { title: 'Analizy strategiczne wpływu Chin na firmę lub sektor', slug: 'analizy-strategiczne' },
+      { title: 'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji', slug: 'decyzje-wejscia' },
+      { title: 'Scenariusze strategiczne i mapy ryzyk', slug: 'scenariusze-strategiczne' },
+      { title: 'Briefingi decyzyjne dla zarządów', slug: 'briefingi-decyzyjne' },
     ],
   },
   {
     title: 'Analizy rynkowe i sektorowe',
-    subtitle: 'Badania i insights',
-    icon: <BarChart3 className="w-6 h-6" />,
-    image: serviceAnalysis,
     slug: 'analizy-rynkowe',
-    items: [
-      'Analizy sektorów i klastrów przemysłowych',
-      'Badanie konkurencji lokalnej i międzynarodowej',
-      'Analiza popytu, trendów i barier wejścia',
-      'Analiza regulacyjna i instytucjonalna rynku',
+    image: serviceAnalysis,
+    subServices: [
+      { title: 'Analizy sektorów i klastrów przemysłowych', slug: 'analizy-sektorow' },
+      { title: 'Badanie konkurencji lokalnej i międzynarodowej', slug: 'badanie-konkurencji' },
+      { title: 'Analiza popytu, trendów i barier wejścia', slug: 'analiza-popytu' },
+      { title: 'Analiza regulacyjna i instytucjonalna rynku', slug: 'analiza-regulacyjna' },
     ],
   },
   {
     title: 'Research, Intelligence i Weryfikacja',
-    subtitle: 'Due diligence',
-    icon: <Search className="w-6 h-6" />,
-    image: serviceStrategy,
     slug: 'research-intelligence',
-    items: [
-      'Research firm chińskich i europejskich',
-      'Analiza zaplecza technologicznego i R&D',
-      'Weryfikacja partnerów biznesowych i technologicznych',
-      'Due diligence przed rozpoczęciem współpracy',
+    image: serviceStrategy,
+    subServices: [
+      { title: 'Research firm chińskich i europejskich', slug: 'research-firm' },
+      { title: 'Analiza zaplecza technologicznego i R&D', slug: 'analiza-technologiczna' },
+      { title: 'Weryfikacja partnerów biznesowych i technologicznych', slug: 'weryfikacja-partnerow' },
+      { title: 'Due diligence przed rozpoczęciem współpracy', slug: 'due-diligence' },
     ],
   },
   {
     title: 'Wejście na rynek',
-    subtitle: 'Polska ↔ Chiny',
-    icon: <Rocket className="w-6 h-6" />,
-    image: serviceAnalysis,
     slug: 'wejscie-na-rynek',
-    items: [
-      'Analiza rynku i modelu wejścia',
-      'Wsparcie regulacyjne i formalne',
-      'Przygotowanie struktur handlowych lub partnerskich',
+    image: serviceAnalysis,
+    subServices: [
+      { title: 'Analiza rynku i modelu wejścia', slug: 'analiza-modelu' },
+      { title: 'Wsparcie regulacyjne i formalne', slug: 'wsparcie-regulacyjne' },
+      { title: 'Przygotowanie struktur handlowych lub partnerskich', slug: 'struktury-handlowe' },
     ],
   },
   {
     title: 'Marketing i Pozycjonowanie',
-    subtitle: 'Strategia komunikacji',
-    icon: <TrendingUp className="w-6 h-6" />,
-    image: serviceStrategy,
     slug: 'marketing-pozycjonowanie',
-    items: [
-      'Pozycjonowanie marki i oferty (PL i CN)',
-      'Strategia komunikacji i adaptacja do realiów lokalnych',
-      'Materiały sprzedażowe i wizerunkowe',
-      'Go-To-Market & walidacja rynku',
+    image: serviceStrategy,
+    subServices: [
+      { title: 'Pozycjonowanie marki i oferty (PL i CN)', slug: 'pozycjonowanie-marki' },
+      { title: 'Strategia komunikacji i adaptacja do realiów lokalnych', slug: 'strategia-komunikacji' },
+      { title: 'Materiały sprzedażowe i wizerunkowe', slug: 'materialy-sprzedazowe' },
+      { title: 'Go-To-Market & walidacja rynku', slug: 'go-to-market' },
     ],
   },
   {
     title: 'Identyfikacja partnerów',
-    subtitle: 'Matchmaking',
-    icon: <Handshake className="w-6 h-6" />,
-    image: serviceAnalysis,
     slug: 'identyfikacja-partnerow',
-    items: [
-      'Identyfikacja potencjalnych partnerów',
-      'Selekcja i ocena dopasowania',
-      'Organizacja spotkań i rozmów',
-      'Wsparcie negocjacyjne i relacyjne',
+    image: serviceAnalysis,
+    subServices: [
+      { title: 'Identyfikacja potencjalnych partnerów', slug: 'identyfikacja-potencjalnych' },
+      { title: 'Selekcja i ocena dopasowania', slug: 'selekcja-ocena' },
+      { title: 'Organizacja spotkań i rozmów', slug: 'organizacja-spotkan' },
+      { title: 'Wsparcie negocjacyjne i relacyjne', slug: 'wsparcie-negocjacyjne' },
     ],
   },
   {
     title: 'Handel, Eksport i Import',
-    subtitle: 'Wsparcie logistyczne',
-    icon: <Package className="w-6 h-6" />,
-    image: serviceStrategy,
     slug: 'handel-eksport-import',
-    items: [
-      'Doradztwo w zakresie eksportu i importu',
-      'Analiza łańcucha dostaw i kosztów logistycznych',
-      'Koordynacja operacyjna dostaw od A do Z',
+    image: serviceStrategy,
+    subServices: [
+      { title: 'Doradztwo w zakresie eksportu i importu', slug: 'doradztwo-eksport' },
+      { title: 'Analiza łańcucha dostaw i kosztów logistycznych', slug: 'analiza-lancucha' },
+      { title: 'Koordynacja operacyjna dostaw od A do Z', slug: 'koordynacja-dostaw' },
     ],
   },
   {
     title: 'Audyty i Nadzór operacyjny',
-    subtitle: 'Kontrola jakości',
-    icon: <ClipboardCheck className="w-6 h-6" />,
-    image: serviceAnalysis,
     slug: 'audyty-nadzor',
-    items: [
-      'Audyty firm i zakładów',
-      'Kontrola jakości',
-      'Monitoring realizacji ustaleń',
-      'Bieżące wsparcie lokalne',
+    image: serviceAnalysis,
+    subServices: [
+      { title: 'Audyty firm i zakładów', slug: 'audyty-firm' },
+      { title: 'Kontrola jakości', slug: 'kontrola-jakosci' },
+      { title: 'Monitoring realizacji ustaleń', slug: 'monitoring-realizacji' },
+      { title: 'Bieżące wsparcie lokalne', slug: 'wsparcie-lokalne' },
     ],
   },
 ];
@@ -153,9 +140,9 @@ const Uslugi = () => {
               Usługi
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Kompleksowe wsparcie
+              Kompleksowe <GradientText>wsparcie</GradientText>
               <br />
-              <span className="text-lime">na linii Polska–Chiny</span>
+              na linii Polska–Chiny
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Zakres współpracy każdorazowo dopasowany jest do kontekstu klienta, etapu relacji z Chinami oraz charakteru podejmowanych decyzji.
@@ -164,66 +151,64 @@ const Uslugi = () => {
         </div>
       </section>
 
-      {/* Services - Alternating Layout with Large Images */}
-      <section className="bg-white py-24">
+      {/* Service Categories with Clickable Sub-services */}
+      <section className="bg-gray-950 py-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="space-y-32">
-            {services.map((service, index) => (
+          <div className="space-y-20">
+            {serviceCategories.map((category, catIndex) => (
               <motion.div
-                key={service.title}
+                key={category.title}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6 }}
-                className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center`}
               >
-                {/* Image */}
-                <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    {/* Overlay with badge */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent" />
-                    <div className="absolute bottom-6 left-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center shadow-lime">
-                          {service.icon}
-                        </div>
-                        <div>
-                          <p className="text-white/70 text-sm">{service.subtitle}</p>
-                          <p className="text-white font-semibold">{service.title}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                {/* Category Header */}
+                <div className="text-center mb-10">
+                  <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-4">
+                    {category.title}
+                  </h2>
                 </div>
 
-                {/* Content */}
-                <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} text-center lg:text-left`}>
-                  <h2 className="font-display text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-                    {service.title}
-                  </h2>
-                  <ul className="space-y-4 mb-8">
-                    {service.items.map((item, itemIndex) => (
-                      <li 
-                        key={itemIndex}
-                        className="flex items-start gap-3 text-gray-600 justify-center lg:justify-start"
+                {/* Sub-services Grid */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {category.subServices.map((subService, index) => (
+                    <motion.div
+                      key={subService.slug}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                    >
+                      <Link
+                        to={`/uslugi/${category.slug}/${subService.slug}`}
+                        className="group relative block h-full"
                       >
-                        <div className="w-2 h-2 rounded-full bg-lime flex-shrink-0 mt-2" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    to={`/uslugi/${service.slug}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-lime hover:text-gray-900 transition-all duration-300 hover:shadow-lime"
-                  >
-                    Dowiedz się więcej
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                        <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-lime/50 transition-all duration-300">
+                          {/* Image */}
+                          <div className="aspect-[4/3] relative overflow-hidden">
+                            <img
+                              src={category.image}
+                              alt={subService.title}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="absolute bottom-0 left-0 right-0 p-4">
+                            <h3 className="text-white text-sm font-medium leading-tight group-hover:text-lime transition-colors">
+                              {subService.title}
+                            </h3>
+                            <div className="flex items-center gap-1 mt-2 text-lime opacity-0 group-hover:opacity-100 transition-opacity">
+                              <span className="text-xs">Dowiedz się więcej</span>
+                              <ArrowRight className="w-3 h-3" />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
             ))}
@@ -244,7 +229,7 @@ const Uslugi = () => {
               Case Study
             </span>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-              Przykładowa realizacja
+              Przykładowa <GradientText>realizacja</GradientText>
             </h2>
           </motion.div>
 
@@ -252,16 +237,40 @@ const Uslugi = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="bg-gray-950 py-20">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* Stats Section with Background Image */}
+      <section className="relative py-32 overflow-hidden">
+        <motion.div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${statsBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+          }}
+        >
+          <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" />
+        </motion.div>
+
+        {/* Animated glow */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{ 
+              x: ['-20%', '20%', '-20%'],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-lime/20 blur-[100px] rounded-full"
+          />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <span className="text-gray-500 text-sm uppercase tracking-widest">
+            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
               Doświadczenie i skala
             </span>
           </motion.div>
@@ -276,10 +285,10 @@ const Uslugi = () => {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="font-display text-4xl lg:text-5xl font-bold text-lime mb-2">
+                <div className="font-display text-5xl lg:text-6xl font-bold text-lime mb-3">
                   <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                 </div>
-                <p className="text-gray-400 text-sm">{stat.label}</p>
+                <p className="text-white/70 text-sm">{stat.label}</p>
               </motion.div>
             ))}
           </div>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { GradientText } from '@/components/GradientText';
 import { MapPin, Send, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
 
@@ -16,6 +17,7 @@ const contactMethods = [
     color: 'red',
     hoverBorder: 'hover:border-red-500',
     hoverText: 'group-hover:text-red-500',
+    iconColor: 'group-hover:text-red-500',
     href: 'mailto:contact@yinyang.pl',
   },
   {
@@ -29,6 +31,7 @@ const contactMethods = [
     color: 'green',
     hoverBorder: 'hover:border-green-500',
     hoverText: 'group-hover:text-green-500',
+    iconColor: 'group-hover:text-green-500',
     href: 'https://wa.me/48123456789',
   },
   {
@@ -42,12 +45,13 @@ const contactMethods = [
     color: 'green',
     hoverBorder: 'hover:border-green-500',
     hoverText: 'group-hover:text-green-500',
+    iconColor: 'group-hover:text-green-500',
     href: '#',
   },
   {
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 14.316c-.868 0-1.691.192-2.433.538l-.1.045c-.23.106-.425.223-.6.35l-.025.017V24l2.475-1.65a6.57 6.57 0 0 0 .683.044c3.652 0 6.625-2.598 6.625-5.806S15.652 10.78 12 10.78c-3.652 0-6.625 2.599-6.625 5.807 0 1.51.645 2.89 1.709 3.918l-.002.002.007.006c.099.091.195.186.298.274l.015.013c.218.183.45.352.699.499l.008.004v-3.44l.1.015a5.53 5.53 0 0 1 1.791-.297c3.052 0 5.538 2.108 5.538 4.696 0 2.588-2.486 4.697-5.538 4.697-.2 0-.4-.01-.596-.029H9.38zM21.652 8.108C18.76 5.474 14.717 4 10.5 4c-4.218 0-8.26 1.474-11.152 4.108C-2.145 9.46-3.5 12.12-3.5 14.93c0 2.811 1.355 5.47 3.847 6.822l.026.014c.132.07.264.14.398.206l.067.032V16.27c-.878-.914-1.338-2.064-1.338-3.341 0-1.277.46-2.426 1.338-3.34 2.048-2.135 5.598-3.46 9.462-3.46s7.414 1.325 9.462 3.46c.878.914 1.338 2.063 1.338 3.34 0 1.278-.46 2.427-1.338 3.342v5.734l.067-.033c.134-.066.266-.136.398-.205l.026-.015c2.493-1.351 3.847-4.01 3.847-6.822 0-2.81-1.354-5.47-3.848-6.822zM2.058 9.614C4.586 7.398 8.292 6.197 12 6.197c3.708 0 7.414 1.2 9.942 3.417 1.71 1.5 2.558 3.413 2.558 5.317 0 1.903-.848 3.817-2.558 5.317l-.026.022v-4.086c.593-.786.893-1.678.893-2.654 0-.975-.3-1.867-.893-2.653-1.678-1.755-4.657-2.83-7.916-2.83-3.26 0-6.238 1.075-7.916 2.83-.593.786-.893 1.678-.893 2.653 0 .976.3 1.868.893 2.654v4.086l-.026-.022C.848 18.748 0 16.834 0 14.93c0-1.903.848-3.817 2.558-5.317z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.5 17.5l-4-4 1.41-1.41L10.5 14.67l5.09-5.09L17 11l-6.5 6.5z"/>
       </svg>
     ),
     title: 'Umów spotkanie',
@@ -55,6 +59,7 @@ const contactMethods = [
     color: 'blue',
     hoverBorder: 'hover:border-blue-500',
     hoverText: 'group-hover:text-blue-500',
+    iconColor: 'group-hover:text-blue-500',
     href: 'https://calendar.google.com',
   },
 ];
@@ -80,52 +85,48 @@ const Kontakt = () => {
       {/* Main Content - Dark theme */}
       <section className="pt-24 pb-12">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header - Short */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8"
-          >
-            <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
-              Kontakt
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
-              Porozmawiajmy
-              <br />
-              <span className="text-lime">o Twoich potrzebach</span>
-            </h1>
-          </motion.div>
-
-          {/* Two Column Layout */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-            {/* Left side - Contact Methods */}
+          {/* Two Column Layout - Form aligned with title */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Left side - Title + Contact Methods */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="space-y-4"
             >
+              {/* Header */}
+              <div className="mb-8">
+                <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
+                  Kontakt
+                </span>
+                <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
+                  Porozmawiajmy
+                  <br />
+                  <span className="text-lime">o Twoich potrzebach</span>
+                </h1>
+              </div>
+
               {/* Contact Method Cards */}
-              {contactMethods.map((method, index) => (
-                <motion.a
-                  key={method.title}
-                  href={method.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 + index * 0.1 }}
-                  className={`group flex items-center gap-4 p-5 rounded-2xl bg-gray-800/50 border-2 border-gray-700/50 ${method.hoverBorder} transition-all duration-300`}
-                >
-                  <div className={`w-14 h-14 rounded-xl bg-gray-700/50 flex items-center justify-center text-gray-400 ${method.hoverText} transition-colors duration-300`}>
-                    {method.icon}
-                  </div>
-                  <div className="flex-grow">
-                    <p className={`text-white font-semibold ${method.hoverText} transition-colors duration-300`}>{method.title}</p>
-                    <p className="text-gray-400 text-sm">{method.subtitle}</p>
-                  </div>
-                  <ArrowUpRight className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors duration-300" />
-                </motion.a>
-              ))}
+              <div className="space-y-4">
+                {contactMethods.map((method, index) => (
+                  <motion.a
+                    key={method.title}
+                    href={method.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    className={`group flex items-center gap-4 p-5 rounded-2xl bg-gray-800/50 border-2 border-gray-700/50 ${method.hoverBorder} transition-all duration-300`}
+                  >
+                    <div className={`w-14 h-14 rounded-xl bg-gray-700/50 flex items-center justify-center text-gray-400 ${method.iconColor} transition-colors duration-300`}>
+                      {method.icon}
+                    </div>
+                    <div className="flex-grow">
+                      <p className={`text-white font-semibold ${method.hoverText} transition-colors duration-300`}>{method.title}</p>
+                      <p className="text-gray-400 text-sm">{method.subtitle}</p>
+                    </div>
+                    <ArrowUpRight className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors duration-300" />
+                  </motion.a>
+                ))}
+              </div>
             </motion.div>
 
             {/* Right side - Form */}
@@ -202,7 +203,7 @@ const Kontakt = () => {
                     </label>
                     <textarea
                       placeholder="Opisz krótko, w czym możemy pomóc..."
-                      rows={5}
+                      rows={6}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-gray-700/50 border border-gray-600/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300 resize-none"
@@ -224,7 +225,7 @@ const Kontakt = () => {
       </section>
 
       {/* Map + Locations Section */}
-      <section className="py-16 bg-gray-950">
+      <section className="py-16 bg-gray-900">
         <div className="container mx-auto px-6 lg:px-12">
           {/* Location Cards */}
           <motion.div
@@ -234,7 +235,7 @@ const Kontakt = () => {
             className="mb-8"
           >
             <h3 className="font-display font-semibold text-2xl text-white mb-6">
-              Nasze lokalizacje
+              Nasze <GradientText>lokalizacje</GradientText>
             </h3>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
@@ -250,8 +251,8 @@ const Kontakt = () => {
                 </p>
               </div>
               <div className="p-6 rounded-2xl bg-gray-800/50 border border-gray-700/50 hover:border-lime/30 transition-colors duration-300">
-                <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center mb-4">
-                  <MapPin className="w-5 h-5 text-gray-900" />
+                <div className="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center mb-4">
+                  <MapPin className="w-5 h-5 text-lime" />
                 </div>
                 <h4 className="font-semibold text-white mb-2">Shanghai</h4>
                 <p className="text-gray-400 text-sm leading-relaxed">

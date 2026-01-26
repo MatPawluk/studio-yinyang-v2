@@ -21,9 +21,9 @@ const defaultData: CaseStudyData = {
 };
 
 const tabs = [
-  { id: 'situation', label: 'Sytuacja', icon: '📋' },
-  { id: 'actions', label: 'Działania Yin Yang', icon: '⚡' },
-  { id: 'result', label: 'Efekt decyzyjny', icon: '✅' },
+  { id: 'situation', label: 'Sytuacja' },
+  { id: 'actions', label: 'Działania Yin Yang' },
+  { id: 'result', label: 'Efekt decyzyjny' },
 ];
 
 export const InteractiveCaseStudy = ({ data = defaultData }: InteractiveCaseStudyProps) => {
@@ -77,7 +77,6 @@ export const InteractiveCaseStudy = ({ data = defaultData }: InteractiveCaseStud
                   : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 hover:text-white'
               }`}
             >
-              <span className="mr-2">{tab.icon}</span>
               {tab.label}
               {activeTab === tab.id && (
                 <motion.div
