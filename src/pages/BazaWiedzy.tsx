@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { GradientText } from '@/components/GradientText';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';
@@ -70,11 +71,11 @@ const articles = [
 
 const BazaWiedzy = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-100">
       <Navbar />
       
-      {/* Hero Section - Short */}
-      <section className="relative pt-28 pb-6 bg-white">
+      {/* Hero Section - Light gray background for navbar visibility */}
+      <section className="relative pt-28 pb-6 bg-gray-100">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -82,13 +83,13 @@ const BazaWiedzy = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-2 rounded-full bg-gray-900 text-lime text-sm font-medium mb-4">
               Baza wiedzy
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
-              Analizy, poradniki
+              Analizy, <GradientText>poradniki</GradientText>
               <br />
-              <span className="text-gray-900">i komentarze</span>
+              i komentarze
             </h1>
             <p className="text-lg text-gray-500">
               Materiały dotyczące Chin, technologii oraz współpracy międzynarodowej – przygotowane z perspektywy decyzyjnej.
@@ -98,7 +99,7 @@ const BazaWiedzy = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="bg-white py-8">
+      <section className="bg-gray-100 py-8">
         <div className="container mx-auto px-6 lg:px-12">
           {/* Categories */}
           <motion.div
@@ -113,7 +114,7 @@ const BazaWiedzy = () => {
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                   index === 0
                     ? 'bg-gray-900 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    : 'bg-white text-gray-600 hover:bg-gray-200 border border-gray-200'
                 }`}
               >
                 {category}
@@ -130,7 +131,7 @@ const BazaWiedzy = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-500"
+                className="group relative bg-white rounded-3xl overflow-hidden border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-500"
               >
                 <Link to={`/baza-wiedzy/${article.slug}`}>
                   {/* Image */}

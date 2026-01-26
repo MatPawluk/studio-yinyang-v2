@@ -7,7 +7,9 @@ import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { RadarAnimation } from '@/components/RadarAnimation';
-import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, TrendingUp, BarChart3, Handshake, Package, ClipboardCheck, Users } from 'lucide-react';
+import { TypewriterText } from '@/components/TypewriterText';
+import { GradientText } from '@/components/GradientText';
+import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, TrendingUp, BarChart3, Handshake, Package, ClipboardCheck } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
@@ -18,22 +20,22 @@ import avatar3 from '@/assets/avatar-3.jpg';
 
 const heroServices = [
   { 
-    icon: <Target className="w-8 h-8" />, 
+    icon: <Target className="w-7 h-7" />, 
     title: 'Strategia i decyzje', 
     description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.' 
   },
   { 
-    icon: <Search className="w-8 h-8" />, 
+    icon: <Search className="w-7 h-7" />, 
     title: 'Research i weryfikacja', 
     description: 'Due diligence, analiza partnerów, intelligence.' 
   },
   { 
-    icon: <Rocket className="w-8 h-8" />, 
+    icon: <Rocket className="w-7 h-7" />, 
     title: 'Wejście i rozwój', 
     description: 'Model wejścia, struktury, pozycjonowanie.' 
   },
   { 
-    icon: <Settings className="w-8 h-8" />, 
+    icon: <Settings className="w-7 h-7" />, 
     title: 'Operacje i logistyka', 
     description: 'Audyt, kontrola jakości, nadzór, eksport/import.' 
   },
@@ -193,19 +195,19 @@ const Index = () => {
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-lime/10 blur-[150px] rounded-full pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-lime/5 blur-[120px] rounded-full pointer-events-none" />
 
-        {/* Hero Content */}
+        {/* Hero Content - CENTERED */}
         <motion.div 
           style={{ opacity: heroOpacity }}
           className="relative z-10 container mx-auto px-6 lg:px-12 pt-32 lg:pt-40"
         >
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
               className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
             >
-              Twój przewodnik
+              Twój <TypewriterText words={['przewodnik', 'partner']} />
               <br />
               <span className="text-lime">w relacjach Polska–Chiny.</span>
             </motion.h1>
@@ -214,7 +216,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-gray-300 max-w-2xl mb-10 leading-relaxed"
+              className="text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed"
             >
               Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL–CN
             </motion.p>
@@ -223,6 +225,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col items-center gap-6"
             >
               <Link
                 to="/kontakt"
@@ -231,6 +234,18 @@ const Index = () => {
                 Umów bezpłatną konsultację
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
+
+              {/* Join 720+ clients - below CTA */}
+              <div className="flex items-center gap-4">
+                <div className="flex -space-x-3">
+                  <img src={avatar1} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
+                  <img src={avatar2} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
+                  <img src={avatar3} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
+                </div>
+                <p className="text-white/80 text-sm">
+                  <span className="font-semibold text-lime">Dołącz do grona 720+</span> zadowolonych klientów
+                </p>
+              </div>
             </motion.div>
           </div>
         </motion.div>
@@ -240,7 +255,7 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-44 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50"
+          className="absolute bottom-64 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50"
         >
           <span className="text-xs uppercase tracking-widest">Scroll</span>
           <motion.div
@@ -251,8 +266,8 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {/* Service Cards - Fixed dark themed with centered icons */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 pb-8">
+        {/* Service Cards - Half in hero, half overlapping white section */}
+        <div className="absolute -bottom-24 left-0 right-0 z-20">
           <div className="container mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {heroServices.map((service, index) => (
@@ -261,49 +276,32 @@ const Index = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="group relative bg-black/60 backdrop-blur-md rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-lime/20 overflow-hidden"
+                  className="group relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 shadow-2xl hover:shadow-lime/20 transition-all duration-500 hover:-translate-y-2 border border-gray-800 overflow-hidden"
                 >
-                  {/* Lime accent glow */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-lime/10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Top lime accent bar */}
+                  <div className="absolute top-0 left-4 right-4 h-1 bg-gradient-to-r from-lime/50 via-lime to-lime/50 rounded-b-full opacity-80 group-hover:opacity-100 transition-opacity" />
                   
-                  <div className="relative z-10 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-lime/20 flex items-center justify-center text-lime mx-auto mb-4 transition-all duration-300 group-hover:bg-lime group-hover:text-gray-900 group-hover:scale-110 group-hover:shadow-lime">
+                  {/* Lime accent glow */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-16 bg-lime/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="relative z-10 text-center pt-3">
+                    <div className="w-14 h-14 rounded-2xl bg-gray-800/80 border border-gray-700 flex items-center justify-center text-lime mx-auto mb-4 transition-all duration-300 group-hover:bg-lime group-hover:text-gray-900 group-hover:scale-110 group-hover:border-lime group-hover:shadow-lime">
                       {service.icon}
                     </div>
-                    <h3 className="font-display font-semibold text-white mb-2">{service.title}</h3>
-                    <p className="text-gray-400 text-sm">{service.description}</p>
+                    <h3 className="font-display font-semibold text-white text-lg mb-2">{service.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{service.description}</p>
                   </div>
-                  
-                  {/* Bottom lime accent line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-lime/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </motion.div>
               ))}
             </div>
-
-            {/* Join 720+ clients text with avatars */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-              className="flex items-center justify-center gap-4 mt-8"
-            >
-              <div className="flex -space-x-3">
-                <img src={avatar1} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
-                <img src={avatar2} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
-                <img src={avatar3} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
-              </div>
-              <p className="text-white/80 text-sm">
-                <span className="font-semibold text-lime">Dołącz do grona 720+</span> zadowolonych klientów
-              </p>
-            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Services Carousel Section */}
-      <section className="bg-white pt-24 pb-24">
+      <section className="bg-white pt-40 pb-24">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header - "Nasze usługi" in black */}
+          {/* Header - "Nasze usługi" in BLACK */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -422,9 +420,14 @@ const Index = () => {
         <LogoMarquee />
       </section>
 
-      {/* Process Section - Staircase Layout with Radar */}
-      <section className="bg-white py-24">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* Process Section with Large Radar Background */}
+      <section className="bg-white py-24 relative overflow-hidden">
+        {/* Large Radar in Background */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
+          <RadarAnimation size="lg" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -435,57 +438,40 @@ const Index = () => {
               Proces
             </span>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Jak to działa
+              Jak to <GradientText>działa</GradientText>?
             </h2>
             <p className="text-gray-500 max-w-xl mx-auto">
               Prosty, przejrzysty proces współpracy od pierwszego kontaktu do realizacji.
             </p>
           </motion.div>
 
-          {/* Staircase Layout */}
-          <div className="max-w-5xl mx-auto">
+          {/* Modern Process Cards - No circles around numbers */}
+          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
             {processSteps.map((step, index) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.15 }}
-                className="relative flex items-start gap-6 mb-8"
-                style={{ marginLeft: index * 60 }}
+                transition={{ delay: index * 0.1 }}
+                className="relative bg-gray-50 rounded-3xl p-8 hover:bg-gray-100 transition-all duration-300 group border border-gray-100 hover:border-lime/30"
               >
-                {/* Step indicator */}
-                <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-lime flex items-center justify-center shadow-lime">
-                  <span className="font-display text-2xl font-bold text-gray-900">{step.number}</span>
-                </div>
+                {/* Large lime number in background */}
+                <span className="absolute top-4 right-6 font-display text-8xl font-bold text-lime/20 group-hover:text-lime/30 transition-colors">
+                  {step.number}
+                </span>
                 
-                {/* Content */}
-                <div className="flex-1 bg-gray-50 rounded-2xl p-6 hover:bg-gray-100 transition-colors duration-300">
-                  <h3 className="font-display font-semibold text-xl text-gray-900 mb-2">
+                <div className="relative z-10">
+                  <h3 className="font-display font-semibold text-xl text-gray-900 mb-3 pr-16">
                     {step.title}
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed">
                     {step.description}
                   </p>
                 </div>
-
-                {/* Connector line */}
-                {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute left-8 top-16 w-0.5 h-12 bg-gradient-to-b from-lime to-gray-200" />
-                )}
               </motion.div>
             ))}
           </div>
-
-          {/* Radar Animation below process */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="mt-16"
-          >
-            <RadarAnimation />
-          </motion.div>
         </div>
       </section>
 
