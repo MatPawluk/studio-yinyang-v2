@@ -82,9 +82,20 @@ const Kontakt = () => {
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Main Content - Dark theme */}
-      <section className="pt-24 pb-12">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* Main Content - Dark theme with background decorations */}
+      <section className="pt-24 pb-12 relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-lime/3 blur-[120px] rounded-full" />
+          {/* Grid pattern */}
+          <div className="absolute inset-0 opacity-5" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(196, 255, 0, 0.3) 1px, transparent 0)`,
+            backgroundSize: '50px 50px',
+          }} />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
           {/* Two Column Layout - Form aligned with title */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left side - Title + Contact Methods */}

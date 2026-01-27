@@ -2,8 +2,11 @@ import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { ArrowLeft, Clock, Calendar, Share2, Bookmark } from 'lucide-react';
+import { GradientText } from '@/components/GradientText';
+import { ArrowLeft, Clock, Calendar, Share2, Bookmark, ArrowRight, TrendingUp, ChartBar, Globe } from 'lucide-react';
 import articleCompetition from '@/assets/article-competition.jpg';
+import articleInnovation from '@/assets/article-china-innovation.jpg';
+import serviceStrategy from '@/assets/service-strategy.jpg';
 
 const ArticleDetail = () => {
   const { articleSlug } = useParams();
@@ -52,25 +55,38 @@ const ArticleDetail = () => {
     `,
   };
 
+  const relatedArticles = [
+    {
+      title: 'Chiński system innowacji',
+      slug: 'chinski-system-innowacji',
+      image: articleInnovation,
+    },
+    {
+      title: 'Automatyzacja w Chinach',
+      slug: 'automatyzacja-robotyzacja-chiny',
+      image: serviceStrategy,
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-900">
       <Navbar />
       
       {/* Header */}
-      <section className="relative pt-28 pb-12 bg-gray-900">
+      <section className="relative pt-28 pb-16 bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <img 
             src={article.image} 
             alt={article.title}
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-gray-900/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/90 to-gray-900/70" />
         </div>
         
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <Link 
             to="/baza-wiedzy"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-lime transition-colors duration-300 mb-6"
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-lime transition-colors duration-300 mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
             Wróć do bazy wiedzy
@@ -80,13 +96,13 @@ const ArticleDetail = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+            className="max-w-4xl"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-lime text-gray-900 text-sm font-semibold mb-4">
+            <span className="inline-block px-4 py-2 rounded-full bg-lime text-gray-900 text-sm font-semibold mb-6">
               {article.category}
             </span>
-            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-              {article.title}
+            <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-8">
+              <GradientText>{article.title}</GradientText>
             </h1>
             
             <div className="flex flex-wrap items-center gap-6 text-gray-400">
@@ -105,25 +121,52 @@ const ArticleDetail = () => {
       </section>
 
       {/* Article Content */}
-      <section className="py-16">
+      <section className="py-16 bg-gray-950">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Sidebar */}
             <aside className="lg:col-span-1 order-2 lg:order-1">
               <div className="sticky top-28 space-y-6">
-                <div className="p-6 bg-gray-50 rounded-2xl">
-                  <h3 className="font-semibold text-gray-900 mb-4">Udostępnij</h3>
+                {/* Share buttons */}
+                <div className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700/50">
+                  <h3 className="font-semibold text-white mb-4">Udostępnij</h3>
                   <div className="flex gap-3">
-                    <button className="w-10 h-10 rounded-xl bg-gray-200 hover:bg-lime hover:text-gray-900 flex items-center justify-center transition-colors duration-300">
+                    <button className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-lime hover:text-gray-900 text-gray-400 flex items-center justify-center transition-all duration-300">
                       <Share2 className="w-5 h-5" />
                     </button>
-                    <button className="w-10 h-10 rounded-xl bg-gray-200 hover:bg-lime hover:text-gray-900 flex items-center justify-center transition-colors duration-300">
+                    <button className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-lime hover:text-gray-900 text-gray-400 flex items-center justify-center transition-all duration-300">
                       <Bookmark className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
 
-                <div className="p-6 bg-gray-900 rounded-2xl">
+                {/* Key Stats - Interactive element */}
+                <div className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700/50">
+                  <h3 className="font-semibold text-white mb-4">Kluczowe dane</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
+                        <TrendingUp className="w-5 h-5 text-lime" />
+                      </div>
+                      <div>
+                        <p className="text-lime font-bold text-lg">15%+</p>
+                        <p className="text-gray-500 text-xs">Inwestycje w R&D</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
+                        <Globe className="w-5 h-5 text-lime" />
+                      </div>
+                      <div>
+                        <p className="text-lime font-bold text-lg">1.4 mld</p>
+                        <p className="text-gray-500 text-xs">Rynek wewnętrzny</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="p-6 bg-lime/10 rounded-2xl border border-lime/20">
                   <h3 className="font-semibold text-white mb-3">Potrzebujesz analizy?</h3>
                   <p className="text-gray-400 text-sm mb-4">Przygotujemy dedykowany raport dla Twojej firmy.</p>
                   <Link 
@@ -138,13 +181,87 @@ const ArticleDetail = () => {
 
             {/* Main Content */}
             <article className="lg:col-span-3 order-1 lg:order-2">
+              {/* Featured Image */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="mb-12 rounded-3xl overflow-hidden"
+              >
+                <img 
+                  src={article.image} 
+                  alt={article.title}
+                  className="w-full aspect-video object-cover"
+                />
+              </motion.div>
+
+              {/* Article body */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="prose prose-lg prose-gray max-w-none"
+                className="prose prose-lg prose-invert max-w-none prose-headings:font-display prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-a:text-lime prose-a:no-underline hover:prose-a:underline"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
+
+              {/* Infographic / Visual element */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mt-12 p-8 bg-gray-800/50 rounded-3xl border border-gray-700/50"
+              >
+                <h3 className="font-display font-bold text-xl text-white mb-6 text-center">
+                  Kluczowe przewagi chińskich firm
+                </h3>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {['Skala', 'Innowacje', 'Koszty', 'Szybkość'].map((item, index) => (
+                    <div key={item} className="text-center p-4 bg-gray-900/50 rounded-2xl border border-gray-700/50">
+                      <div className="font-display text-4xl font-bold text-lime mb-2">
+                        {['50%', '15%', '30%', '2x'][index]}
+                      </div>
+                      <p className="text-gray-400 text-sm">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Related Articles */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mt-16"
+              >
+                <h3 className="font-display font-bold text-2xl text-white mb-8">
+                  Powiązane <GradientText>artykuły</GradientText>
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  {relatedArticles.map((related) => (
+                    <Link
+                      key={related.slug}
+                      to={`/baza-wiedzy/${related.slug}`}
+                      className="group relative rounded-2xl overflow-hidden aspect-video"
+                    >
+                      <img 
+                        src={related.image} 
+                        alt={related.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <h4 className="font-semibold text-white group-hover:text-lime transition-colors">
+                          {related.title}
+                        </h4>
+                        <div className="flex items-center gap-2 text-lime opacity-0 group-hover:opacity-100 transition-opacity mt-2">
+                          <span className="text-sm">Czytaj więcej</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
             </article>
           </div>
         </div>

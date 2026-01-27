@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
@@ -7,12 +8,13 @@ import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
+import worldMap from '@/assets/world-map.jpg';
 
-const categories = ['Wszystkie', 'Analizy', 'Poradniki', 'Blog / komentarze'];
+const categories = ['Wszystkie', 'Analizy', 'Poradniki', 'Blog'];
 
 const articles = [
   {
-    category: 'Analiza',
+    category: 'Analizy',
     title: 'Przewagi konkurencyjne chińskich firm w wybranych sektorach',
     description: 'Analiza kluczowych przewag, które pozwalają chińskim firmom dominować w wybranych branżach globalnie.',
     date: '10.01.2025',
@@ -22,7 +24,7 @@ const articles = [
     featured: true,
   },
   {
-    category: 'Analiza',
+    category: 'Analizy',
     title: 'Chiński system innowacji i jego implikacje dla Europy',
     description: 'Jak chiński ekosystem innowacji wpływa na konkurencyjność europejskich firm i instytucji.',
     date: '5.01.2025',
@@ -32,7 +34,7 @@ const articles = [
     featured: true,
   },
   {
-    category: 'Poradnik',
+    category: 'Poradniki',
     title: 'Jak przygotować firmę do współpracy z chińskim partnerem',
     description: 'Praktyczny przewodnik dla firm planujących nawiązanie współpracy z partnerami z Chin.',
     date: '20.12.2024',
@@ -41,7 +43,7 @@ const articles = [
     slug: 'przygotowanie-do-wspolpracy',
   },
   {
-    category: 'Poradnik',
+    category: 'Poradniki',
     title: 'Na co zwrócić uwagę przed podpisaniem umowy z firmą z Chin',
     description: 'Kluczowe aspekty prawne, kulturowe i operacyjne, które należy rozważyć przed finalizacją umowy.',
     date: '15.12.2024',
@@ -59,7 +61,7 @@ const articles = [
     slug: 'chiny-konkurent-technologiczny',
   },
   {
-    category: 'Analiza',
+    category: 'Analizy',
     title: 'Automatyzacja i robotyzacja w Chinach a przyszłość produkcji w Polsce',
     description: 'Jak rozwój automatyzacji w Chinach może wpłynąć na polski sektor produkcyjny.',
     date: '1.12.2024',
@@ -70,28 +72,45 @@ const articles = [
 ];
 
 const BazaWiedzy = () => {
+  const [activeCategory, setActiveCategory] = useState('Wszystkie');
+  
+  const filteredArticles = activeCategory === 'Wszystkie' 
+    ? articles 
+    : articles.filter(article => article.category === activeCategory);
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Hero Section - Light gray background for navbar visibility */}
-      <section className="relative pt-28 pb-6 bg-gray-100">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* Hero Section - Dark themed with world map */}
+      <section className="relative pt-28 pb-12 bg-gray-900 overflow-hidden">
+        {/* Background with world map */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <img 
+            src={worldMap} 
+            alt="" 
+            className="w-full h-full object-cover opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/90 to-gray-900" />
+          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-gray-900 text-lime text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
               Baza wiedzy
             </span>
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
               Analizy, <GradientText>poradniki</GradientText>
               <br />
               i komentarze
             </h1>
-            <p className="text-lg text-gray-500">
+            <p className="text-lg text-gray-400">
               Materiały dotyczące Chin, technologii oraz współpracy międzynarodowej – przygotowane z perspektywy decyzyjnej.
             </p>
           </motion.div>
@@ -99,22 +118,31 @@ const BazaWiedzy = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="bg-gray-100 py-8">
-        <div className="container mx-auto px-6 lg:px-12">
-          {/* Categories */}
+      <section className="bg-gray-950 py-12 relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(196, 255, 0, 0.3) 1px, transparent 0)`,
+            backgroundSize: '40px 40px',
+          }} />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
+          {/* Categories - Working filters */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="flex flex-wrap gap-3 mb-10"
           >
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <button
                 key={category}
+                onClick={() => setActiveCategory(category)}
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  index === 0
-                    ? 'bg-gray-900 text-white'
-                    : 'bg-white text-gray-600 hover:bg-gray-200 border border-gray-200'
+                  activeCategory === category
+                    ? 'bg-lime text-gray-900'
+                    : 'bg-gray-800/50 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-700/50'
                 }`}
               >
                 {category}
@@ -122,16 +150,15 @@ const BazaWiedzy = () => {
             ))}
           </motion.div>
 
-          {/* Articles Grid - Card Style with Images */}
+          {/* Articles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((article, index) => (
+            {filteredArticles.map((article, index) => (
               <motion.article
-                key={article.title}
+                key={article.slug}
                 initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group relative bg-white rounded-3xl overflow-hidden border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-500"
+                className="group relative bg-gray-800/30 rounded-3xl overflow-hidden border border-gray-700/50 hover:border-lime/30 hover:shadow-xl hover:shadow-lime/5 transition-all duration-500"
               >
                 <Link to={`/baza-wiedzy/${article.slug}`}>
                   {/* Image */}
@@ -141,14 +168,15 @@ const BazaWiedzy = () => {
                       alt={article.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent" />
                     {/* Category badge */}
                     <div className="absolute bottom-4 left-4">
                       <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold ${
-                        article.category === 'Analiza' 
-                          ? 'bg-gray-900 text-white'
-                          : article.category === 'Poradnik'
+                        article.category === 'Analizy' 
                           ? 'bg-lime text-gray-900'
-                          : 'bg-white text-gray-900'
+                          : article.category === 'Poradniki'
+                          ? 'bg-white/90 text-gray-900'
+                          : 'bg-gray-800 text-white'
                       }`}>
                         {article.category}
                       </span>
@@ -157,15 +185,15 @@ const BazaWiedzy = () => {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="font-display font-semibold text-xl mb-3 text-gray-900 group-hover:text-lime transition-colors duration-300 line-clamp-2">
+                    <h3 className="font-display font-semibold text-xl mb-3 text-white group-hover:text-lime transition-colors duration-300 line-clamp-2">
                       {article.title}
                     </h3>
 
-                    <p className="text-gray-500 text-sm mb-6 line-clamp-2">
+                    <p className="text-gray-400 text-sm mb-6 line-clamp-2">
                       {article.description}
                     </p>
 
-                    <div className="flex items-center justify-between text-sm text-gray-400">
+                    <div className="flex items-center justify-between text-sm text-gray-500">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
                         <span>{article.date}</span>
@@ -183,8 +211,17 @@ const BazaWiedzy = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-24 overflow-hidden bg-gray-900">
+      {/* CTA Section with smooth transition */}
+      <section className="relative py-24 overflow-hidden">
+        {/* Gradient transition from articles section */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-900" />
+          {/* Radial glow effect like "Let's get to work" inspiration */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-64">
+            <div className="absolute inset-0 bg-gradient-radial from-lime/10 via-lime/5 to-transparent rounded-t-full" />
+          </div>
+        </div>
+        
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
@@ -200,7 +237,7 @@ const BazaWiedzy = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
-              Potrzebujesz dedykowanej analizy?
+              Potrzebujesz dedykowanej <GradientText>analizy</GradientText>?
             </h2>
             <p className="text-gray-400 mb-8 max-w-lg mx-auto">
               Przygotowujemy materiały na zamówienie, dopasowane do Twojej branży i potrzeb.

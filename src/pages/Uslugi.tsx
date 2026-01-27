@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
@@ -10,6 +11,7 @@ import { ArrowRight } from 'lucide-react';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
 import statsBg from '@/assets/stats-bg.jpg';
+import worldMap from '@/assets/world-map.jpg';
 
 // Service categories with sub-services
 const serviceCategories = [
@@ -109,24 +111,24 @@ const stats = [
 ];
 
 const Uslugi = () => {
+  const [activeCategory, setActiveCategory] = useState(0);
+  const currentCategory = serviceCategories[activeCategory];
+
   return (
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Hero Section - Dark with effects */}
+      {/* Hero Section - Dark with world map background */}
       <section className="relative pt-28 pb-16 bg-gray-900 overflow-hidden">
-        {/* Background effects */}
+        {/* Background with world map */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
-          <div 
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: `url(${serviceStrategy})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
+          <img 
+            src={worldMap} 
+            alt="" 
+            className="w-full h-full object-cover opacity-10"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/90 via-gray-900/95 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/90 to-gray-900" />
+          <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
@@ -151,68 +153,84 @@ const Uslugi = () => {
         </div>
       </section>
 
-      {/* Service Categories with Clickable Sub-services */}
-      <section className="bg-gray-950 py-24">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="space-y-20">
-            {serviceCategories.map((category, catIndex) => (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6 }}
-              >
-                {/* Category Header */}
-                <div className="text-center mb-10">
-                  <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-4">
-                    {category.title}
-                  </h2>
-                </div>
+      {/* Category Tabs + Sub-services */}
+      <section className="bg-gray-950 py-16 relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(196, 255, 0, 0.3) 1px, transparent 0)`,
+            backgroundSize: '40px 40px',
+          }} />
+        </div>
 
-                {/* Sub-services Grid */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {category.subServices.map((subService, index) => (
-                    <motion.div
-                      key={subService.slug}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <Link
-                        to={`/uslugi/${category.slug}/${subService.slug}`}
-                        className="group relative block h-full"
-                      >
-                        <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-lime/50 transition-all duration-300">
-                          {/* Image */}
-                          <div className="aspect-[4/3] relative overflow-hidden">
-                            <img
-                              src={category.image}
-                              alt={subService.title}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
-                          </div>
-                          
-                          {/* Content */}
-                          <div className="absolute bottom-0 left-0 right-0 p-4">
-                            <h3 className="text-white text-sm font-medium leading-tight group-hover:text-lime transition-colors">
-                              {subService.title}
-                            </h3>
-                            <div className="flex items-center gap-1 mt-2 text-lime opacity-0 group-hover:opacity-100 transition-opacity">
-                              <span className="text-xs">Dowiedz się więcej</span>
-                              <ArrowRight className="w-3 h-3" />
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
+          {/* Category Tabs - Scrollable on mobile */}
+          <div className="mb-12 overflow-x-auto pb-4 -mx-6 px-6">
+            <div className="flex gap-3 min-w-max">
+              {serviceCategories.map((category, index) => (
+                <button
+                  key={category.slug}
+                  onClick={() => setActiveCategory(index)}
+                  className={`px-5 py-3 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+                    activeCategory === index
+                      ? 'bg-lime text-gray-900'
+                      : 'bg-gray-800/50 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-700/50'
+                  }`}
+                >
+                  {category.title}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {/* Sub-services Grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              {currentCategory.subServices.map((subService, index) => (
+                <motion.div
+                  key={subService.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Link
+                    to={`/uslugi/${currentCategory.slug}/${subService.slug}`}
+                    className="group relative block h-full"
+                  >
+                    <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-gray-900/50 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
+                      {/* Image */}
+                      <div className="aspect-[4/3] relative overflow-hidden">
+                        <img
+                          src={currentCategory.image}
+                          alt={subService.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="absolute bottom-0 left-0 right-0 p-5">
+                        <h3 className="text-white text-sm font-medium leading-tight group-hover:text-lime transition-colors mb-3">
+                          {subService.title}
+                        </h3>
+                        <div className="flex items-center gap-2 text-lime opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                          <span className="text-xs font-medium">Dowiedz się więcej</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 

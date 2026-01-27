@@ -250,24 +250,24 @@ const Index = () => {
           </div>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll arrow - no text, just arrow lower */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-64 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50"
+          className="absolute bottom-48 left-1/2 -translate-x-1/2"
         >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={{ y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
+            className="text-white/40"
           >
-            <ChevronDown className="w-5 h-5" />
+            <ChevronDown className="w-6 h-6" />
           </motion.div>
         </motion.div>
 
-        {/* Service Cards - Half in hero, half overlapping white section */}
-        <div className="absolute -bottom-24 left-0 right-0 z-20">
+        {/* Service Cards - Half in hero, half overlapping white section - HIGH Z-INDEX */}
+        <div className="absolute -bottom-28 left-0 right-0 z-50">
           <div className="container mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {heroServices.map((service, index) => (
@@ -276,20 +276,20 @@ const Index = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="group relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 shadow-2xl hover:shadow-lime/20 transition-all duration-500 hover:-translate-y-2 border border-gray-800 overflow-hidden"
+                  className="group relative bg-black/70 backdrop-blur-xl rounded-2xl p-6 shadow-2xl hover:shadow-lime/20 transition-all duration-500 hover:-translate-y-2 border border-gray-800/50 overflow-hidden"
                 >
-                  {/* Top lime accent bar */}
-                  <div className="absolute top-0 left-4 right-4 h-1 bg-gradient-to-r from-lime/50 via-lime to-lime/50 rounded-b-full opacity-80 group-hover:opacity-100 transition-opacity" />
+                  {/* Top lime accent bar - thinner */}
+                  <div className="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-lime/30 via-lime to-lime/30" />
                   
                   {/* Lime accent glow */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-16 bg-lime/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-12 bg-lime/30 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   <div className="relative z-10 text-center pt-3">
-                    <div className="w-14 h-14 rounded-2xl bg-gray-800/80 border border-gray-700 flex items-center justify-center text-lime mx-auto mb-4 transition-all duration-300 group-hover:bg-lime group-hover:text-gray-900 group-hover:scale-110 group-hover:border-lime group-hover:shadow-lime">
+                    <div className="w-12 h-12 rounded-xl bg-gray-800/80 border border-gray-700/50 flex items-center justify-center text-lime mx-auto mb-4 transition-all duration-300 group-hover:bg-lime group-hover:text-gray-900 group-hover:scale-110 group-hover:border-lime group-hover:shadow-lime">
                       {service.icon}
                     </div>
-                    <h3 className="font-display font-semibold text-white text-lg mb-2">{service.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{service.description}</p>
+                    <h3 className="font-display font-semibold text-white text-base mb-2">{service.title}</h3>
+                    <p className="text-gray-400 text-xs leading-relaxed">{service.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -298,8 +298,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Carousel Section */}
-      <section className="bg-white pt-40 pb-24">
+      {/* Services Carousel Section - relative z-index lower than cards */}
+      <section className="relative bg-white pt-44 pb-24 z-10">
         <div className="container mx-auto px-6 lg:px-12">
           {/* Header - "Nasze usługi" in BLACK */}
           <motion.div
@@ -370,36 +370,36 @@ const Index = () => {
               </div>
             </motion.div>
 
-            {/* Carousel Controls */}
-            <div className="flex items-center justify-between mt-6">
-              {/* Indicators */}
+            {/* Carousel Controls - centered dots */}
+            <div className="flex items-center justify-center mt-8 gap-6">
+              {/* Arrows left */}
+              <button
+                onClick={prevSlide}
+                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
+              </button>
+
+              {/* Centered Indicators */}
               <div className="flex gap-2">
                 {carouselServices.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`h-1 rounded-full transition-all duration-300 ${
+                    className={`h-2 rounded-full transition-all duration-300 ${
                       index === currentSlide ? 'w-8 bg-lime' : 'w-2 bg-gray-300'
                     }`}
                   />
                 ))}
               </div>
 
-              {/* Arrows */}
-              <div className="flex gap-2">
-                <button
-                  onClick={prevSlide}
-                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
-                >
-                  <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
-                >
-                  <ChevronRight className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
-                </button>
-              </div>
+              {/* Arrows right */}
+              <button
+                onClick={nextSlide}
+                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
+              </button>
             </div>
           </div>
         </div>
@@ -420,57 +420,81 @@ const Index = () => {
         <LogoMarquee />
       </section>
 
-      {/* Process Section with Large Radar Background */}
-      <section className="bg-white py-24 relative overflow-hidden">
+      {/* Process Section - Dark with Large Radar and Vertical Timeline */}
+      <section className="bg-gray-900 py-24 relative overflow-hidden">
         {/* Large Radar in Background */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
-          <RadarAnimation size="lg" />
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[800px] h-[800px] opacity-30">
+            <RadarAnimation size="lg" className="w-full h-full" />
+          </div>
         </div>
+        
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900 pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
               Proces
             </span>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-4">
               Jak to <GradientText>działa</GradientText>?
             </h2>
-            <p className="text-gray-500 max-w-xl mx-auto">
+            <p className="text-gray-400 max-w-xl mx-auto">
               Prosty, przejrzysty proces współpracy od pierwszego kontaktu do realizacji.
             </p>
           </motion.div>
 
-          {/* Modern Process Cards - No circles around numbers */}
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.1 }}
-                className="relative bg-gray-50 rounded-3xl p-8 hover:bg-gray-100 transition-all duration-300 group border border-gray-100 hover:border-lime/30"
-              >
-                {/* Large lime number in background */}
-                <span className="absolute top-4 right-6 font-display text-8xl font-bold text-lime/20 group-hover:text-lime/30 transition-colors">
-                  {step.number}
-                </span>
-                
-                <div className="relative z-10">
-                  <h3 className="font-display font-semibold text-xl text-gray-900 mb-3 pr-16">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+          {/* Vertical Timeline Layout */}
+          <div className="max-w-4xl mx-auto">
+            <div className="relative">
+              {/* Vertical line */}
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-lime via-lime/50 to-lime/20 md:-translate-x-1/2" />
+              
+              {processSteps.map((step, index) => (
+                <motion.div
+                  key={step.number}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: index * 0.15 }}
+                  className={`relative flex items-start gap-8 mb-12 last:mb-0 ${
+                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                  }`}
+                >
+                  {/* Timeline dot */}
+                  <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-lime shadow-lg shadow-lime/50 md:-translate-x-1/2 z-10">
+                    <div className="absolute inset-0 rounded-full bg-lime animate-ping opacity-30" />
+                  </div>
+                  
+                  {/* Content card */}
+                  <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
+                    <div className="relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-lime/30 transition-all duration-300 group">
+                      {/* Large number */}
+                      <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${
+                        index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'
+                      }`}>
+                        {step.number}
+                      </span>
+                      
+                      <div className="relative z-10 pt-8">
+                        <h3 className="font-display font-semibold text-xl text-white mb-3">
+                          {step.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
