@@ -22,8 +22,8 @@ const defaultData: CaseStudyData = {
 
 const tabs = [
   { id: 'situation', label: 'Sytuacja' },
-  { id: 'actions', label: 'Działania Yin Yang' },
-  { id: 'result', label: 'Efekt decyzyjny' },
+  { id: 'actions', label: 'Działania' },
+  { id: 'result', label: 'Efekt' },
 ];
 
 export const InteractiveCaseStudy = ({ data = defaultData }: InteractiveCaseStudyProps) => {

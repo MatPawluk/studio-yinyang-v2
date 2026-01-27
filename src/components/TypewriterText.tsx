@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface TypewriterTextProps {
   words: string[];
@@ -10,16 +10,25 @@ interface TypewriterTextProps {
 
 export const TypewriterText = ({ 
   words, 
-  typingSpeed = 100, 
-  deletingSpeed = 50, 
-  pauseDuration = 2000 
+  typingSpeed = 120, 
+  deletingSpeed = 60, 
+  pauseDuration = 3000 
 }: TypewriterTextProps) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const currentWord = words[currentWordIndex];
+    
+    if (isPaused) {
+      const pauseTimeout = setTimeout(() => {
+        setIsPaused(false);
+        setIsDeleting(true);
+      }, pauseDuration);
+      return () => clearTimeout(pauseTimeout);
+    }
     
     const timeout = setTimeout(() => {
       if (!isDeleting) {
@@ -28,7 +37,7 @@ export const TypewriterText = ({
           setDisplayText(currentWord.slice(0, displayText.length + 1));
         } else {
           // Pause before deleting
-          setTimeout(() => setIsDeleting(true), pauseDuration);
+          setIsPaused(true);
         }
       } else {
         // Deleting
@@ -42,7 +51,7 @@ export const TypewriterText = ({
     }, isDeleting ? deletingSpeed : typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentWordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
+  }, [displayText, isDeleting, isPaused, currentWordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
 
   return (
     <span className="inline-block">

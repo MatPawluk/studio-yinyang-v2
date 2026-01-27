@@ -1,98 +1,136 @@
-import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { useRef, useMemo } from 'react';
+import { Canvas, useFrame, extend } from '@react-three/fiber';
+import { OrbitControls, Sphere, Line } from '@react-three/drei';
+import * as THREE from 'three';
+
+// Warsaw coordinates (lat: 52.23, lon: 21.01)
+// Shanghai coordinates (lat: 31.23, lon: 121.47)
+
+const latLonToVector3 = (lat: number, lon: number, radius: number) => {
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lon + 180) * (Math.PI / 180);
+  
+  const x = -(radius * Math.sin(phi) * Math.cos(theta));
+  const z = radius * Math.sin(phi) * Math.sin(theta);
+  const y = radius * Math.cos(phi);
+  
+  return new THREE.Vector3(x, y, z);
+};
+
+const GlobeModel = () => {
+  const globeRef = useRef<THREE.Mesh>(null);
+  const warsawRef = useRef<THREE.Mesh>(null);
+  const shanghaiRef = useRef<THREE.Mesh>(null);
+  
+  const radius = 2;
+  const warsawPos = latLonToVector3(52.23, 21.01, radius);
+  const shanghaiPos = latLonToVector3(31.23, 121.47, radius);
+  
+  // Create curve between points
+  const curvePoints = useMemo(() => {
+    const curve = new THREE.QuadraticBezierCurve3(
+      warsawPos,
+      new THREE.Vector3(
+        (warsawPos.x + shanghaiPos.x) / 2,
+        (warsawPos.y + shanghaiPos.y) / 2 + 1.5,
+        (warsawPos.z + shanghaiPos.z) / 2
+      ),
+      shanghaiPos
+    );
+    return curve.getPoints(50).map(p => [p.x, p.y, p.z] as [number, number, number]);
+  }, []);
+  
+  useFrame((state) => {
+    if (globeRef.current) {
+      globeRef.current.rotation.y += 0.002;
+    }
+    if (warsawRef.current) {
+      warsawRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.2);
+    }
+    if (shanghaiRef.current) {
+      shanghaiRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2 + 1) * 0.2);
+    }
+  });
+  
+  return (
+    <group>
+      {/* Globe */}
+      <mesh ref={globeRef}>
+        <Sphere args={[radius, 64, 64]}>
+          <meshStandardMaterial
+            color="#1a1a2e"
+            metalness={0.4}
+            roughness={0.7}
+            wireframe={false}
+          />
+        </Sphere>
+        
+        {/* Grid lines on globe */}
+        <Sphere args={[radius + 0.01, 32, 32]}>
+          <meshBasicMaterial
+            color="#c4ff00"
+            wireframe={true}
+            transparent
+            opacity={0.1}
+          />
+        </Sphere>
+      </mesh>
+      
+      {/* Warsaw marker */}
+      <mesh ref={warsawRef} position={warsawPos}>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshBasicMaterial color="#c4ff00" />
+        <pointLight color="#c4ff00" intensity={1} distance={0.5} />
+      </mesh>
+      
+      {/* Shanghai marker */}
+      <mesh ref={shanghaiRef} position={shanghaiPos}>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshBasicMaterial color="#c4ff00" />
+        <pointLight color="#c4ff00" intensity={1} distance={0.5} />
+      </mesh>
+      
+      {/* Connection line using drei Line */}
+      <Line
+        points={curvePoints}
+        color="#c4ff00"
+        lineWidth={2}
+        transparent
+        opacity={0.6}
+      />
+    </group>
+  );
+};
 
 export const Globe3D = () => {
   return (
-    <div className="relative w-full max-w-3xl mx-auto aspect-video">
-      {/* Stylized globe representation */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        {/* Outer glow */}
-        <div className="absolute w-[400px] h-[400px] bg-lime/20 blur-[100px] rounded-full" />
+    <div className="relative w-full h-[500px] max-w-3xl mx-auto">
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 45 }}
+        style={{ background: 'transparent' }}
+      >
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={1} />
+        <pointLight position={[-10, -10, -5]} intensity={0.5} />
         
-        {/* Globe circles */}
-        <div className="relative w-[300px] h-[300px]">
-          {/* Rotating rings */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 rounded-full border border-lime/30"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-4 rounded-full border border-lime/20"
-          />
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-8 rounded-full border border-lime/15"
-          />
-          
-          {/* Center globe */}
-          <div className="absolute inset-12 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 shadow-2xl overflow-hidden">
-            {/* Grid lines */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-1/4 left-0 right-0 h-px bg-lime/50" />
-              <div className="absolute top-1/2 left-0 right-0 h-px bg-lime/50" />
-              <div className="absolute top-3/4 left-0 right-0 h-px bg-lime/50" />
-              <div className="absolute left-1/4 top-0 bottom-0 w-px bg-lime/50" />
-              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-lime/50" />
-              <div className="absolute left-3/4 top-0 bottom-0 w-px bg-lime/50" />
-            </div>
-          </div>
-          
-          {/* Warsaw marker */}
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="absolute top-[30%] left-[45%] z-10"
-          >
-            <div className="relative">
-              <div className="w-4 h-4 rounded-full bg-lime shadow-lg shadow-lime/50" />
-              <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900/90 px-2 py-1 rounded text-xs text-lime font-medium">
-                Warszawa
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Shanghai marker */}
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-            className="absolute top-[55%] right-[20%] z-10"
-          >
-            <div className="relative">
-              <div className="w-4 h-4 rounded-full bg-lime shadow-lg shadow-lime/50" />
-              <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-gray-900/90 px-2 py-1 rounded text-xs text-lime font-medium">
-                Shanghai
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Connection line */}
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
-            <motion.path
-              d="M 45 30 Q 60 20 80 55"
-              fill="none"
-              stroke="hsl(75, 100%, 50%)"
-              strokeWidth="0.5"
-              strokeDasharray="2 2"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
-            />
-          </svg>
-          
-          {/* Animated pulse on line */}
-          <motion.div
-            animate={{
-              offsetDistance: ['0%', '100%'],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            style={{ offsetPath: 'path("M 135 90 Q 180 60 240 165")' }}
-            className="absolute w-2 h-2 rounded-full bg-white shadow-lg"
-          />
-        </div>
+        <GlobeModel />
+        
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          autoRotate
+          autoRotateSpeed={0.5}
+          minPolarAngle={Math.PI / 3}
+          maxPolarAngle={Math.PI / 1.5}
+        />
+      </Canvas>
+      
+      {/* Labels */}
+      <div className="absolute top-1/3 left-1/4 transform -translate-x-1/2 bg-gray-900/90 px-3 py-1 rounded-lg border border-lime/30">
+        <span className="text-lime text-sm font-medium">Warszawa</span>
+      </div>
+      <div className="absolute top-1/2 right-1/4 transform translate-x-1/2 bg-gray-900/90 px-3 py-1 rounded-lg border border-lime/30">
+        <span className="text-lime text-sm font-medium">Shanghai</span>
       </div>
     </div>
   );
