@@ -112,7 +112,7 @@ const Kontakt = () => {
                 <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
                   Porozmawiajmy
                   <br />
-                  <span className="text-lime">o Twoich potrzebach</span>
+                  <GradientText>o Twoich potrzebach</GradientText>
                 </h1>
               </div>
 

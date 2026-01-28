@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { GradientText } from '@/components/GradientText';
+import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';
@@ -94,6 +95,9 @@ const BazaWiedzy = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/90 to-gray-900" />
           <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
         </div>
+        
+        {/* Chinese character */}
+        <ChineseCharacters characters="知" position="right" className="top-20" opacity={0.06} />
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <motion.div

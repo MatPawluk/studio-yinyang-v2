@@ -9,7 +9,9 @@ import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { RadarAnimation } from '@/components/RadarAnimation';
 import { TypewriterText } from '@/components/TypewriterText';
 import { GradientText } from '@/components/GradientText';
-import { Target, Search, Rocket, Settings, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, TrendingUp, BarChart3, Handshake, Package, ClipboardCheck } from 'lucide-react';
+import { HomeFAQSection } from '@/components/HomeFAQSection';
+import { ChineseCharacters } from '@/components/ChineseCharacters';
+import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
@@ -20,22 +22,18 @@ import avatar3 from '@/assets/avatar-3.jpg';
 
 const heroServices = [
   { 
-    icon: <Target className="w-7 h-7" />, 
     title: 'Strategia i decyzje', 
     description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.' 
   },
   { 
-    icon: <Search className="w-7 h-7" />, 
     title: 'Research i weryfikacja', 
     description: 'Due diligence, analiza partnerów, intelligence.' 
   },
   { 
-    icon: <Rocket className="w-7 h-7" />, 
     title: 'Wejście i rozwój', 
     description: 'Model wejścia, struktury, pozycjonowanie.' 
   },
   { 
-    icon: <Settings className="w-7 h-7" />, 
     title: 'Operacje i logistyka', 
     description: 'Audyt, kontrola jakości, nadzór, eksport/import.' 
   },
@@ -43,56 +41,48 @@ const heroServices = [
 
 const carouselServices = [
   {
-    icon: <Target className="w-6 h-6" />,
     title: 'Strategia wobec Chin',
     description: 'Analizy strategiczne, scenariusze i mapy ryzyk, briefingi dla zarządów.',
     image: serviceStrategy,
     slug: 'strategia-wobec-chin',
   },
   {
-    icon: <BarChart3 className="w-6 h-6" />,
     title: 'Analizy rynkowe i sektorowe',
     description: 'Badania sektorów, analiza konkurencji i trendów rynkowych.',
     image: serviceAnalysis,
     slug: 'analizy-rynkowe',
   },
   {
-    icon: <Search className="w-6 h-6" />,
     title: 'Research, Intelligence i Weryfikacja',
     description: 'Due diligence partnerów biznesowych i technologicznych.',
     image: serviceStrategy,
     slug: 'research-intelligence',
   },
   {
-    icon: <Rocket className="w-6 h-6" />,
     title: 'Wejście na rynek',
     description: 'Analiza modelu wejścia i struktur handlowych.',
     image: serviceAnalysis,
     slug: 'wejscie-na-rynek',
   },
   {
-    icon: <TrendingUp className="w-6 h-6" />,
     title: 'Marketing i Pozycjonowanie',
     description: 'Strategia komunikacji i Go-To-Market.',
     image: serviceStrategy,
     slug: 'marketing-pozycjonowanie',
   },
   {
-    icon: <Handshake className="w-6 h-6" />,
     title: 'Identyfikacja partnerów',
     description: 'Matchmaking i wsparcie negocjacyjne.',
     image: serviceAnalysis,
     slug: 'identyfikacja-partnerow',
   },
   {
-    icon: <Package className="w-6 h-6" />,
     title: 'Handel, Eksport i Import',
     description: 'Doradztwo logistyczne i koordynacja dostaw.',
     image: serviceStrategy,
     slug: 'handel-eksport-import',
   },
   {
-    icon: <ClipboardCheck className="w-6 h-6" />,
     title: 'Audyty i Nadzór operacyjny',
     description: 'Kontrola jakości i monitoring realizacji.',
     image: serviceAnalysis,
@@ -142,11 +132,11 @@ const Index = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  // Auto-scroll carousel every 2.5 seconds
+  // Auto-scroll carousel every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
-    }, 2500);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -205,9 +195,9 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
+              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
             >
-              Twój <TypewriterText words={['przewodnik', 'partner']} />
+              Twój <TypewriterText words={['przewodnik', 'partner']} pauseDuration={3000} />
               <br />
               <span className="text-lime">w relacjach Polska–Chiny.</span>
             </motion.h1>
@@ -216,7 +206,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed"
+              className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed px-4"
             >
               Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL–CN
             </motion.p>
@@ -250,12 +240,12 @@ const Index = () => {
           </div>
         </motion.div>
 
-        {/* Scroll arrow - no text, just arrow lower */}
+        {/* Scroll arrow - moved lower */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-48 left-1/2 -translate-x-1/2"
+          className="absolute bottom-56 md:bottom-64 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -266,30 +256,27 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {/* Service Cards - Half in hero, half overlapping white section - HIGH Z-INDEX */}
-        <div className="absolute -bottom-28 left-0 right-0 z-50">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Service Cards - Higher z-index, mobile responsive */}
+        <div className="absolute -bottom-16 sm:-bottom-20 md:-bottom-24 lg:-bottom-28 left-0 right-0 z-50 pointer-events-none">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pointer-events-auto">
               {heroServices.map((service, index) => (
                 <motion.div
                   key={service.title}
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="group relative bg-black/70 backdrop-blur-xl rounded-2xl p-6 shadow-2xl hover:shadow-lime/20 transition-all duration-500 hover:-translate-y-2 border border-gray-800/50 overflow-hidden"
+                  className="group relative bg-black/80 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 shadow-2xl hover:shadow-lime/20 transition-all duration-500 hover:-translate-y-2 border border-gray-800/50 overflow-hidden"
                 >
-                  {/* Top lime accent bar - thinner */}
-                  <div className="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-lime/30 via-lime to-lime/30" />
+                  {/* Top lime accent bar - shorter width (50%) */}
+                  <div className="absolute top-0 left-1/4 right-1/4 h-[3px] bg-gradient-to-r from-lime/50 via-lime to-lime/50" />
                   
                   {/* Lime accent glow */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-12 bg-lime/30 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-lime/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <div className="relative z-10 text-center pt-3">
-                    <div className="w-12 h-12 rounded-xl bg-gray-800/80 border border-gray-700/50 flex items-center justify-center text-lime mx-auto mb-4 transition-all duration-300 group-hover:bg-lime group-hover:text-gray-900 group-hover:scale-110 group-hover:border-lime group-hover:shadow-lime">
-                      {service.icon}
-                    </div>
-                    <h3 className="font-display font-semibold text-white text-base mb-2">{service.title}</h3>
-                    <p className="text-gray-400 text-xs leading-relaxed">{service.description}</p>
+                  <div className="relative z-10 text-center pt-2">
+                    <h3 className="font-display font-semibold text-white text-sm sm:text-base mb-1 sm:mb-2">{service.title}</h3>
+                    <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed hidden sm:block">{service.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -298,19 +285,40 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Carousel Section - relative z-index lower than cards */}
-      <section className="relative bg-white pt-44 pb-24 z-10">
-        <div className="container mx-auto px-6 lg:px-12">
-          {/* Header - "Nasze usługi" in BLACK */}
+      {/* Bridge Section - Transition between hero and services */}
+      <section className="relative bg-gradient-to-b from-gray-900 via-white to-white pt-32 sm:pt-40 pb-16">
+        {/* Chinese character decoration */}
+        <div className="absolute top-20 right-8 lg:right-16 opacity-5 pointer-events-none">
+          <span className="font-display text-[10rem] md:text-[16rem] font-bold text-lime leading-none">橋</span>
+        </div>
+        
+        <div className="container mx-auto px-6 lg:px-12 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-start justify-between mb-16"
+            className="max-w-2xl mx-auto"
+          >
+            <p className="text-gray-600 text-lg leading-relaxed">
+              Łączymy polskie firmy z chińskim rynkiem. Od strategii po egzekucję.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services Carousel Section */}
+      <section className="relative bg-white pt-8 pb-24 z-10">
+        <div className="container mx-auto px-6 lg:px-12">
+          {/* Header - "Nasze usługi" with gradient */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-start justify-between mb-12"
           >
             <div>
               <h2 className="font-display text-4xl lg:text-6xl font-bold text-gray-900">
-                Nasze usługi
+                Nasze <GradientText className="text-gray-900">usługi</GradientText>
               </h2>
             </div>
             <Link 
@@ -322,7 +330,7 @@ const Index = () => {
             </Link>
           </motion.div>
 
-          {/* Carousel */}
+          {/* Carousel with peek effect */}
           <div className="relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -341,8 +349,8 @@ const Index = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/50 to-transparent" />
               
-              {/* Content overlay */}
-              <div className="absolute inset-0 flex items-end p-8 lg:p-12">
+              {/* Content overlay - no icon */}
+              <div className="absolute inset-0 flex items-end p-6 sm:p-8 lg:p-12">
                 <motion.div 
                   key={`content-${currentSlide}`}
                   initial={{ opacity: 0, y: 20 }}
@@ -350,13 +358,10 @@ const Index = () => {
                   transition={{ duration: 0.3 }}
                   className="max-w-lg"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-lime flex items-center justify-center text-gray-900 mb-6">
-                    {carouselServices[currentSlide].icon}
-                  </div>
-                  <h3 className="font-display text-3xl lg:text-4xl font-bold text-white mb-3">
+                  <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3">
                     {carouselServices[currentSlide].title}
                   </h3>
-                  <p className="text-gray-300 text-lg mb-6">
+                  <p className="text-gray-300 text-base lg:text-lg mb-6 hidden sm:block">
                     {carouselServices[currentSlide].description}
                   </p>
                   <Link
@@ -371,11 +376,11 @@ const Index = () => {
             </motion.div>
 
             {/* Carousel Controls - centered dots */}
-            <div className="flex items-center justify-center mt-8 gap-6">
+            <div className="flex items-center justify-center mt-8 gap-4 sm:gap-6">
               {/* Arrows left */}
               <button
                 onClick={prevSlide}
-                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
               >
                 <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
               </button>
@@ -396,7 +401,7 @@ const Index = () => {
               {/* Arrows right */}
               <button
                 onClick={nextSlide}
-                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
               >
                 <ChevronRight className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
               </button>
@@ -420,17 +425,20 @@ const Index = () => {
         <LogoMarquee />
       </section>
 
-      {/* Process Section - Dark with Large Radar and Vertical Timeline */}
-      <section className="bg-gray-900 py-24 relative overflow-hidden">
-        {/* Large Radar in Background */}
+      {/* Process Section - Dark with Large Radar and Chinese characters */}
+      <section className="bg-gray-950 py-24 relative overflow-hidden">
+        {/* Large Radar in Background - much bigger */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[800px] h-[800px] opacity-30">
+          <div className="w-[1200px] h-[1200px] opacity-20">
             <RadarAnimation size="lg" className="w-full h-full" />
           </div>
         </div>
         
+        {/* Chinese characters decoration */}
+        <ChineseCharacters characters="桥梁" position="left" className="top-32" opacity={0.06} />
+        
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-950/95 to-gray-950 pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
@@ -474,7 +482,7 @@ const Index = () => {
                   
                   {/* Content card */}
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                    <div className="relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-lime/30 transition-all duration-300 group">
+                    <div className="relative bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-all duration-300 group">
                       {/* Large number */}
                       <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${
                         index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'
@@ -547,14 +555,14 @@ const Index = () => {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="font-display text-5xl lg:text-6xl font-bold text-lime mb-3">
+                <div className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-lime mb-3">
                   {stat.isText ? (
                     <span>{stat.suffix}</span>
                   ) : (
                     <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                   )}
                 </div>
-                <p className="text-white/70 text-sm">{stat.label}</p>
+                <p className="text-white/70 text-xs sm:text-sm">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -563,6 +571,9 @@ const Index = () => {
 
       {/* Testimonials Section */}
       <TestimonialsSection />
+
+      {/* FAQ Section - NEW */}
+      <HomeFAQSection />
 
       {/* CTA Section */}
       <section className="relative py-32 overflow-hidden bg-gray-900">
@@ -580,6 +591,11 @@ const Index = () => {
           />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/10 blur-[150px] rounded-full" />
         </div>
+        
+        {/* Chinese character */}
+        <div className="absolute bottom-10 left-10 opacity-5 pointer-events-none">
+          <span className="font-display text-[12rem] font-bold text-lime leading-none">合作</span>
+        </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
           <motion.div
@@ -588,10 +604,10 @@ const Index = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
               Skontaktuj się z nami na
               <br />
-              <span className="text-lime">bezpłatną konsultację</span>
+              <GradientText>bezpłatną konsultację</GradientText>
             </h2>
             <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
               Jeśli Chiny mają znaczenie dla Twojej organizacji, zapraszamy do rozmowy.

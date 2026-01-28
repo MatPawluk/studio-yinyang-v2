@@ -121,7 +121,7 @@ const ArticleDetail = () => {
       </section>
 
       {/* Article Content */}
-      <section className="py-16 bg-gray-950">
+      <section className="py-16 bg-gray-950 text-white">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Sidebar */}
@@ -200,7 +200,7 @@ const ArticleDetail = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="prose prose-lg prose-invert max-w-none prose-headings:font-display prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-a:text-lime prose-a:no-underline hover:prose-a:underline"
+                className="prose prose-lg prose-invert max-w-none prose-headings:font-display prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-a:text-lime prose-a:no-underline hover:prose-a:underline prose-strong:text-white"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
 

@@ -1,5 +1,5 @@
 import { useRef, useMemo } from 'react';
-import { Canvas, useFrame, extend } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -18,7 +18,7 @@ const latLonToVector3 = (lat: number, lon: number, radius: number) => {
 };
 
 const GlobeModel = () => {
-  const globeRef = useRef<THREE.Mesh>(null);
+  const globeRef = useRef<THREE.Group>(null);
   const warsawRef = useRef<THREE.Mesh>(null);
   const shanghaiRef = useRef<THREE.Mesh>(null);
   
@@ -26,15 +26,17 @@ const GlobeModel = () => {
   const warsawPos = latLonToVector3(52.23, 21.01, radius);
   const shanghaiPos = latLonToVector3(31.23, 121.47, radius);
   
-  // Create curve between points
+  // Create arc curve between points that follows the globe surface better
   const curvePoints = useMemo(() => {
+    const midPoint = new THREE.Vector3()
+      .addVectors(warsawPos, shanghaiPos)
+      .multiplyScalar(0.5)
+      .normalize()
+      .multiplyScalar(radius * 1.3); // Arc height above globe
+    
     const curve = new THREE.QuadraticBezierCurve3(
       warsawPos,
-      new THREE.Vector3(
-        (warsawPos.x + shanghaiPos.x) / 2,
-        (warsawPos.y + shanghaiPos.y) / 2 + 1.5,
-        (warsawPos.z + shanghaiPos.z) / 2
-      ),
+      midPoint,
       shanghaiPos
     );
     return curve.getPoints(50).map(p => [p.x, p.y, p.z] as [number, number, number]);
@@ -42,7 +44,8 @@ const GlobeModel = () => {
   
   useFrame((state) => {
     if (globeRef.current) {
-      globeRef.current.rotation.y += 0.002;
+      // Slow rotation
+      globeRef.current.rotation.y += 0.001;
     }
     if (warsawRef.current) {
       warsawRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.2);
@@ -53,50 +56,48 @@ const GlobeModel = () => {
   });
   
   return (
-    <group>
+    <group ref={globeRef}>
       {/* Globe */}
-      <mesh ref={globeRef}>
-        <Sphere args={[radius, 64, 64]}>
-          <meshStandardMaterial
-            color="#1a1a2e"
-            metalness={0.4}
-            roughness={0.7}
-            wireframe={false}
-          />
-        </Sphere>
-        
-        {/* Grid lines on globe */}
-        <Sphere args={[radius + 0.01, 32, 32]}>
-          <meshBasicMaterial
-            color="#c4ff00"
-            wireframe={true}
-            transparent
-            opacity={0.1}
-          />
-        </Sphere>
-      </mesh>
+      <Sphere args={[radius, 64, 64]}>
+        <meshStandardMaterial
+          color="#1a1a2e"
+          metalness={0.4}
+          roughness={0.7}
+          wireframe={false}
+        />
+      </Sphere>
+      
+      {/* Grid lines on globe */}
+      <Sphere args={[radius + 0.02, 32, 32]}>
+        <meshBasicMaterial
+          color="#c4ff00"
+          wireframe={true}
+          transparent
+          opacity={0.08}
+        />
+      </Sphere>
       
       {/* Warsaw marker */}
       <mesh ref={warsawRef} position={warsawPos}>
-        <sphereGeometry args={[0.08, 16, 16]} />
+        <sphereGeometry args={[0.1, 16, 16]} />
         <meshBasicMaterial color="#c4ff00" />
-        <pointLight color="#c4ff00" intensity={1} distance={0.5} />
+        <pointLight color="#c4ff00" intensity={2} distance={1} />
       </mesh>
       
       {/* Shanghai marker */}
       <mesh ref={shanghaiRef} position={shanghaiPos}>
-        <sphereGeometry args={[0.08, 16, 16]} />
+        <sphereGeometry args={[0.1, 16, 16]} />
         <meshBasicMaterial color="#c4ff00" />
-        <pointLight color="#c4ff00" intensity={1} distance={0.5} />
+        <pointLight color="#c4ff00" intensity={2} distance={1} />
       </mesh>
       
       {/* Connection line using drei Line */}
       <Line
         points={curvePoints}
         color="#c4ff00"
-        lineWidth={2}
+        lineWidth={3}
         transparent
-        opacity={0.6}
+        opacity={0.8}
       />
     </group>
   );
@@ -104,9 +105,9 @@ const GlobeModel = () => {
 
 export const Globe3D = () => {
   return (
-    <div className="relative w-full h-[500px] max-w-3xl mx-auto">
+    <div className="relative w-full h-[600px] max-w-4xl mx-auto">
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
+        camera={{ position: [0, 1, 6], fov: 40 }}
         style={{ background: 'transparent' }}
       >
         <ambientLight intensity={0.5} />
@@ -118,18 +119,17 @@ export const Globe3D = () => {
         <OrbitControls
           enableZoom={false}
           enablePan={false}
-          autoRotate
-          autoRotateSpeed={0.5}
-          minPolarAngle={Math.PI / 3}
+          autoRotate={false}
+          minPolarAngle={Math.PI / 4}
           maxPolarAngle={Math.PI / 1.5}
         />
       </Canvas>
       
-      {/* Labels */}
-      <div className="absolute top-1/3 left-1/4 transform -translate-x-1/2 bg-gray-900/90 px-3 py-1 rounded-lg border border-lime/30">
+      {/* Labels - positioned based on 3D projection */}
+      <div className="absolute top-1/4 left-1/3 transform -translate-x-1/2 bg-gray-900/90 px-4 py-2 rounded-lg border border-lime/40 shadow-lg shadow-lime/10">
         <span className="text-lime text-sm font-medium">Warszawa</span>
       </div>
-      <div className="absolute top-1/2 right-1/4 transform translate-x-1/2 bg-gray-900/90 px-3 py-1 rounded-lg border border-lime/30">
+      <div className="absolute top-1/2 right-1/4 transform translate-x-1/2 bg-gray-900/90 px-4 py-2 rounded-lg border border-lime/40 shadow-lg shadow-lime/10">
         <span className="text-lime text-sm font-medium">Shanghai</span>
       </div>
     </div>

@@ -1,13 +1,15 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { InteractiveCaseStudy } from '@/components/InteractiveCaseStudy';
 import { GradientText } from '@/components/GradientText';
+import { ChineseCharacters } from '@/components/ChineseCharacters';
+import { ParallaxSection } from '@/components/ParallaxSection';
 import { ArrowLeft, ArrowRight, Check, X, FileText, Video, Clock, Users } from 'lucide-react';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
+import statsBg from '@/assets/stats-bg.jpg';
 
 const servicesData: Record<string, {
   title: string;
@@ -122,8 +124,16 @@ const defaultServiceData = {
 };
 
 const ServiceDetail = () => {
-  const { serviceSlug } = useParams();
-  const service = serviceSlug && servicesData[serviceSlug] ? servicesData[serviceSlug] : defaultServiceData;
+  const { serviceSlug, subServiceSlug } = useParams();
+  
+  // Try to find the service by main slug first, then check sub-service slug
+  const mainSlug = serviceSlug || '';
+  const service = servicesData[mainSlug] || defaultServiceData;
+  
+  // Override title if subServiceSlug exists
+  const displayTitle = subServiceSlug 
+    ? subServiceSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    : service.title;
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -141,7 +151,7 @@ const ServiceDetail = () => {
           <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-lime/10 blur-[150px] rounded-full" />
         </div>
         
-        <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
+        <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <Link 
             to="/uslugi"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-lime transition-colors duration-300 mb-6"
@@ -154,37 +164,47 @@ const ServiceDetail = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="max-w-4xl"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
               {service.subtitle}
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              <GradientText>{service.title}</GradientText>
+              <GradientText>{displayTitle}</GradientText>
             </h1>
           </motion.div>
         </div>
       </section>
 
       {/* Description with Image */}
-      <section className="py-20 bg-gray-950">
+      <section className="py-20 bg-gray-950 relative overflow-hidden">
+        {/* Chinese character */}
+        <ChineseCharacters characters="信" position="right" className="top-10" opacity={0.04} />
+        
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Image */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-3xl overflow-hidden aspect-[4/3]"
+            >
+              <img 
+                src={service.image} 
+                alt={service.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent" />
+            </motion.div>
+
+            {/* Description */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              {/* Decorative image */}
-              <div className="relative mb-12 rounded-3xl overflow-hidden aspect-[21/9]">
-                <img 
-                  src={service.image} 
-                  alt={service.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent" />
-              </div>
-
-              <h2 className="font-display text-2xl font-bold text-white mb-6 flex items-center justify-center gap-3">
+              <h2 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center">
                   <FileText className="w-6 h-6 text-gray-900" />
                 </div>
@@ -198,10 +218,11 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* When it makes sense */}
-      <section className="py-20 bg-gray-900">
+      {/* When it makes sense + Problems Solved - with parallax background */}
+      <ParallaxSection imageUrl={statsBg} overlayOpacity={0.85} className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* When it makes sense */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -221,33 +242,28 @@ const ServiceDetail = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="relative p-6 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-lime/30 transition-all duration-300"
+                    className="relative p-6 bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-lime/30 transition-all duration-300"
                   >
-                    <span className="absolute -top-4 left-6 font-display text-5xl font-bold text-lime/20">
+                    <span className="absolute -top-3 left-6 font-display text-4xl font-bold text-lime/30">
                       {(index + 1).toString().padStart(2, '0')}
                     </span>
-                    <p className="text-gray-300 text-left pt-2">{item}</p>
+                    <p className="text-gray-300 text-sm pt-2">{item}</p>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* Problems Solved */}
-      <section className="py-20 bg-gray-950">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-4xl mx-auto text-center">
+            {/* Problems Solved */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
             >
               <h2 className="font-display text-2xl font-bold text-white mb-8">
                 Problem klienta, który <GradientText>rozwiązuje</GradientText>
               </h2>
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-6">
                 {service.problemsSolved.map((problem, index) => (
                   <motion.div
                     key={index}
@@ -255,21 +271,34 @@ const ServiceDetail = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="group p-8 bg-lime/10 backdrop-blur-sm rounded-3xl border border-lime/20 hover:border-lime/40 transition-all duration-300"
+                    className="group p-6 bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-lime/40 transition-all duration-300"
                   >
-                    <p className="text-white text-left">{problem}</p>
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-lg bg-lime/20 flex items-center justify-center flex-shrink-0">
+                        <Check className="w-4 h-4 text-lime" />
+                      </div>
+                      <p className="text-gray-300">{problem}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
           </div>
         </div>
-      </section>
+      </ParallaxSection>
 
       {/* Scope */}
-      <section className="py-20 bg-gray-900">
+      <section className="py-20 bg-gray-900 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(196, 255, 0, 0.3) 1px, transparent 0)`,
+            backgroundSize: '40px 40px',
+          }} />
+        </div>
+        
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -332,8 +361,16 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* Deliverables */}
-      <section className="py-20 bg-gray-950">
+      {/* Deliverables with engaging background */}
+      <section className="py-20 bg-gray-950 relative overflow-hidden">
+        {/* Decorative background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
+        </div>
+        
+        {/* Chinese character */}
+        <ChineseCharacters characters="任" position="left" className="top-10" opacity={0.04} />
+        
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
@@ -355,7 +392,7 @@ const ServiceDetail = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-5 p-6 bg-lime/10 backdrop-blur-sm rounded-2xl border border-lime/20 text-left"
+                    className="flex items-start gap-5 p-6 bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-700/50 text-left"
                   >
                     <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center flex-shrink-0">
                       {index === 0 ? <FileText className="w-6 h-6 text-gray-900" /> : <Video className="w-6 h-6 text-gray-900" />}
@@ -401,7 +438,7 @@ const ServiceDetail = () => {
                   className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
                 >
                   <Clock className="w-10 h-10 text-lime mx-auto mb-4" />
-                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Czas trwania</p>
+                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Czas realizacji</p>
                   <p className="text-white font-semibold">{service.workModel.duration}</p>
                 </motion.div>
                 <motion.div
@@ -411,7 +448,7 @@ const ServiceDetail = () => {
                   transition={{ delay: 0.2 }}
                   className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
                 >
-                  <Video className="w-10 h-10 text-lime mx-auto mb-4" />
+                  <FileText className="w-10 h-10 text-lime mx-auto mb-4" />
                   <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Komunikacja</p>
                   <p className="text-white font-semibold text-sm">{service.workModel.communication}</p>
                 </motion.div>
@@ -421,8 +458,11 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* Interactive Case Study */}
-      <section className="py-24 bg-gray-950">
+      {/* Case Study */}
+      <section className="bg-gray-950 py-24 relative overflow-hidden">
+        {/* Chinese character */}
+        <ChineseCharacters characters="橋" position="right" className="top-20" opacity={0.05} />
+        
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -430,7 +470,7 @@ const ServiceDetail = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
               Case Study
             </span>
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white">
@@ -442,7 +482,7 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA Section */}
       <section className="relative py-24 overflow-hidden bg-gray-900">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
@@ -460,16 +500,16 @@ const ServiceDetail = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
-              Zainteresowany tą usługą?
+              Zainteresowany? <GradientText>Porozmawiajmy</GradientText>
             </h2>
             <p className="text-gray-400 mb-8 max-w-lg mx-auto">
-              Porozmawiajmy o tym, jak możemy pomóc Twojej organizacji.
+              Bezpłatna konsultacja pomoże określić, czy ta usługa odpowiada Twoim potrzebom.
             </p>
             <Link
               to="/kontakt"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+              className="inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow-slow"
             >
-              Umów konsultację
+              Umów rozmowę
               <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>

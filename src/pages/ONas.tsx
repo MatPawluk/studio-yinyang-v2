@@ -7,15 +7,22 @@ import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { Globe3D } from '@/components/Globe3D';
 import { FAQSection } from '@/components/FAQSection';
 import { GradientText } from '@/components/GradientText';
+import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ArrowRight } from 'lucide-react';
 import teamJan from '@/assets/team-jan.jpg';
 import teamWei from '@/assets/team-wei.jpg';
 import teamAnna from '@/assets/team-anna.jpg';
+import avatar4 from '@/assets/avatar-4.jpg';
+import avatar5 from '@/assets/avatar-5.jpg';
+import serviceStrategy from '@/assets/service-strategy.jpg';
+import serviceAnalysis from '@/assets/service-analysis.jpg';
 
 const team = [
   { name: 'Jan Kowalski', role: 'Founder / Strategy & China Lead', image: teamJan },
   { name: 'Wei Zhang', role: 'China Operations & Research', image: teamWei },
   { name: 'Anna Nowak', role: 'Business & Project Lead (PL)', image: teamAnna },
+  { name: 'Michał Wiśniewski', role: 'Senior Analyst', image: avatar4 },
+  { name: 'Li Ming', role: 'Shanghai Operations Manager', image: avatar5 },
 ];
 
 const stats = [
@@ -25,16 +32,52 @@ const stats = [
   { value: 0, suffix: 'PL–CN', label: 'stała obecność operacyjna', isText: true },
 ];
 
+// Gallery images for team vibe
+const galleryImages = [
+  serviceStrategy,
+  serviceAnalysis,
+  teamJan,
+  teamWei,
+  teamAnna,
+  serviceStrategy,
+];
+
 const ONas = () => {
   return (
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Hero Section - About Us Style */}
+      {/* Hero Section with Team Gallery Background */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-gray-900">
+        {/* Scattered gallery images in background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {galleryImages.map((img, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.15, scale: 1 }}
+              transition={{ delay: index * 0.1, duration: 0.8 }}
+              className="absolute"
+              style={{
+                left: `${10 + (index % 3) * 30}%`,
+                top: `${15 + Math.floor(index / 3) * 40}%`,
+                transform: `rotate(${-10 + index * 5}deg)`,
+                width: '200px',
+              }}
+            >
+              <img 
+                src={img} 
+                alt="" 
+                className="w-full rounded-2xl shadow-xl"
+              />
+            </motion.div>
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/95 via-gray-900/90 to-gray-900" />
           <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-lime/10 blur-[150px] rounded-full" />
         </div>
+        
+        {/* Chinese character */}
+        <ChineseCharacters characters="合" position="right" className="top-40" opacity={0.06} />
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
           <motion.div
@@ -82,8 +125,11 @@ const ONas = () => {
         </div>
       </section>
 
-      {/* Team - Large Photos */}
-      <section className="bg-gray-950 py-24">
+      {/* Team - Large Photos with 5 members */}
+      <section className="bg-gray-950 py-24 relative overflow-hidden">
+        {/* Chinese character */}
+        <ChineseCharacters characters="作" position="left" className="top-20" opacity={0.05} />
+        
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -99,7 +145,7 @@ const ONas = () => {
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
             {team.map((member, index) => (
               <motion.div
                 key={member.name}
@@ -109,8 +155,8 @@ const ONas = () => {
                 transition={{ delay: index * 0.1 }}
                 className="group"
               >
-                {/* Large Photo */}
-                <div className="relative mb-4 rounded-3xl overflow-hidden aspect-[3/4]">
+                {/* Photo */}
+                <div className="relative mb-4 rounded-2xl overflow-hidden aspect-[3/4]">
                   <img
                     src={member.image}
                     alt={member.name}
@@ -119,8 +165,8 @@ const ONas = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent" />
                 </div>
                 {/* Name and role below */}
-                <h3 className="font-display font-bold text-xl text-white">{member.name}</h3>
-                <p className="text-gray-500 text-sm">{member.role}</p>
+                <h3 className="font-display font-bold text-base lg:text-lg text-white">{member.name}</h3>
+                <p className="text-gray-500 text-xs lg:text-sm">{member.role}</p>
               </motion.div>
             ))}
           </div>
@@ -128,7 +174,7 @@ const ONas = () => {
       </section>
 
       {/* 3D Globe Section */}
-      <section className="bg-gray-900 py-24">
+      <section className="bg-gray-900 py-24 relative overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -166,7 +212,7 @@ const ONas = () => {
         <LogoMarquee />
       </section>
 
-      {/* CTA Section - Fixed slow pulse */}
+      {/* CTA Section */}
       <section className="relative py-32 overflow-hidden bg-gray-900">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
@@ -189,7 +235,7 @@ const ONas = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-6">
-              Umów <span className="text-lime">bezpłatną konsultację</span>
+              Umów <GradientText>bezpłatną konsultację</GradientText>
             </h2>
             <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
               Porozmawiajmy o tym, jak możemy wesprzeć Twoją organizację w relacjach z Chinami.
