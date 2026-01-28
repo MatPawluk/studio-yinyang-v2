@@ -7,7 +7,8 @@ import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { InteractiveCaseStudy } from '@/components/InteractiveCaseStudy';
 import { GradientText } from '@/components/GradientText';
-import { ArrowRight } from 'lucide-react';
+import { ChineseCharacters } from '@/components/ChineseCharacters';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
 import statsBg from '@/assets/stats-bg.jpg';
@@ -20,10 +21,10 @@ const serviceCategories = [
     slug: 'strategia-wobec-chin',
     image: serviceStrategy,
     subServices: [
-      { title: 'Analizy strategiczne wpływu Chin na firmę lub sektor', slug: 'analizy-strategiczne' },
-      { title: 'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji', slug: 'decyzje-wejscia' },
-      { title: 'Scenariusze strategiczne i mapy ryzyk', slug: 'scenariusze-strategiczne' },
-      { title: 'Briefingi decyzyjne dla zarządów', slug: 'briefingi-decyzyjne' },
+      { title: 'Analizy strategiczne wpływu Chin na firmę lub sektor', slug: 'analizy-strategiczne', image: serviceStrategy },
+      { title: 'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji', slug: 'decyzje-wejscia', image: serviceAnalysis },
+      { title: 'Scenariusze strategiczne i mapy ryzyk', slug: 'scenariusze-strategiczne', image: serviceStrategy },
+      { title: 'Briefingi decyzyjne dla zarządów', slug: 'briefingi-decyzyjne', image: serviceAnalysis },
     ],
   },
   {
@@ -31,10 +32,10 @@ const serviceCategories = [
     slug: 'analizy-rynkowe',
     image: serviceAnalysis,
     subServices: [
-      { title: 'Analizy sektorów i klastrów przemysłowych', slug: 'analizy-sektorow' },
-      { title: 'Badanie konkurencji lokalnej i międzynarodowej', slug: 'badanie-konkurencji' },
-      { title: 'Analiza popytu, trendów i barier wejścia', slug: 'analiza-popytu' },
-      { title: 'Analiza regulacyjna i instytucjonalna rynku', slug: 'analiza-regulacyjna' },
+      { title: 'Analizy sektorów i klastrów przemysłowych', slug: 'analizy-sektorow', image: serviceAnalysis },
+      { title: 'Badanie konkurencji lokalnej i międzynarodowej', slug: 'badanie-konkurencji', image: serviceStrategy },
+      { title: 'Analiza popytu, trendów i barier wejścia', slug: 'analiza-popytu', image: serviceAnalysis },
+      { title: 'Analiza regulacyjna i instytucjonalna rynku', slug: 'analiza-regulacyjna', image: serviceStrategy },
     ],
   },
   {
@@ -42,10 +43,10 @@ const serviceCategories = [
     slug: 'research-intelligence',
     image: serviceStrategy,
     subServices: [
-      { title: 'Research firm chińskich i europejskich', slug: 'research-firm' },
-      { title: 'Analiza zaplecza technologicznego i R&D', slug: 'analiza-technologiczna' },
-      { title: 'Weryfikacja partnerów biznesowych i technologicznych', slug: 'weryfikacja-partnerow' },
-      { title: 'Due diligence przed rozpoczęciem współpracy', slug: 'due-diligence' },
+      { title: 'Research firm chińskich i europejskich', slug: 'research-firm', image: serviceStrategy },
+      { title: 'Analiza zaplecza technologicznego i R&D', slug: 'analiza-technologiczna', image: serviceAnalysis },
+      { title: 'Weryfikacja partnerów biznesowych i technologicznych', slug: 'weryfikacja-partnerow', image: serviceStrategy },
+      { title: 'Due diligence przed rozpoczęciem współpracy', slug: 'due-diligence', image: serviceAnalysis },
     ],
   },
   {
@@ -53,9 +54,9 @@ const serviceCategories = [
     slug: 'wejscie-na-rynek',
     image: serviceAnalysis,
     subServices: [
-      { title: 'Analiza rynku i modelu wejścia', slug: 'analiza-modelu' },
-      { title: 'Wsparcie regulacyjne i formalne', slug: 'wsparcie-regulacyjne' },
-      { title: 'Przygotowanie struktur handlowych lub partnerskich', slug: 'struktury-handlowe' },
+      { title: 'Analiza rynku i modelu wejścia', slug: 'analiza-modelu', image: serviceAnalysis },
+      { title: 'Wsparcie regulacyjne i formalne', slug: 'wsparcie-regulacyjne', image: serviceStrategy },
+      { title: 'Przygotowanie struktur handlowych lub partnerskich', slug: 'struktury-handlowe', image: serviceAnalysis },
     ],
   },
   {
@@ -63,10 +64,10 @@ const serviceCategories = [
     slug: 'marketing-pozycjonowanie',
     image: serviceStrategy,
     subServices: [
-      { title: 'Pozycjonowanie marki i oferty (PL i CN)', slug: 'pozycjonowanie-marki' },
-      { title: 'Strategia komunikacji i adaptacja do realiów lokalnych', slug: 'strategia-komunikacji' },
-      { title: 'Materiały sprzedażowe i wizerunkowe', slug: 'materialy-sprzedazowe' },
-      { title: 'Go-To-Market & walidacja rynku', slug: 'go-to-market' },
+      { title: 'Pozycjonowanie marki i oferty (PL i CN)', slug: 'pozycjonowanie-marki', image: serviceStrategy },
+      { title: 'Strategia komunikacji i adaptacja do realiów lokalnych', slug: 'strategia-komunikacji', image: serviceAnalysis },
+      { title: 'Materiały sprzedażowe i wizerunkowe', slug: 'materialy-sprzedazowe', image: serviceStrategy },
+      { title: 'Go-To-Market & walidacja rynku', slug: 'go-to-market', image: serviceAnalysis },
     ],
   },
   {
@@ -74,10 +75,10 @@ const serviceCategories = [
     slug: 'identyfikacja-partnerow',
     image: serviceAnalysis,
     subServices: [
-      { title: 'Identyfikacja potencjalnych partnerów', slug: 'identyfikacja-potencjalnych' },
-      { title: 'Selekcja i ocena dopasowania', slug: 'selekcja-ocena' },
-      { title: 'Organizacja spotkań i rozmów', slug: 'organizacja-spotkan' },
-      { title: 'Wsparcie negocjacyjne i relacyjne', slug: 'wsparcie-negocjacyjne' },
+      { title: 'Identyfikacja potencjalnych partnerów', slug: 'identyfikacja-potencjalnych', image: serviceAnalysis },
+      { title: 'Selekcja i ocena dopasowania', slug: 'selekcja-ocena', image: serviceStrategy },
+      { title: 'Organizacja spotkań i rozmów', slug: 'organizacja-spotkan', image: serviceAnalysis },
+      { title: 'Wsparcie negocjacyjne i relacyjne', slug: 'wsparcie-negocjacyjne', image: serviceStrategy },
     ],
   },
   {
@@ -85,9 +86,9 @@ const serviceCategories = [
     slug: 'handel-eksport-import',
     image: serviceStrategy,
     subServices: [
-      { title: 'Doradztwo w zakresie eksportu i importu', slug: 'doradztwo-eksport' },
-      { title: 'Analiza łańcucha dostaw i kosztów logistycznych', slug: 'analiza-lancucha' },
-      { title: 'Koordynacja operacyjna dostaw od A do Z', slug: 'koordynacja-dostaw' },
+      { title: 'Doradztwo w zakresie eksportu i importu', slug: 'doradztwo-eksport', image: serviceStrategy },
+      { title: 'Analiza łańcucha dostaw i kosztów logistycznych', slug: 'analiza-lancucha', image: serviceAnalysis },
+      { title: 'Koordynacja operacyjna dostaw od A do Z', slug: 'koordynacja-dostaw', image: serviceStrategy },
     ],
   },
   {
@@ -95,10 +96,10 @@ const serviceCategories = [
     slug: 'audyty-nadzor',
     image: serviceAnalysis,
     subServices: [
-      { title: 'Audyty firm i zakładów', slug: 'audyty-firm' },
-      { title: 'Kontrola jakości', slug: 'kontrola-jakosci' },
-      { title: 'Monitoring realizacji ustaleń', slug: 'monitoring-realizacji' },
-      { title: 'Bieżące wsparcie lokalne', slug: 'wsparcie-lokalne' },
+      { title: 'Audyty firm i zakładów', slug: 'audyty-firm', image: serviceAnalysis },
+      { title: 'Kontrola jakości', slug: 'kontrola-jakosci', image: serviceStrategy },
+      { title: 'Monitoring realizacji ustaleń', slug: 'monitoring-realizacji', image: serviceAnalysis },
+      { title: 'Bieżące wsparcie lokalne', slug: 'wsparcie-lokalne', image: serviceStrategy },
     ],
   },
 ];
@@ -111,8 +112,7 @@ const stats = [
 ];
 
 const Uslugi = () => {
-  const [activeCategory, setActiveCategory] = useState(0);
-  const currentCategory = serviceCategories[activeCategory];
+  const [expandedCategory, setExpandedCategory] = useState<number | null>(0);
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -130,6 +130,9 @@ const Uslugi = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/90 to-gray-900" />
           <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
         </div>
+        
+        {/* Chinese character decoration */}
+        <ChineseCharacters characters="合作" position="right" className="top-32" opacity={0.06} />
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <motion.div
@@ -153,7 +156,7 @@ const Uslugi = () => {
         </div>
       </section>
 
-      {/* Category Tabs + Sub-services */}
+      {/* Categories Accordion Section */}
       <section className="bg-gray-950 py-16 relative overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
@@ -164,78 +167,101 @@ const Uslugi = () => {
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          {/* Category Tabs - Scrollable on mobile */}
-          <div className="mb-12 overflow-x-auto pb-4 -mx-6 px-6">
-            <div className="flex gap-3 min-w-max">
-              {serviceCategories.map((category, index) => (
+          {/* Accordion List */}
+          <div className="space-y-0">
+            {serviceCategories.map((category, index) => (
+              <motion.div
+                key={category.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+                className="border-b border-gray-800"
+              >
+                {/* Category Header */}
                 <button
-                  key={category.slug}
-                  onClick={() => setActiveCategory(index)}
-                  className={`px-5 py-3 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
-                    activeCategory === index
-                      ? 'bg-lime text-gray-900'
-                      : 'bg-gray-800/50 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-700/50'
-                  }`}
+                  onClick={() => setExpandedCategory(expandedCategory === index ? null : index)}
+                  className="w-full flex items-center justify-between py-6 group"
                 >
-                  {category.title}
+                  <div className="flex items-center gap-6">
+                    <span className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-white group-hover:text-lime transition-colors duration-300">
+                      {category.title}
+                    </span>
+                    <span className="text-gray-600 text-sm">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-gray-800/50 text-gray-400 text-xs">
+                      {category.subServices.length} usług
+                    </span>
+                  </div>
+                  <ChevronDown 
+                    className={`w-6 h-6 text-gray-500 group-hover:text-lime transition-all duration-300 ${
+                      expandedCategory === index ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
-              ))}
-            </div>
-          </div>
 
-          {/* Sub-services Grid */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            >
-              {currentCategory.subServices.map((subService, index) => (
-                <motion.div
-                  key={subService.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <Link
-                    to={`/uslugi/${currentCategory.slug}/${subService.slug}`}
-                    className="group relative block h-full"
-                  >
-                    <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-gray-900/50 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
-                      {/* Image */}
-                      <div className="aspect-[4/3] relative overflow-hidden">
-                        <img
-                          src={currentCategory.image}
-                          alt={subService.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
+                {/* Expanded Sub-services */}
+                <AnimatePresence>
+                  {expandedCategory === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-8">
+                        {category.subServices.map((subService, subIndex) => (
+                          <motion.div
+                            key={subService.slug}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: subIndex * 0.05 }}
+                          >
+                            <Link
+                              to={`/uslugi/${category.slug}/${subService.slug}`}
+                              className="group relative block h-full"
+                            >
+                              <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-gray-900/50 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
+                                {/* Image - larger */}
+                                <div className="aspect-[4/3] relative overflow-hidden">
+                                  <img
+                                    src={subService.image}
+                                    alt={subService.title}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
+                                </div>
+                                
+                                {/* Content - better visibility */}
+                                <div className="absolute bottom-0 left-0 right-0 p-5">
+                                  <h3 className="text-white text-base font-semibold leading-tight group-hover:text-lime transition-colors mb-2">
+                                    {subService.title}
+                                  </h3>
+                                  <div className="flex items-center gap-2 text-lime">
+                                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                  </div>
+                                </div>
+                              </div>
+                            </Link>
+                          </motion.div>
+                        ))}
                       </div>
-                      
-                      {/* Content */}
-                      <div className="absolute bottom-0 left-0 right-0 p-5">
-                        <h3 className="text-white text-sm font-medium leading-tight group-hover:text-lime transition-colors mb-3">
-                          {subService.title}
-                        </h3>
-                        <div className="flex items-center gap-2 text-lime opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                          <span className="text-xs font-medium">Dowiedz się więcej</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Interactive Case Study */}
-      <section className="bg-gray-900 py-24">
+      <section className="bg-gray-900 py-24 relative overflow-hidden">
+        {/* Chinese character decoration */}
+        <ChineseCharacters characters="信任" position="left" className="top-20" opacity={0.05} />
+        
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -346,7 +372,7 @@ const Uslugi = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
-              Porozmawiajmy o Twoich potrzebach
+              Porozmawiajmy <GradientText>o Twoich potrzebach</GradientText>
             </h2>
             <p className="text-gray-400 mb-8 max-w-lg mx-auto">
               Bezpłatna konsultacja pomoże określić, jak możemy Ci pomóc.

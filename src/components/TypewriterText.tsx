@@ -10,8 +10,8 @@ interface TypewriterTextProps {
 
 export const TypewriterText = ({ 
   words, 
-  typingSpeed = 120, 
-  deletingSpeed = 60, 
+  typingSpeed = 100, 
+  deletingSpeed = 50, 
   pauseDuration = 3000 
 }: TypewriterTextProps) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -36,7 +36,7 @@ export const TypewriterText = ({
         if (displayText.length < currentWord.length) {
           setDisplayText(currentWord.slice(0, displayText.length + 1));
         } else {
-          // Pause before deleting
+          // Pause before deleting - now 3 seconds
           setIsPaused(true);
         }
       } else {
