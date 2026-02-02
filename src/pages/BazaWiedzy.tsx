@@ -115,7 +115,7 @@ const BazaWiedzy = () => {
               i komentarze
             </h1>
             <p className="text-lg text-gray-400">
-              Materiały dotyczące Chin, technologii oraz współpracy międzynarodowej – przygotowane z perspektywy decyzyjnej.
+              Materiały dotyczące rynku polskiego, chińskiego oraz współpracy międzynarodowej.
             </p>
           </motion.div>
         </div>
