@@ -256,7 +256,7 @@ const Kontakt = () => {
                 </div>
                 <h4 className="font-semibold text-white mb-2">Warszawa</h4>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  ul. Chmielna 69<br />
+                  ul. Chmielna 73<br />
                   00-801 Warszawa<br />
                   Polska
                 </p>
@@ -267,9 +267,10 @@ const Kontakt = () => {
                 </div>
                 <h4 className="font-semibold text-white mb-2">Shanghai</h4>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  Zhangyang Road 777<br />
-                  Pudong New Area<br />
-                  Shanghai 200120
+                  696 Weihai Road<br />
+                  Jing'an District<br />
+                  Shanghai 200041<br />
+                  China
                 </p>
               </div>
             </div>

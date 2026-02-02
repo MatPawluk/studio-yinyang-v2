@@ -11,31 +11,33 @@ import { TypewriterText } from '@/components/TypewriterText';
 import { GradientText } from '@/components/GradientText';
 import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
-import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CaseStudiesSection } from '@/components/CaseStudiesSection';
+import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Target, Search, Rocket, Settings } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
-import avatar1 from '@/assets/avatar-1.jpg';
-import avatar2 from '@/assets/avatar-2.jpg';
-import avatar3 from '@/assets/avatar-3.jpg';
 
 const heroServices = [
   { 
     title: 'Strategia i decyzje', 
-    description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.' 
+    description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.',
+    icon: Target,
   },
   { 
     title: 'Research i weryfikacja', 
-    description: 'Due diligence, analiza partnerów, intelligence.' 
+    description: 'Due diligence, analiza partnerów, intelligence.',
+    icon: Search,
   },
   { 
     title: 'Wejście i rozwój', 
-    description: 'Model wejścia, struktury, pozycjonowanie.' 
+    description: 'Model wejścia, struktury, pozycjonowanie.',
+    icon: Rocket,
   },
   { 
     title: 'Operacje i logistyka', 
-    description: 'Audyt, kontrola jakości, nadzór, eksport/import.' 
+    description: 'Audyt, kontrola jakości, nadzór, eksport/import.',
+    icon: Settings,
   },
 ];
 
@@ -47,46 +49,34 @@ const carouselServices = [
     slug: 'strategia-wobec-chin',
   },
   {
-    title: 'Analizy rynkowe i sektorowe',
-    description: 'Badania sektorów, analiza konkurencji i trendów rynkowych.',
+    title: 'Analizy rynku i weryfikacja partnerów',
+    description: 'Badania sektorów, analiza konkurencji, weryfikacja kontrahentów i due diligence.',
     image: serviceAnalysis,
-    slug: 'analizy-rynkowe',
+    slug: 'analizy-rynku',
   },
   {
-    title: 'Research, Intelligence i Weryfikacja',
-    description: 'Due diligence partnerów biznesowych i technologicznych.',
+    title: 'Wejście na rynek Polska ↔ Chiny',
+    description: 'Wybór modelu wejścia, wsparcie regulacyjne, identyfikacja partnerów.',
     image: serviceStrategy,
-    slug: 'research-intelligence',
-  },
-  {
-    title: 'Wejście na rynek',
-    description: 'Analiza modelu wejścia i struktur handlowych.',
-    image: serviceAnalysis,
     slug: 'wejscie-na-rynek',
   },
   {
-    title: 'Marketing i Pozycjonowanie',
-    description: 'Strategia komunikacji i Go-To-Market.',
+    title: 'Import, eksport i łańcuch dostaw',
+    description: 'Audyty dostawców, optymalizacja logistyki, nadzór produkcji, transport.',
+    image: serviceAnalysis,
+    slug: 'import-eksport',
+  },
+  {
+    title: 'Marketing i pozycjonowanie',
+    description: 'Lokalne pozycjonowanie marki, strategia komunikacji, materiały sprzedażowe.',
     image: serviceStrategy,
     slug: 'marketing-pozycjonowanie',
   },
   {
-    title: 'Identyfikacja partnerów',
-    description: 'Matchmaking i wsparcie negocjacyjne.',
+    title: 'Misje biznesowe i szkolenia',
+    description: 'Organizacja misji, matchmaking B2B, szkolenia z kultury i systemu Chin.',
     image: serviceAnalysis,
-    slug: 'identyfikacja-partnerow',
-  },
-  {
-    title: 'Handel, Eksport i Import',
-    description: 'Doradztwo logistyczne i koordynacja dostaw.',
-    image: serviceStrategy,
-    slug: 'handel-eksport-import',
-  },
-  {
-    title: 'Audyty i Nadzór operacyjny',
-    description: 'Kontrola jakości i monitoring realizacji.',
-    image: serviceAnalysis,
-    slug: 'audyty-nadzor',
+    slug: 'misje-szkolenia',
   },
 ];
 
@@ -114,8 +104,8 @@ const processSteps = [
 ];
 
 const stats = [
-  { value: 20, suffix: '+', label: 'firm i instytucji objętych wsparciem' },
-  { value: 77, suffix: '', label: 'projektów analitycznych i doradczych' },
+  { value: 480, suffix: '+', label: 'zweryfikowanych podmiotów i partnerów biznesowych' },
+  { value: 50, suffix: '+', label: 'lat łącznego doświadczenia zespołu w projektach międzynarodowych' },
   { value: 7, suffix: '', label: 'sektorów technologicznych' },
   { value: 0, suffix: 'PL–CN', label: 'stała obecność operacyjna', isText: true },
 ];
@@ -147,6 +137,9 @@ const Index = () => {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + carouselServices.length) % carouselServices.length);
   };
+
+  const getPrevIndex = () => (currentSlide - 1 + carouselServices.length) % carouselServices.length;
+  const getNextIndex = () => (currentSlide + 1) % carouselServices.length;
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -224,18 +217,6 @@ const Index = () => {
                 Umów bezpłatną konsultację
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-
-              {/* Join 720+ clients - below CTA */}
-              <div className="flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  <img src={avatar1} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
-                  <img src={avatar2} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
-                  <img src={avatar3} alt="" className="w-10 h-10 rounded-full border-2 border-gray-900 object-cover" />
-                </div>
-                <p className="text-white/80 text-sm">
-                  <span className="font-semibold text-lime">Dołącz do grona 720+</span> zadowolonych klientów
-                </p>
-              </div>
             </motion.div>
           </div>
         </motion.div>
@@ -245,7 +226,7 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-56 md:bottom-64 left-1/2 -translate-x-1/2"
+          className="absolute bottom-72 md:bottom-80 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -256,78 +237,78 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {/* Service Cards - Higher z-index, mobile responsive */}
-        <div className="absolute -bottom-16 sm:-bottom-20 md:-bottom-24 lg:-bottom-28 left-0 right-0 z-50 pointer-events-none">
+        {/* Premium Service Cards - Thala Labs Style */}
+        <div className="absolute -bottom-32 sm:-bottom-36 md:-bottom-40 lg:-bottom-44 left-0 right-0 z-50 pointer-events-none">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pointer-events-auto">
-              {heroServices.map((service, index) => (
-                <motion.div
-                  key={service.title}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="group relative bg-black/80 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 shadow-2xl hover:shadow-lime/20 transition-all duration-500 hover:-translate-y-2 border border-gray-800/50 overflow-hidden"
-                >
-                  {/* Top lime accent bar - shorter width (50%) */}
-                  <div className="absolute top-0 left-1/4 right-1/4 h-[3px] bg-gradient-to-r from-lime/50 via-lime to-lime/50" />
-                  
-                  {/* Lime accent glow */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-8 bg-lime/40 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative z-10 text-center pt-2">
-                    <h3 className="font-display font-semibold text-white text-sm sm:text-base mb-1 sm:mb-2">{service.title}</h3>
-                    <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed hidden sm:block">{service.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pointer-events-auto">
+              {heroServices.map((service, index) => {
+                const IconComponent = service.icon;
+                return (
+                  <motion.div
+                    key={service.title}
+                    initial={{ opacity: 0, y: 80 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6 + index * 0.15 }}
+                    whileHover={{ y: -8 }}
+                    className="group relative bg-gray-900/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-gray-800/50 hover:border-lime/40 transition-all duration-500 hover:shadow-2xl hover:shadow-lime/10 overflow-hidden"
+                  >
+                    {/* Top lime accent bar - thin and half width */}
+                    <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-lime/50 via-lime to-lime/50" />
+                    
+                    {/* Lime accent glow on hover */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-12 bg-lime/30 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="relative z-10 pt-4">
+                      {/* Icon */}
+                      <div className="mb-4">
+                        <IconComponent className="w-6 h-6 sm:w-8 sm:h-8 text-gray-500 group-hover:text-lime transition-colors duration-300" />
+                      </div>
+                      
+                      <h3 className="font-display font-bold text-white text-base sm:text-lg lg:text-xl mb-2 sm:mb-3">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                        {service.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Bridge Section - Transition between hero and services */}
-      <section className="relative bg-gradient-to-b from-gray-900 via-white to-white pt-32 sm:pt-40 pb-16">
-        {/* Chinese character decoration */}
-        <div className="absolute top-20 right-8 lg:right-16 opacity-5 pointer-events-none">
-          <span className="font-display text-[10rem] md:text-[16rem] font-bold text-lime leading-none">橋</span>
-        </div>
+      {/* Dark transition curve like Thala Labs */}
+      <section className="relative bg-gray-900 pt-48 sm:pt-56 md:pt-64 pb-20">
+        {/* Curved transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-900 to-gray-950" />
         
-        <div className="container mx-auto px-6 lg:px-12 text-center">
+        {/* Content placeholder - visual transition element */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="max-w-2xl mx-auto"
-          >
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Łączymy polskie firmy z chińskim rynkiem. Od strategii po egzekucję.
-            </p>
-          </motion.div>
+            className="h-px bg-gradient-to-r from-transparent via-lime/30 to-transparent"
+          />
         </div>
       </section>
 
       {/* Services Carousel Section */}
-      <section className="relative bg-white pt-8 pb-24 z-10">
+      <section className="relative bg-gray-950 py-24 z-10">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header - "Nasze usługi" with gradient */}
+          {/* Header - "Nasze usługi" with green gradient, centered */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-start justify-between mb-12"
+            className="text-center mb-12"
           >
-            <div>
-              <h2 className="font-display text-4xl lg:text-6xl font-bold text-gray-900">
-                Nasze <GradientText className="text-gray-900">usługi</GradientText>
-              </h2>
-            </div>
-            <Link 
-              to="/uslugi"
-              className="hidden md:inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-full text-gray-900 font-medium hover:border-lime hover:bg-lime transition-all duration-300"
-            >
-              Zobacz wszystkie usługi
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <h2 className="font-display text-4xl lg:text-6xl font-bold">
+              <span className="text-white">Nasze </span>
+              <span className="text-lime">usługi</span>
+            </h2>
           </motion.div>
 
           {/* Carousel with peek effect */}
@@ -336,41 +317,77 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-3xl overflow-hidden aspect-[16/9] lg:aspect-[21/9]"
+              className="relative"
             >
-              <motion.img
-                key={currentSlide}
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                src={carouselServices[currentSlide].image}
-                alt={carouselServices[currentSlide].title}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/50 to-transparent" />
-              
-              {/* Content overlay - no icon */}
-              <div className="absolute inset-0 flex items-end p-6 sm:p-8 lg:p-12">
+              {/* Carousel container with peek */}
+              <div className="flex items-center gap-4 overflow-hidden">
+                {/* Previous slide peek */}
                 <motion.div 
-                  key={`content-${currentSlide}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="max-w-lg"
+                  key={`prev-${getPrevIndex()}`}
+                  className="hidden lg:block flex-shrink-0 w-[15%] opacity-40"
+                  onClick={prevSlide}
                 >
-                  <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3">
-                    {carouselServices[currentSlide].title}
-                  </h3>
-                  <p className="text-gray-300 text-base lg:text-lg mb-6 hidden sm:block">
-                    {carouselServices[currentSlide].description}
-                  </p>
-                  <Link
-                    to={`/uslugi/${carouselServices[currentSlide].slug}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-gray-900 rounded-full font-medium hover:scale-105 transition-all duration-300"
-                  >
-                    Dowiedz się więcej
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  <div className="rounded-2xl overflow-hidden aspect-[16/9] cursor-pointer hover:opacity-60 transition-opacity">
+                    <img
+                      src={carouselServices[getPrevIndex()].image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Main slide */}
+                <div className="flex-1 rounded-3xl overflow-hidden aspect-[16/9] lg:aspect-[21/9] relative">
+                  <motion.img
+                    key={currentSlide}
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    src={carouselServices[currentSlide].image}
+                    alt={carouselServices[currentSlide].title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/50 to-transparent" />
+                  
+                  {/* Content overlay */}
+                  <div className="absolute inset-0 flex items-end p-6 sm:p-8 lg:p-12">
+                    <motion.div 
+                      key={`content-${currentSlide}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="max-w-lg"
+                    >
+                      <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3">
+                        {carouselServices[currentSlide].title}
+                      </h3>
+                      <p className="text-gray-300 text-base lg:text-lg mb-6 hidden sm:block">
+                        {carouselServices[currentSlide].description}
+                      </p>
+                      <Link
+                        to={`/uslugi#${carouselServices[currentSlide].slug}`}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-gray-900 rounded-full font-medium hover:scale-105 transition-all duration-300"
+                      >
+                        Dowiedz się więcej
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </motion.div>
+                  </div>
+                </div>
+
+                {/* Next slide peek */}
+                <motion.div 
+                  key={`next-${getNextIndex()}`}
+                  className="hidden lg:block flex-shrink-0 w-[15%] opacity-40"
+                  onClick={nextSlide}
+                >
+                  <div className="rounded-2xl overflow-hidden aspect-[16/9] cursor-pointer hover:opacity-60 transition-opacity">
+                    <img
+                      src={carouselServices[getNextIndex()].image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </motion.div>
               </div>
             </motion.div>
@@ -380,9 +397,9 @@ const Index = () => {
               {/* Arrows left */}
               <button
                 onClick={prevSlide}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
+                <ChevronLeft className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
               </button>
 
               {/* Centered Indicators */}
@@ -392,7 +409,7 @@ const Index = () => {
                     key={index}
                     onClick={() => setCurrentSlide(index)}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      index === currentSlide ? 'w-8 bg-lime' : 'w-2 bg-gray-300'
+                      index === currentSlide ? 'w-8 bg-lime' : 'w-2 bg-gray-600'
                     }`}
                   />
                 ))}
@@ -401,32 +418,28 @@ const Index = () => {
               {/* Arrows right */}
               <button
                 onClick={nextSlide}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
               >
-                <ChevronRight className="w-5 h-5 text-gray-600 group-hover:text-gray-900" />
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
               </button>
+            </div>
+
+            {/* See all services link */}
+            <div className="text-center mt-8">
+              <Link 
+                to="/uslugi"
+                className="inline-flex items-center gap-2 text-gray-400 hover:text-lime transition-colors duration-300"
+              >
+                Zobacz wszystkie usługi
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trusted By */}
-      <section className="bg-gray-900 py-16">
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center text-gray-500 text-sm uppercase tracking-widest mb-8"
-          >
-            Zaufali nam
-          </motion.p>
-        </div>
-        <LogoMarquee />
-      </section>
-
       {/* Process Section - Dark with Large Radar and Chinese characters */}
-      <section className="bg-gray-950 py-24 relative overflow-hidden">
+      <section className="bg-gray-900 py-24 relative overflow-hidden">
         {/* Large Radar in Background - much bigger */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[1200px] h-[1200px] opacity-20">
@@ -434,11 +447,11 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Chinese characters decoration */}
-        <ChineseCharacters characters="桥梁" position="left" className="top-32" opacity={0.06} />
+        {/* Chinese characters decoration - 合作关系 */}
+        <ChineseCharacters characters="合作关系" position="left" className="top-32" opacity={0.06} />
         
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-950/95 to-gray-950 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900 pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
@@ -482,7 +495,7 @@ const Index = () => {
                   
                   {/* Content card */}
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                    <div className="relative bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-all duration-300 group">
+                    <div className="relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-lime/30 transition-all duration-300 group">
                       {/* Large number */}
                       <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${
                         index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'
@@ -569,10 +582,28 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Trusted By */}
+      <section className="bg-gray-900 py-16">
+        <div className="container mx-auto px-6 lg:px-12">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center text-gray-500 text-sm uppercase tracking-widest mb-8"
+          >
+            Zaufali nam
+          </motion.p>
+        </div>
+        <LogoMarquee />
+      </section>
+
+      {/* Case Studies Section */}
+      <CaseStudiesSection />
+
       {/* Testimonials Section */}
       <TestimonialsSection />
 
-      {/* FAQ Section - NEW */}
+      {/* FAQ Section */}
       <HomeFAQSection />
 
       {/* CTA Section */}

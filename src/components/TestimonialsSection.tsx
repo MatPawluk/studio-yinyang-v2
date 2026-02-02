@@ -1,55 +1,83 @@
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { GradientText } from './GradientText';
-import avatar1 from '@/assets/avatar-1.jpg';
-import avatar2 from '@/assets/avatar-2.jpg';
-import avatar3 from '@/assets/avatar-3.jpg';
-import avatar4 from '@/assets/avatar-4.jpg';
-import avatar5 from '@/assets/avatar-5.jpg';
-import avatar6 from '@/assets/avatar-6.jpg';
+
+// Generated avatar URLs using UI Faces style placeholders
+const getAvatarUrl = (seed: string) => 
+  `https://api.dicebear.com/7.x/initials/svg?seed=${seed}&backgroundColor=1a1a2e&textColor=c4ff00`;
 
 const testimonials = [
   {
     name: 'Marek Wiśniewski',
-    role: 'CEO, TechPol Industries',
-    content: 'Współpraca z Yin Yang pozwoliła nam uniknąć kosztownych błędów przy wyborze dostawcy z Chin. Ich analiza rynku była nieoceniona.',
+    content: 'Współpraca z Yin Yang uratowała nas przed podpisaniem umowy z „producentem", który jak się okazało producentem nie był. Szczerze? Gdyby nie ta analiza, pewnie byśmy weszli w to w ciemno. Dużo konkretów, mało lania wody.',
     rating: 5,
-    avatar: avatar1,
-  },
-  {
-    name: 'Anna Kowalczyk',
-    role: 'Dyrektor Handlowy, EuroAsia Trade',
-    content: 'Profesjonalne podejście i głęboka znajomość chińskiego rynku. Polecam każdej firmie planującej ekspansję.',
-    rating: 5,
-    avatar: avatar2,
-  },
-  {
-    name: 'Tomasz Nowak',
-    role: 'Prezes Zarządu, InnoVest',
-    content: 'Dzięki Yin Yang zaoszczędziliśmy ponad 500 tys. PLN na weryfikacji partnerów. Inwestycja, która się zwróciła wielokrotnie.',
-    rating: 5,
-    avatar: avatar3,
-  },
-  {
-    name: 'Liu Wei',
-    role: 'Managing Director, SinoTrade',
-    content: 'Their understanding of both Polish and Chinese business culture is exceptional. A true bridge between our markets.',
-    rating: 5,
-    avatar: avatar5,
+    avatar: getAvatarUrl('MW'),
   },
   {
     name: 'Katarzyna Dąbrowska',
-    role: 'VP Operations, GlobalLink',
-    content: 'Rzetelne analizy, terminowa realizacja i pełna transparentność. Tak powinna wyglądać profesjonalna współpraca.',
+    content: 'Pierwszy raz import bez pośrednika i miałam trochę stres. Pan Maksymilian wszystko rozpisał krok po kroku, co sprawdzić, gdzie uważać. Nie było obiecywania złotych gór tylko realne ryzyka. Dzięki temu czuję że mam kontrolę.',
+    rating: 4.5,
+    avatar: getAvatarUrl('KD'),
+  },
+  {
+    name: 'Tomasz Nowak',
+    content: 'Doceniam podejście systemowe. Nie tylko „fabryka wygląda ok", ale wejście w rejestry, powiązania kapitałowe itd. Czuć że to nie jest firma od ładnych prezentacji tylko od realnych spraw.',
     rating: 5,
-    avatar: avatar6,
+    avatar: getAvatarUrl('TN'),
+  },
+  {
+    name: 'Anna Kowalczyk',
+    content: 'Dzięki weryfikacji dostawcy uniknęliśmy problemu z certyfikacją który wyszedłby dopiero przy odprawie celnej… a to by bolało. Polecam!',
+    rating: 4.5,
+    avatar: getAvatarUrl('AK'),
   },
   {
     name: 'Piotr Zieliński',
-    role: 'Founder, NexGen Solutions',
-    content: 'Od audytu fabryki po negocjacje kontraktu - Yin Yang przeprowadził nas przez cały proces bez żadnych niespodzianek.',
+    content: 'Mieliśmy sytuację że po wpłacie zaliczki dostawca zaczął „kombinować" z dokumentami. Yin Yang pomogło nam ustawić rozmowę tak, żeby wszystko wróciło na właściwe tory. Bez paniki, bez straszenia, po prostu twarde argumenty.',
     rating: 5,
-    avatar: avatar4,
+    avatar: getAvatarUrl('PZ'),
+  },
+  {
+    name: 'Magdalena Król',
+    content: 'Szkolenie z negocjacji było momentami niewygodne, bo pokazuje jak łatwo oddajemy pole. Dużo przykładów z życia, nie teoria. Od tamtej pory inaczej patrzę na to ich „yes, yes, no problem".',
+    rating: 4.5,
+    avatar: getAvatarUrl('MK'),
+  },
+  {
+    name: 'Paweł Lewandowski',
+    content: 'W pewnym momencie usłyszałem wprost, że nasz pomysł wejścia do Chin w tej formie nie ma sensu. I to było najlepsze co mogli powiedzieć. Nie sprzedawali usługi na siłę.',
+    rating: 5,
+    avatar: getAvatarUrl('PL'),
+  },
+  {
+    name: 'Ewa Kamińska',
+    content: 'Konsultacja otworzyła mi oczy na to jak bardzo polityka wpływa na biznes w Chinach. Czytałam raporty wcześniej, ale dopiero rozmowa z kimś kto tam realnie działa daje inny poziom zrozumienia.',
+    rating: 4.5,
+    avatar: getAvatarUrl('EK'),
+  },
+  {
+    name: 'Łukasz Maj',
+    content: 'Zleciliśmy audyt fabryki, która wyglądała świetnie na Alibaba. Na miejscu wyszły rzeczy których byśmy sami nie wyłapali. Szczerze mówiąc… oszczędzili nam sporo pieniędzy i nerwów.',
+    rating: 5,
+    avatar: getAvatarUrl('LM'),
+  },
+  {
+    name: 'Li Wei',
+    content: 'We worked with Mr. Adrian during a supplier restructuring process. What I appreciated most was his ability to translate Polish expectations into something understandable for the Chinese side. He understands both mentalities, which is rare.',
+    rating: 5,
+    avatar: getAvatarUrl('LW'),
+  },
+  {
+    name: 'Zhang Min',
+    content: 'Good strategic discussion before market entry. They did not promise fast success, they explained the risks first. I respect that.',
+    rating: 4.5,
+    avatar: getAvatarUrl('ZM'),
+  },
+  {
+    name: 'Chen Hao',
+    content: 'Their understanding of both Polish and Chinese business culture makes negotiations smoother. Less emotion, more structure. That makes a difference.',
+    rating: 5,
+    avatar: getAvatarUrl('CH'),
   },
 ];
 
@@ -93,7 +121,7 @@ export const TestimonialsSection = () => {
                 transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
                 className="space-y-6"
               >
-                {allTestimonials.map((testimonial, index) => (
+                {allTestimonials.slice(0, 8).map((testimonial, index) => (
                   <TestimonialCard key={`col1-${index}`} testimonial={testimonial} />
                 ))}
               </motion.div>
@@ -106,7 +134,7 @@ export const TestimonialsSection = () => {
                 transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
                 className="space-y-6"
               >
-                {[...allTestimonials].reverse().map((testimonial, index) => (
+                {[...allTestimonials].reverse().slice(0, 8).map((testimonial, index) => (
                   <TestimonialCard key={`col2-${index}`} testimonial={testimonial} />
                 ))}
               </motion.div>
@@ -119,7 +147,7 @@ export const TestimonialsSection = () => {
                 transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
                 className="space-y-6"
               >
-                {allTestimonials.slice(2).concat(allTestimonials.slice(0, 2)).map((testimonial, index) => (
+                {allTestimonials.slice(4, 12).map((testimonial, index) => (
                   <TestimonialCard key={`col3-${index}`} testimonial={testimonial} />
                 ))}
               </motion.div>
@@ -136,6 +164,9 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
+  const fullStars = Math.floor(testimonial.rating);
+  const hasHalfStar = testimonial.rating % 1 !== 0;
+
   return (
     <div className="group relative p-6 rounded-3xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-lime/30 transition-all duration-500">
       {/* Quote icon */}
@@ -145,9 +176,12 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
 
       {/* Rating */}
       <div className="flex gap-1 mb-4">
-        {[...Array(testimonial.rating)].map((_, i) => (
+        {[...Array(fullStars)].map((_, i) => (
           <Star key={i} className="w-4 h-4 fill-current text-lime" />
         ))}
+        {hasHalfStar && (
+          <Star className="w-4 h-4 text-lime" style={{ clipPath: 'inset(0 50% 0 0)' }} />
+        )}
       </div>
 
       {/* Content */}
@@ -155,16 +189,17 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
         "{testimonial.content}"
       </p>
 
-      {/* Author with avatar */}
+      {/* Author with animated avatar */}
       <div className="flex items-center gap-3">
-        <img
-          src={testimonial.avatar}
-          alt={testimonial.name}
-          className="w-12 h-12 rounded-full object-cover border-2 border-lime/30"
-        />
+        <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center border-2 border-lime/30 overflow-hidden">
+          <img
+            src={testimonial.avatar}
+            alt={testimonial.name}
+            className="w-full h-full"
+          />
+        </div>
         <div>
           <p className="font-semibold text-sm text-white">{testimonial.name}</p>
-          <p className="text-xs text-gray-400">{testimonial.role}</p>
         </div>
       </div>
     </div>

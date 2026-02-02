@@ -5,7 +5,6 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { InteractiveCaseStudy } from '@/components/InteractiveCaseStudy';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ArrowRight, ChevronDown } from 'lucide-react';
@@ -14,101 +13,83 @@ import serviceAnalysis from '@/assets/service-analysis.jpg';
 import statsBg from '@/assets/stats-bg.jpg';
 import worldMap from '@/assets/world-map.jpg';
 
-// Service categories with sub-services
+// New 6 categories with their sub-services
 const serviceCategories = [
   {
     title: 'Strategia wobec Chin',
     slug: 'strategia-wobec-chin',
-    image: serviceStrategy,
+    count: 3,
     subServices: [
-      { title: 'Analizy strategiczne wpływu Chin na firmę lub sektor', slug: 'analizy-strategiczne', image: serviceStrategy },
-      { title: 'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji', slug: 'decyzje-wejscia', image: serviceAnalysis },
-      { title: 'Scenariusze strategiczne i mapy ryzyk', slug: 'scenariusze-strategiczne', image: serviceStrategy },
-      { title: 'Briefingi decyzyjne dla zarządów', slug: 'briefingi-decyzyjne', image: serviceAnalysis },
+      { title: 'Analiza wpływu Chin na firmę lub sektor', slug: 'analiza-wplywu', image: serviceStrategy },
+      { title: 'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji', slug: 'decyzje-strategiczne', image: serviceAnalysis },
+      { title: 'Briefingi decyzyjne dla zarządów', slug: 'briefingi-decyzyjne', image: serviceStrategy },
     ],
   },
   {
-    title: 'Analizy rynkowe i sektorowe',
-    slug: 'analizy-rynkowe',
-    image: serviceAnalysis,
+    title: 'Analizy rynku i weryfikacja partnerów',
+    slug: 'analizy-rynku',
+    count: 4,
     subServices: [
-      { title: 'Analizy sektorów i klastrów przemysłowych', slug: 'analizy-sektorow', image: serviceAnalysis },
-      { title: 'Badanie konkurencji lokalnej i międzynarodowej', slug: 'badanie-konkurencji', image: serviceStrategy },
-      { title: 'Analiza popytu, trendów i barier wejścia', slug: 'analiza-popytu', image: serviceAnalysis },
-      { title: 'Analiza regulacyjna i instytucjonalna rynku', slug: 'analiza-regulacyjna', image: serviceStrategy },
+      { title: 'Analizy sektorów, klastrów przemysłowych i konkurencji', slug: 'analizy-sektorow', image: serviceAnalysis },
+      { title: 'Analiza regulacyjna i barier wejścia', slug: 'analiza-regulacyjna', image: serviceStrategy },
+      { title: 'Weryfikacja kontrahenta (Desktop Check)', slug: 'weryfikacja-kontrahenta', image: serviceAnalysis },
+      { title: 'Rozszerzona weryfikacja partnera (Due Diligence)', slug: 'due-diligence', image: serviceStrategy },
     ],
   },
   {
-    title: 'Research, Intelligence i Weryfikacja',
-    slug: 'research-intelligence',
-    image: serviceStrategy,
-    subServices: [
-      { title: 'Research firm chińskich i europejskich', slug: 'research-firm', image: serviceStrategy },
-      { title: 'Analiza zaplecza technologicznego i R&D', slug: 'analiza-technologiczna', image: serviceAnalysis },
-      { title: 'Weryfikacja partnerów biznesowych i technologicznych', slug: 'weryfikacja-partnerow', image: serviceStrategy },
-      { title: 'Due diligence przed rozpoczęciem współpracy', slug: 'due-diligence', image: serviceAnalysis },
-    ],
-  },
-  {
-    title: 'Wejście na rynek',
+    title: 'Wejście na rynek Polska ↔ Chiny',
     slug: 'wejscie-na-rynek',
-    image: serviceAnalysis,
+    count: 5,
     subServices: [
-      { title: 'Analiza rynku i modelu wejścia', slug: 'analiza-modelu', image: serviceAnalysis },
-      { title: 'Wsparcie regulacyjne i formalne', slug: 'wsparcie-regulacyjne', image: serviceStrategy },
-      { title: 'Przygotowanie struktur handlowych lub partnerskich', slug: 'struktury-handlowe', image: serviceAnalysis },
+      { title: 'Wybór modelu wejścia na rynek', slug: 'wybor-modelu', image: serviceStrategy },
+      { title: 'Wsparcie formalne i regulacyjne', slug: 'wsparcie-regulacyjne', image: serviceAnalysis },
+      { title: 'Identyfikacja i selekcja partnerów', slug: 'identyfikacja-partnerow', image: serviceStrategy },
+      { title: 'Wsparcie negocjacyjne i relacyjne', slug: 'wsparcie-negocjacyjne', image: serviceAnalysis },
+      { title: 'Przygotowanie struktur handlowych lub partnerskich', slug: 'struktury-handlowe', image: serviceStrategy },
     ],
   },
   {
-    title: 'Marketing i Pozycjonowanie',
+    title: 'Import, eksport i zarządzanie łańcuchem dostaw',
+    slug: 'import-eksport',
+    count: 5,
+    subServices: [
+      { title: 'Audyty i weryfikacja dostawców (On-Site)', slug: 'audyty-dostawcow', image: serviceAnalysis },
+      { title: 'Projektowanie i optymalizacja łańcucha dostaw', slug: 'optymalizacja-lancucha', image: serviceStrategy },
+      { title: 'Nadzór produkcji oraz kontrola jakości', slug: 'nadzor-produkcji', image: serviceAnalysis },
+      { title: 'Organizacja transportu międzynarodowego', slug: 'transport-miedzynarodowy', image: serviceStrategy },
+      { title: 'Kompleksowa realizacja projektu PL ↔ CN (end-to-end)', slug: 'projekt-end-to-end', image: serviceAnalysis },
+    ],
+  },
+  {
+    title: 'Marketing i pozycjonowanie rynkowe',
     slug: 'marketing-pozycjonowanie',
-    image: serviceStrategy,
+    count: 5,
     subServices: [
-      { title: 'Pozycjonowanie marki i oferty (PL i CN)', slug: 'pozycjonowanie-marki', image: serviceStrategy },
-      { title: 'Strategia komunikacji i adaptacja do realiów lokalnych', slug: 'strategia-komunikacji', image: serviceAnalysis },
-      { title: 'Materiały sprzedażowe i wizerunkowe', slug: 'materialy-sprzedazowe', image: serviceStrategy },
-      { title: 'Go-To-Market & walidacja rynku', slug: 'go-to-market', image: serviceAnalysis },
+      { title: 'Lokalne pozycjonowanie marki (PL i CN)', slug: 'pozycjonowanie-marki', image: serviceStrategy },
+      { title: 'Strategia komunikacji', slug: 'strategia-komunikacji', image: serviceAnalysis },
+      { title: 'Adaptacja komunikacji do rynku PL i CN', slug: 'adaptacja-komunikacji', image: serviceStrategy },
+      { title: 'Materiały sprzedażowe i wizerunkowe', slug: 'materialy-sprzedazowe', image: serviceAnalysis },
+      { title: 'Wsparcie działań marketingowych i pozyskiwania leadów', slug: 'wsparcie-marketingowe', image: serviceStrategy },
     ],
   },
   {
-    title: 'Identyfikacja partnerów',
-    slug: 'identyfikacja-partnerow',
-    image: serviceAnalysis,
+    title: 'Misje biznesowe i szkolenia',
+    slug: 'misje-szkolenia',
+    count: 4,
     subServices: [
-      { title: 'Identyfikacja potencjalnych partnerów', slug: 'identyfikacja-potencjalnych', image: serviceAnalysis },
-      { title: 'Selekcja i ocena dopasowania', slug: 'selekcja-ocena', image: serviceStrategy },
-      { title: 'Organizacja spotkań i rozmów', slug: 'organizacja-spotkan', image: serviceAnalysis },
-      { title: 'Wsparcie negocjacyjne i relacyjne', slug: 'wsparcie-negocjacyjne', image: serviceStrategy },
-    ],
-  },
-  {
-    title: 'Handel, Eksport i Import',
-    slug: 'handel-eksport-import',
-    image: serviceStrategy,
-    subServices: [
-      { title: 'Doradztwo w zakresie eksportu i importu', slug: 'doradztwo-eksport', image: serviceStrategy },
-      { title: 'Analiza łańcucha dostaw i kosztów logistycznych', slug: 'analiza-lancucha', image: serviceAnalysis },
-      { title: 'Koordynacja operacyjna dostaw od A do Z', slug: 'koordynacja-dostaw', image: serviceStrategy },
-    ],
-  },
-  {
-    title: 'Audyty i Nadzór operacyjny',
-    slug: 'audyty-nadzor',
-    image: serviceAnalysis,
-    subServices: [
-      { title: 'Audyty firm i zakładów', slug: 'audyty-firm', image: serviceAnalysis },
-      { title: 'Kontrola jakości', slug: 'kontrola-jakosci', image: serviceStrategy },
-      { title: 'Monitoring realizacji ustaleń', slug: 'monitoring-realizacji', image: serviceAnalysis },
-      { title: 'Bieżące wsparcie lokalne', slug: 'wsparcie-lokalne', image: serviceStrategy },
+      { title: 'Organizacja misji biznesowych i technologicznych PL ↔ CN', slug: 'organizacja-misji', image: serviceAnalysis },
+      { title: 'Aranżacja spotkań B2B i matchmaking partnerów', slug: 'matchmaking-b2b', image: serviceStrategy },
+      { title: 'Szkolenia z systemu gospodarczego Chin', slug: 'szkolenia-system', image: serviceAnalysis },
+      { title: 'Szkolenia z kultury biznesowej i negocjacji', slug: 'szkolenia-negocjacje', image: serviceStrategy },
     ],
   },
 ];
 
 const stats = [
-  { value: 20, suffix: '+', label: 'firm objętych wsparciem' },
-  { value: 77, suffix: '', label: 'projektów zrealizowanych' },
+  { value: 480, suffix: '+', label: 'zweryfikowanych podmiotów i partnerów biznesowych' },
+  { value: 50, suffix: '+', label: 'lat łącznego doświadczenia zespołu w projektach międzynarodowych' },
   { value: 7, suffix: '', label: 'sektorów technologicznych' },
-  { value: 2, suffix: '', label: 'lokalizacje: Warszawa & Shanghai' },
+  { value: 0, suffix: 'PL-CN', label: 'stała obecność operacyjna', isText: true },
 ];
 
 const Uslugi = () => {
@@ -183,15 +164,12 @@ const Uslugi = () => {
                   onClick={() => setExpandedCategory(expandedCategory === index ? null : index)}
                   className="w-full flex items-center justify-between py-6 group"
                 >
-                  <div className="flex items-center gap-6">
-                    <span className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-white group-hover:text-lime transition-colors duration-300">
+                  <div className="flex items-center gap-4 md:gap-6">
+                    <span className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white group-hover:text-lime transition-colors duration-300">
                       {category.title}
                     </span>
-                    <span className="text-gray-600 text-sm">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
                     <span className="px-3 py-1 rounded-full bg-gray-800/50 text-gray-400 text-xs">
-                      {category.subServices.length} usług
+                      {category.count} usług
                     </span>
                   </div>
                   <ChevronDown 
@@ -211,7 +189,7 @@ const Uslugi = () => {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-8">
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
                         {category.subServices.map((subService, subIndex) => (
                           <motion.div
                             key={subService.slug}
@@ -240,6 +218,7 @@ const Uslugi = () => {
                                     {subService.title}
                                   </h3>
                                   <div className="flex items-center gap-2 text-lime">
+                                    <span className="text-sm">Dowiedz się więcej</span>
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                   </div>
                                 </div>
@@ -254,30 +233,6 @@ const Uslugi = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Interactive Case Study */}
-      <section className="bg-gray-900 py-24 relative overflow-hidden">
-        {/* Chinese character decoration */}
-        <ChineseCharacters characters="信任" position="left" className="top-20" opacity={0.05} />
-        
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Case Study
-            </span>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-              Przykładowa <GradientText>realizacja</GradientText>
-            </h2>
-          </motion.div>
-
-          <InteractiveCaseStudy />
         </div>
       </section>
 
@@ -315,7 +270,7 @@ const Uslugi = () => {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Doświadczenie i skala
+              Skala i zaufanie
             </span>
           </motion.div>
 
@@ -330,7 +285,11 @@ const Uslugi = () => {
                 className="text-center"
               >
                 <div className="font-display text-5xl lg:text-6xl font-bold text-lime mb-3">
-                  <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                  {stat.isText ? (
+                    <span>{stat.suffix}</span>
+                  ) : (
+                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                  )}
                 </div>
                 <p className="text-white/70 text-sm">{stat.label}</p>
               </motion.div>

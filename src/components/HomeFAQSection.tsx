@@ -6,24 +6,28 @@ import { ChineseCharacters } from '@/components/ChineseCharacters';
 
 const faqs = [
   {
-    question: 'Ile kosztują Wasze usługi?',
-    answer: 'Wycena zależy od zakresu projektu. Nasze usługi zaczynają się od 5000 PLN za analizy podstawowe. Bezpłatna konsultacja pozwala precyzyjnie określić budżet.',
-  },
-  {
-    question: 'Jak szybko zobaczę pierwsze efekty?',
-    answer: 'Pierwsze wnioski i materiały dostarczamy zazwyczaj w ciągu 7-14 dni roboczych. Większe projekty analityczne realizujemy do 4 tygodni.',
-  },
-  {
     question: 'Czy gwarantujecie rezultaty?',
     answer: 'Gwarantujemy rzetelność analiz i jakość materiałów. Nasze rekomendacje bazują na weryfikowalnych źródłach i wieloletnim doświadczeniu.',
   },
   {
-    question: 'Jak często otrzymam raporty?',
-    answer: 'W zależności od modelu współpracy - jednorazowo po zakończeniu projektu lub cyklicznie (co miesiąc/kwartał) w przypadku długoterminowego wsparcia.',
+    question: 'Jak wygląda raportowanie w trakcie współpracy?',
+    answer: 'W zależności od modelu współpracy raporty przekazujemy jednorazowo po zakończeniu projektu lub cyklicznie, w modelu miesięcznym lub kwartalnym, przy wsparciu długoterminowym.',
   },
   {
     question: 'Czy działacie w mojej branży?',
     answer: 'Specjalizujemy się w sektorach: technologia, produkcja, automotive, energia odnawialna, e-commerce. Dla innych branż oferujemy konsultacje indywidualne.',
+  },
+  {
+    question: 'Czy reprezentujecie interesy drugiej strony transakcji?',
+    answer: 'Działamy wyłącznie po stronie klienta zlecającego projekt. Nie pobieramy prowizji handlowych ani nie reprezentujemy interesów dostawców, inwestorów czy partnerów biznesowych. Zapewnia to pełną niezależność naszych rekomendacji.',
+  },
+  {
+    question: 'Czy wspieracie również na etapie wdrożenia?',
+    answer: 'Tak. W zależności od zakresu projektu możemy wesprzeć klienta na etapie rozmów z partnerami, weryfikacji podmiotów, organizacji spotkań biznesowych oraz nadzoru operacyjnego po wejściu na rynek.',
+  },
+  {
+    question: 'Czy wspieracie w organizacji transportu i łańcucha dostaw?',
+    answer: 'Tak. W zależności od projektu możemy przejąć koordynację całego procesu logistycznego, od weryfikacji dostawcy i negocjacji warunków, przez organizację produkcji i kontroli jakości, po transport międzynarodowy oraz nadzór nad dostawą do miejsca docelowego.',
   },
 ];
 
