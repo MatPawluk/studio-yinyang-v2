@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
@@ -8,10 +8,9 @@ import { Globe3D } from '@/components/Globe3D';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
-import { FloatingButton } from '@/components/FloatingButton';
 import { TeamCarousel } from '@/components/TeamCarousel';
 import { ArrowRight, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import teamJan from '@/assets/team-jan.jpg';
 import teamWei from '@/assets/team-wei.jpg';
@@ -21,6 +20,7 @@ import avatar5 from '@/assets/avatar-5.jpg';
 import avatar6 from '@/assets/avatar-6.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
+import heroBg from '@/assets/hero-bg.jpg';
 
 const team = [
   { name: 'Adrian Nkwamu', role: 'Co-Founder & Managing Partner', image: teamJan },
@@ -36,16 +36,6 @@ const stats = [
   { value: 50, suffix: '+', label: 'lat łącznego doświadczenia zespołu w projektach międzynarodowych' },
   { value: 7, suffix: '', label: 'sektorów technologicznych' },
   { value: 0, suffix: 'PL-CN', label: 'stała obecność operacyjna', isText: true },
-];
-
-// Gallery images for team vibe
-const galleryImages = [
-  serviceStrategy,
-  serviceAnalysis,
-  teamJan,
-  teamWei,
-  teamAnna,
-  serviceStrategy,
 ];
 
 const faqs = [
@@ -81,83 +71,100 @@ const faqs = [
 
 const ONas = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <div className="min-h-screen bg-gray-900">
       <Navbar />
       
-      {/* Hero Section with Team Gallery Background and Floating Dots */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gray-900">
-        {/* Floating dots animation */}
-        <FloatingDots count={60} />
+      {/* Hero Section with Parallax */}
+      <section ref={heroRef} className="relative min-h-screen overflow-hidden flex items-center">
+        {/* Parallax Background */}
+        <motion.div 
+          style={{ y: heroY, scale: heroScale }}
+          className="absolute inset-0"
+        >
+          <img 
+            src={heroBg} 
+            alt="" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900" />
+        </motion.div>
         
-        {/* Scattered gallery images in background */}
+        {/* Floating dots animation */}
+        <FloatingDots count={80} />
+        
+        {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {galleryImages.map((img, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 0.15, scale: 1 }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              className="absolute"
-              style={{
-                left: `${10 + (index % 3) * 30}%`,
-                top: `${15 + Math.floor(index / 3) * 40}%`,
-                transform: `rotate(${-10 + index * 5}deg)`,
-                width: '200px',
-              }}
-            >
-              <img 
-                src={img} 
-                alt="" 
-                className="w-full rounded-2xl shadow-xl"
-              />
-            </motion.div>
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/95 via-gray-900/90 to-gray-900" />
+          <motion.div
+            animate={{ 
+              rotate: 360,
+            }}
+            transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-1/2 -right-1/4 w-[1000px] h-[1000px] border border-lime/10 rounded-full"
+          />
+          <motion.div
+            animate={{ 
+              rotate: -360,
+            }}
+            transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
+            className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] border border-lime/5 rounded-full"
+          />
           <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-lime/10 blur-[150px] rounded-full" />
         </div>
-
-        {/* Floating buttons */}
-        <FloatingButton label="Warsaw" position="left" className="top-48" />
-        <FloatingButton label="Shanghai" position="right" className="top-64" />
         
         {/* Chinese character */}
         <ChineseCharacters characters="合" position="right" className="top-40" opacity={0.06} />
 
-        <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
+        <motion.div 
+          style={{ opacity: heroOpacity }}
+          className="relative z-10 container mx-auto px-6 lg:px-12 text-center pt-20"
+        >
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-6">
-              <span className="w-2 h-2 rounded-full bg-lime" />
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-8">
+              <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
               O Yin Yang
             </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight mb-8">
               Twój <GradientText>partner</GradientText>,
               <br />
-              na linii PL–CN
+              na linii PL-CN
             </h1>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-10">
+            <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
               Działamy operacyjnie pomiędzy Polską a Chinami, łącząc perspektywę europejskich firm z bezpośrednią obecnością w chińskim systemie gospodarczym. Nasi specjaliści łączą wieloletnią praktykę projektów międzynarodowych z zapleczem akademickim zdobytym na czołowych uczelniach w Chinach, w tym Fudan University i Tongji University.
             </p>
           </motion.div>
 
-          {/* Stats Row */}
+          {/* Stats Row - integrated into hero */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto"
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto"
           >
-            {stats.map((stat) => (
-              <div 
+            {stats.map((stat, index) => (
+              <motion.div 
                 key={stat.label}
-                className="p-6 rounded-2xl bg-gray-800/50 border border-gray-700/50"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+                className="p-6 lg:p-8 rounded-2xl bg-gray-900/60 backdrop-blur-lg border border-gray-800/50 hover:border-lime/30 transition-all duration-300"
               >
-                <div className="font-display text-3xl font-bold text-lime mb-1">
+                <div className="font-display text-3xl lg:text-4xl font-bold text-lime mb-2">
                   {stat.isText ? (
                     <span>{stat.suffix}</span>
                   ) : (
@@ -165,10 +172,26 @@ const ONas = () => {
                   )}
                 </div>
                 <p className="text-gray-400 text-sm">{stat.label}</p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2"
+          >
+            <motion.div className="w-1.5 h-1.5 rounded-full bg-lime" />
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Team - 3+3 layout */}

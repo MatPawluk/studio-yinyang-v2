@@ -128,7 +128,7 @@ const Uslugi = () => {
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Kompleksowe <GradientText>wsparcie</GradientText>
               <br />
-              na linii Polska–Chiny
+              na linii Polska-Chiny
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Zakres współpracy każdorazowo dopasowany jest do kontekstu klienta, etapu relacji z Chinami oraz charakteru podejmowanych decyzji.

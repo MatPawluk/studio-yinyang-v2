@@ -221,7 +221,7 @@ const ServiceDetail = () => {
       {/* When it makes sense + Problems Solved - with parallax background */}
       <ParallaxSection imageUrl={statsBg} overlayOpacity={0.85} className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-16">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* When it makes sense */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -253,16 +253,19 @@ const ServiceDetail = () => {
               </div>
             </motion.div>
 
-            {/* Problems Solved */}
+            {/* Problems Solved - aligned at top */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <h2 className="font-display text-2xl font-bold text-white mb-8">
+              <h2 className="font-display text-2xl font-bold text-white mb-4">
                 Problem klienta, który <GradientText>rozwiązuje</GradientText>
               </h2>
+              <p className="text-gray-500 text-sm mb-8">
+                Korzyści biznesowe dla Twojej firmy
+              </p>
               <div className="space-y-6">
                 {service.problemsSolved.map((problem, index) => (
                   <motion.div
@@ -406,8 +409,13 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* Work Model */}
-      <section className="py-20 bg-gray-900">
+      {/* Work Model - with engaging background */}
+      <ParallaxSection 
+        imageUrl={statsBg} 
+        overlayOpacity={0.9} 
+        variant="asian"
+        className="py-20"
+      >
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
@@ -424,7 +432,7 @@ const ServiceDetail = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
+                  className="bg-gray-800/60 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
                 >
                   <Users className="w-10 h-10 text-lime mx-auto mb-4" />
                   <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Typ</p>
@@ -435,7 +443,7 @@ const ServiceDetail = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
+                  className="bg-gray-800/60 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
                 >
                   <Clock className="w-10 h-10 text-lime mx-auto mb-4" />
                   <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Czas realizacji</p>
@@ -446,7 +454,7 @@ const ServiceDetail = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
+                  className="bg-gray-800/60 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
                 >
                   <FileText className="w-10 h-10 text-lime mx-auto mb-4" />
                   <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Komunikacja</p>
@@ -456,7 +464,7 @@ const ServiceDetail = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </ParallaxSection>
 
       {/* Case Study */}
       <section className="bg-gray-950 py-24 relative overflow-hidden">
