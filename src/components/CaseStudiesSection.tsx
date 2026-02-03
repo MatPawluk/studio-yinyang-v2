@@ -6,44 +6,40 @@ import { GradientText } from './GradientText';
 
 const caseStudies = [
   {
-    name: 'TechPol Industries',
+    name: 'Vektor Automation',
     category: 'Weryfikacja dostawcy',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80',
-    client: 'Firma produkcyjna (Polska)',
-    goal: 'Weryfikacja chińskiego dostawcy robotów',
-    budget: '15 000 PLN',
-    duration: '2 tygodnie',
-    result: 'Uniknięcie straty 200 000 PLN',
+    client: 'Producent systemów automatyki przemysłowej',
+    goal: 'Weryfikacja chińskiego dostawcy podzespołów do linii produkcyjnych',
+    duration: '3 tygodnie',
+    result: 'Wykrycie rozbieżności w zakresie certyfikacji i struktury właścicielskiej. Zabezpieczenie klienta przed podpisaniem kontraktu o podwyższonym ryzyku operacyjnym.',
   },
   {
-    name: 'EuroAsia Trade',
+    name: 'Arcom Electronics',
     category: 'Wejście na rynek',
     image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80',
-    client: 'Dystrybutor elektroniki (Polska)',
-    goal: 'Ekspansja na rynek chiński',
-    budget: '45 000 PLN',
+    client: 'Dystrybutor urządzeń elektronicznych klasy premium',
+    goal: 'Opracowanie strategii wejścia na rynek chiński (model B2B)',
     duration: '3 miesiące',
-    result: '+35% przychodów w pierwszym roku',
+    result: 'Uruchomienie pilotażowej sprzedaży w modelu cross-border. Podpisanie pierwszych umów z lokalnymi partnerami dystrybucyjnymi.',
   },
   {
-    name: 'InnoVest Capital',
+    name: 'Aktir',
     category: 'Due Diligence',
     image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600&q=80',
-    client: 'Fundusz inwestycyjny',
-    goal: 'Weryfikacja przed inwestycją JV',
-    budget: '25 000 PLN',
+    client: 'Operator transportu międzynarodowego',
+    goal: 'Due diligence chińskiego partnera logistycznego',
     duration: '4 tygodnie',
-    result: 'Uniknięcie inwestycji w zadłużony podmiot',
+    result: 'Kompleksowa analiza struktury finansowej i operacyjnej partnera. Podjęcie świadomej decyzji strategicznej oraz wzmocnienie pozycji negocjacyjnej klienta.',
   },
   {
-    name: 'GlobalLink Logistics',
+    name: 'Orvanta',
     category: 'Optymalizacja łańcucha',
     image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=600&q=80',
-    client: 'E-commerce (Polska)',
-    goal: 'Redukcja kosztów logistycznych',
-    budget: '18 000 PLN',
+    client: 'Platforma e-commerce z sektora elektroniki użytkowej',
+    goal: 'Optymalizacja struktury importu i modelu sourcingowego',
     duration: '6 tygodni',
-    result: '-35% kosztów logistycznych rocznie',
+    result: 'Redukcja kosztów logistycznych o 28%. Wdrożenie stabilnego modelu bezpośredniej współpracy z producentami.',
   },
 ];
 
@@ -126,15 +122,11 @@ export const CaseStudiesSection = () => {
                     <div className="space-y-4 flex-1">
                       <div className="flex justify-between border-b border-gray-800 pb-3">
                         <span className="text-gray-500 text-sm uppercase tracking-wider">Klient</span>
-                        <span className="text-white text-sm">{study.client}</span>
+                        <span className="text-white text-sm text-right max-w-[65%]">{study.client}</span>
                       </div>
                       <div className="flex justify-between border-b border-gray-800 pb-3">
                         <span className="text-gray-500 text-sm uppercase tracking-wider">Cel klienta</span>
-                        <span className="text-white text-sm text-right max-w-[60%]">{study.goal}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-gray-800 pb-3">
-                        <span className="text-gray-500 text-sm uppercase tracking-wider">Budżet</span>
-                        <span className="text-white text-sm">{study.budget}</span>
+                        <span className="text-white text-sm text-right max-w-[65%]">{study.goal}</span>
                       </div>
                       <div className="flex justify-between border-b border-gray-800 pb-3">
                         <span className="text-gray-500 text-sm uppercase tracking-wider">Czas współpracy</span>
@@ -142,7 +134,7 @@ export const CaseStudiesSection = () => {
                       </div>
                       <div className="flex justify-between pb-3">
                         <span className="text-gray-500 text-sm uppercase tracking-wider">Rezultat</span>
-                        <span className="text-lime text-sm font-semibold">{study.result}</span>
+                        <span className="text-lime text-sm font-semibold text-right max-w-[65%]">{study.result}</span>
                       </div>
                     </div>
 

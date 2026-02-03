@@ -180,7 +180,12 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
           <Star key={i} className="w-4 h-4 fill-current text-lime" />
         ))}
         {hasHalfStar && (
-          <Star className="w-4 h-4 text-lime" style={{ clipPath: 'inset(0 50% 0 0)' }} />
+          <div className="relative w-4 h-4">
+            <Star className="w-4 h-4 text-lime/30 absolute" />
+            <div className="overflow-hidden w-1/2">
+              <Star className="w-4 h-4 fill-current text-lime" />
+            </div>
+          </div>
         )}
       </div>
 

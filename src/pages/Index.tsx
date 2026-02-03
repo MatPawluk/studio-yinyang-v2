@@ -12,6 +12,7 @@ import { GradientText } from '@/components/GradientText';
 import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Target, Search, Rocket, Settings } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
@@ -107,7 +108,7 @@ const stats = [
   { value: 480, suffix: '+', label: 'zweryfikowanych podmiotów i partnerów biznesowych' },
   { value: 50, suffix: '+', label: 'lat łącznego doświadczenia zespołu w projektach międzynarodowych' },
   { value: 7, suffix: '', label: 'sektorów technologicznych' },
-  { value: 0, suffix: 'PL–CN', label: 'stała obecność operacyjna', isText: true },
+  { value: 0, suffix: 'PL-CN', label: 'stała obecność operacyjna', isText: true },
 ];
 
 const Index = () => {
@@ -192,7 +193,7 @@ const Index = () => {
             >
               Twój <TypewriterText words={['przewodnik', 'partner']} pauseDuration={3000} />
               <br />
-              <span className="text-lime">w relacjach Polska–Chiny.</span>
+              <span className="text-lime">w relacjach Polska-Chiny.</span>
             </motion.h1>
 
             <motion.p
@@ -201,14 +202,14 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed px-4"
             >
-              Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL–CN
+              Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL-CN
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-col items-center gap-6"
+              className="flex flex-col items-center gap-4"
             >
               <Link
                 to="/kontakt"
@@ -217,6 +218,9 @@ const Index = () => {
                 Umów bezpłatną konsultację
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
+              <p className="text-gray-400 text-sm">
+                Dołącz do grona <span className="text-lime font-semibold">540+</span> zadowolonych klientów
+              </p>
             </motion.div>
           </div>
         </motion.div>
@@ -252,6 +256,16 @@ const Index = () => {
                     whileHover={{ y: -8 }}
                     className="group relative bg-gray-900/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-gray-800/50 hover:border-lime/40 transition-all duration-500 hover:shadow-2xl hover:shadow-lime/10 overflow-hidden"
                   >
+                    {/* Glowing Effect */}
+                    <GlowingEffect
+                      spread={40}
+                      glow={true}
+                      disabled={false}
+                      proximity={64}
+                      inactiveZone={0.01}
+                      borderWidth={2}
+                    />
+                    
                     {/* Top lime accent bar - thin and half width */}
                     <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-lime/50 via-lime to-lime/50" />
                     
@@ -298,20 +312,20 @@ const Index = () => {
       {/* Services Carousel Section */}
       <section className="relative bg-gray-950 py-24 z-10">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header - "Nasze usługi" with green gradient, centered */}
+          {/* Header - "Nasze usługi" with gradient, centered */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
             <h2 className="font-display text-4xl lg:text-6xl font-bold">
-              <span className="text-white">Nasze </span>
-              <span className="text-lime">usługi</span>
+              <span className="text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-gray-400 to-white">Nasze </span>
+              <GradientText>usługi</GradientText>
             </h2>
           </motion.div>
 
-          {/* Carousel with peek effect */}
+          {/* Carousel with peek effect - TALLER */}
           <div className="relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -324,10 +338,11 @@ const Index = () => {
                 {/* Previous slide peek */}
                 <motion.div 
                   key={`prev-${getPrevIndex()}`}
-                  className="hidden lg:block flex-shrink-0 w-[15%] opacity-40"
+                  className="hidden lg:block flex-shrink-0 w-[12%] opacity-30 hover:opacity-50 transition-opacity cursor-pointer"
                   onClick={prevSlide}
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <div className="rounded-2xl overflow-hidden aspect-[16/9] cursor-pointer hover:opacity-60 transition-opacity">
+                  <div className="rounded-2xl overflow-hidden aspect-[4/3] border border-gray-800/50">
                     <img
                       src={carouselServices[getPrevIndex()].image}
                       alt=""
@@ -336,40 +351,43 @@ const Index = () => {
                   </div>
                 </motion.div>
 
-                {/* Main slide */}
-                <div className="flex-1 rounded-3xl overflow-hidden aspect-[16/9] lg:aspect-[21/9] relative">
+                {/* Main slide - TALLER */}
+                <div className="flex-1 rounded-3xl overflow-hidden aspect-[16/10] lg:aspect-[2/1] relative border border-gray-800/50 shadow-2xl shadow-lime/5">
                   <motion.img
                     key={currentSlide}
-                    initial={{ opacity: 0, scale: 1.1 }}
+                    initial={{ opacity: 0, scale: 1.05 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
                     src={carouselServices[currentSlide].image}
                     alt={carouselServices[currentSlide].title}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/70 to-transparent" />
                   
-                  {/* Content overlay */}
-                  <div className="absolute inset-0 flex items-end p-6 sm:p-8 lg:p-12">
+                  {/* Content overlay - better positioned */}
+                  <div className="absolute inset-0 flex items-center p-8 sm:p-12 lg:p-16">
                     <motion.div 
                       key={`content-${currentSlide}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="max-w-lg"
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: 0.1 }}
+                      className="max-w-xl"
                     >
-                      <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3">
+                      <span className="inline-block px-3 py-1 rounded-full bg-lime/20 text-lime text-xs font-medium mb-4">
+                        {String(currentSlide + 1).padStart(2, '0')} / {String(carouselServices.length).padStart(2, '0')}
+                      </span>
+                      <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4">
                         {carouselServices[currentSlide].title}
                       </h3>
-                      <p className="text-gray-300 text-base lg:text-lg mb-6 hidden sm:block">
+                      <p className="text-gray-300 text-base lg:text-lg mb-8 hidden sm:block leading-relaxed">
                         {carouselServices[currentSlide].description}
                       </p>
                       <Link
                         to={`/uslugi#${carouselServices[currentSlide].slug}`}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-gray-900 rounded-full font-medium hover:scale-105 transition-all duration-300"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-lime/50 text-lime rounded-full font-medium hover:bg-lime hover:text-gray-900 transition-all duration-300 group"
                       >
-                        Dowiedz się więcej
-                        <ArrowRight className="w-4 h-4" />
+                        <span className="text-sm">Dowiedz się więcej</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </motion.div>
                   </div>
@@ -378,10 +396,11 @@ const Index = () => {
                 {/* Next slide peek */}
                 <motion.div 
                   key={`next-${getNextIndex()}`}
-                  className="hidden lg:block flex-shrink-0 w-[15%] opacity-40"
+                  className="hidden lg:block flex-shrink-0 w-[12%] opacity-30 hover:opacity-50 transition-opacity cursor-pointer"
                   onClick={nextSlide}
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <div className="rounded-2xl overflow-hidden aspect-[16/9] cursor-pointer hover:opacity-60 transition-opacity">
+                  <div className="rounded-2xl overflow-hidden aspect-[4/3] border border-gray-800/50">
                     <img
                       src={carouselServices[getNextIndex()].image}
                       alt=""
