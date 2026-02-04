@@ -7,133 +7,18 @@ import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ParallaxSection } from '@/components/ParallaxSection';
 import { ArrowLeft, ArrowRight, Check, X, FileText, Video, Clock, Users } from 'lucide-react';
-import serviceStrategy from '@/assets/service-strategy.jpg';
-import serviceAnalysis from '@/assets/service-analysis.jpg';
+import { servicesData, serviceSlugMap, defaultServiceData } from '@/data/servicesData';
 import statsBg from '@/assets/stats-bg.jpg';
-
-const servicesData: Record<string, {
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  whenItMakesSense: string[];
-  problemsSolved: string[];
-  scope: {
-    includes: string[];
-    excludes: string[];
-  };
-  deliverables: string[];
-  workModel: {
-    type: string;
-    duration: string;
-    communication: string;
-  };
-  caseStudy: {
-    client: string;
-    situation: string;
-    actions: string;
-    result: string;
-  };
-}> = {
-  'strategia-wobec-chin': {
-    title: 'Strategia wobec Chin',
-    subtitle: 'Poziom zarządczy',
-    image: serviceStrategy,
-    description: 'Dostarczamy rzetelną ocenę Twojej branży w Chinach, zweryfikowaną z perspektywy Szanghaju. Zamiast teoretycznych danych, sprawdzamy lokalne chińskie źródła i plany rządowe, do których trudno dotrzeć z Europy. Dzięki temu oddzielamy realne fakty od marketingu. To pierwszy, bezpieczny krok, który pozwala Zarządowi ocenić szanse i ryzyka zanim firma zainwestuje w drogie audyty prawne czy wyjazdy służbowe.',
-    whenItMakesSense: [
-      'Konieczność Modernizacji: Firma traci konkurencyjność w Polsce (rosnące koszty pracy/energii) i musi wdrożyć automatyzację lub nowe technologie, ale obawia się niskiej jakości chińskich rozwiązań i braku serwisu.',
-      'Ryzyko Dostawcy: Firma jest uzależniona od importu z Chin, ale nie zna kondycji finansowej i prawnej swojego dostawcy (ryzyko nagłego przerwania łańcucha dostaw przez nowe regulacje).',
-      'Planowana Ekspansja: Firma rozważa eksport do Chin i potrzebuje realnej oceny szans (weryfikacja konkurencji i barier wejścia) przed zainwestowaniem środków w marketing.',
-    ],
-    problemsSolved: [
-      'Minimalizacja Ryzyka (De-risking): Chroni przed błędem inwestycyjnym (np. wybór technologii wycofywanej z rynku lub współpraca z pośrednikiem udającym producenta).',
-      'Weryfikacja Opłacalności: Wskazuje, czy import/wdrożenie danej technologii faktycznie przyniesie oszczędności względem rozwiązań dostępnych w Europie.',
-    ],
-    scope: {
-      includes: [
-        'Analiza Luki (Gap Analysis): Porównanie rozwiązań stosowanych w Chinach z obecną sytuacją w firmie klienta.',
-        'Weryfikacja Polityczna: Sprawdzenie, czy dany sektor jest wspierany przez rząd (szansa na niższe ceny/dotacje), czy ograniczany regulacjami (ryzyko).',
-        'Mapa Graczy: Identyfikacja kluczowych producentów i technologii w danym regionie.',
-        'Analiza Ryzyka: Sprawdzenie opinii o podmiotach w chińskim internecie przemysłowym.',
-      ],
-      excludes: [
-        'Fizycznych wizyt w fabrykach i audytów technicznych na miejscu.',
-        'Bezpośrednich negocjacji handlowych i zakupów.',
-        'Doradztwa prawnego i podatkowego.',
-      ],
-    },
-    deliverables: [
-      'Raport Zarządczy (Executive Memo): Dokument PDF (3-5 stron kluczowych wniosków + załączniki analityczne). Skupiony na faktach, liczbach i rekomendacjach, bez zbędnej teorii.',
-      'Omówienie Wniosków (Debriefing Call): 45-minutowa konsultacja online. Możliwość zadania pytań i omówienia dalszych kroków "na żywo".',
-    ],
-    workModel: {
-      type: 'Projekt jednorazowy (usługa otwierająca)',
-      duration: 'do 10 dni roboczych',
-      communication: 'Mail (przesłanie materiałów) + Finalne spotkanie wideo (Debriefing)',
-    },
-    caseStudy: {
-      client: 'Średnia fabryka mebli (Polska)',
-      situation: 'Plan zakupu robotów lakierniczych z Chin. Obawy o awaryjność, brak części zamiennych i rzetelność dostawcy znalezionego w internecie.',
-      actions: 'Przeprowadzono analizę rynku. Zidentyfikowano 3 producentów w klastrze robotyki (Foshan) posiadających stabilną pozycję rynkową. Odrzucono 2 firmy oparte wyłącznie na marketingu (negatywne opinie na chińskich forach inżynierskich). Rekomendowano dostawcę wykorzystującego podzespoły Siemens (łatwy serwis w Polsce).',
-      result: 'Klient zrezygnował z ryzykownego zakupu od pośrednika i rozpoczął rozmowy z rekomendowanym producentem. Uniknięcie straty szacowanej na ok. 200 tys. PLN.',
-    },
-  },
-};
-
-// Default data for services not yet defined
-const defaultServiceData = {
-  title: 'Usługa',
-  subtitle: 'Wsparcie biznesowe',
-  image: serviceAnalysis,
-  description: 'Kompleksowe wsparcie w relacjach biznesowych na linii Polska-Chiny.',
-  whenItMakesSense: [
-    'Planowanie wejścia na rynek chiński',
-    'Weryfikacja potencjalnych partnerów',
-    'Optymalizacja istniejącej współpracy',
-  ],
-  problemsSolved: [
-    'Minimalizacja ryzyka biznesowego',
-    'Weryfikacja wiarygodności partnerów',
-  ],
-  scope: {
-    includes: [
-      'Analiza rynku i konkurencji',
-      'Weryfikacja partnerów',
-      'Raport z rekomendacjami',
-    ],
-    excludes: [
-      'Doradztwo prawne i podatkowe',
-      'Bezpośrednie negocjacje',
-    ],
-  },
-  deliverables: [
-    'Raport analityczny',
-    'Konsultacja online',
-  ],
-  workModel: {
-    type: 'Projekt jednorazowy',
-    duration: 'do 14 dni roboczych',
-    communication: 'Mail + spotkanie wideo',
-  },
-  caseStudy: {
-    client: 'Firma produkcyjna (Polska)',
-    situation: 'Poszukiwanie niezawodnego dostawcy komponentów z Chin.',
-    actions: 'Przeprowadzono weryfikację potencjalnych dostawców i analizę rynku.',
-    result: 'Wybrano optymalnego partnera, unikając potencjalnych problemów jakościowych.',
-  },
-};
 
 const ServiceDetail = () => {
   const { serviceSlug, subServiceSlug } = useParams();
   
   // Try to find the service by main slug first, then check sub-service slug
   const mainSlug = serviceSlug || '';
-  const service = servicesData[mainSlug] || defaultServiceData;
+  const mappedSlug = subServiceSlug ? (serviceSlugMap[subServiceSlug] || subServiceSlug) : mainSlug;
+  const service = servicesData[mappedSlug] || servicesData[mainSlug] || defaultServiceData;
   
-  // Override title if subServiceSlug exists
-  const displayTitle = subServiceSlug 
-    ? subServiceSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    : service.title;
+  const displayTitle = service.title;
 
   return (
     <div className="min-h-screen bg-gray-900">

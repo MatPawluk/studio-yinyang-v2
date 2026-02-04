@@ -218,9 +218,29 @@ const Index = () => {
                 Umów bezpłatną konsultację
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-              <p className="text-gray-400 text-sm">
-                Dołącz do grona <span className="text-lime font-semibold">540+</span> zadowolonych klientów
-              </p>
+              <div className="flex items-center justify-center gap-3">
+                {/* Stacked Avatars */}
+                <div className="flex -space-x-2">
+                  <img 
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anna&backgroundColor=c4ff00" 
+                    alt="Client" 
+                    className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-800"
+                  />
+                  <img 
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marek&backgroundColor=c4ff00" 
+                    alt="Client" 
+                    className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-800"
+                  />
+                  <img 
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tomasz&backgroundColor=c4ff00" 
+                    alt="Client" 
+                    className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-800"
+                  />
+                </div>
+                <p className="text-gray-400 text-sm">
+                  Dołącz do grona <span className="text-lime font-semibold">540+</span> zadowolonych klientów
+                </p>
+              </div>
             </motion.div>
           </div>
         </motion.div>
@@ -373,9 +393,6 @@ const Index = () => {
                       transition={{ duration: 0.4, delay: 0.1 }}
                       className="max-w-xl"
                     >
-                      <span className="inline-block px-3 py-1 rounded-full bg-lime/20 text-lime text-xs font-medium mb-4">
-                        {String(currentSlide + 1).padStart(2, '0')} / {String(carouselServices.length).padStart(2, '0')}
-                      </span>
                       <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4">
                         {carouselServices[currentSlide].title}
                       </h3>
