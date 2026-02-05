@@ -43,7 +43,7 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
               <span className="font-display font-bold text-2xl">Yin Yang</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Twój przewodnik w relacjach Polska–Chiny. Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL–CN.
+              Twój przewodnik w relacjach Polska-Chiny. Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL-CN.
             </p>
           </div>
 
@@ -88,8 +88,9 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
                   Warszawa
                 </div>
                 <p className="text-gray-400 text-sm pl-6">
-                  ul. Chmielna 69<br />
-                  00-801 Warszawa
+                  ul. Chmielna 73<br />
+                  00-801 Warszawa<br />
+                  Polska
                 </p>
               </div>
               <div>
@@ -98,8 +99,9 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
                   Shanghai
                 </div>
                 <p className="text-gray-400 text-sm pl-6">
-                  Zhangyang Road 777<br />
-                  Pudong New Area
+                  696 Weihai Road<br />
+                  Jing'an District<br />
+                  Shanghai 200041, China
                 </p>
               </div>
             </div>
