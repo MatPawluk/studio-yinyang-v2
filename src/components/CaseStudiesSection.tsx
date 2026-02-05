@@ -103,45 +103,47 @@ export const CaseStudiesSection = () => {
 
                 {/* Back of card */}
                 <div 
-                  className="absolute inset-0 rounded-3xl bg-gray-900 border border-gray-800 p-5 backface-hidden overflow-hidden"
+                  className="absolute inset-0 rounded-3xl bg-gray-900 border border-gray-800 p-6 backface-hidden overflow-hidden"
                   style={{ 
                     backfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)'
                   }}
                 >
-                  <div className="h-full flex flex-col">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-display text-lg font-bold text-white">{study.name}</h3>
-                      <span className="px-2 py-1 rounded-full bg-lime/20 text-lime text-xs">
-                        {study.category}
-                      </span>
-                    </div>
+                  <div className="h-full flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between mb-5">
+                        <h3 className="font-display text-xl font-bold text-white">{study.name}</h3>
+                        <span className="px-3 py-1 rounded-full bg-lime/20 text-lime text-xs font-medium">
+                          {study.category}
+                        </span>
+                      </div>
 
-                    <div className="space-y-2 flex-1 overflow-y-auto">
-                      <div className="flex justify-between border-b border-gray-800 pb-2">
-                        <span className="text-gray-500 text-xs uppercase tracking-wider">Klient</span>
-                        <span className="text-white text-xs text-right max-w-[60%]">{study.client}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-gray-800 pb-2">
-                        <span className="text-gray-500 text-xs uppercase tracking-wider">Cel klienta</span>
-                        <span className="text-white text-xs text-right max-w-[60%]">{study.goal}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-gray-800 pb-2">
-                        <span className="text-gray-500 text-xs uppercase tracking-wider">Czas współpracy</span>
-                        <span className="text-white text-xs">{study.duration}</span>
-                      </div>
-                      <div className="pb-2">
-                        <span className="text-gray-500 text-xs uppercase tracking-wider block mb-1">Rezultat</span>
-                        <span className="text-lime text-xs font-medium leading-relaxed block">{study.result}</span>
+                      <div className="space-y-3">
+                        <div className="flex justify-between border-b border-gray-800 pb-3">
+                          <span className="text-gray-500 text-xs uppercase tracking-wider">Klient</span>
+                          <span className="text-white text-sm text-right max-w-[65%]">{study.client}</span>
+                        </div>
+                        <div className="flex justify-between border-b border-gray-800 pb-3">
+                          <span className="text-gray-500 text-xs uppercase tracking-wider">Cel klienta</span>
+                          <span className="text-white text-sm text-right max-w-[65%]">{study.goal}</span>
+                        </div>
+                        <div className="flex justify-between border-b border-gray-800 pb-3">
+                          <span className="text-gray-500 text-xs uppercase tracking-wider">Czas współpracy</span>
+                          <span className="text-white text-sm">{study.duration}</span>
+                        </div>
+                        <div className="pt-1">
+                          <span className="text-gray-500 text-xs uppercase tracking-wider block mb-2">Rezultat</span>
+                          <span className="text-lime text-sm font-medium leading-relaxed block">{study.result}</span>
+                        </div>
                       </div>
                     </div>
 
                     <Link
                       to="/kontakt"
-                      className="mt-3 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-800 hover:bg-lime hover:text-gray-900 text-white rounded-full text-sm font-medium transition-all duration-300 group flex-shrink-0"
+                      className="mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gray-800 hover:bg-lime hover:text-gray-900 text-white rounded-full text-sm font-medium transition-all duration-300 group"
                     >
                       Porozmawiajmy o Twoim projekcie
-                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>
                 </div>

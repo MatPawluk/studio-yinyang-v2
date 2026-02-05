@@ -18,7 +18,9 @@ import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
-
+import avatarTeam1 from '@/assets/avatar-team-1.jpg';
+import avatarTeam2 from '@/assets/avatar-team-2.jpg';
+import avatarTeam3 from '@/assets/avatar-team-3.jpg';
 const heroServices = [
   { 
     title: 'Strategia i decyzje', 
@@ -219,22 +221,22 @@ const Index = () => {
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <div className="flex items-center justify-center gap-3">
-                {/* Stacked Avatars */}
+                {/* Stacked Avatars - real photos */}
                 <div className="flex -space-x-2">
                   <img 
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anna&backgroundColor=c4ff00" 
+                    src={avatarTeam1} 
                     alt="Client" 
-                    className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-800"
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
                   />
                   <img 
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marek&backgroundColor=c4ff00" 
+                    src={avatarTeam2} 
                     alt="Client" 
-                    className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-800"
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
                   />
                   <img 
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tomasz&backgroundColor=c4ff00" 
+                    src={avatarTeam3} 
                     alt="Client" 
-                    className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-800"
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
                   />
                 </div>
                 <p className="text-gray-400 text-sm">
@@ -474,6 +476,68 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Stats Section with Parallax - MOVED BEFORE PROCESS */}
+      <section className="relative py-32 overflow-hidden">
+        <motion.div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${statsBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+          }}
+        >
+          <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" />
+        </motion.div>
+
+        {/* Animated glow */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{ 
+              x: ['-20%', '20%', '-20%'],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-lime/20 blur-[100px] rounded-full"
+          />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
+              Skala i zaufanie
+            </span>
+          </motion.div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-lime mb-3">
+                  {stat.isText ? (
+                    <span>{stat.suffix}</span>
+                  ) : (
+                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                  )}
+                </div>
+                <p className="text-white/70 text-xs sm:text-sm">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Process Section - Dark with Large Radar and Chinese characters */}
       <section className="bg-gray-900 py-24 relative overflow-hidden">
         {/* Large Radar in Background - much bigger */}
@@ -552,68 +616,6 @@ const Index = () => {
                 </motion.div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section with Parallax */}
-      <section className="relative py-32 overflow-hidden">
-        <motion.div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${statsBg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-          }}
-        >
-          <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" />
-        </motion.div>
-
-        {/* Animated glow */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ 
-              x: ['-20%', '20%', '-20%'],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-lime/20 blur-[100px] rounded-full"
-          />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Skala i zaufanie
-            </span>
-          </motion.div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-lime mb-3">
-                  {stat.isText ? (
-                    <span>{stat.suffix}</span>
-                  ) : (
-                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-                  )}
-                </div>
-                <p className="text-white/70 text-xs sm:text-sm">{stat.label}</p>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>

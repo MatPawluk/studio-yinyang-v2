@@ -4,7 +4,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { Globe3D } from '@/components/Globe3D';
+import { WorldDotMap } from '@/components/WorldDotMap';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
@@ -257,7 +257,7 @@ const ONas = () => {
       {/* Team Photo Carousel */}
       <TeamCarousel />
 
-      {/* 3D Globe Section */}
+      {/* World Dot Map Section */}
       <section className="bg-gray-900 py-24 relative overflow-hidden">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
@@ -274,7 +274,9 @@ const ONas = () => {
             </h2>
           </motion.div>
           
-          <Globe3D />
+          <div className="max-w-5xl mx-auto">
+            <WorldDotMap />
+          </div>
         </div>
       </section>
 
