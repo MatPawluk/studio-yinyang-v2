@@ -217,21 +217,11 @@ const BazaWiedzy = () => {
 
       {/* CTA Section with smooth transition */}
       <section className="relative py-24 overflow-hidden">
-        {/* Gradient transition from articles section */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-900" />
-          {/* Radial glow effect like "Let's get to work" inspiration */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-64">
-            <div className="absolute inset-0 bg-gradient-radial from-lime/10 via-lime/5 to-transparent rounded-t-full" />
-          </div>
-        </div>
-        
+        {/* Clean dark background with subtle centered glow */}
+        <div className="absolute inset-0 bg-gray-900" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 8, repeat: Infinity }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-lime/10 blur-[120px] rounded-full"
-          />
+          {/* Subtle, smooth radial glow from center */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-lime/8 blur-[100px] rounded-full" />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">

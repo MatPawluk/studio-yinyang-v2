@@ -226,17 +226,17 @@ const Index = () => {
                   <img 
                     src={avatarTeam1} 
                     alt="Client" 
-                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                    className="w-8 h-8 rounded-full object-cover"
                   />
                   <img 
                     src={avatarTeam2} 
                     alt="Client" 
-                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                    className="w-8 h-8 rounded-full object-cover"
                   />
                   <img 
                     src={avatarTeam3} 
                     alt="Client" 
-                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                    className="w-8 h-8 rounded-full object-cover"
                   />
                 </div>
                 <p className="text-gray-400 text-sm">
@@ -542,7 +542,7 @@ const Index = () => {
       <section className="bg-gray-900 py-24 relative overflow-hidden">
         {/* Large Radar in Background - much bigger */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[1200px] h-[1200px] opacity-20">
+          <div className="w-[1200px] h-[1200px] opacity-40">
             <RadarAnimation size="lg" className="w-full h-full" />
           </div>
         </div>
@@ -550,8 +550,8 @@ const Index = () => {
         {/* Chinese characters decoration - 合作关系 */}
         <ChineseCharacters characters="合作关系" position="left" className="top-32" opacity={0.06} />
         
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-900 pointer-events-none" />
+        {/* Background gradient - lighter to show radar */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900/80 pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
