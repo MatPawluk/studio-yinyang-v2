@@ -4,62 +4,42 @@ import { Footer } from '@/components/Footer';
 import { GradientText } from '@/components/GradientText';
 import { MapPin, Send, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
+import gmailLogo from '@/assets/gmail-logo.png';
+import whatsappLogo from '@/assets/whatsapp-logo.png';
+import wechatLogo from '@/assets/wechat-logo.png';
+import googleMeetLogo from '@/assets/google-meet-logo.png';
 
 const contactMethods = [
   {
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
-      </svg>
-    ),
+    icon: gmailLogo,
     title: 'Napisz do nas',
     subtitle: 'contact@yinyang.pl',
-    color: 'red',
     hoverBorder: 'hover:border-red-500',
     hoverText: 'group-hover:text-red-500',
-    iconColor: 'group-hover:text-red-500',
     href: 'mailto:contact@yinyang.pl',
   },
   {
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>
-    ),
+    icon: whatsappLogo,
     title: 'Porozmawiaj z nami',
     subtitle: 'WhatsApp',
-    color: 'green',
     hoverBorder: 'hover:border-green-500',
     hoverText: 'group-hover:text-green-500',
-    iconColor: 'group-hover:text-green-500',
     href: 'https://wa.me/48123456789',
   },
   {
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.328.328 0 0 0 .186-.059l1.92-1.14a.595.595 0 0 1 .494-.062c.71.194 1.473.301 2.246.301 4.8 0 8.691-3.288 8.691-7.342s-3.89-7.243-8.691-7.243m4.687 4.87a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5m-3.75 0a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5m-3.75 0a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5M21 17.781a.595.595 0 0 1 .213-.665c1.832-1.347 3.001-3.338 3.001-5.55 0-4.054-3.89-7.342-8.69-7.342-.182 0-.36.01-.538.021 2.866 1.159 4.938 3.596 4.938 6.568 0 3.977-4.04 7.206-9.008 7.275a11.14 11.14 0 0 0 4.614.996c.773 0 1.536-.107 2.246-.301a.595.595 0 0 1 .494.062l1.92 1.14c.057.037.118.059.186.059.16 0 .29-.132.29-.295 0-.072-.03-.143-.048-.213l-.39-1.48a.593.593 0 0 1 .213-.665"/>
-      </svg>
-    ),
+    icon: wechatLogo,
     title: 'WeChat',
     subtitle: 'Skanuj kod QR',
-    color: 'green',
     hoverBorder: 'hover:border-green-500',
     hoverText: 'group-hover:text-green-500',
-    iconColor: 'group-hover:text-green-500',
     href: '#',
   },
   {
-    icon: (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.5 17.5l-4-4 1.41-1.41L10.5 14.67l5.09-5.09L17 11l-6.5 6.5z"/>
-      </svg>
-    ),
+    icon: googleMeetLogo,
     title: 'Umów spotkanie',
     subtitle: 'Google Meet',
-    color: 'blue',
     hoverBorder: 'hover:border-blue-500',
     hoverText: 'group-hover:text-blue-500',
-    iconColor: 'group-hover:text-blue-500',
     href: 'https://calendar.google.com',
   },
 ];
@@ -127,8 +107,8 @@ const Kontakt = () => {
                     transition={{ delay: 0.2 + index * 0.1 }}
                     className={`group flex items-center gap-4 p-5 rounded-2xl bg-gray-800/50 border-2 border-gray-700/50 ${method.hoverBorder} transition-all duration-300`}
                   >
-                    <div className={`w-14 h-14 rounded-xl bg-gray-700/50 flex items-center justify-center text-gray-400 ${method.iconColor} transition-colors duration-300`}>
-                      {method.icon}
+                    <div className="w-14 h-14 rounded-xl bg-gray-700/50 flex items-center justify-center overflow-hidden p-2">
+                      <img src={method.icon} alt={method.title} className="w-8 h-8 object-contain" />
                     </div>
                     <div className="flex-grow">
                       <p className={`text-white font-semibold ${method.hoverText} transition-colors duration-300`}>{method.title}</p>

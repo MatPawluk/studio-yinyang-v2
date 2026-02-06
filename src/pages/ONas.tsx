@@ -2,12 +2,12 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { WorldDotMap } from '@/components/WorldDotMap';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
+import { FloatingTransport } from '@/components/FloatingTransport';
 import { TeamCarousel } from '@/components/TeamCarousel';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
@@ -101,8 +101,8 @@ const ONas = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900" />
         </motion.div>
         
-        {/* Floating dots animation */}
         <FloatingDots count={80} />
+        <FloatingTransport />
         
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -347,20 +347,7 @@ const ONas = () => {
         </div>
       </section>
 
-      {/* Trust Section */}
-      <section className="bg-gray-900 py-12 border-t border-gray-800">
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center text-gray-500 text-sm uppercase tracking-widest mb-8"
-          >
-            Zaufali nam
-          </motion.p>
-        </div>
-        <LogoMarquee />
-      </section>
+      {/* Trust Section removed */}
 
       {/* CTA Section */}
       <section className="relative py-32 overflow-hidden bg-gray-900">
