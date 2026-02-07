@@ -16,6 +16,26 @@ const categories = ['Wszystkie', 'Analizy', 'Poradniki', 'Blog'];
 const articles = [
   {
     category: 'Analizy',
+    title: 'Gdzie znika Twoja marża? 5 sygnałów, że Twój chiński „producent" to tylko pośrednik',
+    description: 'W chińskim systemie handlowym ustalenie, kto rzeczywiście stoi za produkcją, przypomina pracę analityka. Wyjaśniamy, jak za pomocą twardych danych z rejestrów państwowych ChRL zdemaskować pośrednika w mniej niż 15 minut.',
+    date: '7.02.2026',
+    readTime: '14 min',
+    image: articleCompetition,
+    slug: 'gdzie-znika-twoja-marza',
+    featured: true,
+  },
+  {
+    category: 'Analizy',
+    title: 'Chiński Nowy Rok 2026: Jak uniknąć paraliżu łańcucha dostaw w Roku Konia?',
+    description: 'Dla chińskiego sektora produkcyjnego Święto Wiosny to całkowite wygaszenie reaktora gospodarczego. Polskie firmy, które nie zaplanują dostaw z 4-miesięcznym wyprzedzeniem, ryzykują puste magazyny.',
+    date: '5.02.2026',
+    readTime: '12 min',
+    image: articleInnovation,
+    slug: 'chinski-nowy-rok-2026',
+    featured: true,
+  },
+  {
+    category: 'Analizy',
     title: 'Przewagi konkurencyjne chińskich firm w wybranych sektorach',
     description: 'Analiza kluczowych przewag, które pozwalają chińskim firmom dominować w wybranych branżach globalnie.',
     date: '10.01.2025',

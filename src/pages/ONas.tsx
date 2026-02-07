@@ -7,7 +7,7 @@ import { WorldDotMap } from '@/components/WorldDotMap';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
-import { FloatingTransport } from '@/components/FloatingTransport';
+import logo3d from '@/assets/logo-3d.png';
 import { TeamCarousel } from '@/components/TeamCarousel';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
@@ -70,7 +70,7 @@ const faqs = [
 ];
 
 const ONas = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
   const heroRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -102,7 +102,59 @@ const ONas = () => {
         </motion.div>
         
         <FloatingDots count={80} />
-        <FloatingTransport />
+        {/* Rotating 3D Logo */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <motion.img
+            src={logo3d}
+            alt="Yin Yang Logo"
+            className="w-40 h-40 md:w-56 md:h-56 lg:w-72 lg:h-72 opacity-15"
+            animate={{ rotateY: 360 }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+            style={{ perspective: 800 }}
+          />
+        </div>
+        
+        {/* Floating overlay cards - inspired by reference */}
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="absolute top-32 right-4 lg:right-12 z-20 hidden md:block"
+        >
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-2xl max-w-[200px]">
+            <p className="text-white/80 text-xs font-medium mb-1">Operacje PL-CN</p>
+            <p className="text-lime font-bold text-2xl">24/7</p>
+            <p className="text-gray-400 text-[10px]">Stała obecność w obu krajach</p>
+          </div>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.3, duration: 0.8 }}
+          className="absolute bottom-40 left-4 lg:left-12 z-20 hidden md:block"
+        >
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-2xl max-w-[220px]">
+            <p className="text-white/80 text-xs font-medium mb-1">Zweryfikowani partnerzy</p>
+            <p className="text-lime font-bold text-2xl">480+</p>
+            <p className="text-gray-400 text-[10px]">Podmiotów w bazie danych</p>
+          </div>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 80 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6, duration: 0.8 }}
+          className="absolute bottom-24 right-8 lg:right-24 z-20 hidden lg:block"
+        >
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-2xl max-w-[200px]">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-2 h-2 rounded-full bg-lime animate-pulse" />
+              <p className="text-white/80 text-xs font-medium">3 języki robocze</p>
+            </div>
+            <p className="text-gray-400 text-[10px]">PL · EN · 中文</p>
+          </div>
+        </motion.div>
         
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -314,7 +366,17 @@ const ONas = () => {
                 className="border-b border-gray-800"
               >
                 <button
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  onClick={() => {
+                    setOpenIndices(prev => {
+                      const next = new Set(prev);
+                      if (next.has(index)) {
+                        next.delete(index);
+                      } else {
+                        next.add(index);
+                      }
+                      return next;
+                    });
+                  }}
                   className="w-full flex items-center justify-between py-6 text-left group"
                 >
                   <span className="font-display text-lg md:text-xl font-semibold text-white group-hover:text-lime transition-colors duration-300 pr-4">
@@ -322,12 +384,12 @@ const ONas = () => {
                   </span>
                   <ChevronRight 
                     className={`w-5 h-5 text-gray-500 group-hover:text-lime transition-all duration-300 flex-shrink-0 ${
-                      openIndex === index ? 'rotate-90' : ''
+                      openIndices.has(index) ? 'rotate-90' : ''
                     }`}
                   />
                 </button>
                 <AnimatePresence>
-                  {openIndex === index && (
+                  {openIndices.has(index) && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}

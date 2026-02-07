@@ -204,7 +204,9 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed px-4"
             >
-              Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL-CN
+              Analizujemy, weryfikujemy, organizujemy i nadzorujemy
+              <br className="hidden sm:block" />
+              projekty na linii PL-CN
             </motion.p>
 
             <motion.div
@@ -239,8 +241,8 @@ const Index = () => {
                     className="w-8 h-8 rounded-full object-cover"
                   />
                 </div>
-                <p className="text-gray-400 text-sm">
-                  Dołącz do grona <span className="text-lime font-semibold">540+</span> zadowolonych klientów
+                <p className="text-gray-300 text-sm font-medium">
+                  Dołącz do grona <span className="text-lime font-bold">540+</span> zadowolonych klientów
                 </p>
               </div>
             </motion.div>
@@ -252,7 +254,7 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-72 md:bottom-80 left-1/2 -translate-x-1/2"
+          className="absolute bottom-52 md:bottom-56 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}

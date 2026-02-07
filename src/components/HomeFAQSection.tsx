@@ -32,7 +32,19 @@ const faqs = [
 ];
 
 export const HomeFAQSection = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
+
+  const toggleIndex = (index: number) => {
+    setOpenIndices(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
 
   return (
     <section className="bg-gray-950 py-24 relative overflow-hidden">
@@ -70,7 +82,7 @@ export const HomeFAQSection = () => {
               className="border-b border-gray-800"
             >
               <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                onClick={() => toggleIndex(index)}
                 className="w-full flex items-center justify-between py-6 text-left group"
               >
                 <span className="font-display text-lg md:text-xl font-semibold text-white group-hover:text-lime transition-colors duration-300 pr-4">
@@ -78,12 +90,12 @@ export const HomeFAQSection = () => {
                 </span>
                 <ChevronRight 
                   className={`w-5 h-5 text-gray-500 group-hover:text-lime transition-all duration-300 flex-shrink-0 ${
-                    openIndex === index ? 'rotate-90' : ''
+                    openIndices.has(index) ? 'rotate-90' : ''
                   }`}
                 />
               </button>
               <AnimatePresence>
-                {openIndex === index && (
+                {openIndices.has(index) && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
