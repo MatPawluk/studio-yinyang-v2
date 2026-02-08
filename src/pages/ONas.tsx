@@ -7,20 +7,23 @@ import { WorldDotMap } from '@/components/WorldDotMap';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
-import logo3d from '@/assets/logo-3d.png';
 import { TeamCarousel } from '@/components/TeamCarousel';
+import { ServicesCarousel } from '@/components/ServicesCarousel';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
+
+// Assets
 import teamJan from '@/assets/team-jan.jpg';
 import teamWei from '@/assets/team-wei.jpg';
 import teamAnna from '@/assets/team-anna.jpg';
 import avatar4 from '@/assets/avatar-4.jpg';
 import avatar5 from '@/assets/avatar-5.jpg';
 import avatar6 from '@/assets/avatar-6.jpg';
-import serviceStrategy from '@/assets/service-strategy.jpg';
-import serviceAnalysis from '@/assets/service-analysis.jpg';
-import heroBg from '@/assets/hero-bg.jpg';
+import shanghaiHeroBg from '@/assets/shanghai-hero-bg.jpg';
+import heroAirplane from '@/assets/hero-airplane.png';
+import heroTruck from '@/assets/hero-truck.png';
+import heroContainer from '@/assets/hero-container.png';
 
 const team = [
   { name: 'Adrian Nkwamu', role: 'Co-Founder & Managing Partner', image: teamJan },
@@ -78,109 +81,104 @@ const ONas = () => {
     offset: ["start start", "end start"]
   });
   
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
-      {/* Hero Section with Parallax */}
+      {/* Hero Section - Premium dark with Shanghai skyline + transport elements */}
       <section ref={heroRef} className="relative min-h-screen overflow-hidden flex items-center">
-        {/* Parallax Background */}
+        {/* Shanghai skyline background */}
         <motion.div 
-          style={{ y: heroY, scale: heroScale }}
+          style={{ y: heroY }}
           className="absolute inset-0"
         >
           <img 
-            src={heroBg} 
+            src={shanghaiHeroBg} 
             alt="" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/60 via-[#050608]/80 to-[#050608]" />
+          {/* Vignette */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#050608_80%)]" />
         </motion.div>
         
-        <FloatingDots count={80} />
-        {/* Rotating 3D Logo */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <motion.img
-            src={logo3d}
-            alt="Yin Yang Logo"
-            className="w-40 h-40 md:w-56 md:h-56 lg:w-72 lg:h-72 opacity-15"
-            animate={{ rotateY: 360 }}
-            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-            style={{ perspective: 800 }}
-          />
+        {/* Oversized blurred background words */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          <div className="absolute top-[15%] left-[5%] font-display text-[12vw] font-bold text-white/[0.04] blur-[2px] tracking-wider">
+            LOGISTICS
+          </div>
+          <div className="absolute top-[35%] right-[5%] font-display text-[10vw] font-bold text-white/[0.05] blur-[2px] tracking-wider">
+            PL—CN
+          </div>
+          <div className="absolute bottom-[30%] left-[10%] font-display text-[8vw] font-bold text-white/[0.03] blur-[2px] tracking-wider">
+            CONNECTED
+          </div>
+          <div className="absolute bottom-[15%] right-[15%] font-display text-[6vw] font-bold text-white/[0.04] blur-[2px] tracking-wider">
+            BRIDGE
+          </div>
         </div>
         
-        {/* Floating overlay cards - inspired by reference */}
+        <FloatingDots count={40} />
+        
+        {/* Transport foreground elements */}
+        {/* Airplane - top right */}
         <motion.div
-          initial={{ opacity: 0, x: 100 }}
+          initial={{ opacity: 0, x: 100, y: -50 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
+          className="absolute top-16 right-0 lg:right-[-5%] w-[300px] md:w-[400px] lg:w-[500px] pointer-events-none z-20"
+        >
+          <div className="relative">
+            <img 
+              src={heroAirplane} 
+              alt="" 
+              className="w-full h-auto drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
+              style={{ filter: 'drop-shadow(0 0 20px rgba(196, 255, 0, 0.15))' }}
+            />
+          </div>
+        </motion.div>
+        
+        {/* Truck - bottom left */}
+        <motion.div
+          initial={{ opacity: 0, x: -150 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="absolute top-32 right-4 lg:right-12 z-20 hidden md:block"
+          transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
+          className="absolute bottom-0 left-[-10%] lg:left-[-5%] w-[350px] md:w-[450px] lg:w-[550px] pointer-events-none z-20"
         >
-          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-2xl max-w-[200px]">
-            <p className="text-white/80 text-xs font-medium mb-1">Operacje PL-CN</p>
-            <p className="text-lime font-bold text-2xl">24/7</p>
-            <p className="text-gray-400 text-[10px]">Stała obecność w obu krajach</p>
+          <div className="relative">
+            <img 
+              src={heroTruck} 
+              alt="" 
+              className="w-full h-auto drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
+              style={{ filter: 'drop-shadow(0 0 15px rgba(196, 255, 0, 0.12))' }}
+            />
           </div>
         </motion.div>
         
+        {/* Container - right middle */}
         <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.3, duration: 0.8 }}
-          className="absolute bottom-40 left-4 lg:left-12 z-20 hidden md:block"
+          initial={{ opacity: 0, y: 80, rotate: -5 }}
+          animate={{ opacity: 1, y: 0, rotate: 0 }}
+          transition={{ delay: 1.2, duration: 1.2, ease: "easeOut" }}
+          className="absolute top-1/2 right-[5%] lg:right-[10%] -translate-y-1/2 w-[200px] md:w-[280px] lg:w-[350px] pointer-events-none z-10 hidden md:block"
         >
-          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-2xl max-w-[220px]">
-            <p className="text-white/80 text-xs font-medium mb-1">Zweryfikowani partnerzy</p>
-            <p className="text-lime font-bold text-2xl">480+</p>
-            <p className="text-gray-400 text-[10px]">Podmiotów w bazie danych</p>
+          <div className="relative" style={{ transform: 'rotate(5deg)' }}>
+            <img 
+              src={heroContainer} 
+              alt="" 
+              className="w-full h-auto drop-shadow-[0_30px_80px_rgba(0,0,0,0.9)]"
+              style={{ filter: 'drop-shadow(0 0 25px rgba(196, 255, 0, 0.1))' }}
+            />
           </div>
         </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 80 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-          className="absolute bottom-24 right-8 lg:right-24 z-20 hidden lg:block"
-        >
-          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 shadow-2xl max-w-[200px]">
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-2 h-2 rounded-full bg-lime animate-pulse" />
-              <p className="text-white/80 text-xs font-medium">3 języki robocze</p>
-            </div>
-            <p className="text-gray-400 text-[10px]">PL · EN · 中文</p>
-          </div>
-        </motion.div>
-        
-        {/* Decorative elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ 
-              rotate: 360,
-            }}
-            transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-1/2 -right-1/4 w-[1000px] h-[1000px] border border-lime/10 rounded-full"
-          />
-          <motion.div
-            animate={{ 
-              rotate: -360,
-            }}
-            transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] border border-lime/5 rounded-full"
-          />
-          <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-lime/10 blur-[150px] rounded-full" />
-        </div>
-        
-        {/* Chinese character */}
-        <ChineseCharacters characters="合" position="right" className="top-40" opacity={0.06} />
 
+        {/* Hero content */}
         <motion.div 
           style={{ opacity: heroOpacity }}
-          className="relative z-10 container mx-auto px-6 lg:px-12 text-center pt-20"
+          className="relative z-30 container mx-auto px-6 lg:px-12 text-center pt-20"
         >
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -192,16 +190,16 @@ const ONas = () => {
               O Yin Yang
             </span>
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight mb-8">
-              Twój <GradientText>partner</GradientText>,
+              Twój <GradientText>partner</GradientText>
               <br />
-              na linii PL-CN
+              na linii PL–CN
             </h1>
             <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
               Działamy operacyjnie pomiędzy Polską a Chinami, łącząc perspektywę europejskich firm z bezpośrednią obecnością w chińskim systemie gospodarczym. Nasi specjaliści łączą wieloletnią praktykę projektów międzynarodowych z zapleczem akademickim zdobytym na czołowych uczelniach w Chinach, w tym Fudan University i Tongji University.
             </p>
           </motion.div>
 
-          {/* Stats Row - integrated into hero */}
+          {/* Stats Row */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -214,7 +212,7 @@ const ONas = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + index * 0.1 }}
-                className="p-6 lg:p-8 rounded-2xl bg-gray-900/60 backdrop-blur-lg border border-gray-800/50 hover:border-lime/30 transition-all duration-300"
+                className="p-6 lg:p-8 rounded-2xl bg-[#0B0B0B]/80 backdrop-blur-lg border border-gray-800/50 hover:border-lime/30 transition-all duration-300"
               >
                 <div className="font-display text-3xl lg:text-4xl font-bold text-lime mb-2">
                   {stat.isText ? (
@@ -228,11 +226,16 @@ const ONas = () => {
             ))}
           </motion.div>
         </motion.div>
-
       </section>
 
+      {/* Services Carousel Section */}
+      <ServicesCarousel />
+
       {/* Team - 3+3 layout */}
-      <section className="bg-gray-950 py-24 relative overflow-hidden">
+      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        {/* Light slash effect */}
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-lime/10 to-transparent" />
+        
         {/* Chinese character */}
         <ChineseCharacters characters="作" position="left" className="top-20" opacity={0.05} />
         
@@ -270,7 +273,7 @@ const ONas = () => {
                       alt={member.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608]/80 via-transparent to-transparent" />
                   </div>
                   <h3 className="font-display font-bold text-base lg:text-lg text-white">{member.name}</h3>
                   <p className="text-gray-500 text-xs lg:text-sm">{member.role}</p>
@@ -278,7 +281,7 @@ const ONas = () => {
               ))}
             </div>
 
-            {/* Second row - 3 people centered */}
+            {/* Second row - 3 people */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {team.slice(3, 6).map((member, index) => (
                 <motion.div
@@ -295,7 +298,7 @@ const ONas = () => {
                       alt={member.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608]/80 via-transparent to-transparent" />
                   </div>
                   <h3 className="font-display font-bold text-base lg:text-lg text-white">{member.name}</h3>
                   <p className="text-gray-500 text-xs lg:text-sm">{member.role}</p>
@@ -310,7 +313,7 @@ const ONas = () => {
       <TeamCarousel />
 
       {/* World Dot Map Section */}
-      <section className="bg-gray-900 py-24 relative overflow-hidden">
+      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -332,13 +335,12 @@ const ONas = () => {
         </div>
       </section>
 
-      {/* FAQ Section - Same style as homepage */}
-      <section className="bg-gray-950 py-24 relative overflow-hidden">
-        <ChineseCharacters characters="信任" position="right" className="top-20" opacity={0.08} />
+      {/* FAQ Section */}
+      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        <ChineseCharacters characters="信任" position="right" className="top-20" opacity={0.05} />
         
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
-        </div>
+        {/* Subtle light slash */}
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-lime/8 to-transparent" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
@@ -409,22 +411,10 @@ const ONas = () => {
         </div>
       </section>
 
-      {/* Trust Section removed */}
-
       {/* CTA Section */}
-      <section className="relative py-32 overflow-hidden bg-gray-900">
+      <section className="relative py-32 overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] border border-lime/10 rounded-full"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-1/2 -left-1/4 w-[600px] h-[600px] border border-lime/5 rounded-full"
-          />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/10 blur-[150px] rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/8 blur-[150px] rounded-full" />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
@@ -441,7 +431,7 @@ const ONas = () => {
             </p>
             <Link
               to="/kontakt"
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow-slow"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
             >
               Skontaktuj się
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />

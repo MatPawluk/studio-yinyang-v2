@@ -73,10 +73,10 @@ export const servicesData: Record<string, ServiceData> = {
       communication: 'E-mail + spotkanie wideo podsumowujące (Debriefing Call)',
     },
     caseStudy: {
-      client: 'Średnia fabryka mebli (Polska), problem z brakiem pracowników.',
+      client: 'Średnia fabryka mebli (Polska).',
       situation: 'Plan zakupu robotów lakierniczych z Chin. Obawy o awaryjność, brak części zamiennych i rzetelność dostawcy znalezionego w internecie.',
       actions: 'Przeprowadzono analizę rynku. Zidentyfikowano 3 producentów w klastrze robotyki (Foshan) posiadających stabilną pozycję rynkową. Odrzucono 2 firmy oparte wyłącznie na marketingu (negatywne opinie na chińskich forach inżynierskich). Rekomendowano dostawcę wykorzystującego podzespoły Siemens (łatwy serwis w Polsce).',
-      result: 'Klient zrezygnował z ryzykownego zakupu od pośrednika i rozpoczął rozmowy z rekomendowanym producentem. Uniknięcie straty szacowanej na ok. 200 tys. PLN.',
+      result: 'Klient zrezygnował z ryzykownego zakupu od pośrednika i rozpoczął rozmowy z rekomendowanym producentem.',
     },
   },
   'decyzje-wejscia': {
