@@ -8,6 +8,8 @@ import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
 import { TeamCarousel } from '@/components/TeamCarousel';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { oNasTranslations } from '@/i18n/pageTranslations';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
@@ -74,6 +76,8 @@ const faqs = [
 const ONas = () => {
   const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
   const heroRef = useRef<HTMLDivElement>(null);
+  const { language, t } = useLanguage();
+  const pt = oNasTranslations[language];
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -186,15 +190,15 @@ const ONas = () => {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-8">
               <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
-              O Yin Yang
+              {pt.badge}
             </span>
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight mb-8">
-              Twój <GradientText>partner</GradientText>
+              {pt.title} <GradientText>{pt.titleHighlight}</GradientText>
               <br />
-              na linii PL–CN
+              {pt.subtitle}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
-              Działamy operacyjnie pomiędzy Polską a Chinami, łącząc perspektywę europejskich firm z bezpośrednią obecnością w chińskim systemie gospodarczym. Nasi specjaliści łączą wieloletnią praktykę projektów międzynarodowych z zapleczem akademickim zdobytym na czołowych uczelniach w Chinach, w tym Fudan University i Tongji University.
+              {pt.description}
             </p>
           </motion.div>
 
@@ -243,10 +247,10 @@ const ONas = () => {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Zespół
+              {pt.teamBadge}
             </span>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-              Poznaj <GradientText>nas</GradientText>
+              {pt.teamTitle} <GradientText>{pt.teamTitleHighlight}</GradientText>
             </h2>
           </motion.div>
 
@@ -318,7 +322,7 @@ const ONas = () => {
             className="text-center mb-12"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Połączenie
+              {pt.connectionBadge}
             </span>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
               Warszawa ↔ <GradientText>Shanghai</GradientText>
@@ -346,10 +350,10 @@ const ONas = () => {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
-              FAQ
+              {pt.faqBadge}
             </span>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-              Najczęściej zadawane <GradientText>pytania</GradientText>
+              {pt.faqTitle} <GradientText>{pt.faqTitleHighlight}</GradientText>
             </h2>
           </motion.div>
 
@@ -409,8 +413,8 @@ const ONas = () => {
 
       {/* CTA Section - consistent gradient style */}
       <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
-        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
-          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
+        <div className="absolute bottom-10 left-10 opacity-[0.06] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-[#c4ff00] leading-none">合作</span>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
@@ -420,16 +424,16 @@ const ONas = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-6">
-              Umów <GradientText>bezpłatną konsultację</GradientText>
+              {t.cta.title} <GradientText>{t.cta.titleHighlight}</GradientText>
             </h2>
             <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-              Porozmawiajmy o tym, jak możemy wesprzeć Twoją organizację w relacjach z Chinami.
+              {t.cta.subtitle}
             </p>
             <Link
               to="/kontakt"
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
             >
-              Skontaktuj się
+              {t.cta.button}
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>

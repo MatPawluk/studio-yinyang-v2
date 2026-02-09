@@ -12,7 +12,7 @@ import { GradientText } from '@/components/GradientText';
 import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Target, Search, Rocket, Settings } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
@@ -22,28 +22,6 @@ import avatarTeam1 from '@/assets/avatar-team-1.jpg';
 import avatarTeam2 from '@/assets/avatar-team-2.jpg';
 import avatarTeam3 from '@/assets/avatar-team-3.jpg';
 import consultantImg from '@/assets/consultant.png';
-const heroServices = [
-  { 
-    title: 'Strategia i decyzje', 
-    description: 'Scenariusze, mapy ryzyk, briefingi zarządcze.',
-    icon: Target,
-  },
-  { 
-    title: 'Research i weryfikacja', 
-    description: 'Due diligence, analiza partnerów, intelligence.',
-    icon: Search,
-  },
-  { 
-    title: 'Wejście i rozwój', 
-    description: 'Model wejścia, struktury, pozycjonowanie.',
-    icon: Rocket,
-  },
-  { 
-    title: 'Operacje i logistyka', 
-    description: 'Audyt, kontrola jakości, nadzór, eksport/import.',
-    icon: Settings,
-  },
-];
 
 const carouselServices = [
   {
@@ -84,28 +62,7 @@ const carouselServices = [
   },
 ];
 
-const processSteps = [
-  {
-    number: '01',
-    title: 'Opowiadasz nam o swojej potrzebie',
-    description: 'Podczas bezpłatnej konsultacji poznajemy Twoją firmę, kontekst działania i cele, które chcesz osiągnąć.',
-  },
-  {
-    number: '02',
-    title: 'Projektujemy rozwiązanie szyte na miarę',
-    description: 'Tworzymy plan działania dopasowany do Twojej sytuacji i skali.',
-  },
-  {
-    number: '03',
-    title: 'Podejmujesz decyzję',
-    description: 'Akceptujesz kierunek, ustalamy harmonogram i zaczynamy współpracę.',
-  },
-  {
-    number: '04',
-    title: 'Egzekwujemy i kontrolujemy proces',
-    description: 'Koordynujemy działania, minimalizujemy ryzyko i dbamy o pełną transparentność.',
-  },
-];
+// processSteps moved to translations (t.process.steps)
 
 const stats = [
   { value: 480, suffix: '+', label: 'zweryfikowanych podmiotów i partnerów biznesowych' },
@@ -117,6 +74,14 @@ const stats = [
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { t } = useLanguage();
+
+  const heroServices = [
+    { title: t.heroCards.strategy.title, description: t.heroCards.strategy.description, icon: Target },
+    { title: t.heroCards.research.title, description: t.heroCards.research.description, icon: Search },
+    { title: t.heroCards.entry.title, description: t.heroCards.entry.description, icon: Rocket },
+    { title: t.heroCards.operations.title, description: t.heroCards.operations.description, icon: Settings },
+  ];
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -194,9 +159,9 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
             >
-              Twój <TypewriterText words={['przewodnik', 'partner']} pauseDuration={3000} />
+              {t.hero.title.split(' ')[0]} <TypewriterText words={[t.hero.title.split(' ').slice(1).join(' ')]} pauseDuration={3000} />
               <br />
-              <span className="text-lime">w relacjach Polska-Chiny.</span>
+              <span className="text-[#c4ff00]">{t.hero.titleHighlight}</span>
             </motion.h1>
 
             <motion.p
@@ -205,9 +170,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed px-4"
             >
-              Analizujemy, weryfikujemy, organizujemy i nadzorujemy
-              <br className="hidden sm:block" />
-              projekty na linii PL-CN
+              {t.hero.subtitle}
             </motion.p>
 
             <motion.div
@@ -218,10 +181,10 @@ const Index = () => {
             >
               <Link
                 to="/kontakt"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+                className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-sm sm:text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
               >
-                Umów bezpłatną konsultację
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                {t.hero.cta}
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <div className="flex items-center justify-center gap-3">
                 {/* Stacked Avatars - real photos */}
@@ -243,7 +206,7 @@ const Index = () => {
                   />
                 </div>
                 <p className="text-gray-300 text-sm font-medium">
-                  Dołącz do grona <span className="text-lime font-bold">540+</span> zadowolonych klientów
+                  {t.clients.join} <span className="text-[#c4ff00] font-bold">540+</span> {t.clients.satisfied}
                 </p>
               </div>
             </motion.div>
@@ -266,10 +229,10 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        {/* Premium Service Cards - Thala Labs Style */}
+        {/* Premium Service Cards - Dark Glass with Shimmer */}
         <div className="absolute -bottom-32 sm:-bottom-36 md:-bottom-40 lg:-bottom-44 left-0 right-0 z-50 pointer-events-none">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pointer-events-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 pointer-events-auto">
               {heroServices.map((service, index) => {
                 const IconComponent = service.icon;
                 return (
@@ -278,38 +241,61 @@ const Index = () => {
                     initial={{ opacity: 0, y: 80 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 + index * 0.15 }}
-                    whileHover={{ y: -8 }}
-                    className="group relative bg-gray-900/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-gray-800/50 hover:border-lime/40 transition-all duration-500 hover:shadow-2xl hover:shadow-lime/10 overflow-hidden"
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className="group relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 lg:p-7 border border-white/[0.06] hover:border-[#c4ff00]/40 transition-all duration-500 overflow-hidden cursor-pointer"
+                    style={{ 
+                      background: 'linear-gradient(135deg, rgba(11,11,11,0.85) 0%, rgba(17,18,20,0.9) 50%, rgba(11,11,11,0.85) 100%)',
+                      backdropFilter: 'blur(20px)',
+                    }}
                   >
-                    {/* Glowing Effect */}
-                    <GlowingEffect
-                      spread={40}
-                      glow={true}
-                      disabled={false}
-                      proximity={64}
-                      inactiveZone={0.01}
-                      borderWidth={2}
+                    {/* Animated shimmer border effect */}
+                    <div className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+                      style={{
+                        background: 'linear-gradient(135deg, transparent 0%, rgba(196,255,0,0.08) 30%, transparent 50%, rgba(196,255,0,0.05) 70%, transparent 100%)',
+                      }}
                     />
                     
-                    {/* Top lime accent bar - thin and half width */}
-                    <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-lime/50 via-lime to-lime/50" />
+                    {/* Top shimmer bar */}
+                    <div className="absolute top-0 left-0 right-0 h-[1px] overflow-hidden">
+                      <motion.div 
+                        className="h-full w-[200%]"
+                        animate={{ x: ['-50%', '0%'] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        style={{
+                          background: 'linear-gradient(90deg, transparent 0%, rgba(196,255,0,0.3) 25%, rgba(196,255,0,0.6) 50%, rgba(196,255,0,0.3) 75%, transparent 100%)',
+                        }}
+                      />
+                    </div>
                     
-                    {/* Lime accent glow on hover */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-12 bg-lime/30 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Hover glow pulse */}
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-20 bg-[#c4ff00]/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
                     
-                    <div className="relative z-10 pt-4">
+                    {/* Corner accent */}
+                    <div className="absolute top-0 right-0 w-12 h-12 pointer-events-none">
+                      <div className="absolute top-0 right-0 w-[1px] h-6 bg-gradient-to-b from-[#c4ff00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute top-0 right-0 h-[1px] w-6 bg-gradient-to-l from-[#c4ff00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </div>
+
+                    <div className="relative z-10 pt-2">
                       {/* Icon */}
-                      <div className="mb-4">
-                        <IconComponent className="w-6 h-6 sm:w-8 sm:h-8 text-gray-500 group-hover:text-lime transition-colors duration-300" />
+                      <div className="mb-3 sm:mb-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border border-white/[0.06] group-hover:border-[#c4ff00]/30 transition-all duration-500"
+                          style={{ backgroundColor: 'rgba(17,18,20,0.8)' }}
+                        >
+                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-[#c4ff00] transition-colors duration-500" />
+                        </div>
                       </div>
                       
-                      <h3 className="font-display font-bold text-white text-base sm:text-lg lg:text-xl mb-2 sm:mb-3">
+                      <h3 className="font-display font-bold text-white text-sm sm:text-base lg:text-lg mb-1.5 sm:mb-2 group-hover:text-[#c4ff00]/90 transition-colors duration-300">
                         {service.title}
                       </h3>
-                      <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
+                      <p className="text-gray-500 text-xs sm:text-sm leading-relaxed group-hover:text-gray-400 transition-colors duration-300">
                         {service.description}
                       </p>
                     </div>
+                    
+                    {/* Bottom accent line */}
+                    <div className="absolute bottom-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-[#c4ff00]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </motion.div>
                 );
               })}
@@ -360,8 +346,8 @@ const Index = () => {
             className="text-center mb-16"
           >
             <h2 className="font-display text-4xl lg:text-6xl font-bold">
-              <span className="text-white">Nasze </span>
-              <GradientText>usługi</GradientText>
+              <span className="text-white">{t.services.title.split(' ')[0]} </span>
+              <GradientText>{t.services.title.split(' ').slice(1).join(' ')}</GradientText>
             </h2>
           </motion.div>
 
@@ -517,7 +503,7 @@ const Index = () => {
                 to="/uslugi"
                 className="inline-flex items-center gap-2 text-gray-500 hover:text-lime transition-colors duration-300 text-sm"
               >
-                Zobacz wszystkie usługi
+                {t.services.viewAll}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -559,7 +545,7 @@ const Index = () => {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Skala i zaufanie
+              {t.stats.badge}
             </span>
           </motion.div>
 
@@ -610,13 +596,13 @@ const Index = () => {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
-              Proces
+              {t.process.badge}
             </span>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-4">
-              Jak to <GradientText>działa</GradientText>?
+              {t.process.title.split(' ').slice(0, -1).join(' ')} <GradientText>{t.process.title.split(' ').slice(-1)[0]}</GradientText>?
             </h2>
             <p className="text-gray-400 max-w-xl mx-auto">
-              Prosty, przejrzysty proces współpracy od pierwszego kontaktu do realizacji.
+              {t.process.subtitle}
             </p>
           </motion.div>
 
@@ -626,7 +612,7 @@ const Index = () => {
               {/* Vertical line */}
               <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-lime via-lime/50 to-lime/20 md:-translate-x-1/2" />
               
-              {processSteps.map((step, index) => (
+              {t.process.steps.map((step, index) => (
                 <motion.div
                   key={step.number}
                   initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
@@ -678,7 +664,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-center text-gray-500 text-sm uppercase tracking-widest mb-8"
           >
-            Zaufali nam
+            {t.trust.title}
           </motion.p>
         </div>
         <LogoMarquee />
@@ -695,28 +681,31 @@ const Index = () => {
 
       {/* CTA Section - Phunk-style premium card with consultant */}
       <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        {/* Chinese chars decoration */}
+        <ChineseCharacters characters="信任" position="left" className="top-0" opacity={0.05} />
+        
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <div className="relative max-w-5xl mx-auto rounded-[1.5rem] overflow-visible border border-gray-800/50" style={{ background: 'linear-gradient(135deg, #0B0B0B 0%, #111214 50%, rgba(196,255,0,0.08) 100%)' }}>
             {/* Subtle lime glow */}
-            <div className="absolute bottom-0 right-0 w-[300px] h-[250px] bg-lime/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[300px] h-[250px] bg-[#c4ff00]/10 blur-[100px] rounded-full pointer-events-none" />
             
             <div className="relative grid lg:grid-cols-[1fr_auto] gap-0 items-end">
               {/* Left: Text content */}
               <div className="p-8 lg:p-12">
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight">
-                  Skontaktuj się z nami na
+                  {t.cta.title}
                 </h2>
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-5 leading-tight">
-                  <GradientText>bezpłatną konsultację</GradientText>
+                  <GradientText>{t.cta.titleHighlight}</GradientText>
                 </h2>
                 <p className="text-gray-400 text-base mb-8 max-w-md">
-                  Jeśli Chiny mają znaczenie dla Twojej organizacji, zapraszamy do rozmowy.
+                  {t.cta.subtitle}
                 </p>
                 <Link
                   to="/kontakt"
-                  className="group inline-flex items-center gap-3 px-8 py-4 bg-lime text-gray-900 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
                 >
-                  Umów rozmowę
+                  {t.cta.button}
                   <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>

@@ -5,6 +5,8 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { bazaWiedzyTranslations } from '@/i18n/pageTranslations';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';
@@ -94,8 +96,10 @@ const articles = [
 
 const BazaWiedzy = () => {
   const [activeCategory, setActiveCategory] = useState('Wszystkie');
+  const { language } = useLanguage();
+  const pt = bazaWiedzyTranslations[language];
   
-  const filteredArticles = activeCategory === 'Wszystkie' 
+  const filteredArticles = activeCategory === 'Wszystkie' || activeCategory === pt.categories[0]
     ? articles 
     : articles.filter(article => article.category === activeCategory);
 
@@ -121,15 +125,15 @@ const BazaWiedzy = () => {
             className="max-w-3xl"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
-              Baza wiedzy
+              {pt.badge}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-              Analizy, <GradientText>poradniki</GradientText>
+              {pt.title} <GradientText>{pt.titleHighlight}</GradientText>
               <br />
-              i komentarze
+              {pt.titleEnd}
             </h1>
             <p className="text-lg text-gray-500">
-              Materiały dotyczące rynku polskiego, chińskiego oraz współpracy międzynarodowej.
+              {pt.subtitle}
             </p>
           </motion.div>
         </div>
@@ -137,6 +141,7 @@ const BazaWiedzy = () => {
 
       {/* Articles Section */}
       <section className="py-12 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        <ChineseCharacters characters="桥梁" position="left" className="top-40" opacity={0.04} />
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           {/* Categories */}
           <motion.div
@@ -226,8 +231,8 @@ const BazaWiedzy = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/8 blur-[150px] rounded-full" />
         </div>
         
-        <div className="absolute bottom-10 right-10 opacity-[0.04] pointer-events-none">
-          <span className="font-display text-[10rem] font-bold text-white leading-none">知識</span>
+        <div className="absolute bottom-10 right-10 opacity-[0.06] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-[#c4ff00] leading-none">知識</span>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
@@ -237,16 +242,16 @@ const BazaWiedzy = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
-              Potrzebujesz dedykowanej <GradientText>analizy</GradientText>?
+              {pt.ctaTitle} <GradientText>{pt.ctaTitleHighlight}</GradientText>?
             </h2>
             <p className="text-gray-500 mb-8 max-w-lg mx-auto">
-              Przygotowujemy materiały na zamówienie, dopasowane do Twojej branży i potrzeb.
+              {pt.ctaSubtitle}
             </p>
             <Link
               to="/kontakt"
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
             >
-              Skontaktuj się z nami
+              {pt.ctaButton}
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
