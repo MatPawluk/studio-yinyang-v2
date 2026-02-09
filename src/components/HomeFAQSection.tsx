@@ -47,7 +47,7 @@ export const HomeFAQSection = () => {
   };
 
   return (
-    <section className="bg-gray-950 py-24 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
       {/* Chinese characters decoration */}
       <ChineseCharacters characters="信任" position="right" className="top-20" opacity={0.08} />
       

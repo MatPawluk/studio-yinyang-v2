@@ -100,11 +100,11 @@ const BazaWiedzy = () => {
     : articles.filter(article => article.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
       {/* Hero Section - Dark themed with world map */}
-      <section className="relative pt-28 pb-12 bg-gray-900 overflow-hidden">
+      <section className="relative pt-28 pb-12 overflow-hidden" style={{ backgroundColor: '#050608' }}>
         {/* Background with world map */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img 
@@ -112,7 +112,7 @@ const BazaWiedzy = () => {
             alt="" 
             className="w-full h-full object-cover opacity-10"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/90 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/80 via-[#050608]/90 to-[#050608]" />
           <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
         </div>
         
@@ -142,7 +142,7 @@ const BazaWiedzy = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="bg-gray-950 py-12 relative overflow-hidden">
+      <section className="py-12 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
