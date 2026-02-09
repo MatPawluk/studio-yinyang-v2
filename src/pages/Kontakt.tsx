@@ -2,8 +2,11 @@ import { motion } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { GradientText } from '@/components/GradientText';
+import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { MapPin, Send, ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { kontaktTranslations } from '@/i18n/pageTranslations';
 import gmailLogo from '@/assets/gmail-logo.png';
 import whatsappLogo from '@/assets/whatsapp-logo.png';
 import wechatLogo from '@/assets/wechat-logo.png';
@@ -45,6 +48,8 @@ const contactMethods = [
 ];
 
 const Kontakt = () => {
+  const { language } = useLanguage();
+  const pt = kontaktTranslations[language];
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -64,6 +69,7 @@ const Kontakt = () => {
       
       {/* Main Content */}
       <section className="pt-24 pb-12 relative overflow-hidden">
+        <ChineseCharacters characters="信" position="right" className="top-32" opacity={0.04} />
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
           <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-lime/3 blur-[120px] rounded-full" />
@@ -79,12 +85,12 @@ const Kontakt = () => {
             >
               <div className="mb-8">
                 <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
-                  Kontakt
+                  {pt.badge}
                 </span>
                 <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
-                  Porozmawiajmy
+                  {pt.title}
                   <br />
-                  <GradientText>o Twoich potrzebach</GradientText>
+                  <GradientText>{pt.titleHighlight}</GradientText>
                 </h1>
               </div>
 
@@ -120,19 +126,19 @@ const Kontakt = () => {
             >
               <div className="rounded-3xl p-8 border border-gray-800/50" style={{ backgroundColor: '#0B0B0B' }}>
                 <h3 className="font-display font-semibold text-xl text-white mb-2">
-                  Wyślij wiadomość
+                  {pt.formTitle}
                 </h3>
                 <p className="text-gray-500 text-sm mb-6">
-                  Wypełnij formularz, a skontaktujemy się w ciągu 24 godzin.
+                  {pt.formSubtitle}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">Imię i nazwisko *</label>
+                      <label className="block text-sm font-medium text-gray-400 mb-2">{pt.nameLabel}</label>
                       <input
                         type="text"
-                        placeholder="Jan Kowalski"
+                        placeholder={pt.namePlaceholder}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
@@ -140,10 +146,10 @@ const Kontakt = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">E-mail *</label>
+                      <label className="block text-sm font-medium text-gray-400 mb-2">{pt.emailLabel}</label>
                       <input
                         type="email"
-                        placeholder="jan@firma.pl"
+                        placeholder={pt.emailPlaceholder}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
@@ -153,10 +159,10 @@ const Kontakt = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Firma / instytucja</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">{pt.companyLabel}</label>
                     <input
                       type="text"
-                      placeholder="Nazwa firmy"
+                      placeholder={pt.companyPlaceholder}
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
@@ -165,10 +171,10 @@ const Kontakt = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Temat</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">{pt.topicLabel}</label>
                     <input
                       type="text"
-                      placeholder="W jakiej sprawie piszesz?"
+                      placeholder={pt.topicPlaceholder}
                       value={formData.topic}
                       onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
@@ -177,9 +183,9 @@ const Kontakt = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Wiadomość *</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">{pt.messageLabel}</label>
                     <textarea
-                      placeholder="Opisz krótko, w czym możemy pomóc..."
+                      placeholder={pt.messagePlaceholder}
                       rows={6}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -190,9 +196,9 @@ const Kontakt = () => {
 
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-lime text-gray-900 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lime-lg"
+                    className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#c4ff00] text-gray-900 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
                   >
-                    Wyślij wiadomość
+                    {pt.submitButton}
                     <Send className="w-5 h-5" />
                   </button>
                 </form>
@@ -213,7 +219,7 @@ const Kontakt = () => {
             className="mb-8"
           >
             <h3 className="font-display font-semibold text-2xl text-white mb-6">
-              Nasze <GradientText>lokalizacje</GradientText>
+              {pt.locationsTitle} <GradientText>{pt.locationsTitleHighlight}</GradientText>
             </h3>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-8">

@@ -27,7 +27,7 @@ export const ChineseCharacters = ({
       transition={{ duration: 1 }}
       className={`absolute ${positionClasses[position]} pointer-events-none select-none ${className}`}
     >
-      <div className="font-display text-lime writing-vertical text-[8rem] md:text-[12rem] lg:text-[16rem] font-bold leading-none tracking-widest" style={{ writingMode: 'vertical-rl' }}>
+      <div className="font-display text-[#c4ff00] writing-vertical text-[8rem] md:text-[12rem] lg:text-[16rem] font-bold leading-none tracking-widest" style={{ writingMode: 'vertical-rl' }}>
         {characters.split('').map((char, index) => (
           <span key={index} className="block">{char}</span>
         ))}

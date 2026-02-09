@@ -7,6 +7,8 @@ import { LogoMarquee } from '@/components/LogoMarquee';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { uslugiTranslations } from '@/i18n/pageTranslations';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
@@ -95,6 +97,8 @@ const stats = [
 
 const Uslugi = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(0);
+  const { language, t } = useLanguage();
+  const pt = uslugiTranslations[language];
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
@@ -124,15 +128,15 @@ const Uslugi = () => {
             className="max-w-4xl text-center mx-auto"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-semibold uppercase tracking-wider mb-6">
-              Usługi
+              {pt.badge}
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Kompleksowe <GradientText>wsparcie</GradientText>
+              {pt.title} <GradientText>{pt.titleHighlight}</GradientText>
               <br />
-              na linii Polska-Chiny
+              {pt.subtitle}
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Zakres współpracy każdorazowo dopasowany jest do kontekstu klienta, etapu relacji z Chinami oraz charakteru podejmowanych decyzji.
+              {pt.description}
             </p>
           </motion.div>
         </div>
@@ -140,6 +144,7 @@ const Uslugi = () => {
 
       {/* Categories Accordion Section */}
       <section className="py-16 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
+        <ChineseCharacters characters="桥" position="right" className="bottom-20" opacity={0.04} />
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
@@ -170,7 +175,7 @@ const Uslugi = () => {
                       {category.title}
                     </span>
                     <span className="px-3 py-1 rounded-full bg-gray-800/50 text-gray-400 text-xs">
-                      {category.count} usług
+                      {category.count} {pt.servicesCount}
                     </span>
                   </div>
                   <ChevronDown 
@@ -219,7 +224,7 @@ const Uslugi = () => {
                                     {subService.title}
                                   </h3>
                                   <div className="flex items-center gap-2 text-lime">
-                                    <span className="text-sm">Dowiedz się więcej</span>
+                                    <span className="text-sm">{pt.learnMore}</span>
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                   </div>
                                 </div>
@@ -271,7 +276,7 @@ const Uslugi = () => {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Skala i zaufanie
+              {t.stats.badge}
             </span>
           </motion.div>
 
@@ -308,7 +313,7 @@ const Uslugi = () => {
             viewport={{ once: true }}
             className="text-center text-gray-500 text-sm uppercase tracking-widest mb-8"
           >
-            Zaufali nam
+            {t.trust.title}
           </motion.p>
         </div>
         <LogoMarquee />
@@ -316,8 +321,8 @@ const Uslugi = () => {
 
       {/* CTA Section - consistent dark style */}
       <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
-        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
-          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
+        <div className="absolute bottom-10 left-10 opacity-[0.06] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-[#c4ff00] leading-none">合作</span>
         </div>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-lime/8 blur-[150px] rounded-full" />
@@ -330,16 +335,16 @@ const Uslugi = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
-              Porozmawiajmy <GradientText>o Twoich potrzebach</GradientText>
+              {pt.ctaTitle} <GradientText>{pt.ctaTitleHighlight}</GradientText>
             </h2>
             <p className="text-gray-400 mb-8 max-w-lg mx-auto">
-              Bezpłatna konsultacja pomoże określić, jak możemy Ci pomóc.
+              {pt.ctaSubtitle}
             </p>
             <Link
               to="/kontakt"
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
             >
-              Umów rozmowę
+              {pt.ctaButton}
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
