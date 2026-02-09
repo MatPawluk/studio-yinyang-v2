@@ -20,11 +20,11 @@ export const TeamCarousel = () => {
   const duplicatedPhotos = [...teamPhotos, ...teamPhotos];
 
   return (
-    <section className="py-16 bg-gray-950 overflow-hidden">
+    <section className="py-16 overflow-hidden" style={{ backgroundColor: '#050608' }}>
       <div className="relative">
         {/* Gradient overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-950 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-950 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #050608, transparent)' }} />
+        <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #050608, transparent)' }} />
 
         {/* Scrolling photos */}
         <motion.div

@@ -21,6 +21,7 @@ import serviceAnalysis from '@/assets/service-analysis.jpg';
 import avatarTeam1 from '@/assets/avatar-team-1.jpg';
 import avatarTeam2 from '@/assets/avatar-team-2.jpg';
 import avatarTeam3 from '@/assets/avatar-team-3.jpg';
+import consultantImg from '@/assets/consultant.png';
 const heroServices = [
   { 
     title: 'Strategia i decyzje', 
@@ -359,7 +360,7 @@ const Index = () => {
             className="text-center mb-16"
           >
             <h2 className="font-display text-4xl lg:text-6xl font-bold">
-              <span className="text-gray-500">Nasze </span>
+              <span className="text-white">Nasze </span>
               <GradientText>usługi</GradientText>
             </h2>
           </motion.div>
@@ -692,51 +693,48 @@ const Index = () => {
       {/* FAQ Section */}
       <HomeFAQSection />
 
-      {/* CTA Section */}
-      <section className="relative py-32 overflow-hidden" style={{ backgroundColor: '#050608' }}>
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] border border-lime/10 rounded-full"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-1/2 -left-1/4 w-[600px] h-[600px] border border-lime/5 rounded-full"
-          />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/10 blur-[150px] rounded-full" />
-        </div>
-        
-        {/* Chinese character */}
-        <div className="absolute bottom-10 left-10 opacity-5 pointer-events-none">
-          <span className="font-display text-[12rem] font-bold text-lime leading-none">合作</span>
+      {/* CTA Section - Phunk-style premium card with consultant */}
+      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-              Skontaktuj się z nami na
-              <br />
-              <GradientText>bezpłatną konsultację</GradientText>
-            </h2>
-            <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-              Jeśli Chiny mają znaczenie dla Twojej organizacji, zapraszamy do rozmowy.
-            </p>
-            <Link
-              to="/kontakt"
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow-slow"
-            >
-              Umów rozmowę
-              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
+        <div className="relative z-10 container mx-auto px-6 lg:px-12">
+          <div className="relative rounded-[2rem] overflow-hidden border border-gray-800/50" style={{ background: 'linear-gradient(135deg, #0B0B0B 0%, #111214 50%, rgba(196,255,0,0.08) 100%)' }}>
+            {/* Subtle lime glow */}
+            <div className="absolute bottom-0 right-0 w-[500px] h-[400px] bg-lime/10 blur-[120px] rounded-full pointer-events-none" />
+            
+            <div className="relative grid lg:grid-cols-2 gap-8 items-end">
+              {/* Left: Text content */}
+              <div className="p-10 lg:p-16">
+                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                  Skontaktuj się z nami na
+                  <br />
+                  <GradientText>bezpłatną konsultację</GradientText>
+                </h2>
+                <p className="text-gray-400 text-lg mb-10 max-w-md">
+                  Jeśli Chiny mają znaczenie dla Twojej organizacji, zapraszamy do rozmowy.
+                </p>
+                <Link
+                  to="/kontakt"
+                  className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+                >
+                  Umów rozmowę
+                  <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </div>
+
+              {/* Right: Consultant image breaking frame */}
+              <div className="relative hidden lg:block">
+                <img 
+                  src={consultantImg}
+                  alt="Konsultant Yin Yang"
+                  className="relative z-10 w-full max-w-md ml-auto object-contain -mt-8 -mb-1"
+                  style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))' }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

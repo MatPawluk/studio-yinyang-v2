@@ -6,14 +6,13 @@ import { InteractiveCaseStudy } from '@/components/InteractiveCaseStudy';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ParallaxSection } from '@/components/ParallaxSection';
-import { ArrowLeft, ArrowRight, Check, X, FileText, Video, Clock, Users } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, X, FileText, Video } from 'lucide-react';
 import { servicesData, serviceSlugMap, defaultServiceData } from '@/data/servicesData';
 import statsBg from '@/assets/stats-bg.jpg';
 
 const ServiceDetail = () => {
   const { serviceSlug, subServiceSlug } = useParams();
   
-  // Try to find the service by main slug first, then check sub-service slug
   const mainSlug = serviceSlug || '';
   const mappedSlug = subServiceSlug ? (serviceSlugMap[subServiceSlug] || subServiceSlug) : mainSlug;
   const service = servicesData[mappedSlug] || servicesData[mainSlug] || defaultServiceData;
@@ -21,25 +20,25 @@ const ServiceDetail = () => {
   const displayTitle = service.title;
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
-      {/* Header with Background Image */}
-      <section className="relative pt-28 pb-20 bg-gray-900 overflow-hidden">
+      {/* Header */}
+      <section className="relative pt-28 pb-20 overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img 
             src={service.image} 
             alt="" 
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-15"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/90 to-gray-900" />
-          <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-lime/10 blur-[150px] rounded-full" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(5,6,8,0.8), rgba(5,6,8,0.9), #050608)' }} />
+          <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-lime/8 blur-[150px] rounded-full" />
         </div>
         
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <Link 
             to="/uslugi"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-lime transition-colors duration-300 mb-6"
+            className="inline-flex items-center gap-2 text-gray-500 hover:text-lime transition-colors duration-300 mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Wróć do usług
@@ -62,13 +61,11 @@ const ServiceDetail = () => {
       </section>
 
       {/* Description with Image */}
-      <section className="py-20 bg-gray-950 relative overflow-hidden">
-        {/* Chinese character */}
+      <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
         <ChineseCharacters characters="信" position="right" className="top-10" opacity={0.04} />
         
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Image */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -80,19 +77,16 @@ const ServiceDetail = () => {
                 alt={service.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent" />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #0B0B0B, transparent, transparent)' }} />
             </motion.div>
 
-            {/* Description */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
               <h2 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-gray-900" />
-                </div>
+                <div className="w-1 h-8 bg-lime rounded-full" />
                 Opis usługi
               </h2>
               <p className="text-gray-400 text-lg leading-relaxed">
@@ -103,22 +97,18 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* When it makes sense + Problems Solved - with parallax background */}
-      <ParallaxSection imageUrl={statsBg} overlayOpacity={0.85} className="py-24">
+      {/* When it makes sense + Problems Solved - parallax */}
+      <ParallaxSection imageUrl={statsBg} overlayOpacity={0.88} className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
-            {/* When it makes sense */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="font-display text-2xl font-bold text-white mb-4">
+              <h2 className="font-display text-2xl font-bold text-white mb-8">
                 Kiedy ta usługa ma <GradientText>sens</GradientText>
               </h2>
-              <p className="text-gray-500 text-sm mb-8">
-                Sytuacje krytyczne, w których brak wiedzy generuje koszty
-              </p>
               <div className="space-y-4">
                 {service.whenItMakesSense.map((item, index) => (
                   <motion.div
@@ -127,31 +117,29 @@ const ServiceDetail = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="relative p-6 bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-lime/30 transition-all duration-300"
+                    className="relative p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-lime/20 transition-all duration-300"
                   >
-                    <span className="absolute -top-3 left-6 font-display text-4xl font-bold text-lime/30">
-                      {(index + 1).toString().padStart(2, '0')}
-                    </span>
-                    <p className="text-gray-300 text-sm pt-2">{item}</p>
+                    <div className="flex items-start gap-3">
+                      <span className="font-display text-sm font-bold text-lime/60 mt-0.5 flex-shrink-0">
+                        {(index + 1).toString().padStart(2, '0')}
+                      </span>
+                      <p className="text-gray-300 text-sm">{item}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Problems Solved - aligned at top */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <h2 className="font-display text-2xl font-bold text-white mb-4">
+              <h2 className="font-display text-2xl font-bold text-white mb-8">
                 Problem klienta, który <GradientText>rozwiązuje</GradientText>
               </h2>
-              <p className="text-gray-500 text-sm mb-8">
-                Korzyści biznesowe dla Twojej firmy
-              </p>
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {service.problemsSolved.map((problem, index) => (
                   <motion.div
                     key={index}
@@ -159,13 +147,11 @@ const ServiceDetail = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="group p-6 bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-lime/40 transition-all duration-300"
+                    className="group p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-lime/20 transition-all duration-300"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-lg bg-lime/20 flex items-center justify-center flex-shrink-0">
-                        <Check className="w-4 h-4 text-lime" />
-                      </div>
-                      <p className="text-gray-300">{problem}</p>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-lime flex-shrink-0 mt-2" />
+                      <p className="text-gray-300 text-sm">{problem}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -176,15 +162,7 @@ const ServiceDetail = () => {
       </ParallaxSection>
 
       {/* Scope */}
-      <section className="py-20 bg-gray-900 relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(196, 255, 0, 0.3) 1px, transparent 0)`,
-            backgroundSize: '40px 40px',
-          }} />
-        </div>
-        
+      <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-5xl mx-auto">
             <motion.div
@@ -199,46 +177,40 @@ const ServiceDetail = () => {
             </motion.div>
             
             <div className="grid md:grid-cols-2 gap-8">
-              {/* Includes */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50"
+                className="p-8 rounded-2xl border border-gray-800/50" style={{ backgroundColor: '#0B0B0B' }}
               >
                 <h3 className="font-semibold text-white mb-6 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-lime flex items-center justify-center">
-                    <Check className="w-5 h-5 text-gray-900" />
-                  </div>
+                  <div className="w-2 h-6 bg-lime rounded-full" />
                   Obejmuje
                 </h3>
                 <ul className="space-y-4">
                   {service.scope.includes.map((item, index) => (
-                    <li key={index} className="flex items-start gap-3 text-gray-300 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-lime flex-shrink-0 mt-2" />
+                    <li key={index} className="flex items-start gap-3 text-gray-400 text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-lime flex-shrink-0 mt-2" />
                       {item}
                     </li>
                   ))}
                 </ul>
               </motion.div>
 
-              {/* Excludes */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50"
+                className="p-8 rounded-2xl border border-gray-800/50" style={{ backgroundColor: '#0B0B0B' }}
               >
                 <h3 className="font-semibold text-white mb-6 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center">
-                    <X className="w-5 h-5 text-red-400" />
-                  </div>
+                  <div className="w-2 h-6 bg-red-500/60 rounded-full" />
                   Nie obejmuje
                 </h3>
                 <ul className="space-y-4">
                   {service.scope.excludes.map((item, index) => (
-                    <li key={index} className="flex items-start gap-3 text-gray-400 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-red-400 flex-shrink-0 mt-2" />
+                    <li key={index} className="flex items-start gap-3 text-gray-500 text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-red-400/60 flex-shrink-0 mt-2" />
                       {item}
                     </li>
                   ))}
@@ -249,14 +221,12 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* Deliverables with engaging background */}
-      <section className="py-20 bg-gray-950 relative overflow-hidden">
-        {/* Decorative background */}
+      {/* Deliverables */}
+      <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-lime/3 blur-[150px] rounded-full" />
         </div>
         
-        {/* Chinese character */}
         <ChineseCharacters characters="任" position="left" className="top-10" opacity={0.04} />
         
         <div className="container mx-auto px-6 lg:px-12">
@@ -266,12 +236,9 @@ const ServiceDetail = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="font-display text-2xl font-bold text-white mb-4">
+              <h2 className="font-display text-2xl font-bold text-white mb-8">
                 Output / <GradientText>Deliverables</GradientText>
               </h2>
-              <p className="text-gray-500 text-sm mb-8">
-                Konkretne efekty pracy - to, co klient realnie otrzymuje
-              </p>
               <div className="space-y-4">
                 {service.deliverables.map((item, index) => (
                   <motion.div
@@ -280,12 +247,12 @@ const ServiceDetail = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-5 p-6 bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-700/50 text-left"
+                    className="flex items-start gap-4 p-5 rounded-xl border border-gray-800/50 text-left" style={{ backgroundColor: '#111214' }}
                   >
-                    <div className="w-12 h-12 rounded-xl bg-lime flex items-center justify-center flex-shrink-0">
-                      {index === 0 ? <FileText className="w-6 h-6 text-gray-900" /> : <Video className="w-6 h-6 text-gray-900" />}
-                    </div>
-                    <p className="text-gray-300">{item}</p>
+                    <span className="font-display text-sm font-bold text-lime/50 mt-0.5 flex-shrink-0">
+                      {(index + 1).toString().padStart(2, '0')}
+                    </span>
+                    <p className="text-gray-300 text-sm">{item}</p>
                   </motion.div>
                 ))}
               </div>
@@ -294,11 +261,10 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* Work Model - with engaging background */}
+      {/* Work Model - clean, no icons, no weird decorations */}
       <ParallaxSection 
         imageUrl={statsBg} 
-        overlayOpacity={0.9} 
-        variant="asian"
+        overlayOpacity={0.92} 
         className="py-20"
       >
         <div className="container mx-auto px-6 lg:px-12">
@@ -317,32 +283,29 @@ const ServiceDetail = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="bg-gray-800/60 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
+                  className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
-                  <Users className="w-10 h-10 text-lime mx-auto mb-4" />
-                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Typ</p>
-                  <p className="text-white font-semibold">{service.workModel.type}</p>
+                  <p className="text-lime text-xs uppercase tracking-wider mb-3 font-medium">Typ</p>
+                  <p className="text-white font-semibold text-sm">{service.workModel.type}</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="bg-gray-800/60 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
+                  className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
-                  <Clock className="w-10 h-10 text-lime mx-auto mb-4" />
-                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Czas realizacji</p>
-                  <p className="text-white font-semibold">{service.workModel.duration}</p>
+                  <p className="text-lime text-xs uppercase tracking-wider mb-3 font-medium">Czas realizacji</p>
+                  <p className="text-white font-semibold text-sm">{service.workModel.duration}</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="bg-gray-800/60 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/50 hover:border-lime/30 transition-all"
+                  className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
-                  <FileText className="w-10 h-10 text-lime mx-auto mb-4" />
-                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-2">Komunikacja</p>
+                  <p className="text-lime text-xs uppercase tracking-wider mb-3 font-medium">Komunikacja</p>
                   <p className="text-white font-semibold text-sm">{service.workModel.communication}</p>
                 </motion.div>
               </div>
@@ -352,8 +315,7 @@ const ServiceDetail = () => {
       </ParallaxSection>
 
       {/* Case Study */}
-      <section className="bg-gray-950 py-24 relative overflow-hidden">
-        {/* Chinese character */}
+      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <ChineseCharacters characters="橋" position="right" className="top-20" opacity={0.05} />
         
         <div className="container mx-auto px-6 lg:px-12">
@@ -375,15 +337,14 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-24 overflow-hidden bg-gray-900">
+      {/* CTA Section - consistent style */}
+      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-1/2 -right-1/4 w-[600px] h-[600px] border border-lime/10 rounded-full"
-          />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-lime/10 blur-[100px] rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/8 blur-[150px] rounded-full" />
+        </div>
+        
+        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
@@ -395,15 +356,15 @@ const ServiceDetail = () => {
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
               Zainteresowany? <GradientText>Porozmawiajmy</GradientText>
             </h2>
-            <p className="text-gray-400 mb-8 max-w-lg mx-auto">
-              Bezpłatna konsultacja pomoże określić, czy ta usługa odpowiada Twoim potrzebom.
+            <p className="text-gray-500 mb-8 max-w-lg mx-auto">
+              Bezpłatna konsultacja pomoże określić, jak możemy Ci pomóc.
             </p>
             <Link
               to="/kontakt"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow-slow"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
             >
               Umów rozmowę
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>
