@@ -62,29 +62,21 @@ const Kontakt = () => {
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
-      {/* Main Content - Dark theme with background decorations */}
+      {/* Main Content */}
       <section className="pt-24 pb-12 relative overflow-hidden">
-        {/* Background decorations */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
           <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-lime/3 blur-[120px] rounded-full" />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-5" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(196, 255, 0, 0.3) 1px, transparent 0)`,
-            backgroundSize: '50px 50px',
-          }} />
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          {/* Two Column Layout - Form aligned with title */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-            {/* Left side - Title + Contact Methods */}
+            {/* Left side */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              {/* Header */}
               <div className="mb-8">
                 <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
                   Kontakt
@@ -96,7 +88,6 @@ const Kontakt = () => {
                 </h1>
               </div>
 
-              {/* Contact Method Cards */}
               <div className="space-y-4">
                 {contactMethods.map((method, index) => (
                   <motion.a
@@ -105,16 +96,17 @@ const Kontakt = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 + index * 0.1 }}
-                    className={`group flex items-center gap-4 p-5 rounded-2xl bg-gray-800/50 border-2 border-gray-700/50 ${method.hoverBorder} transition-all duration-300`}
+                    className={`group flex items-center gap-4 p-5 rounded-2xl border-2 border-gray-800/50 ${method.hoverBorder} transition-all duration-300`}
+                    style={{ backgroundColor: '#0B0B0B' }}
                   >
-                    <div className="w-14 h-14 rounded-xl bg-gray-700/50 flex items-center justify-center overflow-hidden p-2">
+                    <div className="w-14 h-14 rounded-xl flex items-center justify-center overflow-hidden p-2" style={{ backgroundColor: '#111214' }}>
                       <img src={method.icon} alt={method.title} className="w-8 h-8 object-contain" />
                     </div>
                     <div className="flex-grow">
                       <p className={`text-white font-semibold ${method.hoverText} transition-colors duration-300`}>{method.title}</p>
-                      <p className="text-gray-400 text-sm">{method.subtitle}</p>
+                      <p className="text-gray-500 text-sm">{method.subtitle}</p>
                     </div>
-                    <ArrowUpRight className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors duration-300" />
+                    <ArrowUpRight className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors duration-300" />
                   </motion.a>
                 ))}
               </div>
@@ -126,78 +118,73 @@ const Kontakt = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="bg-gray-800/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/50">
+              <div className="rounded-3xl p-8 border border-gray-800/50" style={{ backgroundColor: '#0B0B0B' }}>
                 <h3 className="font-display font-semibold text-xl text-white mb-2">
                   Wyślij wiadomość
                 </h3>
-                <p className="text-gray-400 text-sm mb-6">
+                <p className="text-gray-500 text-sm mb-6">
                   Wypełnij formularz, a skontaktujemy się w ciągu 24 godzin.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Imię i nazwisko *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-400 mb-2">Imię i nazwisko *</label>
                       <input
                         type="text"
                         placeholder="Jan Kowalski"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-gray-700/50 border border-gray-600/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                        style={{ backgroundColor: '#111214' }}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        E-mail *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-400 mb-2">E-mail *</label>
                       <input
                         type="email"
                         placeholder="jan@firma.pl"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-gray-700/50 border border-gray-600/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                        style={{ backgroundColor: '#111214' }}
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Firma / instytucja
-                    </label>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">Firma / instytucja</label>
                     <input
                       type="text"
                       placeholder="Nazwa firmy"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-700/50 border border-gray-600/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                      style={{ backgroundColor: '#111214' }}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Temat
-                    </label>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">Temat</label>
                     <input
                       type="text"
                       placeholder="W jakiej sprawie piszesz?"
                       value={formData.topic}
                       onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-700/50 border border-gray-600/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300"
+                      style={{ backgroundColor: '#111214' }}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Wiadomość *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">Wiadomość *</label>
                     <textarea
                       placeholder="Opisz krótko, w czym możemy pomóc..."
                       rows={6}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-700/50 border border-gray-600/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300 resize-none"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-800/50 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent transition-all duration-300 resize-none"
+                      style={{ backgroundColor: '#111214' }}
                     />
                   </div>
 
@@ -215,10 +202,10 @@ const Kontakt = () => {
         </div>
       </section>
 
-      {/* Map + Locations Section */}
-      <section className="py-16 bg-gray-900">
+      {/* Locations Section - consistent dark bg */}
+      <section className="py-16" style={{ backgroundColor: '#050608' }}>
+        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Location Cards */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -230,23 +217,23 @@ const Kontakt = () => {
             </h3>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
-              <div className="p-6 rounded-2xl bg-gray-800/50 border border-gray-700/50 hover:border-lime/30 transition-colors duration-300">
-                <div className="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center mb-4">
+              <div className="p-6 rounded-2xl border border-gray-800/50 hover:border-lime/30 transition-colors duration-300" style={{ backgroundColor: '#0B0B0B' }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#111214' }}>
                   <MapPin className="w-5 h-5 text-lime" />
                 </div>
                 <h4 className="font-semibold text-white mb-2">Warszawa</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-gray-500 text-sm leading-relaxed">
                   ul. Chmielna 73<br />
                   00-801 Warszawa<br />
                   Polska
                 </p>
               </div>
-              <div className="p-6 rounded-2xl bg-gray-800/50 border border-gray-700/50 hover:border-lime/30 transition-colors duration-300">
-                <div className="w-12 h-12 rounded-xl bg-gray-900 flex items-center justify-center mb-4">
+              <div className="p-6 rounded-2xl border border-gray-800/50 hover:border-lime/30 transition-colors duration-300" style={{ backgroundColor: '#0B0B0B' }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#111214' }}>
                   <MapPin className="w-5 h-5 text-lime" />
                 </div>
                 <h4 className="font-semibold text-white mb-2">Shanghai</h4>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-gray-500 text-sm leading-relaxed">
                   696 Weihai Road<br />
                   Jing'an District<br />
                   Shanghai 200041<br />
@@ -256,12 +243,11 @@ const Kontakt = () => {
             </div>
           </motion.div>
 
-          {/* Apple Maps Embed */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="rounded-3xl overflow-hidden border border-gray-700/50"
+            className="rounded-3xl overflow-hidden border border-gray-800/50"
           >
             <iframe
               src="https://embed.apple.com/maps/place?address=Chmielna%2069,%2000-801%20Warsaw,%20Poland&h=400&colorScheme=dark"

@@ -23,12 +23,9 @@ interface FooterProps {
 
 export const Footer = ({ variant = 'dark' }: FooterProps) => {
   return (
-    <footer className="relative overflow-hidden bg-gray-900 text-white">
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent pointer-events-none" />
-      
-      {/* Glow effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-lime/5 blur-[100px] rounded-full pointer-events-none" />
+    <footer className="relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
+      {/* Subtle top border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
 
       <div className="relative container mx-auto px-6 lg:px-12 pt-20 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
@@ -40,22 +37,22 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
                 alt="Yin Yang Logo" 
                 className="w-12 h-12 object-contain transition-transform duration-300 group-hover:scale-110"
               />
-              <span className="font-display font-bold text-2xl">Yin Yang</span>
+              <span className="font-display font-bold text-2xl text-white">Yin Yang</span>
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
               Twój przewodnik w relacjach Polska-Chiny. Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL-CN.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Nawigacja</h4>
+            <h4 className="font-display font-semibold text-lg mb-6 text-white">Nawigacja</h4>
             <ul className="space-y-3">
               {footerLinks.navigation.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-gray-400 hover:text-lime transition-colors duration-300 text-sm"
+                    className="text-gray-500 hover:text-lime transition-colors duration-300 text-sm"
                   >
                     {link.name}
                   </Link>
@@ -66,11 +63,11 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Kontakt</h4>
+            <h4 className="font-display font-semibold text-lg mb-6 text-white">Kontakt</h4>
             <div className="space-y-4">
               <a
                 href="mailto:contact@yinyang.pl"
-                className="flex items-center gap-3 text-gray-400 hover:text-lime transition-colors duration-300 text-sm"
+                className="flex items-center gap-3 text-gray-500 hover:text-lime transition-colors duration-300 text-sm"
               >
                 <Mail size={18} className="text-lime" />
                 contact@yinyang.pl
@@ -80,14 +77,14 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
 
           {/* Locations */}
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Lokalizacje</h4>
+            <h4 className="font-display font-semibold text-lg mb-6 text-white">Lokalizacje</h4>
             <div className="space-y-6">
               <div>
                 <div className="flex items-center gap-2 text-white font-medium mb-2">
                   <MapPin size={16} className="text-lime" />
                   Warszawa
                 </div>
-                <p className="text-gray-400 text-sm pl-6">
+                <p className="text-gray-500 text-sm pl-6">
                   ul. Chmielna 73<br />
                   00-801 Warszawa<br />
                   Polska
@@ -98,7 +95,7 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
                   <MapPin size={16} className="text-lime" />
                   Shanghai
                 </div>
-                <p className="text-gray-400 text-sm pl-6">
+                <p className="text-gray-500 text-sm pl-6">
                   696 Weihai Road<br />
                   Jing'an District<br />
                   Shanghai 200041, China
@@ -109,9 +106,9 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-gray-800">
+        <div className="mt-16 pt-8 border-t border-gray-800/50">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-600 text-sm">
               © 2025 Yin Yang. Wszelkie prawa zastrzeżone.
             </p>
             <div className="flex items-center gap-6">
@@ -119,7 +116,7 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-gray-500 hover:text-gray-300 transition-colors duration-300 text-sm"
+                  className="text-gray-600 hover:text-gray-400 transition-colors duration-300 text-sm"
                 >
                   {link.name}
                 </a>

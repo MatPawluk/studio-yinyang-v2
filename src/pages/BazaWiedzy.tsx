@@ -103,20 +103,14 @@ const BazaWiedzy = () => {
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
-      {/* Hero Section - Dark themed with world map */}
+      {/* Hero Section */}
       <section className="relative pt-28 pb-12 overflow-hidden" style={{ backgroundColor: '#050608' }}>
-        {/* Background with world map */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img 
-            src={worldMap} 
-            alt="" 
-            className="w-full h-full object-cover opacity-10"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/80 via-[#050608]/90 to-[#050608]" />
+          <img src={worldMap} alt="" className="w-full h-full object-cover opacity-10" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(5,6,8,0.8), rgba(5,6,8,0.9), #050608)' }} />
           <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
         </div>
         
-        {/* Chinese character */}
         <ChineseCharacters characters="知" position="right" className="top-20" opacity={0.06} />
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
@@ -134,7 +128,7 @@ const BazaWiedzy = () => {
               <br />
               i komentarze
             </h1>
-            <p className="text-lg text-gray-400">
+            <p className="text-lg text-gray-500">
               Materiały dotyczące rynku polskiego, chińskiego oraz współpracy międzynarodowej.
             </p>
           </motion.div>
@@ -142,17 +136,9 @@ const BazaWiedzy = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="py-12 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(196, 255, 0, 0.3) 1px, transparent 0)`,
-            backgroundSize: '40px 40px',
-          }} />
-        </div>
-
+      <section className="py-12 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          {/* Categories - Working filters */}
+          {/* Categories */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -166,8 +152,9 @@ const BazaWiedzy = () => {
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                   activeCategory === category
                     ? 'bg-lime text-gray-900'
-                    : 'bg-gray-800/50 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-700/50'
+                    : 'text-gray-500 hover:text-white border border-gray-800/50'
                 }`}
+                style={activeCategory !== category ? { backgroundColor: '#0B0B0B' } : {}}
               >
                 {category}
               </button>
@@ -182,42 +169,40 @@ const BazaWiedzy = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group relative bg-gray-800/30 rounded-3xl overflow-hidden border border-gray-700/50 hover:border-lime/30 hover:shadow-xl hover:shadow-lime/5 transition-all duration-500"
+                className="group relative rounded-2xl overflow-hidden border border-gray-800/50 hover:border-lime/30 hover:shadow-xl hover:shadow-lime/5 transition-all duration-500"
+                style={{ backgroundColor: '#0B0B0B' }}
               >
                 <Link to={`/baza-wiedzy/${article.slug}`}>
-                  {/* Image */}
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={article.image}
                       alt={article.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent" />
-                    {/* Category badge */}
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #0B0B0B, rgba(11,11,11,0.3), transparent)' }} />
                     <div className="absolute bottom-4 left-4">
                       <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold ${
                         article.category === 'Analizy' 
                           ? 'bg-lime text-gray-900'
                           : article.category === 'Poradniki'
                           ? 'bg-white/90 text-gray-900'
-                          : 'bg-gray-800 text-white'
-                      }`}>
+                          : 'text-white border border-gray-700'
+                      }`}
+                      style={article.category === 'Blog' ? { backgroundColor: '#111214' } : {}}
+                      >
                         {article.category}
                       </span>
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div className="p-6">
                     <h3 className="font-display font-semibold text-xl mb-3 text-white group-hover:text-lime transition-colors duration-300 line-clamp-2">
                       {article.title}
                     </h3>
-
-                    <p className="text-gray-400 text-sm mb-6 line-clamp-2">
+                    <p className="text-gray-500 text-sm mb-6 line-clamp-2">
                       {article.description}
                     </p>
-
-                    <div className="flex items-center justify-between text-sm text-gray-500">
+                    <div className="flex items-center justify-between text-sm text-gray-600">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
                         <span>{article.date}</span>
@@ -235,13 +220,14 @@ const BazaWiedzy = () => {
         </div>
       </section>
 
-      {/* CTA Section with smooth transition */}
-      <section className="relative py-24 overflow-hidden">
-        {/* Clean dark background with subtle centered glow */}
-        <div className="absolute inset-0 bg-gray-900" />
+      {/* CTA Section - consistent with homepage style */}
+      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Subtle, smooth radial glow from center */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-lime/8 blur-[100px] rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/8 blur-[150px] rounded-full" />
+        </div>
+        
+        <div className="absolute bottom-10 right-10 opacity-[0.04] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-white leading-none">知識</span>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
@@ -253,15 +239,15 @@ const BazaWiedzy = () => {
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
               Potrzebujesz dedykowanej <GradientText>analizy</GradientText>?
             </h2>
-            <p className="text-gray-400 mb-8 max-w-lg mx-auto">
+            <p className="text-gray-500 mb-8 max-w-lg mx-auto">
               Przygotowujemy materiały na zamówienie, dopasowane do Twojej branży i potrzeb.
             </p>
             <Link
               to="/kontakt"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
             >
               Skontaktuj się z nami
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>
