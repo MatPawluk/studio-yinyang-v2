@@ -1376,6 +1376,7 @@ export const servicesData: Record<string, ServiceData> = {
 export const serviceSlugMap: Record<string, string> = {
   'analiza-wplywu-chin': 'analiza-wplywu',
   'decyzje-wejscia-wspolpracy': 'decyzje-wejscia',
+  'decyzje-strategiczne': 'decyzje-wejscia',
   'scenariusze-mapy-ryzyk': 'scenariusze-strategiczne',
   'briefingi-zarzady': 'briefingi-decyzyjne',
   'analizy-sektorow-klastrow': 'analizy-sektorow',
@@ -1399,6 +1400,7 @@ export const serviceSlugMap: Record<string, string> = {
   'wsparcie-marketing-leady': 'wsparcie-marketingowe',
   'misje-biznesowe-technologiczne': 'misje-biznesowe',
   'matchmaking-b2b': 'matchmaking',
+  'matchmaking-b2b-partnerow': 'matchmaking',
   'szkolenia-system-gospodarczy': 'szkolenia-system',
   'szkolenia-kultura-negocjacje': 'szkolenia-kultura',
 };

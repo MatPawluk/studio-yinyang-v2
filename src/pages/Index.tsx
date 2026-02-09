@@ -432,7 +432,7 @@ const Index = () => {
                       >
                         {/* Category tag */}
                         <span className="inline-block px-3 py-1 rounded-full bg-lime/20 text-lime text-xs font-medium mb-4">
-                          Kategoria {currentSlide + 1} z {carouselServices.length}
+                          {currentSlide + 1} / {carouselServices.length}
                         </span>
                         
                         <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4 leading-tight">
@@ -694,42 +694,39 @@ const Index = () => {
       <HomeFAQSection />
 
       {/* CTA Section - Phunk-style premium card with consultant */}
-      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
-        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
-          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
-        </div>
-
+      <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
-          <div className="relative rounded-[2rem] overflow-hidden border border-gray-800/50" style={{ background: 'linear-gradient(135deg, #0B0B0B 0%, #111214 50%, rgba(196,255,0,0.08) 100%)' }}>
+          <div className="relative max-w-5xl mx-auto rounded-[1.5rem] overflow-visible border border-gray-800/50" style={{ background: 'linear-gradient(135deg, #0B0B0B 0%, #111214 50%, rgba(196,255,0,0.08) 100%)' }}>
             {/* Subtle lime glow */}
-            <div className="absolute bottom-0 right-0 w-[500px] h-[400px] bg-lime/10 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[300px] h-[250px] bg-lime/10 blur-[100px] rounded-full pointer-events-none" />
             
-            <div className="relative grid lg:grid-cols-2 gap-8 items-end">
+            <div className="relative grid lg:grid-cols-[1fr_auto] gap-0 items-end">
               {/* Left: Text content */}
-              <div className="p-10 lg:p-16">
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              <div className="p-8 lg:p-12">
+                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight">
                   Skontaktuj się z nami na
-                  <br />
+                </h2>
+                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-5 leading-tight">
                   <GradientText>bezpłatną konsultację</GradientText>
                 </h2>
-                <p className="text-gray-400 text-lg mb-10 max-w-md">
+                <p className="text-gray-400 text-base mb-8 max-w-md">
                   Jeśli Chiny mają znaczenie dla Twojej organizacji, zapraszamy do rozmowy.
                 </p>
                 <Link
                   to="/kontakt"
-                  className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-lime text-gray-900 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
                 >
                   Umów rozmowę
                   <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
 
-              {/* Right: Consultant image breaking frame */}
-              <div className="relative hidden lg:block">
+              {/* Right: Consultant image breaking frame from top */}
+              <div className="relative hidden lg:flex items-end justify-end pr-8" style={{ minWidth: '280px' }}>
                 <img 
                   src={consultantImg}
                   alt="Konsultant Yin Yang"
-                  className="relative z-10 w-full max-w-md ml-auto object-contain -mt-8 -mb-1"
+                  className="relative z-10 w-[320px] object-contain -mt-32 -mb-1"
                   style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))' }}
                 />
               </div>

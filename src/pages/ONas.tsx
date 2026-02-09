@@ -128,7 +128,7 @@ const ONas = () => {
           initial={{ opacity: 0, x: 100, y: -50 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-          className="absolute top-16 right-0 lg:right-[-5%] w-[300px] md:w-[400px] lg:w-[500px] pointer-events-none z-20"
+          className="absolute top-16 right-[5%] lg:right-[0%] w-[280px] md:w-[380px] lg:w-[460px] pointer-events-none z-20"
         >
           <div className="relative">
             <img 
@@ -145,7 +145,7 @@ const ONas = () => {
           initial={{ opacity: 0, z: -100, scale: 0.8 }}
           animate={{ opacity: 1, z: 0, scale: 1 }}
           transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
-          className="absolute bottom-[10%] left-[5%] lg:left-[8%] w-[400px] md:w-[500px] lg:w-[600px] pointer-events-none z-40"
+          className="absolute bottom-[2%] left-[0%] lg:left-[2%] w-[350px] md:w-[420px] lg:w-[500px] pointer-events-none z-40"
         >
           <div className="relative">
             <img 
@@ -162,7 +162,7 @@ const ONas = () => {
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 1.2, ease: "easeOut" }}
-          className="absolute top-[5%] right-[3%] lg:right-[5%] w-[280px] md:w-[380px] lg:w-[480px] pointer-events-none z-10 hidden md:block"
+          className="absolute top-[2%] left-[2%] lg:left-[5%] w-[280px] md:w-[380px] lg:w-[480px] pointer-events-none z-10 hidden md:block"
         >
           <div className="relative">
             <img 
@@ -309,7 +309,7 @@ const ONas = () => {
       <TeamCarousel />
 
       {/* World Dot Map Section */}
-      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
+      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -407,10 +407,10 @@ const ONas = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-32 overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/8 blur-[150px] rounded-full" />
+      {/* CTA Section - consistent gradient style */}
+      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
