@@ -722,12 +722,12 @@ const Index = () => {
               </div>
 
               {/* Right: Consultant image breaking frame from top */}
-              <div className="relative hidden lg:flex items-end justify-end pr-8" style={{ minWidth: '280px' }}>
+              <div className="relative hidden lg:flex items-end justify-end pr-8" style={{ minWidth: '320px' }}>
                 <img 
                   src={consultantImg}
                   alt="Konsultant Yin Yang"
-                  className="relative z-10 w-[320px] object-contain -mt-32 -mb-1"
-                  style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))' }}
+                  className="relative z-10 w-[380px] object-contain -mb-1"
+                  style={{ marginTop: '-180px', filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))' }}
                 />
               </div>
             </div>

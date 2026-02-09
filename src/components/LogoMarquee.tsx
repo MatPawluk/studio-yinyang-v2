@@ -9,8 +9,8 @@ export const LogoMarquee = () => {
   return (
     <div className="relative overflow-hidden py-8">
       {/* Gradient masks */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-900 to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050608] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050608] to-transparent z-10 pointer-events-none" />
 
       <div className="flex animate-marquee">
         {[...companies, ...companies].map((company, index) => (
@@ -32,8 +32,8 @@ export const LogoMarqueeLight = () => {
   return (
     <div className="relative overflow-hidden py-8">
       {/* Gradient masks */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050608] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050608] to-transparent z-10 pointer-events-none" />
 
       <div className="flex animate-marquee">
         {[...companies, ...companies].map((company, index) => (
