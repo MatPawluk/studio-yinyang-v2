@@ -86,7 +86,7 @@ const allTestimonials = [...testimonials, ...testimonials];
 
 export const TestimonialsSection = () => {
   return (
-    <section className="relative py-24 bg-gray-900 overflow-hidden">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-lime/5 blur-[150px] rounded-full" />
@@ -110,8 +110,8 @@ export const TestimonialsSection = () => {
         {/* Vertical Scrolling Marquee */}
         <div className="relative h-[600px] overflow-hidden">
           {/* Gradient overlays */}
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-900 to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent z-10 pointer-events-none" />
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#050608] to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050608] to-transparent z-10 pointer-events-none" />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
             {/* Column 1 - scrolls up */}
@@ -168,7 +168,7 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   const hasHalfStar = testimonial.rating % 1 !== 0;
 
   return (
-    <div className="group relative p-6 rounded-3xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-lime/30 transition-all duration-500">
+    <div className="group relative p-6 rounded-3xl bg-[#0B0B0B]/80 backdrop-blur-sm border border-gray-800/50 hover:border-lime/30 transition-all duration-500">
       {/* Quote icon */}
       <div className="absolute top-4 right-4 opacity-20">
         <Quote className="w-8 h-8 text-lime" />
@@ -196,7 +196,7 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
 
       {/* Author with animated avatar */}
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center border-2 border-lime/30 overflow-hidden">
+        <div className="w-12 h-12 rounded-full bg-[#111214] flex items-center justify-center border-2 border-lime/30 overflow-hidden">
           <img
             src={testimonial.avatar}
             alt={testimonial.name}

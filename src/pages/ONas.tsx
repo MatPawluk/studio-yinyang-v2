@@ -8,7 +8,6 @@ import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
 import { TeamCarousel } from '@/components/TeamCarousel';
-import { ServicesCarousel } from '@/components/ServicesCarousel';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
@@ -124,7 +123,7 @@ const ONas = () => {
         <FloatingDots count={40} />
         
         {/* Transport foreground elements */}
-        {/* Airplane - top right */}
+        {/* Airplane - top right - stays in position */}
         <motion.div
           initial={{ opacity: 0, x: 100, y: -50 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
@@ -141,36 +140,36 @@ const ONas = () => {
           </div>
         </motion.div>
         
-        {/* Truck - bottom left */}
+        {/* Truck - bottom left, coming from front, overlapping first stat card */}
         <motion.div
-          initial={{ opacity: 0, x: -150 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, z: -100, scale: 0.8 }}
+          animate={{ opacity: 1, z: 0, scale: 1 }}
           transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
-          className="absolute bottom-0 left-[-10%] lg:left-[-5%] w-[350px] md:w-[450px] lg:w-[550px] pointer-events-none z-20"
+          className="absolute bottom-[10%] left-[5%] lg:left-[8%] w-[400px] md:w-[500px] lg:w-[600px] pointer-events-none z-40"
         >
           <div className="relative">
             <img 
               src={heroTruck} 
               alt="" 
-              className="w-full h-auto drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
-              style={{ filter: 'drop-shadow(0 0 15px rgba(196, 255, 0, 0.12))' }}
+              className="w-full h-auto drop-shadow-[0_30px_80px_rgba(0,0,0,0.9)]"
+              style={{ filter: 'drop-shadow(0 0 20px rgba(196, 255, 0, 0.15))' }}
             />
           </div>
         </motion.div>
         
-        {/* Container - right middle */}
+        {/* Container - right side, bigger, starting from top (hook visible) */}
         <motion.div
-          initial={{ opacity: 0, y: 80, rotate: -5 }}
-          animate={{ opacity: 1, y: 0, rotate: 0 }}
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 1.2, ease: "easeOut" }}
-          className="absolute top-1/2 right-[5%] lg:right-[10%] -translate-y-1/2 w-[200px] md:w-[280px] lg:w-[350px] pointer-events-none z-10 hidden md:block"
+          className="absolute top-[5%] right-[3%] lg:right-[5%] w-[280px] md:w-[380px] lg:w-[480px] pointer-events-none z-10 hidden md:block"
         >
-          <div className="relative" style={{ transform: 'rotate(5deg)' }}>
+          <div className="relative">
             <img 
               src={heroContainer} 
               alt="" 
-              className="w-full h-auto drop-shadow-[0_30px_80px_rgba(0,0,0,0.9)]"
-              style={{ filter: 'drop-shadow(0 0 25px rgba(196, 255, 0, 0.1))' }}
+              className="w-full h-auto drop-shadow-[0_40px_100px_rgba(0,0,0,0.9)]"
+              style={{ filter: 'drop-shadow(0 0 30px rgba(196, 255, 0, 0.12))' }}
             />
           </div>
         </motion.div>
@@ -199,12 +198,12 @@ const ONas = () => {
             </p>
           </motion.div>
 
-          {/* Stats Row */}
+          {/* Stats Row - z-index lower than truck */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto relative z-20"
           >
             {stats.map((stat, index) => (
               <motion.div 
@@ -227,9 +226,6 @@ const ONas = () => {
           </motion.div>
         </motion.div>
       </section>
-
-      {/* Services Carousel Section */}
-      <ServicesCarousel />
 
       {/* Team - 3+3 layout */}
       <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>

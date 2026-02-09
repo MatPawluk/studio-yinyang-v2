@@ -96,11 +96,11 @@ const Uslugi = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
       {/* Hero Section - Dark with world map background */}
-      <section className="relative pt-28 pb-16 bg-gray-900 overflow-hidden">
+      <section className="relative pt-28 pb-16 overflow-hidden" style={{ backgroundColor: '#050608' }}>
         {/* Background with world map */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img 
@@ -108,7 +108,7 @@ const Uslugi = () => {
             alt="" 
             className="w-full h-full object-cover opacity-10"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/90 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/80 via-[#050608]/90 to-[#050608]" />
           <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
         </div>
         
@@ -138,7 +138,7 @@ const Uslugi = () => {
       </section>
 
       {/* Categories Accordion Section */}
-      <section className="bg-gray-950 py-16 relative overflow-hidden">
+      <section className="py-16 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
@@ -201,7 +201,7 @@ const Uslugi = () => {
                               to={`/uslugi/${category.slug}/${subService.slug}`}
                               className="group relative block h-full"
                             >
-                              <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-gray-900/50 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
+                              <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-[#0B0B0B]/80 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
                                 {/* Image - larger */}
                                 <div className="aspect-[4/3] relative overflow-hidden">
                                   <img
@@ -209,7 +209,7 @@ const Uslugi = () => {
                                     alt={subService.title}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                   />
-                                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/60 to-transparent" />
                                 </div>
                                 
                                 {/* Content - better visibility */}
@@ -247,7 +247,7 @@ const Uslugi = () => {
             backgroundAttachment: 'fixed',
           }}
         >
-          <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
         </motion.div>
 
         {/* Animated glow */}

@@ -145,7 +145,7 @@ const Index = () => {
   const getNextIndex = () => (currentSlide + 1) % carouselServices.length;
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
       {/* Hero Section with Video Background */}
@@ -164,7 +164,7 @@ const Index = () => {
           >
             <source src={heroVideo} type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/70 via-[#050608]/50 to-[#050608]" />
           
           {/* Animated overlay effects */}
           <motion.div
@@ -318,9 +318,9 @@ const Index = () => {
       </section>
 
       {/* Dark transition curve like Thala Labs */}
-      <section className="relative bg-gray-900 pt-48 sm:pt-56 md:pt-64 pb-20">
+      <section className="relative pt-48 sm:pt-56 md:pt-64 pb-20" style={{ backgroundColor: '#050608' }}>
         {/* Curved transition */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-900 to-gray-950" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#050608] to-[#0B0B0B]" />
         
         {/* Content placeholder - visual transition element */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-6">
@@ -333,10 +333,25 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Carousel Section */}
-      <section className="relative bg-gray-950 py-24 z-10">
+      {/* Services Carousel Section - Premium Redesign */}
+      <section className="relative py-24 z-10" style={{ backgroundColor: '#050608' }}>
+        {/* Background decorations */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Light slash effect */}
+          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-lime/10 to-transparent" />
+          {/* Subtle abstract shapes */}
+          <div className="absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-[#0B0B0B]/60 blur-3xl" />
+        </div>
+
+        {/* Oversized background typography */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          <div className="absolute top-[20%] left-[-5%] font-display text-[18vw] font-bold text-white/[0.02] tracking-wider">
+            PARTNER
+          </div>
+        </div>
+
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header - "Nasze usługi" with gradient, centered */}
+          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -344,12 +359,12 @@ const Index = () => {
             className="text-center mb-16"
           >
             <h2 className="font-display text-4xl lg:text-6xl font-bold">
-              <span className="text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-gray-400 to-white">Nasze </span>
+              <span className="text-gray-500">Nasze </span>
               <GradientText>usługi</GradientText>
             </h2>
           </motion.div>
 
-          {/* Carousel with peek effect - TALLER */}
+          {/* Premium Card Carousel with 3D perspective */}
           <div className="relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -357,99 +372,130 @@ const Index = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              {/* Carousel container with peek */}
-              <div className="flex items-center gap-4 overflow-hidden">
-                {/* Previous slide peek */}
+              {/* Cards Container - 3D Perspective */}
+              <div className="flex items-center justify-center gap-4 lg:gap-8 perspective-[1500px]">
+                {/* Previous Card - Left */}
                 <motion.div 
                   key={`prev-${getPrevIndex()}`}
-                  className="hidden lg:block flex-shrink-0 w-[12%] opacity-30 hover:opacity-50 transition-opacity cursor-pointer"
+                  className="hidden lg:block flex-shrink-0 cursor-pointer"
                   onClick={prevSlide}
                   whileHover={{ scale: 1.02 }}
+                  style={{ 
+                    transform: 'perspective(1000px) rotateY(15deg) scale(0.85)',
+                    transformOrigin: 'right center',
+                  }}
                 >
-                  <div className="rounded-2xl overflow-hidden aspect-[4/3] border border-gray-800/50">
+                  <div className="relative w-[220px] rounded-2xl overflow-hidden aspect-[3/4] opacity-40 hover:opacity-60 transition-opacity border border-gray-800/30">
                     <img
                       src={carouselServices[getPrevIndex()].image}
                       alt=""
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover grayscale"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/40 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <p className="text-white/60 text-sm font-medium truncate">{carouselServices[getPrevIndex()].title}</p>
+                    </div>
                   </div>
                 </motion.div>
 
-                {/* Main slide - TALLER */}
-                <div className="flex-1 rounded-3xl overflow-hidden aspect-[16/10] lg:aspect-[2/1] relative border border-gray-800/50 shadow-2xl shadow-lime/5">
-                  <motion.img
+                {/* Main Active Card - Center */}
+                <div className="flex-shrink-0 w-full max-w-3xl">
+                  <motion.div
                     key={currentSlide}
-                    initial={{ opacity: 0, scale: 1.05 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    src={carouselServices[currentSlide].image}
-                    alt={carouselServices[currentSlide].title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/70 to-transparent" />
-                  
-                  {/* Content overlay - better positioned */}
-                  <div className="absolute inset-0 flex items-center p-8 sm:p-12 lg:p-16">
-                    <motion.div 
-                      key={`content-${currentSlide}`}
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: 0.1 }}
-                      className="max-w-xl"
-                    >
-                      <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4">
-                        {carouselServices[currentSlide].title}
-                      </h3>
-                      <p className="text-gray-300 text-base lg:text-lg mb-8 hidden sm:block leading-relaxed">
-                        {carouselServices[currentSlide].description}
-                      </p>
-                      <Link
-                        to={`/uslugi#${carouselServices[currentSlide].slug}`}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-transparent border border-lime/50 text-lime rounded-full font-medium hover:bg-lime hover:text-gray-900 transition-all duration-300 group"
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="relative rounded-3xl overflow-hidden aspect-[16/10] lg:aspect-[2/1] border border-gray-800/50 shadow-2xl shadow-lime/5 group"
+                  >
+                    <motion.img
+                      initial={{ scale: 1.05 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.6 }}
+                      src={carouselServices[currentSlide].image}
+                      alt={carouselServices[currentSlide].title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#050608] via-[#050608]/70 to-transparent" />
+                    
+                    {/* Lime accent glow */}
+                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-lime via-lime/50 to-transparent" />
+                    
+                    {/* Content overlay */}
+                    <div className="absolute inset-0 flex items-center p-8 sm:p-12 lg:p-16">
+                      <motion.div 
+                        key={`content-${currentSlide}`}
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                        className="max-w-xl"
                       >
-                        <span className="text-sm">Dowiedz się więcej</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </motion.div>
-                  </div>
+                        {/* Category tag */}
+                        <span className="inline-block px-3 py-1 rounded-full bg-lime/20 text-lime text-xs font-medium mb-4">
+                          Kategoria {currentSlide + 1} z {carouselServices.length}
+                        </span>
+                        
+                        <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                          {carouselServices[currentSlide].title}
+                        </h3>
+                        <p className="text-gray-400 text-base lg:text-lg mb-8 hidden sm:block leading-relaxed">
+                          {carouselServices[currentSlide].description}
+                        </p>
+                        <Link
+                          to={`/uslugi#${carouselServices[currentSlide].slug}`}
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-[#050608] rounded-full font-semibold text-sm hover:scale-105 transition-transform duration-300"
+                        >
+                          <span>Poznaj szczegóły</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      </motion.div>
+                    </div>
+                  </motion.div>
                 </div>
 
-                {/* Next slide peek */}
+                {/* Next Card - Right */}
                 <motion.div 
                   key={`next-${getNextIndex()}`}
-                  className="hidden lg:block flex-shrink-0 w-[12%] opacity-30 hover:opacity-50 transition-opacity cursor-pointer"
+                  className="hidden lg:block flex-shrink-0 cursor-pointer"
                   onClick={nextSlide}
                   whileHover={{ scale: 1.02 }}
+                  style={{ 
+                    transform: 'perspective(1000px) rotateY(-15deg) scale(0.85)',
+                    transformOrigin: 'left center',
+                  }}
                 >
-                  <div className="rounded-2xl overflow-hidden aspect-[4/3] border border-gray-800/50">
+                  <div className="relative w-[220px] rounded-2xl overflow-hidden aspect-[3/4] opacity-40 hover:opacity-60 transition-opacity border border-gray-800/30">
                     <img
                       src={carouselServices[getNextIndex()].image}
                       alt=""
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover grayscale"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/40 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <p className="text-white/60 text-sm font-medium truncate">{carouselServices[getNextIndex()].title}</p>
+                    </div>
                   </div>
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Carousel Controls - centered dots */}
-            <div className="flex items-center justify-center mt-8 gap-4 sm:gap-6">
+            {/* Carousel Controls - minimal dots */}
+            <div className="flex items-center justify-center mt-10 gap-4 sm:gap-6">
               {/* Arrows left */}
               <button
                 onClick={prevSlide}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
+                <ChevronLeft className="w-5 h-5 text-gray-500 group-hover:text-lime" />
               </button>
 
-              {/* Centered Indicators */}
+              {/* Centered Indicators - minimal dots */}
               <div className="flex gap-2">
                 {carouselServices.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      index === currentSlide ? 'w-8 bg-lime' : 'w-2 bg-gray-600'
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      index === currentSlide ? 'w-8 bg-lime' : 'w-1.5 bg-gray-700 hover:bg-gray-600'
                     }`}
                   />
                 ))}
@@ -458,9 +504,9 @@ const Index = () => {
               {/* Arrows right */}
               <button
                 onClick={nextSlide}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-700 flex items-center justify-center hover:border-lime hover:bg-lime transition-all duration-300 group"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group"
               >
-                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
+                <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-lime" />
               </button>
             </div>
 
@@ -468,7 +514,7 @@ const Index = () => {
             <div className="text-center mt-8">
               <Link 
                 to="/uslugi"
-                className="inline-flex items-center gap-2 text-gray-400 hover:text-lime transition-colors duration-300"
+                className="inline-flex items-center gap-2 text-gray-500 hover:text-lime transition-colors duration-300 text-sm"
               >
                 Zobacz wszystkie usługi
                 <ArrowRight className="w-4 h-4" />
@@ -489,7 +535,7 @@ const Index = () => {
             backgroundAttachment: 'fixed',
           }}
         >
-          <div className="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
         </motion.div>
 
         {/* Animated glow */}
@@ -541,7 +587,7 @@ const Index = () => {
       </section>
 
       {/* Process Section - Dark with Large Radar and Chinese characters */}
-      <section className="bg-gray-900 py-24 relative overflow-hidden">
+      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
         {/* Large Radar in Background - much bigger */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[1200px] h-[1200px] opacity-40">
@@ -553,7 +599,7 @@ const Index = () => {
         <ChineseCharacters characters="合作关系" position="left" className="top-32" opacity={0.06} />
         
         {/* Background gradient - lighter to show radar */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/70 to-gray-900/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/80 via-[#050608]/70 to-[#050608]/80 pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <motion.div
@@ -597,7 +643,7 @@ const Index = () => {
                   
                   {/* Content card */}
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                    <div className="relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-lime/30 transition-all duration-300 group">
+                    <div className="relative bg-[#0B0B0B]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-all duration-300 group">
                       {/* Large number */}
                       <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${
                         index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'
@@ -623,7 +669,7 @@ const Index = () => {
       </section>
 
       {/* Trusted By */}
-      <section className="bg-gray-900 py-16">
+      <section className="py-16" style={{ backgroundColor: '#050608' }}>
         <div className="container mx-auto px-6 lg:px-12">
           <motion.p
             initial={{ opacity: 0 }}
@@ -647,7 +693,7 @@ const Index = () => {
       <HomeFAQSection />
 
       {/* CTA Section */}
-      <section className="relative py-32 overflow-hidden bg-gray-900">
+      <section className="relative py-32 overflow-hidden" style={{ backgroundColor: '#050608' }}>
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div

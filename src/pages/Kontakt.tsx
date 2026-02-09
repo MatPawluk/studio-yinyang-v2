@@ -59,7 +59,7 @@ const Kontakt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
       <Navbar />
       
       {/* Main Content - Dark theme with background decorations */}

@@ -47,7 +47,7 @@ export const CaseStudiesSection = () => {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
 
   return (
-    <section className="bg-gray-950 py-24 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
       <div className="container mx-auto px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -90,7 +90,7 @@ export const CaseStudiesSection = () => {
                     alt={study.name}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/50 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <span className="text-lime text-sm font-medium uppercase tracking-wider">
                       {study.category}
@@ -103,7 +103,7 @@ export const CaseStudiesSection = () => {
 
                 {/* Back of card */}
                 <div 
-                  className="absolute inset-0 rounded-3xl bg-gray-900 border border-gray-800 p-6 backface-hidden overflow-hidden"
+                  className="absolute inset-0 rounded-3xl bg-[#0B0B0B] border border-gray-800 p-6 backface-hidden overflow-hidden"
                   style={{ 
                     backfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)'
@@ -140,7 +140,7 @@ export const CaseStudiesSection = () => {
 
                     <Link
                       to="/kontakt"
-                      className="mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-gray-800 hover:bg-lime hover:text-gray-900 text-white rounded-full text-sm font-medium transition-all duration-300 group"
+                      className="mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#111214] hover:bg-lime hover:text-[#050608] text-white rounded-full text-sm font-medium transition-all duration-300 group"
                     >
                       Porozmawiajmy o Twoim projekcie
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
