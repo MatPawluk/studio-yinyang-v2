@@ -18,10 +18,11 @@ const serviceCategories = [
   {
     title: 'Strategia wobec Chin',
     slug: 'strategia-wobec-chin',
-    count: 3,
+    count: 4,
     subServices: [
       { title: 'Analiza wpływu Chin na firmę lub sektor', slug: 'analiza-wplywu', image: serviceStrategy },
       { title: 'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji', slug: 'decyzje-strategiczne', image: serviceAnalysis },
+      { title: 'Scenariusze strategiczne i mapy ryzyk', slug: 'scenariusze-mapy-ryzyk', image: serviceAnalysis },
       { title: 'Briefingi decyzyjne dla zarządów', slug: 'briefingi-decyzyjne', image: serviceStrategy },
     ],
   },
@@ -30,10 +31,10 @@ const serviceCategories = [
     slug: 'analizy-rynku',
     count: 4,
     subServices: [
-      { title: 'Analizy sektorów, klastrów przemysłowych i konkurencji', slug: 'analizy-sektorow', image: serviceAnalysis },
-      { title: 'Analiza regulacyjna i barier wejścia', slug: 'analiza-regulacyjna', image: serviceStrategy },
-      { title: 'Weryfikacja kontrahenta (Desktop Check)', slug: 'weryfikacja-kontrahenta', image: serviceAnalysis },
-      { title: 'Rozszerzona weryfikacja partnera (Due Diligence)', slug: 'due-diligence', image: serviceStrategy },
+      { title: 'Analizy sektorów, klastrów przemysłowych i konkurencji', slug: 'analizy-sektorow-klastrow', image: serviceAnalysis },
+      { title: 'Analiza regulacyjna i barier wejścia', slug: 'analiza-regulacyjna-bariery', image: serviceStrategy },
+      { title: 'Weryfikacja kontrahenta (Desktop Check)', slug: 'weryfikacja-kontrahenta-desktop', image: serviceAnalysis },
+      { title: 'Rozszerzona weryfikacja partnera (Due Diligence)', slug: 'due-diligence-partner', image: serviceStrategy },
     ],
   },
   {
@@ -41,11 +42,11 @@ const serviceCategories = [
     slug: 'wejscie-na-rynek',
     count: 5,
     subServices: [
-      { title: 'Wybór modelu wejścia na rynek', slug: 'wybor-modelu', image: serviceStrategy },
-      { title: 'Wsparcie formalne i regulacyjne', slug: 'wsparcie-regulacyjne', image: serviceAnalysis },
-      { title: 'Identyfikacja i selekcja partnerów', slug: 'identyfikacja-partnerow', image: serviceStrategy },
-      { title: 'Wsparcie negocjacyjne i relacyjne', slug: 'wsparcie-negocjacyjne', image: serviceAnalysis },
-      { title: 'Przygotowanie struktur handlowych lub partnerskich', slug: 'struktury-handlowe', image: serviceStrategy },
+      { title: 'Wybór modelu wejścia na rynek', slug: 'wybor-modelu-wejscia', image: serviceStrategy },
+      { title: 'Wsparcie formalne i regulacyjne', slug: 'wsparcie-formalne-regulacyjne', image: serviceAnalysis },
+      { title: 'Identyfikacja i selekcja partnerów', slug: 'identyfikacja-selekcja-partnerow', image: serviceStrategy },
+      { title: 'Wsparcie negocjacyjne i relacyjne', slug: 'wsparcie-negocjacyjne-relacyjne', image: serviceAnalysis },
+      { title: 'Przygotowanie struktur handlowych lub partnerskich', slug: 'struktury-handlowe-partnerskie', image: serviceStrategy },
     ],
   },
   {
@@ -53,11 +54,11 @@ const serviceCategories = [
     slug: 'import-eksport',
     count: 5,
     subServices: [
-      { title: 'Audyty i weryfikacja dostawców (On-Site)', slug: 'audyty-dostawcow', image: serviceAnalysis },
-      { title: 'Projektowanie i optymalizacja łańcucha dostaw', slug: 'optymalizacja-lancucha', image: serviceStrategy },
-      { title: 'Nadzór produkcji oraz kontrola jakości', slug: 'nadzor-produkcji', image: serviceAnalysis },
+      { title: 'Audyty i weryfikacja dostawców (On-Site)', slug: 'audyty-weryfikacja-dostawcow', image: serviceAnalysis },
+      { title: 'Projektowanie i optymalizacja łańcucha dostaw', slug: 'optymalizacja-lancucha-dostaw', image: serviceStrategy },
+      { title: 'Nadzór produkcji oraz kontrola jakości', slug: 'nadzor-produkcji-jakosc', image: serviceAnalysis },
       { title: 'Organizacja transportu międzynarodowego', slug: 'transport-miedzynarodowy', image: serviceStrategy },
-      { title: 'Kompleksowa realizacja projektu PL ↔ CN (end-to-end)', slug: 'projekt-end-to-end', image: serviceAnalysis },
+      { title: 'Kompleksowa realizacja projektu PL ↔ CN (end-to-end)', slug: 'realizacja-projekt-end-to-end', image: serviceAnalysis },
     ],
   },
   {
@@ -65,11 +66,11 @@ const serviceCategories = [
     slug: 'marketing-pozycjonowanie',
     count: 5,
     subServices: [
-      { title: 'Lokalne pozycjonowanie marki (PL i CN)', slug: 'pozycjonowanie-marki', image: serviceStrategy },
+      { title: 'Lokalne pozycjonowanie marki (PL i CN)', slug: 'lokalne-pozycjonowanie-marki', image: serviceStrategy },
       { title: 'Strategia komunikacji', slug: 'strategia-komunikacji', image: serviceAnalysis },
-      { title: 'Adaptacja komunikacji do rynku PL i CN', slug: 'adaptacja-komunikacji', image: serviceStrategy },
-      { title: 'Materiały sprzedażowe i wizerunkowe', slug: 'materialy-sprzedazowe', image: serviceAnalysis },
-      { title: 'Wsparcie działań marketingowych i pozyskiwania leadów', slug: 'wsparcie-marketingowe', image: serviceStrategy },
+      { title: 'Adaptacja komunikacji do rynku PL i CN', slug: 'adaptacja-komunikacji-rynek', image: serviceStrategy },
+      { title: 'Materiały sprzedażowe i wizerunkowe', slug: 'materialy-sprzedazowe-wizerunkowe', image: serviceAnalysis },
+      { title: 'Wsparcie działań marketingowych i pozyskiwania leadów', slug: 'wsparcie-marketing-leady', image: serviceStrategy },
     ],
   },
   {
@@ -77,10 +78,10 @@ const serviceCategories = [
     slug: 'misje-szkolenia',
     count: 4,
     subServices: [
-      { title: 'Organizacja misji biznesowych i technologicznych PL ↔ CN', slug: 'organizacja-misji', image: serviceAnalysis },
-      { title: 'Aranżacja spotkań B2B i matchmaking partnerów', slug: 'matchmaking-b2b', image: serviceStrategy },
-      { title: 'Szkolenia z systemu gospodarczego Chin', slug: 'szkolenia-system', image: serviceAnalysis },
-      { title: 'Szkolenia z kultury biznesowej i negocjacji', slug: 'szkolenia-negocjacje', image: serviceStrategy },
+      { title: 'Organizacja misji biznesowych i technologicznych PL ↔ CN', slug: 'misje-biznesowe-technologiczne', image: serviceAnalysis },
+      { title: 'Aranżacja spotkań B2B i matchmaking partnerów', slug: 'matchmaking-b2b-partnerow', image: serviceStrategy },
+      { title: 'Szkolenia z systemu gospodarczego Chin', slug: 'szkolenia-system-gospodarczy', image: serviceAnalysis },
+      { title: 'Szkolenia z kultury biznesowej i negocjacji', slug: 'szkolenia-kultura-negocjacje', image: serviceStrategy },
     ],
   },
 ];
@@ -299,7 +300,7 @@ const Uslugi = () => {
       </section>
 
       {/* Trust Section */}
-      <section className="bg-gray-900 py-16">
+      <section className="py-16" style={{ backgroundColor: '#050608' }}>
         <div className="container mx-auto px-6 lg:px-12">
           <motion.p
             initial={{ opacity: 0 }}
@@ -313,15 +314,13 @@ const Uslugi = () => {
         <LogoMarquee />
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-24 overflow-hidden bg-gray-900">
+      {/* CTA Section - consistent dark style */}
+      <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
+        </div>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-1/2 -right-1/4 w-[600px] h-[600px] border border-lime/10 rounded-full"
-          />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-lime/10 blur-[100px] rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-lime/8 blur-[150px] rounded-full" />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
@@ -338,10 +337,10 @@ const Uslugi = () => {
             </p>
             <Link
               to="/kontakt"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg animate-pulse-glow-slow"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
             >
               Umów rozmowę
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>
