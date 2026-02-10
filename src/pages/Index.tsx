@@ -22,6 +22,7 @@ import avatarTeam1 from '@/assets/avatar-team-1.jpg';
 import avatarTeam2 from '@/assets/avatar-team-2.jpg';
 import avatarTeam3 from '@/assets/avatar-team-3.jpg';
 import consultantImg from '@/assets/consultant.png';
+import { statsTranslations } from '@/i18n/contentTranslations';
 
 const carouselServices = [
   {

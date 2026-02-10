@@ -7,6 +7,7 @@ import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { bazaWiedzyTranslations } from '@/i18n/pageTranslations';
+import { articlesTranslations } from '@/i18n/contentTranslations';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';

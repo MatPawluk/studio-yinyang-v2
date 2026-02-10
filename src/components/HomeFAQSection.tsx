@@ -4,110 +4,43 @@ import { ChevronRight } from 'lucide-react';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { useLanguage } from '@/contexts/LanguageContext';
-
-const faqs = [
-  {
-    question: 'Czy gwarantujecie rezultaty?',
-    answer: 'Gwarantujemy rzetelność analiz i jakość materiałów. Nasze rekomendacje bazują na weryfikowalnych źródłach i wieloletnim doświadczeniu.',
-  },
-  {
-    question: 'Jak wygląda raportowanie w trakcie współpracy?',
-    answer: 'W zależności od modelu współpracy raporty przekazujemy jednorazowo po zakończeniu projektu lub cyklicznie, w modelu miesięcznym lub kwartalnym, przy wsparciu długoterminowym.',
-  },
-  {
-    question: 'Czy działacie w mojej branży?',
-    answer: 'Specjalizujemy się w sektorach: technologia, produkcja, automotive, energia odnawialna, e-commerce. Dla innych branż oferujemy konsultacje indywidualne.',
-  },
-  {
-    question: 'Czy reprezentujecie interesy drugiej strony transakcji?',
-    answer: 'Działamy wyłącznie po stronie klienta zlecającego projekt. Nie pobieramy prowizji handlowych ani nie reprezentujemy interesów dostawców, inwestorów czy partnerów biznesowych. Zapewnia to pełną niezależność naszych rekomendacji.',
-  },
-  {
-    question: 'Czy wspieracie również na etapie wdrożenia?',
-    answer: 'Tak. W zależności od zakresu projektu możemy wesprzeć klienta na etapie rozmów z partnerami, weryfikacji podmiotów, organizacji spotkań biznesowych oraz nadzoru operacyjnego po wejściu na rynek.',
-  },
-  {
-    question: 'Czy wspieracie w organizacji transportu i łańcucha dostaw?',
-    answer: 'Tak. W zależności od projektu możemy przejąć koordynację całego procesu logistycznego, od weryfikacji dostawcy i negocjacji warunków, przez organizację produkcji i kontroli jakości, po transport międzynarodowy oraz nadzór nad dostawą do miejsca docelowego.',
-  },
-];
+import { homeFaqTranslations } from '@/i18n/contentTranslations';
 
 export const HomeFAQSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const faqs = homeFaqTranslations[language];
   const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
 
   const toggleIndex = (index: number) => {
     setOpenIndices(prev => {
       const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-      } else {
-        next.add(index);
-      }
+      if (next.has(index)) { next.delete(index); } else { next.add(index); }
       return next;
     });
   };
 
   return (
     <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
-      {/* Chinese characters decoration */}
       <ChineseCharacters characters="信任" position="right" className="top-20" opacity={0.08} />
-      
-      {/* Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
       </div>
-
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
-            {t.faq.badge}
-          </span>
-          <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-            {t.faq.title} <GradientText>{t.faq.titleHighlight}</GradientText>
-          </h2>
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">{t.faq.badge}</span>
+          <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">{t.faq.title} <GradientText>{t.faq.titleHighlight}</GradientText></h2>
         </motion.div>
-
         <div className="max-w-4xl mx-auto space-y-0">
           {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-              className="border-b border-gray-800"
-            >
-              <button
-                onClick={() => toggleIndex(index)}
-                className="w-full flex items-center justify-between py-6 text-left group"
-              >
-                <span className="font-display text-lg md:text-xl font-semibold text-white group-hover:text-lime transition-colors duration-300 pr-4">
-                  {faq.question}
-                </span>
-                <ChevronRight 
-                  className={`w-5 h-5 text-gray-500 group-hover:text-lime transition-all duration-300 flex-shrink-0 ${
-                    openIndices.has(index) ? 'rotate-90' : ''
-                  }`}
-                />
+            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="border-b border-gray-800">
+              <button onClick={() => toggleIndex(index)} className="w-full flex items-center justify-between py-6 text-left group">
+                <span className="font-display text-lg md:text-xl font-semibold text-white group-hover:text-lime transition-colors duration-300 pr-4">{faq.question}</span>
+                <ChevronRight className={`w-5 h-5 text-gray-500 group-hover:text-lime transition-all duration-300 flex-shrink-0 ${openIndices.has(index) ? 'rotate-90' : ''}`} />
               </button>
               <AnimatePresence>
                 {openIndices.has(index) && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-gray-400 pb-6 leading-relaxed">
-                      {faq.answer}
-                    </p>
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
+                    <p className="text-gray-400 pb-6 leading-relaxed">{faq.answer}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
