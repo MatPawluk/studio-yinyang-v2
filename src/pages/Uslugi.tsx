@@ -9,6 +9,7 @@ import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { uslugiTranslations } from '@/i18n/pageTranslations';
+import { statsTranslations, serviceCategoriesTranslations } from '@/i18n/contentTranslations';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';

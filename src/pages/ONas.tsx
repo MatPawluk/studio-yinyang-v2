@@ -10,6 +10,7 @@ import { FloatingDots } from '@/components/FloatingDots';
 import { TeamCarousel } from '@/components/TeamCarousel';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { oNasTranslations } from '@/i18n/pageTranslations';
+import { statsTranslations, oNasFaqTranslations } from '@/i18n/contentTranslations';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
