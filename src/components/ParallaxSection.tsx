@@ -28,22 +28,26 @@ export const ParallaxSection = ({
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
       {imageUrl && (
-        <motion.div 
-          style={{ y }}
-          className="absolute inset-0 w-full h-[130%] -top-[15%]"
-        >
+        <>
+          {/* Parallax moving background */}
+          <motion.div 
+            style={{ y }}
+            className="absolute inset-0 w-full h-[130%] -top-[15%]"
+          >
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ 
+                backgroundImage: `url(${imageUrl})`,
+                filter: 'blur(2px)'
+              }}
+            />
+          </motion.div>
+          {/* Static overlay that covers entire section - doesn't move with parallax */}
           <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ 
-              backgroundImage: `url(${imageUrl})`,
-              filter: 'blur(2px)'
-            }}
-          />
-          <div 
-            className="absolute inset-0 bg-gray-900" 
+            className="absolute inset-0 bg-gray-900 z-[1]" 
             style={{ opacity: overlayOpacity }}
           />
-        </motion.div>
+        </>
       )}
       
       {variant === 'dots' && (

@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
@@ -91,11 +91,11 @@ const Index = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  // Auto-scroll carousel every 4 seconds
+  // Auto-scroll carousel every 7 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
-    }, 4000);
+    }, 7000);
     return () => clearInterval(interval);
   }, []);
 
@@ -255,14 +255,14 @@ const Index = () => {
                       }}
                     />
                     
-                    {/* Top shimmer bar */}
+                    {/* Top shimmer bar - continuous */}
                     <div className="absolute top-0 left-0 right-0 h-[1px] overflow-hidden">
                       <motion.div 
-                        className="h-full w-[200%]"
-                        animate={{ x: ['-50%', '0%'] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        className="h-full w-[300%]"
+                        animate={{ x: ['-66%', '0%'] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "linear", repeatType: "loop" }}
                         style={{
-                          background: 'linear-gradient(90deg, transparent 0%, rgba(196,255,0,0.3) 25%, rgba(196,255,0,0.6) 50%, rgba(196,255,0,0.3) 75%, transparent 100%)',
+                          background: 'repeating-linear-gradient(90deg, transparent 0%, rgba(196,255,0,0.3) 15%, rgba(196,255,0,0.6) 33%, rgba(196,255,0,0.3) 50%, transparent 66%)',
                         }}
                       />
                     </div>
@@ -304,28 +304,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Dark transition curve like Thala Labs */}
+      {/* Dark transition spacer */}
       <section className="relative pt-48 sm:pt-56 md:pt-64 pb-20" style={{ backgroundColor: '#050608' }}>
-        {/* Curved transition */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#050608] to-[#0B0B0B]" />
-        
-        {/* Content placeholder - visual transition element */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="h-px bg-gradient-to-r from-transparent via-lime/30 to-transparent"
-          />
-        </div>
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#050608] to-[#050608]" />
       </section>
 
       {/* Services Carousel Section - Premium Redesign */}
       <section className="relative py-24 z-10" style={{ backgroundColor: '#050608' }}>
         {/* Background decorations */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Light slash effect */}
-          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-lime/10 to-transparent" />
           {/* Subtle abstract shapes */}
           <div className="absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-[#0B0B0B]/60 blur-3xl" />
         </div>
@@ -386,12 +373,14 @@ const Index = () => {
                 </motion.div>
 
                 {/* Main Active Card - Center */}
-                <div className="flex-shrink-0 w-full max-w-3xl">
+                <div className="flex-shrink-0 w-full max-w-3xl overflow-hidden">
+                  <AnimatePresence mode="popLayout">
                   <motion.div
                     key={currentSlide}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    initial={{ x: 300, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -300, opacity: 0 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     className="relative rounded-3xl overflow-hidden aspect-[16/10] lg:aspect-[2/1] border border-gray-800/50 shadow-2xl shadow-lime/5 group"
                   >
                     <motion.img
@@ -429,14 +418,15 @@ const Index = () => {
                         </p>
                         <Link
                           to={`/uslugi#${carouselServices[currentSlide].slug}`}
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-lime text-[#050608] rounded-full font-semibold text-sm hover:scale-105 transition-transform duration-300"
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-[#c4ff00] text-[#050608] rounded-full font-semibold text-sm hover:scale-105 transition-transform duration-300"
                         >
-                          <span>Poznaj szczegóły</span>
+                          <span>{t.services.learnMore}</span>
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       </motion.div>
                     </div>
                   </motion.div>
+                  </AnimatePresence>
                 </div>
 
                 {/* Next Card - Right */}
