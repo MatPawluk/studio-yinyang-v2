@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { GradientText } from './GradientText';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Generated avatar URLs using UI Faces style placeholders
 const getAvatarUrl = (seed: string) => 
@@ -85,11 +86,13 @@ const testimonials = [
 const allTestimonials = [...testimonials, ...testimonials];
 
 export const TestimonialsSection = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="relative py-24 overflow-hidden" style={{ backgroundColor: '#050608' }}>
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-lime/5 blur-[150px] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#c4ff00]/5 blur-[150px] rounded-full" />
       </div>
 
       <div className="relative z-10 container mx-auto px-6 lg:px-12">
@@ -99,11 +102,11 @@ export const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-lime/10 backdrop-blur-sm text-lime text-sm font-semibold mb-4">
-            Opinie klientów
+          <span className="inline-block px-4 py-2 rounded-full bg-[#c4ff00]/10 backdrop-blur-sm text-[#c4ff00] text-sm font-semibold mb-4">
+            {t.testimonials.badge}
           </span>
           <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-            Co mówią o nas <GradientText>klienci</GradientText>
+            {t.testimonials.title} <GradientText>{t.testimonials.titleHighlight}</GradientText>
           </h2>
         </motion.div>
 

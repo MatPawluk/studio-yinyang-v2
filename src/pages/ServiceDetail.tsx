@@ -6,12 +6,14 @@ import { InteractiveCaseStudy } from '@/components/InteractiveCaseStudy';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ParallaxSection } from '@/components/ParallaxSection';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowLeft, ArrowRight, Check, X, FileText, Video } from 'lucide-react';
 import { servicesData, serviceSlugMap, defaultServiceData } from '@/data/servicesData';
 import statsBg from '@/assets/stats-bg.jpg';
 
 const ServiceDetail = () => {
   const { serviceSlug, subServiceSlug } = useParams();
+  const { t } = useLanguage();
   
   const mainSlug = serviceSlug || '';
   const mappedSlug = subServiceSlug ? (serviceSlugMap[subServiceSlug] || subServiceSlug) : mainSlug;
@@ -38,10 +40,10 @@ const ServiceDetail = () => {
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <Link 
             to="/uslugi"
-            className="inline-flex items-center gap-2 text-gray-500 hover:text-lime transition-colors duration-300 mb-6"
+            className="inline-flex items-center gap-2 text-gray-500 hover:text-[#c4ff00] transition-colors duration-300 mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
-            Wróć do usług
+            {t.serviceDetail.backToServices}
           </Link>
 
           <motion.div
@@ -86,8 +88,8 @@ const ServiceDetail = () => {
               viewport={{ once: true }}
             >
               <h2 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <div className="w-1 h-8 bg-lime rounded-full" />
-                Opis usługi
+                <div className="w-1 h-8 bg-[#c4ff00] rounded-full" />
+                {t.serviceDetail.serviceDescription}
               </h2>
               <p className="text-gray-400 text-lg leading-relaxed">
                 {service.description}
@@ -107,7 +109,7 @@ const ServiceDetail = () => {
               viewport={{ once: true }}
             >
               <h2 className="font-display text-2xl font-bold text-white mb-8">
-                Kiedy ta usługa ma <GradientText>sens</GradientText>
+                {t.serviceDetail.whenMakesSense} <GradientText>{t.serviceDetail.whenMakesSenseHighlight}</GradientText>
               </h2>
               <div className="space-y-4">
                 {service.whenItMakesSense.map((item, index) => (
@@ -137,7 +139,7 @@ const ServiceDetail = () => {
               transition={{ delay: 0.2 }}
             >
               <h2 className="font-display text-2xl font-bold text-white mb-8">
-                Problem klienta, który <GradientText>rozwiązuje</GradientText>
+                {t.serviceDetail.problemSolved} <GradientText>{t.serviceDetail.problemSolvedHighlight}</GradientText>
               </h2>
               <div className="space-y-4">
                 {service.problemsSolved.map((problem, index) => (
@@ -172,7 +174,7 @@ const ServiceDetail = () => {
               className="text-center mb-10"
             >
               <h2 className="font-display text-2xl font-bold text-white">
-                Zakres <GradientText>usługi</GradientText>
+                {t.serviceDetail.scopeTitle} <GradientText>{t.serviceDetail.scopeHighlight}</GradientText>
               </h2>
             </motion.div>
             
@@ -184,8 +186,8 @@ const ServiceDetail = () => {
                 className="p-8 rounded-2xl border border-gray-800/50" style={{ backgroundColor: '#0B0B0B' }}
               >
                 <h3 className="font-semibold text-white mb-6 flex items-center gap-3">
-                  <div className="w-2 h-6 bg-lime rounded-full" />
-                  Obejmuje
+                  <div className="w-2 h-6 bg-[#c4ff00] rounded-full" />
+                  {t.serviceDetail.includes}
                 </h3>
                 <ul className="space-y-4">
                   {service.scope.includes.map((item, index) => (
@@ -205,7 +207,7 @@ const ServiceDetail = () => {
               >
                 <h3 className="font-semibold text-white mb-6 flex items-center gap-3">
                   <div className="w-2 h-6 bg-red-500/60 rounded-full" />
-                  Nie obejmuje
+                  {t.serviceDetail.excludes}
                 </h3>
                 <ul className="space-y-4">
                   {service.scope.excludes.map((item, index) => (
@@ -237,7 +239,7 @@ const ServiceDetail = () => {
               viewport={{ once: true }}
             >
               <h2 className="font-display text-2xl font-bold text-white mb-8">
-                Output / <GradientText>Deliverables</GradientText>
+                Output / <GradientText>{t.serviceDetail.deliverables}</GradientText>
               </h2>
               <div className="space-y-4">
                 {service.deliverables.map((item, index) => (
@@ -275,7 +277,7 @@ const ServiceDetail = () => {
               viewport={{ once: true }}
             >
               <h2 className="font-display text-2xl font-bold text-white mb-10">
-                Model <GradientText>współpracy</GradientText>
+                {t.serviceDetail.workModelTitle} <GradientText>{t.serviceDetail.workModelHighlight}</GradientText>
               </h2>
               
               <div className="grid md:grid-cols-3 gap-6">
@@ -285,7 +287,7 @@ const ServiceDetail = () => {
                   viewport={{ once: true }}
                   className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
-                  <p className="text-lime text-xs uppercase tracking-wider mb-3 font-medium">Typ</p>
+                  <p className="text-[#c4ff00] text-xs uppercase tracking-wider mb-3 font-medium">{t.serviceDetail.workModelType}</p>
                   <p className="text-white font-semibold text-sm">{service.workModel.type}</p>
                 </motion.div>
                 <motion.div
@@ -295,7 +297,7 @@ const ServiceDetail = () => {
                   transition={{ delay: 0.1 }}
                   className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
-                  <p className="text-lime text-xs uppercase tracking-wider mb-3 font-medium">Czas realizacji</p>
+                  <p className="text-[#c4ff00] text-xs uppercase tracking-wider mb-3 font-medium">{t.serviceDetail.workModelDuration}</p>
                   <p className="text-white font-semibold text-sm">{service.workModel.duration}</p>
                 </motion.div>
                 <motion.div
@@ -305,7 +307,7 @@ const ServiceDetail = () => {
                   transition={{ delay: 0.2 }}
                   className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
-                  <p className="text-lime text-xs uppercase tracking-wider mb-3 font-medium">Komunikacja</p>
+                  <p className="text-[#c4ff00] text-xs uppercase tracking-wider mb-3 font-medium">{t.serviceDetail.workModelComm}</p>
                   <p className="text-white font-semibold text-sm">{service.workModel.communication}</p>
                 </motion.div>
               </div>
@@ -326,10 +328,10 @@ const ServiceDetail = () => {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
-              Case Study
+              {t.serviceDetail.caseStudyBadge}
             </span>
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white">
-              Przykładowa <GradientText>realizacja</GradientText>
+              {t.serviceDetail.caseStudyTitle} <GradientText>{t.serviceDetail.caseStudyHighlight}</GradientText>
             </h2>
           </motion.div>
 
@@ -343,8 +345,8 @@ const ServiceDetail = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-lime/8 blur-[150px] rounded-full" />
         </div>
         
-        <div className="absolute bottom-10 left-10 opacity-[0.04] pointer-events-none">
-          <span className="font-display text-[10rem] font-bold text-white leading-none">合作</span>
+        <div className="absolute bottom-10 left-10 opacity-[0.06] pointer-events-none">
+          <span className="font-display text-[10rem] font-bold text-[#c4ff00] leading-none">合作</span>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
@@ -354,16 +356,16 @@ const ServiceDetail = () => {
             viewport={{ once: true }}
           >
             <h2 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">
-              Zainteresowany? <GradientText>Porozmawiajmy</GradientText>
+              {t.serviceDetail.ctaTitle} <GradientText>{t.serviceDetail.ctaHighlight}</GradientText>
             </h2>
             <p className="text-gray-500 mb-8 max-w-lg mx-auto">
-              Bezpłatna konsultacja pomoże określić, jak możemy Ci pomóc.
+              {t.serviceDetail.ctaSubtitle}
             </p>
             <Link
               to="/kontakt"
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-lime text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lime-lg"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
             >
-              Umów rozmowę
+              {t.serviceDetail.ctaButton}
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </motion.div>

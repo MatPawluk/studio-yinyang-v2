@@ -114,7 +114,7 @@ const Uslugi = () => {
             className="w-full h-full object-cover opacity-10"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/80 via-[#050608]/90 to-[#050608]" />
-          <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-lime/5 blur-[150px] rounded-full" />
+          <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-[#c4ff00]/5 blur-[150px] rounded-full" />
         </div>
         
         {/* Chinese character decoration */}
@@ -142,8 +142,10 @@ const Uslugi = () => {
         </div>
       </section>
 
-      {/* Categories Accordion Section */}
-      <section className="py-16 relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
+      {/* Categories Accordion Section - seamless transition */}
+      <section className="py-16 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
+        {/* Top gradient for seamless blend */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#050608] to-transparent z-[1]" />
         <ChineseCharacters characters="桥" position="right" className="bottom-20" opacity={0.04} />
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">

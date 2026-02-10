@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { GradientText } from './GradientText';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const caseStudies = [
   {
@@ -45,6 +46,7 @@ const caseStudies = [
 
 export const CaseStudiesSection = () => {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const { t } = useLanguage();
 
   return (
     <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
@@ -56,10 +58,10 @@ export const CaseStudiesSection = () => {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium uppercase tracking-wider mb-4">
-            Case Studies
+            {t.caseStudies.badge}
           </span>
           <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">
-            Projekty, które <GradientText>mówią za nas</GradientText>
+            {t.caseStudies.title} <GradientText>{t.caseStudies.titleHighlight}</GradientText>
           </h2>
         </motion.div>
 
@@ -120,20 +122,20 @@ export const CaseStudiesSection = () => {
 
                       <div className="space-y-3">
                         <div className="flex justify-between border-b border-gray-800 pb-3">
-                          <span className="text-gray-500 text-xs uppercase tracking-wider">Klient</span>
+                          <span className="text-gray-500 text-xs uppercase tracking-wider">{t.caseStudies.client}</span>
                           <span className="text-white text-sm text-right max-w-[65%]">{study.client}</span>
                         </div>
                         <div className="flex justify-between border-b border-gray-800 pb-3">
-                          <span className="text-gray-500 text-xs uppercase tracking-wider">Cel klienta</span>
+                          <span className="text-gray-500 text-xs uppercase tracking-wider">{t.caseStudies.goal}</span>
                           <span className="text-white text-sm text-right max-w-[65%]">{study.goal}</span>
                         </div>
                         <div className="flex justify-between border-b border-gray-800 pb-3">
-                          <span className="text-gray-500 text-xs uppercase tracking-wider">Czas współpracy</span>
+                          <span className="text-gray-500 text-xs uppercase tracking-wider">{t.caseStudies.duration}</span>
                           <span className="text-white text-sm">{study.duration}</span>
                         </div>
                         <div className="pt-1">
-                          <span className="text-gray-500 text-xs uppercase tracking-wider block mb-2">Rezultat</span>
-                          <span className="text-lime text-sm font-medium leading-relaxed block">{study.result}</span>
+                          <span className="text-gray-500 text-xs uppercase tracking-wider block mb-2">{t.caseStudies.result}</span>
+                          <span className="text-[#c4ff00] text-sm font-medium leading-relaxed block">{study.result}</span>
                         </div>
                       </div>
                     </div>
@@ -142,7 +144,7 @@ export const CaseStudiesSection = () => {
                       to="/kontakt"
                       className="mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#111214] hover:bg-lime hover:text-[#050608] text-white rounded-full text-sm font-medium transition-all duration-300 group"
                     >
-                      Porozmawiajmy o Twoim projekcie
+                      {t.caseStudies.ctaButton}
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>
