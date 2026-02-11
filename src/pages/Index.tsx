@@ -13,69 +13,36 @@ import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { statsTranslations, carouselServicesTranslations } from '@/i18n/contentTranslations';
 import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Target, Search, Rocket, Settings } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
-import serviceStrategy from '@/assets/service-strategy.jpg';
-import serviceAnalysis from '@/assets/service-analysis.jpg';
 import avatarTeam1 from '@/assets/avatar-team-1.jpg';
 import avatarTeam2 from '@/assets/avatar-team-2.jpg';
 import avatarTeam3 from '@/assets/avatar-team-3.jpg';
 import consultantImg from '@/assets/consultant.png';
-import { statsTranslations } from '@/i18n/contentTranslations';
 
-const carouselServices = [
-  {
-    title: 'Strategia wobec Chin',
-    description: 'Analizy strategiczne, scenariusze i mapy ryzyk, briefingi dla zarządów.',
-    image: serviceStrategy,
-    slug: 'strategia-wobec-chin',
-  },
-  {
-    title: 'Analizy rynku i weryfikacja partnerów',
-    description: 'Badania sektorów, analiza konkurencji, weryfikacja kontrahentów i due diligence.',
-    image: serviceAnalysis,
-    slug: 'analizy-rynku',
-  },
-  {
-    title: 'Wejście na rynek Polska ↔ Chiny',
-    description: 'Wybór modelu wejścia, wsparcie regulacyjne, identyfikacja partnerów.',
-    image: serviceStrategy,
-    slug: 'wejscie-na-rynek',
-  },
-  {
-    title: 'Import, eksport i łańcuch dostaw',
-    description: 'Audyty dostawców, optymalizacja logistyki, nadzór produkcji, transport.',
-    image: serviceAnalysis,
-    slug: 'import-eksport',
-  },
-  {
-    title: 'Marketing i pozycjonowanie',
-    description: 'Lokalne pozycjonowanie marki, strategia komunikacji, materiały sprzedażowe.',
-    image: serviceStrategy,
-    slug: 'marketing-pozycjonowanie',
-  },
-  {
-    title: 'Misje biznesowe i szkolenia',
-    description: 'Organizacja misji, matchmaking B2B, szkolenia z kultury i systemu Chin.',
-    image: serviceAnalysis,
-    slug: 'misje-szkolenia',
-  },
-];
+// Service carousel images
+import sgStrategia from '@/assets/sg-strategia.png';
+import sgAnalizy from '@/assets/sg-analizy.png';
+import sgWejscie from '@/assets/sg-wejscie.png';
+import sgImport from '@/assets/sg-import.png';
+import sgMarketing from '@/assets/sg-marketing.png';
+import sgMisje from '@/assets/sg-misje.png';
 
-// processSteps moved to translations (t.process.steps)
-
-const stats = [
-  { value: 480, suffix: '+', label: 'zweryfikowanych podmiotów i partnerów biznesowych' },
-  { value: 50, suffix: '+', label: 'lat łącznego doświadczenia zespołu w projektach międzynarodowych' },
-  { value: 7, suffix: '', label: 'sektorów technologicznych' },
-  { value: 0, suffix: 'PL-CN', label: 'stała obecność operacyjna', isText: true },
-];
+const carouselImages = [sgStrategia, sgAnalizy, sgWejscie, sgImport, sgMarketing, sgMisje];
+const carouselSlugs = ['strategia-wobec-chin', 'analizy-rynku', 'wejscie-na-rynek', 'import-eksport', 'marketing-pozycjonowanie', 'misje-szkolenia'];
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const stats = statsTranslations[language];
+  const carouselServices = carouselServicesTranslations[language].map((s, i) => ({
+    ...s,
+    image: carouselImages[i],
+    slug: carouselSlugs[i],
+  }));
 
   const heroServices = [
     { title: t.heroCards.strategy.title, description: t.heroCards.strategy.description, icon: Target },
@@ -98,7 +65,7 @@ const Index = () => {
       setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
     }, 7000);
     return () => clearInterval(interval);
-  }, []);
+  }, [carouselServices.length]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
@@ -188,23 +155,10 @@ const Index = () => {
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <div className="flex items-center justify-center gap-3">
-                {/* Stacked Avatars - real photos */}
                 <div className="flex -space-x-2">
-                  <img 
-                    src={avatarTeam1} 
-                    alt="Client" 
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  <img 
-                    src={avatarTeam2} 
-                    alt="Client" 
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  <img 
-                    src={avatarTeam3} 
-                    alt="Client" 
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
+                  <img src={avatarTeam1} alt="Client" className="w-8 h-8 rounded-full object-cover" />
+                  <img src={avatarTeam2} alt="Client" className="w-8 h-8 rounded-full object-cover" />
+                  <img src={avatarTeam3} alt="Client" className="w-8 h-8 rounded-full object-cover" />
                 </div>
                 <p className="text-gray-300 text-sm font-medium">
                   {t.clients.join} <span className="text-[#c4ff00] font-bold">540+</span> {t.clients.satisfied}
@@ -214,7 +168,7 @@ const Index = () => {
           </div>
         </motion.div>
 
-        {/* Scroll arrow - moved lower */}
+        {/* Scroll arrow */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -278,7 +232,6 @@ const Index = () => {
                     </div>
 
                     <div className="relative z-10 pt-2">
-                      {/* Icon */}
                       <div className="mb-3 sm:mb-4">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border border-white/[0.06] group-hover:border-[#c4ff00]/30 transition-all duration-500"
                           style={{ backgroundColor: 'rgba(17,18,20,0.8)' }}
@@ -310,15 +263,12 @@ const Index = () => {
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#050608] to-[#050608]" />
       </section>
 
-      {/* Services Carousel Section - Premium Redesign */}
+      {/* Services Carousel Section */}
       <section className="relative py-24 z-10" style={{ backgroundColor: '#050608' }}>
-        {/* Background decorations */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Subtle abstract shapes */}
           <div className="absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-[#0B0B0B]/60 blur-3xl" />
         </div>
 
-        {/* Oversized background typography */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
           <div className="absolute top-[20%] left-[-5%] font-display text-[18vw] font-bold text-white/[0.02] tracking-wider">
             PARTNER
@@ -326,7 +276,6 @@ const Index = () => {
         </div>
 
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -347,7 +296,6 @@ const Index = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              {/* Cards Container - 3D Perspective */}
               <div className="flex items-center justify-center gap-4 lg:gap-8 perspective-[1500px]">
                 {/* Previous Card - Left */}
                 <motion.div 
@@ -361,11 +309,7 @@ const Index = () => {
                   }}
                 >
                   <div className="relative w-[220px] rounded-2xl overflow-hidden aspect-[3/4] opacity-40 hover:opacity-60 transition-opacity border border-gray-800/30">
-                    <img
-                      src={carouselServices[getPrevIndex()].image}
-                      alt=""
-                      className="w-full h-full object-cover grayscale"
-                    />
+                    <img src={carouselServices[getPrevIndex()].image} alt="" className="w-full h-full object-cover grayscale" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/40 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
                       <p className="text-white/60 text-sm font-medium truncate">{carouselServices[getPrevIndex()].title}</p>
@@ -406,7 +350,6 @@ const Index = () => {
                         transition={{ duration: 0.4, delay: 0.1 }}
                         className="max-w-xl"
                       >
-                        {/* Category tag */}
                         <span className="inline-block px-3 py-1 rounded-full bg-lime/20 text-lime text-xs font-medium mb-4">
                           {currentSlide + 1} / {carouselServices.length}
                         </span>
@@ -442,11 +385,7 @@ const Index = () => {
                   }}
                 >
                   <div className="relative w-[220px] rounded-2xl overflow-hidden aspect-[3/4] opacity-40 hover:opacity-60 transition-opacity border border-gray-800/30">
-                    <img
-                      src={carouselServices[getNextIndex()].image}
-                      alt=""
-                      className="w-full h-full object-cover grayscale"
-                    />
+                    <img src={carouselServices[getNextIndex()].image} alt="" className="w-full h-full object-cover grayscale" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/40 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
                       <p className="text-white/60 text-sm font-medium truncate">{carouselServices[getNextIndex()].title}</p>
@@ -456,44 +395,23 @@ const Index = () => {
               </div>
             </motion.div>
 
-            {/* Carousel Controls - minimal dots */}
+            {/* Carousel Controls */}
             <div className="flex items-center justify-center mt-10 gap-4 sm:gap-6">
-              {/* Arrows left */}
-              <button
-                onClick={prevSlide}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group"
-              >
+              <button onClick={prevSlide} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group">
                 <ChevronLeft className="w-5 h-5 text-gray-500 group-hover:text-lime" />
               </button>
-
-              {/* Centered Indicators - minimal dots */}
               <div className="flex gap-2">
                 {carouselServices.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      index === currentSlide ? 'w-8 bg-lime' : 'w-1.5 bg-gray-700 hover:bg-gray-600'
-                    }`}
-                  />
+                  <button key={index} onClick={() => setCurrentSlide(index)} className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-8 bg-lime' : 'w-1.5 bg-gray-700 hover:bg-gray-600'}`} />
                 ))}
               </div>
-
-              {/* Arrows right */}
-              <button
-                onClick={nextSlide}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group"
-              >
+              <button onClick={nextSlide} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group">
                 <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-lime" />
               </button>
             </div>
 
-            {/* See all services link */}
             <div className="text-center mt-8">
-              <Link 
-                to="/uslugi"
-                className="inline-flex items-center gap-2 text-gray-500 hover:text-lime transition-colors duration-300 text-sm"
-              >
+              <Link to="/uslugi" className="inline-flex items-center gap-2 text-gray-500 hover:text-lime transition-colors duration-300 text-sm">
                 {t.services.viewAll}
                 <ArrowRight className="w-4 h-4" />
               </Link>
@@ -502,7 +420,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Stats Section with Parallax - MOVED BEFORE PROCESS */}
+      {/* Stats Section with Parallax */}
       <section className="relative py-32 overflow-hidden">
         <motion.div 
           className="absolute inset-0"
@@ -516,25 +434,16 @@ const Index = () => {
           <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
         </motion.div>
 
-        {/* Animated glow */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
-            animate={{ 
-              x: ['-20%', '20%', '-20%'],
-              opacity: [0.3, 0.5, 0.3]
-            }}
+            animate={{ x: ['-20%', '20%', '-20%'], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-lime/20 blur-[100px] rounded-full"
           />
         </div>
 
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-4">
               {t.stats.badge}
             </span>
@@ -542,20 +451,9 @@ const Index = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
+              <motion.div key={stat.label} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="text-center">
                 <div className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-lime mb-3">
-                  {stat.isText ? (
-                    <span>{stat.suffix}</span>
-                  ) : (
-                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-                  )}
+                  {stat.isText ? <span>{stat.suffix}</span> : <AnimatedCounter end={stat.value} suffix={stat.suffix} />}
                 </div>
                 <p className="text-white/70 text-xs sm:text-sm">{stat.label}</p>
               </motion.div>
@@ -564,43 +462,30 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Process Section - Dark with Large Radar and Chinese characters */}
+      {/* Process Section */}
       <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
-        {/* Large Radar in Background - much bigger */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[1200px] h-[1200px] opacity-40">
             <RadarAnimation size="lg" className="w-full h-full" />
           </div>
         </div>
         
-        {/* Chinese characters decoration - 合作关系 */}
         <ChineseCharacters characters="合作关系" position="left" className="top-32" opacity={0.06} />
-        
-        {/* Background gradient - lighter to show radar */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/80 via-[#050608]/70 to-[#050608]/80 pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <span className="inline-block px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-4">
               {t.process.badge}
             </span>
             <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-4">
               {t.process.title.split(' ').slice(0, -1).join(' ')} <GradientText>{t.process.title.split(' ').slice(-1)[0]}</GradientText>?
             </h2>
-            <p className="text-gray-400 max-w-xl mx-auto">
-              {t.process.subtitle}
-            </p>
+            <p className="text-gray-400 max-w-xl mx-auto">{t.process.subtitle}</p>
           </motion.div>
 
-          {/* Vertical Timeline Layout */}
           <div className="max-w-4xl mx-auto">
             <div className="relative">
-              {/* Vertical line */}
               <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-lime via-lime/50 to-lime/20 md:-translate-x-1/2" />
               
               {t.process.steps.map((step, index) => (
@@ -610,32 +495,20 @@ const Index = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: index * 0.15 }}
-                  className={`relative flex items-start gap-8 mb-12 last:mb-0 ${
-                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                  }`}
+                  className={`relative flex items-start gap-8 mb-12 last:mb-0 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
                 >
-                  {/* Timeline dot */}
                   <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-lime shadow-lg shadow-lime/50 md:-translate-x-1/2 z-10">
                     <div className="absolute inset-0 rounded-full bg-lime animate-ping opacity-30" />
                   </div>
                   
-                  {/* Content card */}
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
                     <div className="relative bg-[#0B0B0B]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-all duration-300 group">
-                      {/* Large number */}
-                      <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${
-                        index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'
-                      }`}>
+                      <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'}`}>
                         {step.number}
                       </span>
-                      
                       <div className="relative z-10 pt-8">
-                        <h3 className="font-display font-semibold text-xl text-white mb-3">
-                          {step.title}
-                        </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                          {step.description}
-                        </p>
+                        <h3 className="font-display font-semibold text-xl text-white mb-3">{step.title}</h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">{step.description}</p>
                       </div>
                     </div>
                   </div>
@@ -649,12 +522,7 @@ const Index = () => {
       {/* Trusted By */}
       <section className="py-16" style={{ backgroundColor: '#050608' }}>
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center text-gray-500 text-sm uppercase tracking-widest mb-8"
-          >
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-gray-500 text-sm uppercase tracking-widest mb-8">
             {t.trust.title}
           </motion.p>
         </div>
@@ -670,45 +538,26 @@ const Index = () => {
       {/* FAQ Section */}
       <HomeFAQSection />
 
-      {/* CTA Section - Phunk-style premium card with consultant */}
+      {/* CTA Section */}
       <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#050608' }}>
-        {/* Chinese chars decoration */}
         <ChineseCharacters characters="信任" position="left" className="top-0" opacity={0.05} />
         
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <div className="relative max-w-5xl mx-auto rounded-[1.5rem] overflow-visible border border-gray-800/50" style={{ background: 'linear-gradient(135deg, #0B0B0B 0%, #111214 50%, rgba(196,255,0,0.08) 100%)' }}>
-            {/* Subtle lime glow */}
             <div className="absolute bottom-0 right-0 w-[300px] h-[250px] bg-[#c4ff00]/10 blur-[100px] rounded-full pointer-events-none" />
             
             <div className="relative grid lg:grid-cols-[1fr_auto] gap-0 items-end">
-              {/* Left: Text content */}
               <div className="p-8 lg:p-12">
-                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight">
-                  {t.cta.title}
-                </h2>
-                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-5 leading-tight">
-                  <GradientText>{t.cta.titleHighlight}</GradientText>
-                </h2>
-                <p className="text-gray-400 text-base mb-8 max-w-md">
-                  {t.cta.subtitle}
-                </p>
-                <Link
-                  to="/kontakt"
-                  className="group inline-flex items-center gap-3 px-8 py-4 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
-                >
+                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight">{t.cta.title}</h2>
+                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-5 leading-tight"><GradientText>{t.cta.titleHighlight}</GradientText></h2>
+                <p className="text-gray-400 text-base mb-8 max-w-md">{t.cta.subtitle}</p>
+                <Link to="/kontakt" className="group inline-flex items-center gap-3 px-8 py-4 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]">
                   {t.cta.button}
                   <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
-
-              {/* Right: Consultant image breaking frame from top */}
               <div className="relative hidden lg:flex items-end justify-end pr-8" style={{ minWidth: '320px' }}>
-                <img 
-                  src={consultantImg}
-                  alt="Konsultant Yin Yang"
-                  className="relative z-10 w-[380px] object-contain -mb-1"
-                  style={{ marginTop: '-180px', filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))' }}
-                />
+                <img src={consultantImg} alt="Konsultant Yin Yang" className="relative z-10 w-[380px] object-contain -mb-1" style={{ marginTop: '-180px', filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))' }} />
               </div>
             </div>
           </div>
