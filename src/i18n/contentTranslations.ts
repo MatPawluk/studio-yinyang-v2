@@ -127,25 +127,53 @@ export const testimonialsTranslations: Record<Language, { name: string; content:
   ],
 };
 
-// Case studies translations
-export const caseStudiesTranslations: Record<Language, { name: string; category: string; image: string; client: string; goal: string; duration: string; result: string }[]> = {
+// Case studies translations - images are imported in the component
+export const caseStudiesTranslations: Record<Language, { name: string; category: string; imageKey: string; client: string; goal: string; duration: string; result: string }[]> = {
   pl: [
-    { name: 'Vektor Automation', category: 'Weryfikacja dostawcy', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80', client: 'Producent systemów automatyki przemysłowej', goal: 'Weryfikacja chińskiego dostawcy podzespołów do linii produkcyjnych', duration: '3 tygodnie', result: 'Wykrycie rozbieżności w zakresie certyfikacji i struktury właścicielskiej. Zabezpieczenie klienta przed podpisaniem kontraktu o podwyższonym ryzyku operacyjnym.' },
-    { name: 'Arcom Electronics', category: 'Wejście na rynek', image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80', client: 'Dystrybutor urządzeń elektronicznych klasy premium', goal: 'Opracowanie strategii wejścia na rynek chiński (model B2B)', duration: '3 miesiące', result: 'Uruchomienie pilotażowej sprzedaży w modelu cross-border. Podpisanie pierwszych umów z lokalnymi partnerami dystrybucyjnymi.' },
-    { name: 'Aktir', category: 'Due Diligence', image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600&q=80', client: 'Operator transportu międzynarodowego', goal: 'Due diligence chińskiego partnera logistycznego', duration: '4 tygodnie', result: 'Kompleksowa analiza struktury finansowej i operacyjnej partnera. Podjęcie świadomej decyzji strategicznej oraz wzmocnienie pozycji negocjacyjnej klienta.' },
-    { name: 'Orvanta', category: 'Optymalizacja łańcucha', image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=600&q=80', client: 'Platforma e-commerce z sektora elektroniki użytkowej', goal: 'Optymalizacja struktury importu i modelu sourcingowego', duration: '6 tygodni', result: 'Redukcja kosztów logistycznych o 28%. Wdrożenie stabilnego modelu bezpośredniej współpracy z producentami.' },
+    { name: 'Vektor Automation', category: 'Weryfikacja dostawcy', imageKey: 'vektor', client: 'Producent systemów automatyki przemysłowej', goal: 'Weryfikacja chińskiego dostawcy podzespołów do linii produkcyjnych', duration: '3 tygodnie', result: 'Wykrycie rozbieżności w zakresie certyfikacji i struktury właścicielskiej. Zabezpieczenie klienta przed podpisaniem kontraktu o podwyższonym ryzyku operacyjnym.' },
+    { name: 'Arcom Electronics', category: 'Wejście na rynek', imageKey: 'arcom', client: 'Dystrybutor urządzeń elektronicznych klasy premium', goal: 'Opracowanie strategii wejścia na rynek chiński (model B2B)', duration: '3 miesiące', result: 'Uruchomienie pilotażowej sprzedaży w modelu cross-border. Podpisanie pierwszych umów z lokalnymi partnerami dystrybucyjnymi.' },
+    { name: 'Aktir', category: 'Due Diligence', imageKey: 'aktir', client: 'Operator transportu międzynarodowego', goal: 'Due diligence chińskiego partnera logistycznego', duration: '4 tygodnie', result: 'Kompleksowa analiza struktury finansowej i operacyjnej partnera. Podjęcie świadomej decyzji strategicznej oraz wzmocnienie pozycji negocjacyjnej klienta.' },
+    { name: 'Orvanta', category: 'Optymalizacja łańcucha', imageKey: 'orvanta', client: 'Platforma e-commerce z sektora elektroniki użytkowej', goal: 'Optymalizacja struktury importu i modelu sourcingowego', duration: '6 tygodni', result: 'Redukcja kosztów logistycznych o 28%. Wdrożenie stabilnego modelu bezpośredniej współpracy z producentami.' },
   ],
   en: [
-    { name: 'Vektor Automation', category: 'Supplier Verification', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80', client: 'Industrial automation systems manufacturer', goal: 'Verification of Chinese component supplier for production lines', duration: '3 weeks', result: 'Detection of discrepancies in certification and ownership structure. Protecting the client from signing a contract with elevated operational risk.' },
-    { name: 'Arcom Electronics', category: 'Market Entry', image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80', client: 'Premium electronics equipment distributor', goal: 'Development of Chinese market entry strategy (B2B model)', duration: '3 months', result: 'Launch of pilot cross-border sales. Signing first agreements with local distribution partners.' },
-    { name: 'Aktir', category: 'Due Diligence', image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600&q=80', client: 'International transport operator', goal: 'Due diligence of Chinese logistics partner', duration: '4 weeks', result: 'Comprehensive analysis of partner\'s financial and operational structure. Making an informed strategic decision and strengthening client\'s negotiating position.' },
-    { name: 'Orvanta', category: 'Supply Chain Optimization', image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=600&q=80', client: 'Consumer electronics e-commerce platform', goal: 'Optimization of import structure and sourcing model', duration: '6 weeks', result: '28% reduction in logistics costs. Implementation of stable direct cooperation model with manufacturers.' },
+    { name: 'Vektor Automation', category: 'Supplier Verification', imageKey: 'vektor', client: 'Industrial automation systems manufacturer', goal: 'Verification of Chinese component supplier for production lines', duration: '3 weeks', result: 'Detection of discrepancies in certification and ownership structure. Protecting the client from signing a contract with elevated operational risk.' },
+    { name: 'Arcom Electronics', category: 'Market Entry', imageKey: 'arcom', client: 'Premium electronics equipment distributor', goal: 'Development of Chinese market entry strategy (B2B model)', duration: '3 months', result: 'Launch of pilot cross-border sales. Signing first agreements with local distribution partners.' },
+    { name: 'Aktir', category: 'Due Diligence', imageKey: 'aktir', client: 'International transport operator', goal: 'Due diligence of Chinese logistics partner', duration: '4 weeks', result: 'Comprehensive analysis of partner\'s financial and operational structure. Making an informed strategic decision and strengthening client\'s negotiating position.' },
+    { name: 'Orvanta', category: 'Supply Chain Optimization', imageKey: 'orvanta', client: 'Consumer electronics e-commerce platform', goal: 'Optimization of import structure and sourcing model', duration: '6 weeks', result: '28% reduction in logistics costs. Implementation of stable direct cooperation model with manufacturers.' },
   ],
   cn: [
-    { name: 'Vektor Automation', category: '供应商验证', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80', client: '工业自动化系统制造商', goal: '验证生产线零部件的中国供应商', duration: '3周', result: '发现认证和所有权结构方面的差异。保护客户免于签订具有较高运营风险的合同。' },
-    { name: 'Arcom Electronics', category: '市场进入', image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80', client: '高端电子设备分销商', goal: '制定中国市场进入战略（B2B模式）', duration: '3个月', result: '启动跨境试点销售。与当地分销合作伙伴签署首批协议。' },
-    { name: 'Aktir', category: '尽职调查', image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600&q=80', client: '国际运输运营商', goal: '对中国物流合作伙伴进行尽职调查', duration: '4周', result: '对合作伙伴的财务和运营结构进行全面分析。做出明智的战略决策并加强客户的谈判地位。' },
-    { name: 'Orvanta', category: '供应链优化', image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=600&q=80', client: '消费电子电商平台', goal: '优化进口结构和采购模式', duration: '6周', result: '物流成本降低28%。实施与制造商的稳定直接合作模式。' },
+    { name: 'Vektor Automation', category: '供应商验证', imageKey: 'vektor', client: '工业自动化系统制造商', goal: '验证生产线零部件的中国供应商', duration: '3周', result: '发现认证和所有权结构方面的差异。保护客户免于签订具有较高运营风险的合同。' },
+    { name: 'Arcom Electronics', category: '市场进入', imageKey: 'arcom', client: '高端电子设备分销商', goal: '制定中国市场进入战略（B2B模式）', duration: '3个月', result: '启动跨境试点销售。与当地分销合作伙伴签署首批协议。' },
+    { name: 'Aktir', category: '尽职调查', imageKey: 'aktir', client: '国际运输运营商', goal: '对中国物流合作伙伴进行尽职调查', duration: '4周', result: '对合作伙伴的财务和运营结构进行全面分析。做出明智的战略决策并加强客户的谈判地位。' },
+    { name: 'Orvanta', category: '供应链优化', imageKey: 'orvanta', client: '消费电子电商平台', goal: '优化进口结构和采购模式', duration: '6周', result: '物流成本降低28%。实施与制造商的稳定直接合作模式。' },
+  ],
+};
+
+// Carousel service translations for homepage
+export const carouselServicesTranslations: Record<Language, { title: string; description: string }[]> = {
+  pl: [
+    { title: 'Strategia wobec Chin', description: 'Analizy strategiczne, scenariusze i mapy ryzyk, briefingi dla zarządów.' },
+    { title: 'Analizy rynku i weryfikacja partnerów', description: 'Badania sektorów, analiza konkurencji, weryfikacja kontrahentów i due diligence.' },
+    { title: 'Wejście na rynek Polska ↔ Chiny', description: 'Wybór modelu wejścia, wsparcie regulacyjne, identyfikacja partnerów.' },
+    { title: 'Import, eksport i łańcuch dostaw', description: 'Audyty dostawców, optymalizacja logistyki, nadzór produkcji, transport.' },
+    { title: 'Marketing i pozycjonowanie', description: 'Lokalne pozycjonowanie marki, strategia komunikacji, materiały sprzedażowe.' },
+    { title: 'Misje biznesowe i szkolenia', description: 'Organizacja misji, matchmaking B2B, szkolenia z kultury i systemu Chin.' },
+  ],
+  en: [
+    { title: 'China Strategy', description: 'Strategic analyses, scenarios and risk maps, board briefings.' },
+    { title: 'Market Analysis & Partner Verification', description: 'Sector research, competition analysis, contractor verification and due diligence.' },
+    { title: 'Market Entry Poland ↔ China', description: 'Entry model selection, regulatory support, partner identification.' },
+    { title: 'Import, Export & Supply Chain', description: 'Supplier audits, logistics optimization, production supervision, transport.' },
+    { title: 'Marketing & Positioning', description: 'Local brand positioning, communication strategy, sales materials.' },
+    { title: 'Business Missions & Training', description: 'Mission organization, B2B matchmaking, culture and system training.' },
+  ],
+  cn: [
+    { title: '对华战略', description: '战略分析、情景规划和风险图、管理层简报。' },
+    { title: '市场分析与合作伙伴验证', description: '行业研究、竞争分析、合作方验证和尽职调查。' },
+    { title: '市场进入 波兰 ↔ 中国', description: '进入模式选择、监管支持、合作伙伴识别。' },
+    { title: '进出口与供应链', description: '供应商审计、物流优化、生产监督、运输。' },
+    { title: '营销与市场定位', description: '本地品牌定位、传播策略、销售材料。' },
+    { title: '商务考察与培训', description: '考察组织、B2B配对、文化和体系培训。' },
   ],
 };
 

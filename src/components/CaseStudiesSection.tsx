@@ -6,6 +6,19 @@ import { GradientText } from './GradientText';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { caseStudiesTranslations } from '@/i18n/contentTranslations';
 
+// Case study images
+import sgCsVektor from '@/assets/sg-cs-vektor.png';
+import sgCsArcom from '@/assets/sg-cs-arcom.png';
+import sgCsAktir from '@/assets/sg-cs-aktir.png';
+import sgCsOrvanta from '@/assets/sg-cs-orvanta.png';
+
+const caseStudyImages: Record<string, string> = {
+  vektor: sgCsVektor,
+  arcom: sgCsArcom,
+  aktir: sgCsAktir,
+  orvanta: sgCsOrvanta,
+};
+
 export const CaseStudiesSection = () => {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
   const { t, language } = useLanguage();
@@ -23,7 +36,7 @@ export const CaseStudiesSection = () => {
             <motion.div key={study.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="relative h-[480px] cursor-pointer perspective-1000" onClick={() => setFlippedCard(flippedCard === index ? null : index)}>
               <motion.div animate={{ rotateY: flippedCard === index ? 180 : 0 }} transition={{ duration: 0.6 }} className="relative w-full h-full preserve-3d" style={{ transformStyle: 'preserve-3d' }}>
                 <div className="absolute inset-0 rounded-3xl overflow-hidden backface-hidden" style={{ backfaceVisibility: 'hidden' }}>
-                  <img src={study.image} alt={study.name} className="w-full h-full object-cover" />
+                  <img src={caseStudyImages[study.imageKey]} alt={study.name} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/50 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <span className="text-lime text-sm font-medium uppercase tracking-wider">{study.category}</span>
