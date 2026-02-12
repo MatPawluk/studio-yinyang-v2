@@ -1,5 +1,8 @@
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import serviceAnalysis from '@/assets/service-analysis.jpg';
+import { Language } from '@/i18n/translations';
+import { servicesTextEN } from './servicesDataEN';
+import { servicesTextCN } from './servicesDataCN';
 
 export interface ServiceData {
   title: string;
@@ -1435,3 +1438,16 @@ export const defaultServiceData: ServiceData = {
     result: 'Osiągnięty rezultat.',
   },
 };
+
+export type ServiceDataText = Omit<ServiceData, 'image'>;
+
+export function getLocalizedServicesData(language: Language): Record<string, ServiceData> {
+  if (language === 'pl') return servicesData;
+  const texts: Record<string, ServiceDataText> = language === 'en' ? servicesTextEN : servicesTextCN;
+  const result: Record<string, ServiceData> = {};
+  for (const [key, plData] of Object.entries(servicesData)) {
+    const t = texts[key];
+    result[key] = t ? { image: plData.image, ...t } : plData;
+  }
+  return result;
+}

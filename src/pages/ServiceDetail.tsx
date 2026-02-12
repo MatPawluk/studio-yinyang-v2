@@ -8,16 +8,17 @@ import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ParallaxSection } from '@/components/ParallaxSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowLeft, ArrowRight, Check, X, FileText, Video } from 'lucide-react';
-import { servicesData, serviceSlugMap, defaultServiceData } from '@/data/servicesData';
+import { serviceSlugMap, defaultServiceData, getLocalizedServicesData } from '@/data/servicesData';
 import statsBg from '@/assets/stats-bg.jpg';
 
 const ServiceDetail = () => {
   const { serviceSlug, subServiceSlug } = useParams();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
+  const localizedServices = getLocalizedServicesData(language);
   const mainSlug = serviceSlug || '';
   const mappedSlug = subServiceSlug ? (serviceSlugMap[subServiceSlug] || subServiceSlug) : mainSlug;
-  const service = servicesData[mappedSlug] || servicesData[mainSlug] || defaultServiceData;
+  const service = localizedServices[mappedSlug] || localizedServices[mainSlug] || defaultServiceData;
   
   const displayTitle = service.title;
 

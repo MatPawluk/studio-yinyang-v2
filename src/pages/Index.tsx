@@ -1,6 +1,6 @@
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
@@ -35,7 +35,9 @@ const carouselSlugs = ['strategia-wobec-chin', 'analizy-rynku', 'wejscie-na-ryne
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const isCarouselInView = useInView(carouselRef, { amount: 0.3 });
   const { t, language } = useLanguage();
   const stats = statsTranslations[language];
   const carouselServices = carouselServicesTranslations[language].map((s, i) => ({
@@ -59,20 +61,33 @@ const Index = () => {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  // Auto-scroll carousel every 7 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
+  // Auto-scroll carousel - only when in view, reset on interaction
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const resetAutoplay = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
-    }, 7000);
-    return () => clearInterval(interval);
+    }, 12000);
   }, [carouselServices.length]);
+
+  useEffect(() => {
+    if (!isCarouselInView) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
+    resetAutoplay();
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [isCarouselInView, resetAutoplay]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
+    resetAutoplay();
   };
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + carouselServices.length) % carouselServices.length);
+    resetAutoplay();
   };
 
   const getPrevIndex = () => (currentSlide - 1 + carouselServices.length) % carouselServices.length;
@@ -264,7 +279,7 @@ const Index = () => {
       </section>
 
       {/* Services Carousel Section */}
-      <section className="relative py-24 z-10" style={{ backgroundColor: '#050608' }}>
+      <section ref={carouselRef} className="relative py-24 z-10" style={{ backgroundColor: '#050608' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-[#0B0B0B]/60 blur-3xl" />
         </div>
