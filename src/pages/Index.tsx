@@ -195,7 +195,7 @@ const Index = () => {
       </section>
 
       {/* Services Carousel Section - pulled up to overlap hero */}
-      <section ref={carouselRef} className="relative z-10 -mt-32 pt-4 pb-24" style={{ backgroundColor: 'transparent' }}>
+      <section ref={carouselRef} className="relative z-10 -mt-44 pt-4 pb-24" style={{ backgroundColor: 'transparent' }}>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050608]/80 to-[#050608] pointer-events-none" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-[#0B0B0B]/60 blur-3xl" />
