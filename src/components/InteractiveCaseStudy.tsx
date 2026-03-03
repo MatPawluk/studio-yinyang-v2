@@ -13,6 +13,7 @@ interface CaseStudyData {
 
 interface InteractiveCaseStudyProps {
   data?: CaseStudyData;
+  image?: string;
 }
 
 const defaultData: CaseStudyData = {
@@ -22,7 +23,7 @@ const defaultData: CaseStudyData = {
   result: 'Klient zrezygnował z ryzykownego zakupu od pośrednika i rozpoczął rozmowy z rekomendowanym producentem.',
 };
 
-export const InteractiveCaseStudy = ({ data = defaultData }: InteractiveCaseStudyProps) => {
+export const InteractiveCaseStudy = ({ data = defaultData, image }: InteractiveCaseStudyProps) => {
   const [activeTab, setActiveTab] = useState('situation');
   const { language } = useLanguage();
   const tabs = caseStudyTabsTranslations[language];
@@ -40,7 +41,7 @@ export const InteractiveCaseStudy = ({ data = defaultData }: InteractiveCaseStud
     <div className="grid lg:grid-cols-3 gap-8 items-start">
       <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="relative lg:col-span-1">
         <div className="absolute inset-0 bg-lime/20 rounded-3xl blur-2xl" />
-        <img src={clientPortrait} alt="Client" className="relative rounded-3xl object-cover w-full aspect-[3/4] border-4 border-lime/30" />
+        <img src={image || clientPortrait} alt="Client" className="relative rounded-3xl object-cover object-center w-full aspect-[3/4] border-4 border-lime/30" />
         <div className="absolute -bottom-4 -right-4 bg-lime text-gray-900 px-6 py-3 rounded-2xl font-display font-semibold">{data.client}</div>
       </motion.div>
       <div className="lg:col-span-2 space-y-6">
