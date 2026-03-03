@@ -16,24 +16,24 @@ import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
 // Assets
-import teamJan from '@/assets/team-jan.jpg';
-import teamWei from '@/assets/team-wei.jpg';
-import teamAnna from '@/assets/team-anna.jpg';
-import avatar4 from '@/assets/avatar-4.jpg';
-import avatar5 from '@/assets/avatar-5.jpg';
-import avatar6 from '@/assets/avatar-6.jpg';
+import onasAdrian from '@/assets/onas-adrian.png';
+import onasHugo from '@/assets/onas-hugo.png';
+import onasMaksymilian from '@/assets/onas-maksymilian.jpg';
+import onasLiuWenhao from '@/assets/onas-liu-wenhao.jpeg';
+import onasZhangRui from '@/assets/onas-zhang-rui.png';
+import onasSara from '@/assets/onas-sara.png';
 import shanghaiHeroBg from '@/assets/shanghai-hero-bg.jpg';
 import heroAirplane from '@/assets/hero-airplane.png';
 import heroTruck from '@/assets/hero-truck.png';
 import heroContainer from '@/assets/hero-container.png';
 
 const team = [
-  { name: 'Adrian Nkwamu', role: 'Co-Founder & Managing Partner', image: teamJan },
-  { name: 'Hugo Przybyła', role: 'Co-Founder & Poland Market Lead', image: teamWei },
-  { name: 'Maksymilian Szabatin', role: 'Partner, Strategy & Intelligence', image: teamAnna },
-  { name: 'Liu Wenhao', role: 'Senior China Market Analyst', image: avatar4 },
-  { name: 'Zhang Rui', role: 'Logistics & Supply Chain Coordinator', image: avatar5 },
-  { name: 'Sara Chen', role: 'Head of China Operations & International Relations', image: avatar6 },
+  { name: 'Adrian Nkwamu', role: 'Co-Founder & Managing Partner', image: onasAdrian },
+  { name: 'Hugo Przybyła', role: 'Co-Founder & Poland Market Lead', image: onasHugo },
+  { name: 'Maksymilian Szabatin', role: 'Partner, Strategy & Intelligence', image: onasMaksymilian },
+  { name: 'Liu Wenhao', role: 'Senior China Market Analyst', image: onasLiuWenhao },
+  { name: 'Zhang Rui', role: 'Logistics & Supply Chain Coordinator', image: onasZhangRui },
+  { name: 'Sara Chen', role: 'Head of China Operations & International Relations', image: onasSara },
 ];
 
 const ONas = () => {

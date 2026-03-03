@@ -336,7 +336,7 @@ const ServiceDetail = () => {
             </h2>
           </motion.div>
 
-          <InteractiveCaseStudy data={service.caseStudy} />
+          <InteractiveCaseStudy data={service.caseStudy} image={service.caseStudyImage} />
         </div>
       </section>
 

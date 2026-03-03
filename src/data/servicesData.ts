@@ -1,14 +1,71 @@
-import serviceStrategy from '@/assets/service-strategy.jpg';
-import serviceAnalysis from '@/assets/service-analysis.jpg';
 import { Language } from '@/i18n/translations';
 import { servicesTextEN } from './servicesDataEN';
 import { servicesTextCN } from './servicesDataCN';
+
+// Service cover images (u-*)
+import uAnalizaWplywu from '@/assets/u-analiza-wplywu.png';
+import uDecyzjeWejscia from '@/assets/u-decyzje-wejscia.png';
+import uScenariuszeStrategiczne from '@/assets/u-scenariusze-strategiczne.png';
+import uBriefingiDecyzyjne from '@/assets/u-briefingi-decyzyjne.png';
+import uAnalizySektorow from '@/assets/u-analizy-sektorow.png';
+import uAnalizaRegulacyjna from '@/assets/u-analiza-regulacyjna.png';
+import uWeryfikacjaKontrahenta from '@/assets/u-weryfikacja-kontrahenta.png';
+import uRozszerzonaWeryfikacja from '@/assets/u-rozszerzona-weryfikacja.png';
+import uWyborModelu from '@/assets/u-wybor-modelu.png';
+import uWsparcieFormalne from '@/assets/u-wsparcie-formalne.png';
+import uIdentyfikacjaPartnerow from '@/assets/u-identyfikacja-partnerow.png';
+import uWsparcieNegocjacyjne from '@/assets/u-wsparcie-negocjacyjne.png';
+import uPrzygotowanieStruktur from '@/assets/u-przygotowanie-struktur.png';
+import uAudytyWeryfikacja from '@/assets/u-audyty-weryfikacja.png';
+import uProjektowanieLancucha from '@/assets/u-projektowanie-lancucha.png';
+import uNadzorProdukcji from '@/assets/u-nadzor-produkcji.png';
+import uOrganizacjaTransportu from '@/assets/u-organizacja-transportu.png';
+import uKompleksowaRealizacja from '@/assets/u-kompleksowa-realizacja.png';
+import uLokalnePozycjonowanie from '@/assets/u-lokalne-pozycjonowanie.png';
+import uStrategieKomunikacji from '@/assets/u-strategie-komunikacji.png';
+import uAdaptacjaKomunikacji from '@/assets/u-adaptacja-komunikacji.png';
+import uMaterialySprzedazowe from '@/assets/u-materialy-sprzedazowe.png';
+import uWsparcieMarketingowe from '@/assets/u-wsparcie-marketingowe.png';
+import uOrganizacjaMisji from '@/assets/u-organizacja-misji.png';
+import uAranzacjaSpotkan from '@/assets/u-aranzacja-spotkan.png';
+import uSzkoleniaSystem from '@/assets/u-szkolenia-system.png';
+import uSzkoleniaKultura from '@/assets/u-szkolenia-kultura.png';
+
+// Case study images (ucs-*)
+import ucsAnalizaWplywu from '@/assets/ucs-analiza-wplywu.png';
+import ucsDecyzjeWejscia from '@/assets/ucs-decyzje-wejscia.png';
+import ucsScenariuszeStrategiczne from '@/assets/ucs-scenariusze-strategiczne.png';
+import ucsBriefingiDecyzyjne from '@/assets/ucs-briefingi-decyzyjne.png';
+import ucsAnalizySektorow from '@/assets/ucs-analizy-sektorow.png';
+import ucsAnalizaRegulacyjna from '@/assets/ucs-analiza-regulacyjna.png';
+import ucsWeryfikacjaKontrahenta from '@/assets/ucs-weryfikacja-kontrahenta.png';
+import ucsRozszerzonaWeryfikacja from '@/assets/ucs-rozszerzona-weryfikacja.png';
+import ucsWyborModelu from '@/assets/ucs-wybor-modelu.png';
+import ucsWsparcieFormalne from '@/assets/ucs-wsparcie-formalne.png';
+import ucsIdentyfikacjaPartnerow from '@/assets/ucs-identyfikacja-partnerow.png';
+import ucsWsparcieNegocjacyjne from '@/assets/ucs-wsparcie-negocjacyjne.png';
+import ucsPrzygotowanieStruktur from '@/assets/ucs-przygotowanie-struktur.png';
+import ucsAudytyWeryfikacja from '@/assets/ucs-audyty-weryfikacja.png';
+import ucsProjektowanieLancucha from '@/assets/ucs-projektowanie-lancucha.png';
+import ucsNadzorProdukcji from '@/assets/ucs-nadzor-produkcji.png';
+import ucsOrganizacjaTransportu from '@/assets/ucs-organizacja-transportu.png';
+import ucsKompleksowaRealizacja from '@/assets/ucs-kompleksowa-realizacja.png';
+import ucsLokalnePozycjonowanie from '@/assets/ucs-lokalne-pozycjonowanie.png';
+import ucsStrategiaKomunikacji from '@/assets/ucs-strategia-komunikacji.png';
+import ucsAdaptacjaKomunikacji from '@/assets/ucs-adaptacja-komunikacji.png';
+import ucsMaterialySprzedazowe from '@/assets/ucs-materialy-sprzedazowe.png';
+import ucsWsparcieMarketingowe from '@/assets/ucs-wsparcie-marketingowe.png';
+import ucsOrganizacjaMisji from '@/assets/ucs-organizacja-misji.png';
+import ucsAranzacjaSpotkan from '@/assets/ucs-aranzacja-spotkan.png';
+import ucsSzkoleniaSystem from '@/assets/ucs-szkolenia-system.png';
+import ucsSzkoleniaKultura from '@/assets/ucs-szkolenia-kultura.png';
 
 export interface ServiceData {
   title: string;
   subtitle: string;
   description: string;
   image: string;
+  caseStudyImage: string;
   whenItMakesSense: string[];
   problemsSolved: string[];
   scope: {
@@ -36,7 +93,8 @@ export const servicesData: Record<string, ServiceData> = {
   'analiza-wplywu': {
     title: 'Analiza wpływu Chin na firmę lub sektor',
     subtitle: 'Strategia wobec Chin',
-    image: serviceStrategy,
+    image: uAnalizaWplywu,
+    caseStudyImage: ucsAnalizaWplywu,
     description: 'To strategiczny risk check dla Zarządu przed podjęciem decyzji o wejściu na rynek chiński, zmianie dostawcy, inwestycji technologicznej lub ekspansji eksportowej. Oceniamy realny wpływ Chin na dany sektor w oparciu o chińskie źródła branżowe, dokumenty planistyczne oraz lokalne dane rynkowe. Weryfikujemy, czy przewagi kosztowe są faktyczne, czy jedynie pozorne oraz czy rozważany kierunek działania ma uzasadnienie ekonomiczne i operacyjne. Oddzielamy twarde fakty od narracji marketingowej. Efektem jest klarowna rekomendacja: wchodzić, modyfikować, testować czy wstrzymać projekt - zanim firma zainwestuje w kosztowne audyty, podróże służbowe czy formalne procedury.',
     whenItMakesSense: [
       'Firma traci konkurencyjność w Polsce i rozważa automatyzację lub zakup technologii z Chin.',
@@ -85,7 +143,8 @@ export const servicesData: Record<string, ServiceData> = {
   'decyzje-wejscia': {
     title: 'Decyzje wejścia, współpracy, skalowania lub ograniczenia ekspozycji',
     subtitle: 'Strategia wobec Chin',
-    image: serviceAnalysis,
+    image: uDecyzjeWejscia,
+    caseStudyImage: ucsDecyzjeWejscia,
     description: 'Kompleksowa analiza strategiczna oparta o źródła otwarte (OSINT) i chińskojęzyczne bazy danych, dedykowana firmom stojącym przed kluczową decyzją kierunkową: wejść do Chin, rozpocząć współpracę z chińskim partnerem (wdrożenie technologii, import, JV), skalować obecność czy ograniczyć ryzyko (decoupling). Agregujemy dane z chińskich rejestrów, dokumentów planistycznych i wywiadu rynkowego, tworząc "holistyczną mapę terenu". Usługa dostarcza zarządowi twardych argumentów "za" lub "przeciw" każdej formie kooperacji, eliminując domysły i emocje na etapie planowania strategicznego.',
     whenItMakesSense: [
       'Decyzja o Współpracy Technologicznej: Rozważany jest zakup chińskich maszyn, licencji lub wdrożenie ich systemów IT w Polsce, ale istnieje obawa o jakość, bezpieczeństwo danych i serwis.',
@@ -131,7 +190,8 @@ export const servicesData: Record<string, ServiceData> = {
   'scenariusze-strategiczne': {
     title: 'Scenariusze strategiczne i mapy ryzyk',
     subtitle: 'Strategia wobec Chin',
-    image: serviceStrategy,
+    image: uScenariuszeStrategiczne,
+    caseStudyImage: ucsScenariuszeStrategiczne,
     description: 'Tworzymy scenariusze strategiczne dla firm z istotną ekspozycją na Chiny, które muszą podejmować decyzje w warunkach wysokiej niepewności. Zamiast reagować na kryzysy po fakcie, porządkujemy ryzyka geopolityczne, regulacyjne i operacyjne, projektując możliwe warianty rozwoju sytuacji - od bazowych po krytyczne. Usługa dostarcza Zarządowi "mapę pól ryzyk" oraz zestaw działań osłonowych (Plan B), które można uruchomić w momencie zmiany warunków. Celem jest utrzymanie ciągłości biznesowej i zdolności decyzyjnej w środowisku, w którym relacje z Chinami podlegają szybkim i nie zawsze przewidywalnym zmianom.',
     whenItMakesSense: [
       'Wysoka ekspozycja na Chiny: Ponad 30-40% kosztów, obrotu lub kluczowych komponentów zależy od relacji PL-CN.',
@@ -176,7 +236,8 @@ export const servicesData: Record<string, ServiceData> = {
   'briefingi-decyzyjne': {
     title: 'Briefingi decyzyjne dla zarządów',
     subtitle: 'Strategia wobec Chin',
-    image: serviceStrategy,
+    image: uBriefingiDecyzyjne,
+    caseStudyImage: ucsBriefingiDecyzyjne,
     description: 'Dedykowane sesje strategiczne lub zwięzłe materiały analityczne (Board Memo), przygotowane specjalnie pod kątem posiedzeń Zarządów i Rad Nadzorczych. Tłumaczymy skomplikowane makroekonomiczne i technologiczne sygnały z Chin na język konkretnych ryzyk i szans dla Twojej spółki. Usługa służy szybkiemu wyrównaniu poziomu wiedzy decydentów (alignment), obaleniu mitów i dostarczeniu niezależnej, zewnętrznej perspektywy przed kluczowymi głosowaniami.',
     whenItMakesSense: [
       'Brak Spójności w Zarządzie: Część decydentów opowiada się za współpracą z Chinami, część jest sceptyczna. Potrzebna jest zewnętrzna perspektywa oparta na danych.',
@@ -227,7 +288,8 @@ export const servicesData: Record<string, ServiceData> = {
   'analizy-sektorow': {
     title: 'Analizy sektorów, klastrów przemysłowych i konkurencji',
     subtitle: 'Analizy rynku i weryfikacja partnerów',
-    image: serviceAnalysis,
+    image: uAnalizySektorow,
+    caseStudyImage: ucsAnalizySektorow,
     description: 'To kompleksowa analiza struktury rynku i jego kluczowych graczy w Chinach. Łączymy mapowanie klastrów przemysłowych z pogłębionym badaniem konkurencji - zarówno lokalnej, jak i międzynarodowej. Identyfikujemy rzeczywiste centra produkcji w danym sektorze (np. Shenzhen - elektronika, Foshan - meble, Guzhen - oświetlenie), analizujemy lokalny ekosystem dostawców i łańcuch wartości oraz wskazujemy regiony, w których technologia jest najbardziej rozwinięta, a koszty najbardziej efektywne. Równolegle analizujemy konkurencję: strategie cenowe, kanały sprzedaży, komunikację marketingową, opinie klientów oraz źródła przewagi (technologia, skala, efektywność operacyjna, wsparcie publiczne). Efektem jest decyzja sourcingowa i rynkowa oparta na realnej strukturze rynku, a nie na deklaracjach dostawców czy marketingu konkurencji.',
     whenItMakesSense: [
       'Eliminacja pośredników: Chcesz kupować bezpośrednio u producenta, ale trafiasz głównie na firmy handlowe.',
@@ -276,7 +338,8 @@ export const servicesData: Record<string, ServiceData> = {
   'analiza-regulacyjna': {
     title: 'Analiza regulacyjna i barier wejścia',
     subtitle: 'Analizy rynku i weryfikacja partnerów',
-    image: serviceStrategy,
+    image: uAnalizaRegulacyjna,
+    caseStudyImage: ucsAnalizaRegulacyjna,
     description: 'To kompleksowa ocena możliwości wejścia na rynek chiński - z perspektywy regulacyjnej, rynkowej i operacyjnej. Chiński rynek jest w dużej mierze sterowany instytucjonalnie - o powodzeniu decyduje nie tylko produkt, ale zgodność z reżimem regulacyjnym oraz realne dopasowanie do lokalnego popytu. Identyfikujemy właściwe instytucje nadzorcze dla Twojej branży, kluczowe licencje i standardy (np. GB), ograniczenia inwestycyjne (m.in. "Negative List"), a także weryfikujemy, czy Twój model wejścia jest możliwy w praktyce. Równolegle analizujemy realny popyt, wrażliwość cenową, trendy konsumenckie (m.in. Guochao, livestream commerce) oraz mechanizmy sprzedaży w danej kategorii. Efektem jest decyzja kierunkowa: wejść, adaptować model, testować pilotażowo czy wstrzymać projekt - zanim firma zaangażuje kapitał w formalne procedury, logistykę i marketing.',
     whenItMakesSense: [
       'Planujesz eksport lub sprzedaż cross-border i chcesz wiedzieć, czy produkt ma realne szanse powodzenia.',
@@ -329,7 +392,8 @@ export const servicesData: Record<string, ServiceData> = {
   'weryfikacja-kontrahenta': {
     title: 'Weryfikacja kontrahenta (Desktop Check)',
     subtitle: 'Analizy rynku i weryfikacja partnerów',
-    image: serviceAnalysis,
+    image: uWeryfikacjaKontrahenta,
+    caseStudyImage: ucsWeryfikacjaKontrahenta,
     description: 'Podstawowy pakiet bezpieczeństwa przed nawiązaniem relacji handlowej z potencjalnym partnerem. Usługa pozwala zweryfikować, czy potencjalny kontrahent faktycznie istnieje, prowadzi deklarowaną działalność i posiada realne zaplecze operacyjne. Sprawdzamy, czy "producent" nie jest w rzeczywistości firmą handlową (Trading Company), czy dane rejestrowe są spójne oraz czy podmiot nie figuruje w rejestrach sporów i ostrzeżeń. Celem jest szybkie oddzielenie wiarygodnych partnerów od podmiotów wysokiego ryzyka, zanim dojdzie do transferu środków lub podpisania umowy.',
     whenItMakesSense: [
       'Nowy Dostawca: Znaleźliście firmę na targach, portalu B2B lub przez polecenie i chcecie sprawdzić jej legalność przed pierwszym zamówieniem.',
@@ -374,7 +438,8 @@ export const servicesData: Record<string, ServiceData> = {
   'due-diligence': {
     title: 'Rozszerzona weryfikacja partnera (Due Diligence)',
     subtitle: 'Analizy rynku i weryfikacja partnerów',
-    image: serviceStrategy,
+    image: uRozszerzonaWeryfikacja,
+    caseStudyImage: ucsRozszerzonaWeryfikacja,
     description: 'To pogłębione Due Diligence dla relacji o wysokiej stawce kapitałowej i operacyjnej. Gdy w grę wchodzą kontrakty strategiczne, wyłączności, Joint Venture, inwestycje kapitałowe lub uzależnienie operacyjne od jednego partnera, standardowe "sprawdzenie rejestru" nie wystarcza. Prowadzimy wielowymiarową weryfikację partnerów biznesowych, technologicznych i dostawców - obejmującą historię sporów sądowych, reputację branżową, strukturę powiązań właścicielskich oraz sygnały ryzyka operacyjnego i finansowego (w zakresie możliwym w realiach Chin). Celem jest wykrycie ukrytych zobowiązań, konfliktów interesów i red flags, które mogą zablokować projekt po podpisaniu umowy.',
     whenItMakesSense: [
       'Planujesz Joint Venture lub spółkę celową i musisz potwierdzić wiarygodność partnera.',
@@ -428,7 +493,8 @@ export const servicesData: Record<string, ServiceData> = {
   'wybor-modelu': {
     title: 'Wybór modelu wejścia na rynek',
     subtitle: 'Wejście na rynek Polska ↔ Chiny',
-    image: serviceAnalysis,
+    image: uWyborModelu,
+    caseStudyImage: ucsWyborModelu,
     description: 'To fundament każdej ekspansji na rynek chiński. Zamiast kosztownych eksperymentów, projektujemy precyzyjny model wejścia dopasowany do Twojego produktu, branży i apetytu na ryzyko. Traktujemy Chiny nie jako jeden rynek, lecz system złożony z regionów, kanałów i odmiennych zachowań konsumenckich. Odpowiadamy na trzy kluczowe pytania strategiczne: jak wejść (dystrybutor, CBEC, WFOE, JV, TP), gdzie wejść (Tier 1 vs Tier 2/3, regiony specjalizacji), czy i jak lokalizować produkt, aby wygrać z konkurencją lokalną.',
     whenItMakesSense: [
       'Plan Eksportowy: Masz sprawdzony produkt w Polsce (FMCG, kosmetyki, IT, hardware) i rozważasz sprzedaż w Chinach, ale bariera wejścia jest niejasna.',
@@ -473,7 +539,8 @@ export const servicesData: Record<string, ServiceData> = {
   'wsparcie-formalne': {
     title: 'Wsparcie formalne i regulacyjne',
     subtitle: 'Wejście na rynek Polska ↔ Chiny',
-    image: serviceStrategy,
+    image: uWsparcieFormalne,
+    caseStudyImage: ucsWsparcieFormalne,
     description: 'Aby sprzedawać w Chinach legalnie, produkt musi posiadać "chiński paszport" - komplet rejestracji, certyfikatów i zgodnych etykiet, bez których odprawa celna i sprzedaż są niemożliwe. Ta usługa to kompleksowe wsparcie regulacyjne i formalne w procesie dopuszczenia produktów na rynek chiński. Koordynujemy rejestrację producentów i produktów w kluczowych systemach rządowych (GACC/CIFER, NMPA, CCC), weryfikujemy dokumentację techniczną oraz zgodność etykiet z normami GB (Guobiao). Działamy jako koordynator procesu - minimalizując ryzyko błędów formalnych, opóźnień, cofnięcia towaru oraz blokad sprzedaży na poziomie platform i dystrybutorów.',
     whenItMakesSense: [
       'Eksport Żywności i Napojów: Chcesz rozpocząć regularny eksport, ale Twój zakład nie posiada numeru rejestracyjnego GACC/CIFER (obowiązkowego od 2022 r. dla wielu kategorii).',
@@ -527,7 +594,8 @@ export const servicesData: Record<string, ServiceData> = {
   'identyfikacja-partnerow': {
     title: 'Identyfikacja i selekcja partnerów',
     subtitle: 'Wejście na rynek Polska ↔ Chiny',
-    image: serviceAnalysis,
+    image: uIdentyfikacjaPartnerow,
+    caseStudyImage: ucsIdentyfikacjaPartnerow,
     description: 'Znalezienie właściwego partnera w Chinach nie jest kwestią wyszukiwarki, lecz selekcji. Ta usługa to ustrukturyzowany proces identyfikacji, oceny dopasowania oraz wstępnej weryfikacji dostawców, dystrybutorów i partnerów technologicznych, którzy często są niewidoczni z poziomu Europy. Nie dostarczamy "zrzutów z Alibaby". Wykorzystujemy chińskie kanały operacyjne (Baidu, 1688, WeChat, zamknięte grupy branżowe), aby oddzielić realnych producentów i podmioty operacyjne od pośredników oraz "wirtualnych fabryk". Proces obejmuje nie tylko wyszukanie podmiotów, ale również ocenę ich zdolności operacyjnej, wiarygodności formalnej i realnego dopasowania do Twojego projektu (wolumen, technologia, eksport, komunikacja). Celem jest dostarczenie krótkiej, zweryfikowanej listy partnerów gotowych do dalszych rozmów - opartych na faktach, a nie deklaracjach marketingowych.',
     whenItMakesSense: [
       'Nie możesz znaleźć producenta, ponieważ nie istnieje on w anglojęzycznym internecie (bariera Great Firewall).',
@@ -581,7 +649,8 @@ export const servicesData: Record<string, ServiceData> = {
   'wsparcie-negocjacyjne': {
     title: 'Wsparcie negocjacyjne i relacyjne',
     subtitle: 'Wejście na rynek Polska ↔ Chiny',
-    image: serviceStrategy,
+    image: uWsparcieNegocjacyjne,
+    caseStudyImage: ucsWsparcieNegocjacyjne,
     description: 'W Chinach relacja (Guanxi) często wyprzedza kontrakt, a sposób prowadzenia rozmów bywa równie ważny jak ich treść. Ta usługa to kompleksowe wsparcie procesu negocjacyjnego: od zaprojektowania strategii, przez moderowanie i facylitację rozmów, aż po zarządzanie relacją po podpisaniu ustaleń. Działamy jako "kulturowy zderzak" i tłumacz intencji - pomagamy mówić twardo bez palenia mostów i utraty twarzy (Mianzi). Celem jest wypracowanie porozumienia zabezpieczającego interes ekonomiczny klienta przy zachowaniu długoterminowej relacji operacyjnej.',
     whenItMakesSense: [
       'Negocjacje high-stakes: Kontrakt o dużej wartości (np. >500 tys. PLN).',
@@ -627,7 +696,8 @@ export const servicesData: Record<string, ServiceData> = {
   'struktury-handlowe': {
     title: 'Przygotowanie struktur handlowych lub partnerskich',
     subtitle: 'Wejście na rynek Polska ↔ Chiny',
-    image: serviceAnalysis,
+    image: uPrzygotowanieStruktur,
+    caseStudyImage: ucsPrzygotowanieStruktur,
     description: 'Projektujemy bezpieczną i wykonalną strukturę wejścia oraz współpracy PL↔CN: kto ma sprzedawać, kto ma importować, kto ponosi odpowiedzialność, gdzie powstaje marża i gdzie kumuluje się ryzyko. Dobieramy model współpracy (dystrybutor, agent, OEM/ODM, licencja, JV, TP w e-commerce) i przygotowujemy "architekturę relacji" tak, aby nie utknąć w toksycznej wyłączności, martwych kanałach lub ukrytych kosztach operacyjnych. Klient dostaje klarowny model działania oraz checklistę elementów do wdrożenia przed podpisaniem umów.',
     whenItMakesSense: [
       'Planujesz wejście do Chin lub import technologii z Chin, ale nie wiesz jaki model jest realnie wykonalny (CBEC vs General Trade, dystrybutor vs własna spółka).',
@@ -678,7 +748,8 @@ export const servicesData: Record<string, ServiceData> = {
   'audyty-dostawcow': {
     title: 'Audyty i weryfikacja dostawców (On-Site)',
     subtitle: 'Import, eksport i łańcuch dostaw',
-    image: serviceAnalysis,
+    image: uAudytyWeryfikacja,
+    caseStudyImage: ucsAudytyWeryfikacja,
     description: 'W Chinach "widzieć" znaczy "wiedzieć". Zdjęcia, wideo i profile online nie zawsze są dowodem istnienia aktywów. Ta usługa to fizyczna weryfikacja zakładu produkcyjnego na miejscu. Działamy jako Twoje "Boots on the Ground" - niezależny obserwator w terenie. Sprawdzamy, czy deklarowany producent faktycznie istnieje, produkuje pod wskazanym adresem i dysponuje realnym zapleczem operacyjnym. Weryfikujemy park maszynowy, organizację produkcji, magazyny, kulturę pracy oraz zdolność do realizacji Twojego zamówienia w zadanym wolumenie i czasie. Celem jest dostarczenie niepodważalnego dowodu istnienia (lub jego braku) oraz ocena realnego ryzyka operacyjnego.',
     whenItMakesSense: [
       'High-Value Deal: Planowane zamówienie lub kontrakt przekracza 50-100 tys. USD i wymaga pełnej pewności co do kontrahenta.',
@@ -726,7 +797,8 @@ export const servicesData: Record<string, ServiceData> = {
   'optymalizacja-lancucha': {
     title: 'Projektowanie i optymalizacja łańcucha dostaw',
     subtitle: 'Import, eksport i łańcuch dostaw',
-    image: serviceStrategy,
+    image: uProjektowanieLancucha,
+    caseStudyImage: ucsProjektowanieLancucha,
     description: 'Logistyka w imporcie z Chin to jedno z najczęstszych miejsc "ucieczki marży". Ta usługa to pogłębiony audyt całego łańcucha dostaw - od rampy fabryki w Chinach po magazyn docelowy w Polsce lub UE. Nie szukamy najtańszego przewoźnika, lecz identyfikujemy błędy strukturalne: nadmiar pośredników, nieefektywną konsolidację, zły dobór środka transportu i ukryte koszty portowe. Analizujemy, czy faktyczny model logistyczny odpowiada rotacji towaru i skali biznesu. Celem jest trwałe obniżenie Landed Cost i zamiana logistyki z kosztu w przewagę konkurencyjną.',
     whenItMakesSense: [
       'Margin Squeeze: Marża spada mimo stabilnych cen zakupu - koszty frachtu, opłat portowych i odpraw "zjadają" zysk.',
@@ -776,7 +848,8 @@ export const servicesData: Record<string, ServiceData> = {
   'nadzor-produkcji': {
     title: 'Nadzór produkcji oraz kontrola jakości',
     subtitle: 'Import, eksport i łańcuch dostaw',
-    image: serviceAnalysis,
+    image: uNadzorProdukcji,
+    caseStudyImage: ucsNadzorProdukcji,
     description: 'To koordynacja i nadzór nad procesem produkcyjnym w Chinach oraz kontrola jakości na etapach, które realnie decydują o wyniku projektu. W praktyce największe ryzyka nie biorą się z wyboru dostawcy, tylko z tego, co dzieje się po wpłaceniu zaliczki: zamiany materiałów, cięcia kosztów, rozjazdu specyfikacji, opóźnień i "milczenia" po stronie fabryki. Nadzorujemy proces od momentu potwierdzenia specyfikacji do gotowości towaru do wysyłki. Pilnujemy zgodności technicznej (wymagania, tolerancje, standard pakowania), harmonogramu oraz komunikacji z fabryką w języku i realiach lokalnych. Równolegle organizujemy kontrolę jakości w modelu dopasowanym do produktu: pre-production, in-line oraz pre-shipment, tak aby problemy zostały wykryte zanim towar wyruszy w drogę. Efektem jest większa przewidywalność jakości, kosztu oraz terminu realizacji.',
     whenItMakesSense: [
       'Produkujesz w Chinach pierwszy raz i chcesz uniknąć błędów wynikających z różnic w standardach i komunikacji.',
@@ -830,7 +903,8 @@ export const servicesData: Record<string, ServiceData> = {
   'transport-miedzynarodowy': {
     title: 'Organizacja transportu międzynarodowego',
     subtitle: 'Import, eksport i łańcuch dostaw',
-    image: serviceStrategy,
+    image: uOrganizacjaTransportu,
+    caseStudyImage: ucsOrganizacjaTransportu,
     description: 'To usługa pełnego przejęcia odpowiedzialności za koordynację i zarządzanie procesem dostawy towaru z Chin do Polski - bez chaosu, niedoprecyzowań i kosztownych błędów. Klient określa miejsce dostawy. My odpowiadamy za to, aby towar znalazł się tam zgodnie z harmonogramem i budżetem. Zarządzamy całym procesem: dokumentacją eksportową, wyborem modelu transportu, warunkami Incoterms, koordynacją operacyjną, odprawą celną oraz dostawą do miejsca docelowego. Dobieramy optymalny model transportu (sea / rail / air / multimodal), analizujemy całkowity koszt dostawy (Total Landed Cost), identyfikujemy punkty ryzyka i eliminujemy je przed rozpoczęciem transportu. Celem nie jest "zarezerwowanie kontenera", lecz bezpieczne, terminowe i kontrolowane finansowo dostarczenie towaru do miejsca docelowego w Polsce.',
     whenItMakesSense: [
       'Pierwszy projekt importowy lub eksportowy w relacji PL↔CN i brak doświadczenia operacyjnego.',
@@ -882,7 +956,8 @@ export const servicesData: Record<string, ServiceData> = {
   'realizacja-end-to-end': {
     title: 'Kompleksowa realizacja projektu PL ↔ CN (end-to-end)',
     subtitle: 'Import, eksport i łańcuch dostaw',
-    image: serviceAnalysis,
+    image: uKompleksowaRealizacja,
+    caseStudyImage: ucsKompleksowaRealizacja,
     description: 'To usługa strategiczno-operacyjnego przejęcia zarządzania projektem między Polską a Chinami - od decyzji wejścia po realne wdrożenie i uruchomienie operacji. Działamy jako centralny koordynator i integrator projektu. Odpowiadamy za przełożenie decyzji strategicznych na realne wykonanie operacyjne. Łączymy analizę rynku, selekcję partnerów, negocjacje, produkcję, logistykę i nadzór operacyjny w jeden kontrolowany proces. Klient nie zarządza wieloma podmiotami osobno. Ma jeden punkt odpowiedzialności projektowej. Naszym celem nie jest przygotowanie rekomendacji, lecz doprowadzenie projektu do mierzalnego efektu biznesowego: uruchomionej produkcji, zakontraktowanego partnera, działającego łańcucha dostaw lub rozpoczętej sprzedaży.',
     whenItMakesSense: [
       'Wejście na rynek chiński lub polski od zera.',
@@ -938,7 +1013,8 @@ export const servicesData: Record<string, ServiceData> = {
   'lokalne-pozycjonowanie': {
     title: 'Lokalne pozycjonowanie marki (PL i CN)',
     subtitle: 'Marketing i pozycjonowanie rynkowe',
-    image: serviceStrategy,
+    image: uLokalnePozycjonowanie,
+    caseStudyImage: ucsLokalnePozycjonowanie,
     description: 'Pomagamy firmom jasno zdefiniować, jak powinny być postrzegane na rynku Chin lub Polski - zanim zainwestują środki w komunikację, kampanie marketingowe lub działania sprzedażowe. Przekładamy ofertę klienta na język zrozumiały dla lokalnych decydentów, klientów i partnerów biznesowych, uwzględniając realia kulturowe, konkurencyjne oraz sposób podejmowania decyzji na danym rynku. Usługa porządkuje narrację rynkową i eliminuje ryzyko wejścia z ofertą, która funkcjonuje w jednym kontekście, lecz nie ma uzasadnienia rynkowego w innym.',
     whenItMakesSense: [
       'Wejście na nowy rynek (PL ↔ CN): Firma planuje ekspansję i potrzebuje jasnej odpowiedzi, czy jej obecna oferta oraz sposób jej prezentacji są właściwe dla lokalnych realiów.',
@@ -985,7 +1061,8 @@ export const servicesData: Record<string, ServiceData> = {
   'strategia-komunikacji': {
     title: 'Strategia komunikacji',
     subtitle: 'Marketing i pozycjonowanie rynkowe',
-    image: serviceAnalysis,
+    image: uStrategieKomunikacji,
+    caseStudyImage: ucsStrategiaKomunikacji,
     description: 'Projektujemy strategię komunikacji, która przekłada pozycjonowanie marki na spójny, kontrolowany przekaz rynkowy - dostosowany do realiów Polski lub Chin. Określamy, co, gdzie i w jakiej kolejności powinno być komunikowane, aby wspierać cele biznesowe: wejście na rynek, budowę zaufania, pozyskanie partnerów lub generowanie popytu. To usługa, która nadaje marketingowi strukturę decyzyjną i zapobiega chaotycznym, nieskoordynowanym działaniom komunikacyjnym.',
     whenItMakesSense: [
       'Po zakończeniu pozycjonowania: Firma wie, jak powinna być postrzegana, ale nie ma jasnego planu komunikacji.',
@@ -1033,7 +1110,8 @@ export const servicesData: Record<string, ServiceData> = {
   'adaptacja-komunikacji': {
     title: 'Adaptacja komunikacji do rynku PL i CN',
     subtitle: 'Marketing i pozycjonowanie rynkowe',
-    image: serviceStrategy,
+    image: uAdaptacjaKomunikacji,
+    caseStudyImage: ucsAdaptacjaKomunikacji,
     description: 'Dostosowujemy komunikację marki do lokalnych realiów kulturowych, językowych i decyzyjnych rynku Polski lub Chin. Nie tłumaczymy treści - lokalizujemy sens, argumentację i akcenty, tak aby komunikacja była zrozumiała, wiarygodna i akceptowalna dla lokalnych odbiorców. To usługa, która redukuje ryzyko nieporozumień, utraty wiarygodności oraz błędnych interpretacji komunikatu w obcym kontekście rynkowym.',
     whenItMakesSense: [
       'Po zaprojektowaniu strategii komunikacji: Firma wie, co chce komunikować, ale nie ma pewności, jak zrobić to lokalnie.',
@@ -1080,7 +1158,8 @@ export const servicesData: Record<string, ServiceData> = {
   'materialy-sprzedazowe': {
     title: 'Materiały sprzedażowe i wizerunkowe',
     subtitle: 'Marketing i pozycjonowanie rynkowe',
-    image: serviceAnalysis,
+    image: uMaterialySprzedazowe,
+    caseStudyImage: ucsMaterialySprzedazowe,
     description: 'Projektujemy i realizujemy materiały sprzedażowe oraz wizerunkowe, które wspierają realne rozmowy biznesowe i proces decyzyjny na rynku Polski lub Chin. Odpowiadamy zarówno za koncepcję, strukturę i narrację, jak i za produkcję gotowych materiałów - od treści, przez design, po zdjęcia i wideo. To usługa, która zamienia strategię komunikacji w konkretne, używalne narzędzia sprzedażowe.',
     whenItMakesSense: [
       'Rozpoczęcie rozmów handlowych lub partnerskich: Firma potrzebuje gotowych materiałów, które wspierają spotkania z decydentami.',
@@ -1128,7 +1207,8 @@ export const servicesData: Record<string, ServiceData> = {
   'wsparcie-marketingowe': {
     title: 'Wsparcie działań marketingowych i pozyskiwania leadów',
     subtitle: 'Marketing i pozycjonowanie rynkowe',
-    image: serviceStrategy,
+    image: uWsparcieMarketingowe,
+    caseStudyImage: ucsWsparcieMarketingowe,
     description: 'Zapewniamy operacyjną realizację działań marketingowych, które wspierają cele biznesowe firmy na rynku Polski lub Chin. Odpowiadamy za planowanie, uruchamianie i prowadzenie działań marketingowych w oparciu o wcześniej zwalidowaną strategię i komunikację. To usługa dla firm, które nie potrzebują już testów, lecz oczekują systematycznego generowania zainteresowania, leadów i rozmów biznesowych.',
     whenItMakesSense: [
       'Po walidacji rynku (GTM): Decyzja o przejściu z fazy testowej do skalowania działań.',
@@ -1182,7 +1262,8 @@ export const servicesData: Record<string, ServiceData> = {
   'misje-biznesowe': {
     title: 'Organizacja misji biznesowych i technologicznych PL ↔ CN',
     subtitle: 'Misje biznesowe i szkolenia',
-    image: serviceAnalysis,
+    image: uOrganizacjaMisji,
+    caseStudyImage: ucsOrganizacjaMisji,
     description: 'To strategicznie zaprojektowana misja decyzyjna dla Zarządów i właścicieli firm, którzy chcą w krótkim czasie zweryfikować realia chińskiego ekosystemu technologii, produkcji i handlu. Budujemy program wokół konkretnego celu (automatyzacja, robotyka, e-commerce, supply chain, AI w produkcji), organizujemy wejścia do firm, parków technologicznych i zakładów, a na miejscu tłumaczymy nie tylko język, ale przede wszystkim kontekst: "dlaczego oni to robią tak" i "co z tego wynika dla Polski". Celem misji jest skrócenie krzywej uczenia i przywiezienie do Polski konkretnych rozwiązań, kontaktów i decyzji wdrożeniowych - bez tracenia czasu na przypadkowe spotkania i powierzchowne wrażenia.',
     whenItMakesSense: [
       'Pivot strategiczny / CAPEX: Planujesz nową fabrykę, modernizację linii lub duży projekt automatyzacji i chcesz zobaczyć "state-of-the-art" w praktyce, nie w katalogu.',
@@ -1232,7 +1313,8 @@ export const servicesData: Record<string, ServiceData> = {
   'matchmaking': {
     title: 'Aranżacja spotkań B2B i matchmaking partnerów',
     subtitle: 'Misje biznesowe i szkolenia',
-    image: serviceStrategy,
+    image: uAranzacjaSpotkan,
+    caseStudyImage: ucsAranzacjaSpotkan,
     description: 'Spotkanie z chińskim partnerem nie jest zwykłą rozmową biznesową - to proces, w którym znaczenie mają hierarchia, kontekst, timing oraz to, co nie zostało powiedziane wprost. Ta usługa łączy aktywny matchmaking partnerów z profesjonalną aranżacją i facylitacją rozmów. Najpierw identyfikujemy właściwych decydentów po stronie chińskiej (lub polskiej), następnie projektujemy architekturę spotkania tak, aby zwiększyć prawdopodobieństwo realnego efektu biznesowego. Nie działamy jako tłumacze językowi, lecz jako tłumacze intencji, dynamiki i kodu kulturowego. Przygotowujemy klienta do rozmowy, moderujemy spotkanie (online lub stacjonarnie) oraz zabezpieczamy ustalenia w formie możliwej do egzekwowania. Celem jest przełożenie relacji na konkret: decyzję, pilotaż, MoU lub dalszy etap negocjacyjny.',
     whenItMakesSense: [
       'Wchodzisz na nowy rynek i potrzebujesz bezpośredniego kontaktu z właściwymi decydentami.',
@@ -1283,7 +1365,8 @@ export const servicesData: Record<string, ServiceData> = {
   'szkolenia-system': {
     title: 'Szkolenia z systemu gospodarczego Chin',
     subtitle: 'Misje biznesowe i szkolenia',
-    image: serviceAnalysis,
+    image: uSzkoleniaSystem,
+    caseStudyImage: ucsSzkoleniaSystem,
     description: 'Chiny nie są gospodarką wolnorynkową w zachodnim rozumieniu, ale nie są też klasyczną gospodarką nakazową. To system hybrydowy: kapitalizm państwowy sterowany politycznie. Ta usługa to dekodowanie "systemu operacyjnego" Chińskiej Republiki Ludowej dla właścicieli firm, zarządów i decydentów strategicznych. Wyjaśniamy, jak interpretować doktryny, komunikaty i dokumenty polityczne w kontekście realnych przepływów kapitału, regulacji i kierunków wsparcia sektorowego. Celem nie jest analiza ideologiczna, lecz zrozumienie logiki decyzyjnej systemu i jej wpływu na konkretne branże oraz projekty. To nie jest wykład akademicki ani publicystyka. To instrukcja zarządzania ryzykiem polityczno-gospodarczym w relacji z Chinami.',
     whenItMakesSense: [
       'Planowanie strategiczne: Tworzysz strategię na 3-5 lat i musisz wiedzieć, jakie sektory Pekin uznaje za priorytetowe (np. high-tech, automatyzacja, green tech), a jakie za problematyczne.',
@@ -1329,7 +1412,8 @@ export const servicesData: Record<string, ServiceData> = {
   'szkolenia-kultura': {
     title: 'Szkolenia z kultury biznesowej i negocjacji',
     subtitle: 'Misje biznesowe i szkolenia',
-    image: serviceStrategy,
+    image: uSzkoleniaKultura,
+    caseStudyImage: ucsSzkoleniaKultura,
     description: 'W Chinach negocjacje nie kończą się w momencie podpisania kontraktu - często dopiero wtedy wchodzą w fazę operacyjną. Ta usługa to zaawansowany warsztat taktyczny dla handlowców, kupców i managerów operujących na styku PL-CN. Przechodzimy od powierzchownego savoir-vivre\'u do twardej psychologii negocjacji i gier relacyjnych. Analizujemy mechanizmy negocjacyjne charakterystyczne dla rynku chińskiego (m.in. Biała Twarz / Czerwona Twarz, „gra na czas", „Pusty Fort", presja hierarchii). Uczymy, jak rozpoznać, kiedy „Tak" oznacza zgodę, kiedy jest manewrem, a kiedy tylko sposobem na przesunięcie odpowiedzialności. Celem szkolenia jest wzmocnienie odporności negocjacyjnej zespołu oraz ochrona marży i warunków kontraktowych w długim horyzoncie.',
     whenItMakesSense: [
       'Erozja marży: Kontrakty z Chin wyglądają dobrze na papierze, ale po czasie okazują się nieopłacalne (dodatkowe koszty, zmiany warunków, renegocjacje).',
@@ -1411,7 +1495,8 @@ export const serviceSlugMap: Record<string, string> = {
 export const defaultServiceData: ServiceData = {
   title: 'Usługa',
   subtitle: 'Yin Yang',
-  image: serviceStrategy,
+  image: uAnalizaWplywu,
+  caseStudyImage: ucsAnalizaWplywu,
   description: 'Szczegółowy opis usługi.',
   whenItMakesSense: [
     'Gdy potrzebujesz profesjonalnego wsparcia.',
@@ -1439,7 +1524,7 @@ export const defaultServiceData: ServiceData = {
   },
 };
 
-export type ServiceDataText = Omit<ServiceData, 'image'>;
+export type ServiceDataText = Omit<ServiceData, 'image' | 'caseStudyImage'>;
 
 export function getLocalizedServicesData(language: Language): Record<string, ServiceData> {
   if (language === 'pl') return servicesData;
@@ -1447,7 +1532,7 @@ export function getLocalizedServicesData(language: Language): Record<string, Ser
   const result: Record<string, ServiceData> = {};
   for (const [key, plData] of Object.entries(servicesData)) {
     const t = texts[key];
-    result[key] = t ? { image: plData.image, ...t } : plData;
+    result[key] = t ? { image: plData.image, caseStudyImage: plData.caseStudyImage, ...t } : plData;
   }
   return result;
 }
