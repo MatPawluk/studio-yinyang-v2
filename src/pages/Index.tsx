@@ -393,7 +393,13 @@ const Index = () => {
 
           <div className="max-w-4xl mx-auto">
             <div className="relative">
-              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-lime via-lime/50 to-lime/20 md:-translate-x-1/2" />
+              {/* Vertical line that ends at the last dot */}
+              <div className="absolute left-8 md:left-1/2 top-2 w-px md:-translate-x-1/2"
+                style={{
+                  bottom: 'calc(1.5rem + 8px)',
+                  background: 'linear-gradient(to bottom, #c4ff00, rgba(196,255,0,0.4), transparent)',
+                }}
+              />
               
               {t.process.steps.map((step, index) => (
                 <motion.div
@@ -404,7 +410,8 @@ const Index = () => {
                   transition={{ delay: index * 0.15 }}
                   className={`relative flex items-start gap-8 mb-12 last:mb-0 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
                 >
-                  <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-lime shadow-lg shadow-lime/50 md:-translate-x-1/2 z-10">
+                  <div className="absolute left-8 md:left-1/2 mt-4 w-4 h-4 rounded-full bg-lime shadow-lg shadow-lime/50 md:-translate-x-1/2 z-10 
+                                  transform -translate-y-1/2">
                     <div className="absolute inset-0 rounded-full bg-lime animate-ping opacity-30" />
                   </div>
                   

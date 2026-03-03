@@ -1,230 +1,156 @@
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-
-// World map coordinates (simplified grid representation)
-// Each point is [x, y] normalized to 0-100 range
-const worldMapPoints: [number, number][] = [];
-
-// Generate a simplified world map using dots
-// This creates a dot-based representation of continents
-const generateWorldMapPoints = () => {
-  const points: [number, number][] = [];
-  
-  // Europe
-  for (let x = 45; x <= 55; x += 2) {
-    for (let y = 25; y <= 40; y += 2) {
-      if (Math.random() > 0.3) points.push([x, y]);
-    }
-  }
-  
-  // Asia (including China)
-  for (let x = 55; x <= 85; x += 2) {
-    for (let y = 20; y <= 50; y += 2) {
-      if (Math.random() > 0.25) points.push([x, y]);
-    }
-  }
-  
-  // North America
-  for (let x = 10; x <= 35; x += 2) {
-    for (let y = 20; y <= 45; y += 2) {
-      if (Math.random() > 0.35) points.push([x, y]);
-    }
-  }
-  
-  // South America
-  for (let x = 20; x <= 35; x += 2) {
-    for (let y = 50; y <= 75; y += 2) {
-      if (Math.random() > 0.4) points.push([x, y]);
-    }
-  }
-  
-  // Africa
-  for (let x = 42; x <= 58; x += 2) {
-    for (let y = 40; y <= 70; y += 2) {
-      if (Math.random() > 0.35) points.push([x, y]);
-    }
-  }
-  
-  // Australia
-  for (let x = 75; x <= 88; x += 2) {
-    for (let y = 60; y <= 72; y += 2) {
-      if (Math.random() > 0.4) points.push([x, y]);
-    }
-  }
-  
-  return points;
-};
-
-// Pre-generate points (stable across renders)
-const staticPoints = generateWorldMapPoints();
-
-// Poland and China approximate positions
-const POLAND_POS = { x: 51, y: 32 };
-const CHINA_POS = { x: 75, y: 35 };
+// @ts-ignore
+import DottedMap from 'dotted-map/without-countries';
+import worldMapData from '@/data/worldMapData.json';
 
 interface WorldDotMapProps {
   className?: string;
 }
 
+const WARSAW_LAT = 52.237049;
+const WARSAW_LNG = 21.017532;
+const BEIJING_LAT = 39.9042;
+const BEIJING_LNG = 116.4074;
+
 export const WorldDotMap = ({ className = '' }: WorldDotMapProps) => {
-  const [hoveredLocation, setHoveredLocation] = useState<'poland' | 'china' | null>(null);
+  const { svgContent, warsawPct, beijingPct } = useMemo(() => {
+    const map = new DottedMap({ map: JSON.parse(JSON.stringify(worldMapData)) });
 
-  // Calculate if a point is near Poland or China
-  const isNearPoland = (x: number, y: number) => {
-    return Math.abs(x - POLAND_POS.x) < 4 && Math.abs(y - POLAND_POS.y) < 4;
-  };
+    // Add pins with distinct color
+    map.addPin({ lat: WARSAW_LAT, lng: WARSAW_LNG, svgOptions: { color: '#c4ff00', radius: 0.5 } });
+    map.addPin({ lat: BEIJING_LAT, lng: BEIJING_LNG, svgOptions: { color: '#c4ff00', radius: 0.5 } });
 
-  const isNearChina = (x: number, y: number) => {
-    return Math.abs(x - CHINA_POS.x) < 6 && Math.abs(y - CHINA_POS.y) < 6;
-  };
+    // Get all points to determine the SVG coordinate space
+    const points: { x: number; y: number; svgOptions?: { color?: string } }[] = map.getPoints();
+
+    // Find the two lime-colored pin points
+    const pins = points.filter(p => p.svgOptions?.color === '#c4ff00');
+    const warsawPoint = pins[0];
+    const beijingPoint = pins[1];
+
+    // Determine bounds of the entire map
+    const allX = points.map(p => p.x);
+    const allY = points.map(p => p.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
+
+    // Convert to percentage within the SVG bounds
+    const toPct = (x: number, y: number) => ({
+      x: ((x - minX) / (maxX - minX)) * 100,
+      y: ((y - minY) / (maxY - minY)) * 100,
+    });
+
+    const svg = map.getSVG({
+      radius: 0.27,
+      color: '#374151',
+      shape: 'circle',
+      backgroundColor: 'transparent',
+    });
+
+    return {
+      svgContent: svg,
+      warsawPct: warsawPoint ? toPct(warsawPoint.x, warsawPoint.y) : { x: 51, y: 26 },
+      beijingPct: beijingPoint ? toPct(beijingPoint.x, beijingPoint.y) : { x: 72, y: 36 },
+    };
+  }, []);
+
+  // Arc control point - arc's apex goes north (up) of both cities
+  const arcQx = (warsawPct.x + beijingPct.x) / 2;
+  const arcQy = Math.min(warsawPct.y, beijingPct.y) - 14;
+  const arcPath = `M ${warsawPct.x} ${warsawPct.y} Q ${arcQx} ${arcQy} ${beijingPct.x} ${beijingPct.y}`;
 
   return (
-    <div className={`relative w-full aspect-[2/1] ${className}`}>
+    <div className={`relative w-full ${className}`} style={{ userSelect: 'none' }}>
+      {/* Dot map */}
+      <img
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(svgContent)}`}
+        alt="World Map"
+        className="w-full h-auto block"
+        draggable={false}
+      />
+
+      {/* Overlay SVG — uses same 0-100x0-100 coordinate space as our toPct() */}
       <svg
-        viewBox="0 0 100 80"
-        className="w-full h-full"
-        preserveAspectRatio="xMidYMid meet"
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
       >
-        {/* Background dots - gray */}
-        {staticPoints.map((point, index) => {
-          const isPoland = isNearPoland(point[0], point[1]);
-          const isChina = isNearChina(point[0], point[1]);
-          const isHighlighted = isPoland || isChina;
-          
-          return (
-            <motion.circle
-              key={index}
-              cx={point[0]}
-              cy={point[1]}
-              r={isHighlighted ? 0.8 : 0.6}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ 
-                opacity: isHighlighted ? 1 : 0.4, 
-                scale: 1,
-                fill: isHighlighted ? '#c4ff00' : '#6b7280'
-              }}
-              transition={{ 
-                delay: index * 0.002,
-                duration: 0.3
-              }}
-              className={isHighlighted ? 'drop-shadow-[0_0_3px_#c4ff00]' : ''}
-            />
-          );
-        })}
-
-        {/* Poland marker */}
-        <motion.g
-          onMouseEnter={() => setHoveredLocation('poland')}
-          onMouseLeave={() => setHoveredLocation(null)}
-          className="cursor-pointer"
-        >
-          <motion.circle
-            cx={POLAND_POS.x}
-            cy={POLAND_POS.y}
-            r={2}
-            fill="#c4ff00"
-            initial={{ scale: 0 }}
-            animate={{ scale: [1, 1.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="drop-shadow-[0_0_8px_#c4ff00]"
-          />
-          <motion.circle
-            cx={POLAND_POS.x}
-            cy={POLAND_POS.y}
-            r={4}
-            fill="transparent"
-            stroke="#c4ff00"
-            strokeWidth={0.3}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [1, 2], opacity: [0.6, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.g>
-
-        {/* China marker */}
-        <motion.g
-          onMouseEnter={() => setHoveredLocation('china')}
-          onMouseLeave={() => setHoveredLocation(null)}
-          className="cursor-pointer"
-        >
-          <motion.circle
-            cx={CHINA_POS.x}
-            cy={CHINA_POS.y}
-            r={2}
-            fill="#c4ff00"
-            initial={{ scale: 0 }}
-            animate={{ scale: [1, 1.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-            className="drop-shadow-[0_0_8px_#c4ff00]"
-          />
-          <motion.circle
-            cx={CHINA_POS.x}
-            cy={CHINA_POS.y}
-            r={4}
-            fill="transparent"
-            stroke="#c4ff00"
-            strokeWidth={0.3}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [1, 2], opacity: [0.6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-          />
-        </motion.g>
-
-        {/* Connecting line */}
+        {/* Arc */}
         <motion.path
-          d={`M ${POLAND_POS.x} ${POLAND_POS.y} Q ${(POLAND_POS.x + CHINA_POS.x) / 2} ${POLAND_POS.y - 15} ${CHINA_POS.x} ${CHINA_POS.y}`}
+          d={arcPath}
           fill="none"
           stroke="#c4ff00"
           strokeWidth={0.4}
-          strokeDasharray="2 1"
+          strokeDasharray="1.8 1"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 0.6 }}
-          transition={{ duration: 2, delay: 0.5 }}
+          animate={{ pathLength: 1, opacity: 0.7 }}
+          transition={{ duration: 2.5, delay: 0.5, ease: 'easeInOut' }}
         />
 
-        {/* Animated dot on path */}
+        {/* Animated plane dot along arc */}
         <motion.circle
-          r={0.8}
+          r={0.7}
           fill="#c4ff00"
           initial={{ opacity: 0 }}
-          animate={{
-            opacity: [0, 1, 1, 0],
-            offsetDistance: ['0%', '50%', '100%', '100%']
-          }}
-          transition={{ 
-            duration: 4, 
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          style={{
-            offsetPath: `path('M ${POLAND_POS.x} ${POLAND_POS.y} Q ${(POLAND_POS.x + CHINA_POS.x) / 2} ${POLAND_POS.y - 15} ${CHINA_POS.x} ${CHINA_POS.y}')`
-          }}
-          className="drop-shadow-[0_0_4px_#c4ff00]"
+          animate={{ opacity: [0, 1, 1, 0], offsetDistance: ['0%', '50%', '100%', '100%'] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'linear', delay: 2 }}
+          style={{ offsetPath: `path('${arcPath}')` } as React.CSSProperties}
         />
+
+        {/* Warsaw: outer ping */}
+        <motion.circle
+          cx={warsawPct.x} cy={warsawPct.y} r={1.6}
+          fill="none" stroke="#c4ff00" strokeWidth={0.35}
+          animate={{ scale: [1, 2.5], opacity: [0.7, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+          style={{ transformOrigin: `${warsawPct.x}px ${warsawPct.y}px` }}
+        />
+        {/* Warsaw: inner dot */}
+        <circle cx={warsawPct.x} cy={warsawPct.y} r={0.9} fill="#c4ff00" opacity={1} />
+
+        {/* Beijing: outer ping */}
+        <motion.circle
+          cx={beijingPct.x} cy={beijingPct.y} r={1.6}
+          fill="none" stroke="#c4ff00" strokeWidth={0.35}
+          animate={{ scale: [1, 2.5], opacity: [0.7, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeOut', delay: 1 }}
+          style={{ transformOrigin: `${beijingPct.x}px ${beijingPct.y}px` }}
+        />
+        {/* Beijing: inner dot */}
+        <circle cx={beijingPct.x} cy={beijingPct.y} r={0.9} fill="#c4ff00" opacity={1} />
       </svg>
 
-      {/* Labels */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: hoveredLocation === 'poland' ? 1 : 0.8 }}
-        className="absolute left-[48%] top-[35%] transform -translate-x-1/2"
+      {/* HTML labels — positioned using same % as toPct */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          left: `${warsawPct.x}%`,
+          top: `${warsawPct.y + 3.5}%`,
+          transform: 'translateX(-50%)',
+        }}
       >
-        <div className="bg-gray-900/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-gray-700">
-          <p className="text-white text-sm font-medium">Warszawa</p>
-          <p className="text-gray-400 text-xs">Polska</p>
+        <div className="bg-gray-900/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-gray-700 whitespace-nowrap">
+          <p className="text-white text-xs font-semibold">Warszawa</p>
+          <p className="text-gray-400 text-[10px]">Polska</p>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: hoveredLocation === 'china' ? 1 : 0.8 }}
-        className="absolute left-[73%] top-[38%] transform -translate-x-1/2"
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          left: `${beijingPct.x}%`,
+          top: `${beijingPct.y + 3.5}%`,
+          transform: 'translateX(-50%)',
+        }}
       >
-        <div className="bg-gray-900/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-gray-700">
-          <p className="text-white text-sm font-medium">Shanghai</p>
-          <p className="text-gray-400 text-xs">China</p>
+        <div className="bg-gray-900/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-gray-700 whitespace-nowrap">
+          <p className="text-white text-xs font-semibold">Pekin</p>
+          <p className="text-gray-400 text-[10px]">Chiny</p>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
