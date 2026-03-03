@@ -446,7 +446,7 @@ const Index = () => {
       <HomeFAQSection />
 
       {/* CTA Section */}
-      <section className="relative py-16 overflow-hidden" style={{ backgroundColor: '#050608' }}>
+      <section className="relative pt-24 lg:pt-32 pb-16 overflow-x-clip overflow-y-visible" style={{ backgroundColor: '#050608' }}>
         <ChineseCharacters characters="信任" position="left" className="top-0" opacity={0.05} />
         
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
@@ -454,7 +454,7 @@ const Index = () => {
             <div className="absolute bottom-0 right-0 w-[300px] h-[250px] bg-[#c4ff00]/10 blur-[100px] rounded-full pointer-events-none" />
             
             <div className="relative grid lg:grid-cols-[1fr_auto] gap-0 items-end">
-              <div className="p-8 lg:p-12">
+              <div className="p-8 lg:p-12 relative z-20">
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight">{t.cta.title}</h2>
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-5 leading-tight"><GradientText>{t.cta.titleHighlight}</GradientText></h2>
                 <p className="text-gray-400 text-base mb-8 max-w-md">{t.cta.subtitle}</p>
@@ -463,8 +463,15 @@ const Index = () => {
                   <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
-              <div className="relative hidden lg:flex items-end justify-end pr-8" style={{ minWidth: '320px' }}>
-                <img src={consultantImg} alt="Konsultant Yin Yang" className="relative z-10 w-[380px] object-contain -mb-1" style={{ marginTop: '-180px', filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))' }} />
+              <div className="relative hidden lg:block lg:w-[380px] xl:w-[450px]">
+                <img 
+                  src={consultantImg} 
+                  alt="Konsultant Yin Yang" 
+                  className="absolute bottom-0 -right-24 lg:-right-32 xl:-right-40 z-10 w-[680px] xl:w-[820px] max-w-none object-contain pointer-events-none" 
+                  style={{ 
+                    filter: 'drop-shadow(-10px 20px 40px rgba(0,0,0,0.4))' 
+                  }} 
+                />
               </div>
             </div>
           </div>
