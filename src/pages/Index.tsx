@@ -14,7 +14,7 @@ import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { statsTranslations, carouselServicesTranslations } from '@/i18n/contentTranslations';
-import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Target, Search, Rocket, Settings } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import heroVideo from '@/assets/hero-video.mp4';
 import statsBg from '@/assets/stats-bg.jpg';
 import avatarTeam1 from '@/assets/avatar-team-1.jpg';
@@ -46,12 +46,6 @@ const Index = () => {
     slug: carouselSlugs[i],
   }));
 
-  const heroServices = [
-    { title: t.heroCards.strategy.title, description: t.heroCards.strategy.description, icon: Target },
-    { title: t.heroCards.research.title, description: t.heroCards.research.description, icon: Search },
-    { title: t.heroCards.entry.title, description: t.heroCards.entry.description, icon: Rocket },
-    { title: t.heroCards.operations.title, description: t.heroCards.operations.description, icon: Settings },
-  ];
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -188,7 +182,7 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-52 md:bottom-56 left-1/2 -translate-x-1/2"
+          className="absolute bottom-24 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -198,88 +192,11 @@ const Index = () => {
             <ChevronDown className="w-6 h-6" />
           </motion.div>
         </motion.div>
-
-        {/* Premium Service Cards - Dark Glass with Shimmer */}
-        <div className="absolute -bottom-32 sm:-bottom-36 md:-bottom-40 lg:-bottom-44 left-0 right-0 z-20 pointer-events-none">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 pointer-events-auto">
-              {heroServices.map((service, index) => {
-                const IconComponent = service.icon;
-                return (
-                  <motion.div
-                    key={service.title}
-                    initial={{ opacity: 0, y: 80 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 + index * 0.15 }}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    className="group relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 lg:p-7 border border-white/[0.06] hover:border-[#c4ff00]/40 transition-all duration-500 overflow-hidden cursor-pointer"
-                    style={{ 
-                      background: 'linear-gradient(135deg, rgba(11,11,11,0.85) 0%, rgba(17,18,20,0.9) 50%, rgba(11,11,11,0.85) 100%)',
-                      backdropFilter: 'blur(20px)',
-                    }}
-                  >
-                    {/* Animated shimmer border effect */}
-                    <div className="absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
-                      style={{
-                        background: 'linear-gradient(135deg, transparent 0%, rgba(196,255,0,0.08) 30%, transparent 50%, rgba(196,255,0,0.05) 70%, transparent 100%)',
-                      }}
-                    />
-                    
-                    {/* Top shimmer bar - continuous */}
-                    <div className="absolute top-0 left-0 right-0 h-[1px] overflow-hidden">
-                      <motion.div 
-                        className="h-full w-[300%]"
-                        animate={{ x: ['-66%', '0%'] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "linear", repeatType: "loop" }}
-                        style={{
-                          background: 'repeating-linear-gradient(90deg, transparent 0%, rgba(196,255,0,0.3) 15%, rgba(196,255,0,0.6) 33%, rgba(196,255,0,0.3) 50%, transparent 66%)',
-                        }}
-                      />
-                    </div>
-                    
-                    {/* Hover glow pulse */}
-                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-20 bg-[#c4ff00]/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
-                    
-                    {/* Corner accent */}
-                    <div className="absolute top-0 right-0 w-12 h-12 pointer-events-none">
-                      <div className="absolute top-0 right-0 w-[1px] h-6 bg-gradient-to-b from-[#c4ff00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="absolute top-0 right-0 h-[1px] w-6 bg-gradient-to-l from-[#c4ff00]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </div>
-
-                    <div className="relative z-10 pt-2">
-                      <div className="mb-3 sm:mb-4">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border border-white/[0.06] group-hover:border-[#c4ff00]/30 transition-all duration-500"
-                          style={{ backgroundColor: 'rgba(17,18,20,0.8)' }}
-                        >
-                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 group-hover:text-[#c4ff00] transition-colors duration-500" />
-                        </div>
-                      </div>
-                      
-                      <h3 className="font-display font-bold text-white text-sm sm:text-base lg:text-lg mb-1.5 sm:mb-2 group-hover:text-[#c4ff00]/90 transition-colors duration-300">
-                        {service.title}
-                      </h3>
-                      <p className="text-gray-500 text-xs sm:text-sm leading-relaxed group-hover:text-gray-400 transition-colors duration-300">
-                        {service.description}
-                      </p>
-                    </div>
-                    
-                    {/* Bottom accent line */}
-                    <div className="absolute bottom-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-[#c4ff00]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
       </section>
 
-      {/* Dark transition spacer */}
-      <section className="relative pt-48 sm:pt-56 md:pt-64 pb-20" style={{ backgroundColor: '#050608' }}>
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#050608] to-[#050608]" />
-      </section>
-
-      {/* Services Carousel Section */}
-      <section ref={carouselRef} className="relative py-24 z-10" style={{ backgroundColor: '#050608' }}>
+      {/* Services Carousel Section - pulled up to overlap hero */}
+      <section ref={carouselRef} className="relative z-10 -mt-20 pt-4 pb-24" style={{ backgroundColor: 'transparent' }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050608]/80 to-[#050608] pointer-events-none" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-[#0B0B0B]/60 blur-3xl" />
         </div>
@@ -290,18 +207,7 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-display text-4xl lg:text-6xl font-bold">
-              <span className="text-white">{t.services.title.split(' ')[0]} </span>
-              <GradientText>{t.services.title.split(' ').slice(1).join(' ')}</GradientText>
-            </h2>
-          </motion.div>
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
 
           {/* Premium Card Carousel with 3D perspective */}
           <div className="relative">

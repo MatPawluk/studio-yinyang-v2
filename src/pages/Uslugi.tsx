@@ -214,7 +214,7 @@ const Uslugi = () => {
                                 <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-[#0B0B0B]/80 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
                                   <div className="aspect-[4/3] relative overflow-hidden">
                                     <img src={subService.image} alt={translated.subServices[subIndex]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/60 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/50 to-[#050608]/10" />
                                   </div>
                                   <div className="absolute bottom-0 left-0 right-0 p-5">
                                     <h3 className="text-white text-base font-semibold leading-tight group-hover:text-lime transition-colors mb-2">
