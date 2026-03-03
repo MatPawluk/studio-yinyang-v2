@@ -23,8 +23,8 @@ export const TestimonialsSection = () => {
           <h2 className="font-display text-4xl lg:text-5xl font-bold text-white">{t.testimonials.title} <GradientText>{t.testimonials.titleHighlight}</GradientText></h2>
         </motion.div>
         <div className="relative h-[600px] overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#050608] to-transparent z-10 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#050608] to-transparent z-10 pointer-events-none" />
+          <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-[#050608] from-10% via-[#050608]/70 via-50% to-transparent z-20 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#050608] from-10% via-[#050608]/70 via-50% to-transparent z-20 pointer-events-none" />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
             <div className="relative overflow-hidden">
               <motion.div animate={{ y: ['0%', '-50%'] }} transition={{ duration: 30, repeat: Infinity, ease: 'linear' }} className="space-y-6">

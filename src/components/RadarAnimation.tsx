@@ -29,19 +29,19 @@ export const RadarAnimation = ({ size = 'md', className = '' }: RadarAnimationPr
       {/* Rotating radar line */}
       <motion.div
         animate={{ rotate: 360 }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
         className="absolute inset-0"
       >
-        <div className="absolute top-1/2 left-1/2 w-1/2 h-1 origin-left bg-gradient-to-r from-lime to-transparent rounded-full" />
+        <div className="absolute top-1/2 left-1/2 w-1/2 h-0.5 origin-left bg-gradient-to-r from-lime/20 via-lime to-transparent rounded-full" />
       </motion.div>
       
       {/* Radar sweep gradient */}
       <motion.div
         animate={{ rotate: 360 }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
         className="absolute inset-0 rounded-full"
         style={{
-          background: 'conic-gradient(from 0deg, transparent 0deg, hsl(75 100% 50% / 0.3) 45deg, transparent 90deg)',
+          background: 'conic-gradient(from 0deg, transparent 0deg, hsl(75 100% 50% / 0.05) 10deg, hsl(75 100% 50% / 0.15) 30deg, transparent 60deg)',
         }}
       />
       

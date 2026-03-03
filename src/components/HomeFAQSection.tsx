@@ -20,9 +20,9 @@ export const HomeFAQSection = () => {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
+    <section className="py-24 relative" style={{ backgroundColor: '#050608' }}>
       <ChineseCharacters characters="信任" position="right" className="top-20" opacity={0.08} />
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-lime/5 blur-[150px] rounded-full" />
       </div>
       <div className="container mx-auto px-6 lg:px-12 relative z-10">

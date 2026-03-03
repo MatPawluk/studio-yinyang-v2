@@ -446,7 +446,7 @@ const Index = () => {
       <HomeFAQSection />
 
       {/* CTA Section */}
-      <section className="relative pt-24 lg:pt-32 pb-16 overflow-x-clip overflow-y-visible" style={{ backgroundColor: '#050608' }}>
+      <section className="relative pt-24 lg:pt-32 pb-16 overflow-visible z-20" style={{ backgroundColor: 'transparent' }}>
         <ChineseCharacters characters="信任" position="left" className="top-0" opacity={0.05} />
         
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
