@@ -11,10 +11,37 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { uslugiTranslations } from '@/i18n/pageTranslations';
 import { statsTranslations, serviceCategoriesTranslations } from '@/i18n/contentTranslations';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import serviceStrategy from '@/assets/service-strategy.jpg';
-import serviceAnalysis from '@/assets/service-analysis.jpg';
 import statsBg from '@/assets/stats-bg.jpg';
 import worldMap from '@/assets/world-map.jpg';
+
+// Service cover images
+import uAnalizaWplywu from '@/assets/u-analiza-wplywu.png';
+import uDecyzjeWejscia from '@/assets/u-decyzje-wejscia.png';
+import uScenariuszeStrategiczne from '@/assets/u-scenariusze-strategiczne.png';
+import uBriefingiDecyzyjne from '@/assets/u-briefingi-decyzyjne.png';
+import uAnalizySektorow from '@/assets/u-analizy-sektorow.png';
+import uAnalizaRegulacyjna from '@/assets/u-analiza-regulacyjna.png';
+import uWeryfikacjaKontrahenta from '@/assets/u-weryfikacja-kontrahenta.png';
+import uRozszerzonaWeryfikacja from '@/assets/u-rozszerzona-weryfikacja.png';
+import uWyborModelu from '@/assets/u-wybor-modelu.png';
+import uWsparcieFormalne from '@/assets/u-wsparcie-formalne.png';
+import uIdentyfikacjaPartnerow from '@/assets/u-identyfikacja-partnerow.png';
+import uWsparcieNegocjacyjne from '@/assets/u-wsparcie-negocjacyjne.png';
+import uPrzygotowanieStruktur from '@/assets/u-przygotowanie-struktur.png';
+import uAudytyWeryfikacja from '@/assets/u-audyty-weryfikacja.png';
+import uProjektowanieLancucha from '@/assets/u-projektowanie-lancucha.png';
+import uNadzorProdukcji from '@/assets/u-nadzor-produkcji.png';
+import uOrganizacjaTransportu from '@/assets/u-organizacja-transportu.png';
+import uKompleksowaRealizacja from '@/assets/u-kompleksowa-realizacja.png';
+import uLokalnePozycjonowanie from '@/assets/u-lokalne-pozycjonowanie.png';
+import uStrategieKomunikacji from '@/assets/u-strategie-komunikacji.png';
+import uAdaptacjaKomunikacji from '@/assets/u-adaptacja-komunikacji.png';
+import uMaterialySprzedazowe from '@/assets/u-materialy-sprzedazowe.png';
+import uWsparcieMarketingowe from '@/assets/u-wsparcie-marketingowe.png';
+import uOrganizacjaMisji from '@/assets/u-organizacja-misji.png';
+import uAranzacjaSpotkan from '@/assets/u-aranzacja-spotkan.png';
+import uSzkoleniaSystem from '@/assets/u-szkolenia-system.png';
+import uSzkoleniaKultura from '@/assets/u-szkolenia-kultura.png';
 
 // Sub-service slugs (stable across languages)
 const serviceCategorySlugs = [
@@ -22,63 +49,63 @@ const serviceCategorySlugs = [
     slug: 'strategia-wobec-chin',
     count: 4,
     subServices: [
-      { slug: 'analiza-wplywu', image: serviceStrategy },
-      { slug: 'decyzje-strategiczne', image: serviceAnalysis },
-      { slug: 'scenariusze-mapy-ryzyk', image: serviceAnalysis },
-      { slug: 'briefingi-decyzyjne', image: serviceStrategy },
+      { slug: 'analiza-wplywu', image: uAnalizaWplywu },
+      { slug: 'decyzje-strategiczne', image: uDecyzjeWejscia },
+      { slug: 'scenariusze-mapy-ryzyk', image: uScenariuszeStrategiczne },
+      { slug: 'briefingi-decyzyjne', image: uBriefingiDecyzyjne },
     ],
   },
   {
     slug: 'analizy-rynku',
     count: 4,
     subServices: [
-      { slug: 'analizy-sektorow-klastrow', image: serviceAnalysis },
-      { slug: 'analiza-regulacyjna-bariery', image: serviceStrategy },
-      { slug: 'weryfikacja-kontrahenta-desktop', image: serviceAnalysis },
-      { slug: 'due-diligence-partner', image: serviceStrategy },
+      { slug: 'analizy-sektorow-klastrow', image: uAnalizySektorow },
+      { slug: 'analiza-regulacyjna-bariery', image: uAnalizaRegulacyjna },
+      { slug: 'weryfikacja-kontrahenta-desktop', image: uWeryfikacjaKontrahenta },
+      { slug: 'due-diligence-partner', image: uRozszerzonaWeryfikacja },
     ],
   },
   {
     slug: 'wejscie-na-rynek',
     count: 5,
     subServices: [
-      { slug: 'wybor-modelu-wejscia', image: serviceStrategy },
-      { slug: 'wsparcie-formalne-regulacyjne', image: serviceAnalysis },
-      { slug: 'identyfikacja-selekcja-partnerow', image: serviceStrategy },
-      { slug: 'wsparcie-negocjacyjne-relacyjne', image: serviceAnalysis },
-      { slug: 'struktury-handlowe-partnerskie', image: serviceStrategy },
+      { slug: 'wybor-modelu-wejscia', image: uWyborModelu },
+      { slug: 'wsparcie-formalne-regulacyjne', image: uWsparcieFormalne },
+      { slug: 'identyfikacja-selekcja-partnerow', image: uIdentyfikacjaPartnerow },
+      { slug: 'wsparcie-negocjacyjne-relacyjne', image: uWsparcieNegocjacyjne },
+      { slug: 'struktury-handlowe-partnerskie', image: uPrzygotowanieStruktur },
     ],
   },
   {
     slug: 'import-eksport',
     count: 5,
     subServices: [
-      { slug: 'audyty-weryfikacja-dostawcow', image: serviceAnalysis },
-      { slug: 'optymalizacja-lancucha-dostaw', image: serviceStrategy },
-      { slug: 'nadzor-produkcji-jakosc', image: serviceAnalysis },
-      { slug: 'transport-miedzynarodowy', image: serviceStrategy },
-      { slug: 'realizacja-projekt-end-to-end', image: serviceAnalysis },
+      { slug: 'audyty-weryfikacja-dostawcow', image: uAudytyWeryfikacja },
+      { slug: 'optymalizacja-lancucha-dostaw', image: uProjektowanieLancucha },
+      { slug: 'nadzor-produkcji-jakosc', image: uNadzorProdukcji },
+      { slug: 'transport-miedzynarodowy', image: uOrganizacjaTransportu },
+      { slug: 'realizacja-projekt-end-to-end', image: uKompleksowaRealizacja },
     ],
   },
   {
     slug: 'marketing-pozycjonowanie',
     count: 5,
     subServices: [
-      { slug: 'lokalne-pozycjonowanie-marki', image: serviceStrategy },
-      { slug: 'strategia-komunikacji', image: serviceAnalysis },
-      { slug: 'adaptacja-komunikacji-rynek', image: serviceStrategy },
-      { slug: 'materialy-sprzedazowe-wizerunkowe', image: serviceAnalysis },
-      { slug: 'wsparcie-marketing-leady', image: serviceStrategy },
+      { slug: 'lokalne-pozycjonowanie-marki', image: uLokalnePozycjonowanie },
+      { slug: 'strategia-komunikacji', image: uStrategieKomunikacji },
+      { slug: 'adaptacja-komunikacji-rynek', image: uAdaptacjaKomunikacji },
+      { slug: 'materialy-sprzedazowe-wizerunkowe', image: uMaterialySprzedazowe },
+      { slug: 'wsparcie-marketing-leady', image: uWsparcieMarketingowe },
     ],
   },
   {
     slug: 'misje-szkolenia',
     count: 4,
     subServices: [
-      { slug: 'misje-biznesowe-technologiczne', image: serviceAnalysis },
-      { slug: 'matchmaking-b2b-partnerow', image: serviceStrategy },
-      { slug: 'szkolenia-system-gospodarczy', image: serviceAnalysis },
-      { slug: 'szkolenia-kultura-negocjacje', image: serviceStrategy },
+      { slug: 'misje-biznesowe-technologiczne', image: uOrganizacjaMisji },
+      { slug: 'matchmaking-b2b-partnerow', image: uAranzacjaSpotkan },
+      { slug: 'szkolenia-system-gospodarczy', image: uSzkoleniaSystem },
+      { slug: 'szkolenia-kultura-negocjacje', image: uSzkoleniaKultura },
     ],
   },
 ];
