@@ -200,7 +200,7 @@ const Index = () => {
         </motion.div>
 
         {/* Premium Service Cards - Dark Glass with Shimmer */}
-        <div className="absolute -bottom-32 sm:-bottom-36 md:-bottom-40 lg:-bottom-44 left-0 right-0 z-50 pointer-events-none">
+        <div className="absolute -bottom-32 sm:-bottom-36 md:-bottom-40 lg:-bottom-44 left-0 right-0 z-20 pointer-events-none">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 pointer-events-auto">
               {heroServices.map((service, index) => {
