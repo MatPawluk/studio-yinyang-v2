@@ -21,14 +21,15 @@ export const TeamCarousel = () => {
 
   return (
     <section className="py-16 overflow-hidden" style={{ backgroundColor: '#050608' }}>
-      <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #050608, transparent)' }} />
-        <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #050608, transparent)' }} />
+      <div className="relative py-4">
+        <div className="absolute left-0 -top-4 -bottom-4 w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #050608 30%, transparent)' }} />
+        <div className="absolute right-0 -top-4 -bottom-4 w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #050608 30%, transparent)' }} />
 
         <motion.div
           animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-          className="flex gap-6"
+          transition={{ duration: 40, repeat: Infinity, ease: 'linear', repeatType: 'loop' }}
+          className="flex gap-6 will-change-transform"
+          style={{ width: 'max-content' }}
         >
           {duplicatedPhotos.map((photo, index) => (
             <div
