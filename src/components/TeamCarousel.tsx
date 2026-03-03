@@ -7,15 +7,13 @@ import galeria3 from '@/assets/onas-galeria-3.png';
 import galeria4 from '@/assets/onas-galeria-4.jpg';
 import galeria5 from '@/assets/onas-galeria-5.jpg';
 import galeria6 from '@/assets/onas-galeria-6.jpg';
-import galeria7 from '@/assets/onas-galeria-7.jpeg';
-import galeria8 from '@/assets/onas-galeria-8.jpeg';
 import galeria9 from '@/assets/onas-galeria-9.jpg';
 import galeria10 from '@/assets/onas-galeria-10.png';
 import galeria11 from '@/assets/onas-galeria-11.png';
 
 const teamPhotos = [
   galeria0, galeria1, galeria2, galeria3, galeria4, galeria5,
-  galeria6, galeria7, galeria8, galeria9, galeria10, galeria11,
+  galeria6, galeria9, galeria10, galeria11,
 ];
 
 export const TeamCarousel = () => {
