@@ -235,12 +235,12 @@ const Index = () => {
                     className="relative rounded-3xl overflow-hidden aspect-[16/10] lg:aspect-[2/1] border border-gray-800/50 shadow-2xl shadow-lime/5 group"
                   >
                     <motion.img
-                      initial={{ scale: 1.05 }}
-                      animate={{ scale: 1 }}
+                      initial={{ scale: carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? 1.45 : 1.05 }}
+                      animate={{ scale: carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? 1.4 : 1 }}
                       transition={{ duration: 0.6 }}
                       src={carouselServices[currentSlide].image}
                       alt={carouselServices[currentSlide].title}
-className={`absolute inset-0 w-full h-full object-cover ${carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? 'scale-[1.4]' : ''}`}
+                      className="absolute inset-0 w-full h-full object-cover"
                       style={carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? { objectPosition: '70% 55%' } : undefined}
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#050608] via-[#050608]/70 to-transparent" />
