@@ -44,7 +44,13 @@ export function WorldMap() {
     <div className="w-full aspect-[2/1] rounded-lg relative font-sans overflow-hidden">
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-        className="h-full w-full [mask-image:linear-gradient(to_bottom,transparent,white_10%,white_90%,transparent)] pointer-events-none select-none object-cover"
+        className="h-full w-full pointer-events-none select-none object-cover"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent, white 10%, white 90%, transparent), linear-gradient(to right, transparent, white 10%, white 90%, transparent)',
+          maskComposite: 'intersect',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent, white 10%, white 90%, transparent), linear-gradient(to right, transparent, white 10%, white 90%, transparent)',
+          WebkitMaskComposite: 'source-in'
+        }}
         alt="world map"
         draggable={false}
       />
@@ -63,12 +69,17 @@ export function WorldMap() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#c4ff00" stopOpacity="0.1" />
+            <stop offset="50%" stopColor="#c4ff00" stopOpacity="1" />
+            <stop offset="100%" stopColor="#c4ff00" stopOpacity="0.1" />
+          </linearGradient>
         </defs>
 
         <motion.path
           d={curvePath}
           fill="none"
-          stroke="#c4ff00"
+          stroke="url(#line-gradient)"
           strokeWidth="2"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: [0, 1, 0] }}
