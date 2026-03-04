@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { WorldDotMap } from '@/components/WorldDotMap';
+import { WorldMap } from '@/components/WorldMap';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { FloatingDots } from '@/components/FloatingDots';
@@ -165,7 +165,7 @@ const ONas = () => {
               Warszawa ↔ <GradientText>Shanghai</GradientText>
             </h2>
           </motion.div>
-          <div className="w-full max-w-7xl mx-auto pt-2" style={{ overflow: 'visible' }}><WorldDotMap /></div>
+          <div className="w-full max-w-7xl mx-auto pt-2"><WorldMap /></div>
         </div>
       </section>
 
