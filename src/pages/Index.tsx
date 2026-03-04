@@ -240,8 +240,8 @@ const Index = () => {
                       transition={{ duration: 0.6 }}
                       src={carouselServices[currentSlide].image}
                       alt={carouselServices[currentSlide].title}
-                      className={`absolute inset-0 w-full h-full object-cover ${carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? 'scale-[1.15]' : ''}`}
-                      style={carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? { objectPosition: '60% 55%' } : undefined}
+className={`absolute inset-0 w-full h-full object-cover ${carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? 'scale-[1.4]' : ''}`}
+                      style={carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? { objectPosition: '70% 55%' } : undefined}
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#050608] via-[#050608]/70 to-transparent" />
                     
