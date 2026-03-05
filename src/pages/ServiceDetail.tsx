@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
@@ -7,20 +8,144 @@ import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ParallaxSection } from '@/components/ParallaxSection';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { ArrowLeft, ArrowRight, Check, X, FileText, Video } from 'lucide-react';
-import { serviceSlugMap, defaultServiceData, getLocalizedServicesData } from '@/data/servicesData';
+import { sanityClient } from '@/lib/sanity';
+import { ArrowLeft, ArrowRight, Check, X, FileText, Video, Loader2 } from 'lucide-react';
 import statsBg from '@/assets/stats-bg.jpg';
 
+// Service cover images
+import uAnalizaWplywu from '@/assets/u-analiza-wplywu.png';
+import uDecyzjeWejscia from '@/assets/u-decyzje-wejscia.png';
+import uScenariuszeStrategiczne from '@/assets/u-scenariusze-strategiczne.png';
+import uBriefingiDecyzyjne from '@/assets/u-briefingi-decyzyjne.png';
+import uAnalizySektorow from '@/assets/u-analizy-sektorow.png';
+import uAnalizaRegulacyjna from '@/assets/u-analiza-regulacyjna.png';
+import uWeryfikacjaKontrahenta from '@/assets/u-weryfikacja-kontrahenta.png';
+import uRozszerzonaWeryfikacja from '@/assets/u-rozszerzona-weryfikacja.png';
+import uWyborModelu from '@/assets/u-wybor-modelu.png';
+import uWsparcieFormalne from '@/assets/u-wsparcie-formalne.png';
+import uIdentyfikacjaPartnerow from '@/assets/u-identyfikacja-partnerow.png';
+import uWsparcieNegocjacyjne from '@/assets/u-wsparcie-negocjacyjne.png';
+import uPrzygotowanieStruktur from '@/assets/u-przygotowanie-struktur.png';
+import uAudytyWeryfikacja from '@/assets/u-audyty-weryfikacja.png';
+import uProjektowanieLancucha from '@/assets/u-projektowanie-lancucha.png';
+import uNadzorProdukcji from '@/assets/u-nadzor-produkcji.png';
+import uOrganizacjaTransportu from '@/assets/u-organizacja-transportu.png';
+import uKompleksowaRealizacja from '@/assets/u-kompleksowa-realizacja.png';
+import uLokalnePozycjonowanie from '@/assets/u-lokalne-pozycjonowanie.png';
+import uStrategieKomunikacji from '@/assets/u-strategie-komunikacji.png';
+import uAdaptacjaKomunikacji from '@/assets/u-adaptacja-komunikacji.png';
+import uMaterialySprzedazowe from '@/assets/u-materialy-sprzedazowe.png';
+import uWsparcieMarketingowe from '@/assets/u-wsparcie-marketingowe.png';
+import uOrganizacjaMisji from '@/assets/u-organizacja-misji.png';
+import uAranzacjaSpotkan from '@/assets/u-aranzacja-spotkan.png';
+import uSzkoleniaSystem from '@/assets/u-szkolenia-system.png';
+import uSzkoleniaKultura from '@/assets/u-szkolenia-kultura.png';
+
+// Image mapping by slug
+const serviceImages: Record<string, string> = {
+  'analiza-wplywu': uAnalizaWplywu,
+  'decyzje-wejscia': uDecyzjeWejscia,
+  'scenariusze-strategiczne': uScenariuszeStrategiczne,
+  'briefingi-decyzyjne': uBriefingiDecyzyjne,
+  'analizy-sektorow': uAnalizySektorow,
+  'analiza-regulacyjna': uAnalizaRegulacyjna,
+  'weryfikacja-kontrahenta': uWeryfikacjaKontrahenta,
+  'due-diligence': uRozszerzonaWeryfikacja,
+  'wybor-modelu': uWyborModelu,
+  'wsparcie-formalne': uWsparcieFormalne,
+  'identyfikacja-partnerow': uIdentyfikacjaPartnerow,
+  'wsparcie-negocjacyjne': uWsparcieNegocjacyjne,
+  'struktury-handlowe': uPrzygotowanieStruktur,
+  'audyty-dostawcow': uAudytyWeryfikacja,
+  'optymalizacja-lancucha': uProjektowanieLancucha,
+  'nadzor-produkcji': uNadzorProdukcji,
+  'transport-miedzynarodowy': uOrganizacjaTransportu,
+  'realizacja-end-to-end': uKompleksowaRealizacja,
+  'lokalne-pozycjonowanie': uLokalnePozycjonowanie,
+  'strategia-komunikacji': uStrategieKomunikacji,
+  'adaptacja-komunikacji': uAdaptacjaKomunikacji,
+  'materialy-sprzedazowe': uMaterialySprzedazowe,
+  'wsparcie-marketingowe': uWsparcieMarketingowe,
+  'misje-biznesowe': uOrganizacjaMisji,
+  'matchmaking': uAranzacjaSpotkan,
+  'szkolenia-system': uSzkoleniaSystem,
+  'szkolenia-kultura': uSzkoleniaKultura,
+};
+
 const ServiceDetail = () => {
-  const { serviceSlug, subServiceSlug } = useParams();
+  const { subServiceSlug } = useParams();
   const { t, language } = useLanguage();
-  
-  const localizedServices = getLocalizedServicesData(language);
-  const mainSlug = serviceSlug || '';
-  const mappedSlug = subServiceSlug ? (serviceSlugMap[subServiceSlug] || subServiceSlug) : mainSlug;
-  const service = localizedServices[mappedSlug] || localizedServices[mainSlug] || defaultServiceData;
-  
-  const displayTitle = service.title;
+  const [service, setService] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchService = async () => {
+      try {
+        const query = `*[_type == "service" && slug.current == $slug][0]`;
+        const data = await sanityClient.fetch(query, { slug: subServiceSlug });
+        
+        if (data) {
+          // Map Sanity data structure to component expectations
+          const localizedData = {
+            title: data?.title?.[language] || data?.title?.['pl'] || '',
+            subtitle: data?.subtitle?.[language] || data?.subtitle?.['pl'] || '',
+            description: data?.description?.[language] || data?.description?.['pl'] || '',
+            image: serviceImages[subServiceSlug || ''] || uAnalizaWplywu,
+            whenItMakesSense: (data?.whenItMakesSense || []).map((i: any) => i?.[language] || i?.['pl'] || ''),
+            problemsSolved: (data?.problemsSolved || []).map((i: any) => i?.[language] || i?.['pl'] || ''),
+            scope: {
+              includes: (data?.scopeIncludes || []).map((i: any) => i?.[language] || i?.['pl'] || ''),
+              excludes: (data?.scopeExcludes || []).map((i: any) => i?.[language] || i?.['pl'] || ''),
+            },
+            deliverables: (data?.deliverables || []).map((i: any) => i?.[language] || i?.['pl'] || ''),
+            workModel: {
+              type: data?.workModelType?.[language] || data?.workModelType?.['pl'] || '',
+              duration: data?.workModelDuration?.[language] || data?.workModelDuration?.['pl'] || '',
+              communication: data?.workModelCommunication?.[language] || data?.workModelCommunication?.['pl'] || '',
+            },
+            caseStudy: {
+              client: data?.caseStudyClient?.[language] || data?.caseStudyClient?.['pl'] || '',
+              situation: data?.caseStudySituation?.[language] || data?.caseStudySituation?.['pl'] || '',
+              actions: data?.caseStudyActions?.[language] || data?.caseStudyActions?.['pl'] || '',
+              result: data?.caseStudyResult?.[language] || data?.caseStudyResult?.['pl'] || '',
+            },
+            caseStudyImage: serviceImages[subServiceSlug || ''] || uAnalizaWplywu, // Placeholder
+          };
+          setService(localizedData);
+        }
+      } catch (error) {
+        console.error('Error fetching service:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (subServiceSlug) {
+      fetchService();
+    }
+  }, [subServiceSlug, language]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#050608] text-gray-400">
+        <Loader2 className="w-12 h-12 animate-spin mb-4 text-lime" />
+        <p>Ładowanie szczegółów usługi...</p>
+      </div>
+    );
+  }
+
+  if (!service) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#050608] text-gray-400 px-6 text-center">
+        <h1 className="text-2xl font-bold text-white mb-4">Nie znaleziono usługi</h1>
+        <p className="mb-8 text-gray-500 max-w-md">Przepraszamy, ale usługa o podanym adresie nie istnieje lub została tymczasowo przeniesiona.</p>
+        <Link to="/uslugi" className="px-8 py-3 bg-lime text-gray-900 rounded-full font-semibold hover:scale-105 transition-transform">
+          Wróć do usług
+        </Link>
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
@@ -57,7 +182,7 @@ const ServiceDetail = () => {
               {service.subtitle}
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              <GradientText>{displayTitle}</GradientText>
+              <GradientText>{service.title}</GradientText>
             </h1>
           </motion.div>
         </div>

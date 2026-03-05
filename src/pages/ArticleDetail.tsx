@@ -1,72 +1,157 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { GradientText } from '@/components/GradientText';
-import { ArrowLeft, Clock, Calendar, Share2, Bookmark, ArrowRight, TrendingUp, ChartBar, Globe } from 'lucide-react';
+import { ChineseCharacters } from '@/components/ChineseCharacters';
+import { sanityClient } from '@/lib/sanity';
+import { ArrowLeft, Clock, Calendar, Share2, Bookmark, ArrowRight, TrendingUp, Globe, Loader2, Facebook, Linkedin, X } from 'lucide-react';
+
+// Article images mapping
 import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const articleImages: Record<string, string> = {
+  'gdzie-znika-twoja-marza': articleCompetition,
+  'chinski-nowy-rok-2026': articleInnovation,
+  'przewagi-konkurencyjne-chinskich-firm': articleCompetition,
+  'chinski-system-innowacji': articleInnovation,
+  'przygotowanie-do-wspolpracy': serviceStrategy,
+  'przed-podpisaniem-umowy': articleCompetition,
+  'chiny-konkurent-technologiczny': articleInnovation,
+  'automatyzacja-robotyzacja-chiny': serviceStrategy,
+};
 
 const ArticleDetail = () => {
   const { articleSlug } = useParams();
+  const { language } = useLanguage();
+  const [article, setArticle] = useState<any>(null);
+  const [relatedArticles, setRelatedArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showShareTooltip, setShowShareTooltip] = useState(false);
 
-  // Sample article data - in a real app this would come from a database
-  const article = {
-    title: 'Przewagi konkurencyjne chińskich firm w wybranych sektorach',
-    category: 'Analiza',
-    date: '10.01.2025',
-    readTime: '12 min',
-    author: 'Jan Kowalski',
-    image: articleCompetition,
-    content: `
-      <h2>Wprowadzenie</h2>
-      <p>Chińskie firmy w ostatniej dekadzie znacząco zwiększyły swoją obecność na globalnych rynkach, w wielu sektorach stając się liderami pod względem skali produkcji, innowacyjności oraz konkurencyjności cenowej. Niniejsza analiza przedstawia kluczowe przewagi konkurencyjne, które umożliwiły ten dynamiczny rozwój.</p>
+  useEffect(() => {
+    const fetchArticleData = async () => {
+      try {
+        setLoading(true);
+        // Fetch current article
+        const articleQuery = `*[_type == "article" && slug.current == $slug][0] {
+          title,
+          description,
+          content,
+          date,
+          readTime,
+          author,
+          category->{
+            title,
+            slug
+          }
+        }`;
+        const data = await sanityClient.fetch(articleQuery, { slug: articleSlug });
 
-      <h2>Sektor technologiczny</h2>
-      <p>W sektorze technologicznym chińskie firmy wyróżniają się przede wszystkim:</p>
-      <ul>
-        <li>Skalą inwestycji w R&D, która w przypadku liderów przekracza 15% rocznych przychodów</li>
-        <li>Dostępem do ogromnego rynku wewnętrznego, umożliwiającego szybkie skalowanie</li>
-        <li>Wsparciem państwowym w ramach strategicznych programów rozwojowych</li>
-        <li>Zintegrowanymi łańcuchami dostaw, minimalizującymi koszty produkcji</li>
-      </ul>
+        if (data) {
+          const localizedArticle = {
+            title: data?.title?.[language] || data?.title?.['pl'] || 'Bez tytułu',
+            category: data?.category?.title?.[language] || data?.category?.title?.['pl'] || '',
+            date: data?.date || '',
+            readTime: data?.readTime?.[language] || data?.readTime?.['pl'] || '',
+            author: data?.author || 'Yin Yang Team',
+            image: articleImages[articleSlug || ''] || articleCompetition,
+            content: data?.content?.[language] || data?.content?.['pl'] || '',
+          };
+          setArticle(localizedArticle);
 
-      <h2>Sektor produkcyjny</h2>
-      <p>W sektorze produkcyjnym kluczowe przewagi obejmują:</p>
-      <ul>
-        <li>Niższe koszty pracy przy jednoczesnym wzroście automatyzacji</li>
-        <li>Koncentrację specjalistycznych klastrów przemysłowych</li>
-        <li>Elastyczność i szybkość adaptacji do zmieniających się wymagań rynku</li>
-        <li>Rozbudowaną infrastrukturę logistyczną i transportową</li>
-      </ul>
+          // Fetch related articles (same category, different slug)
+          const catRef = data?.category?._id;
+          if (catRef) {
+            const relatedQuery = `*[_type == "article" && category._ref == $catRef && slug.current != $slug][0...2] {
+              title,
+              slug
+            }`;
+            const relatedData = await sanityClient.fetch(relatedQuery, { 
+              catRef, 
+              slug: articleSlug 
+            });
+            
+            setRelatedArticles((relatedData || []).map((r: any) => ({
+              title: r?.title?.[language] || r?.title?.['pl'] || 'Bez tytułu',
+              slug: r?.slug?.current || 'article',
+              image: articleImages[r?.slug?.current || ''] || articleCompetition
+            })));
+          } else {
+            setRelatedArticles([]);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching article:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      <h2>Implikacje dla europejskich firm</h2>
-      <p>Rosnąca konkurencyjność chińskich przedsiębiorstw wymaga od firm europejskich strategicznego przemyślenia pozycjonowania rynkowego. Kluczowe rekomendacje obejmują:</p>
-      <ol>
-        <li>Koncentrację na segmentach premium i niszowych, gdzie chińska konkurencja jest mniej intensywna</li>
-        <li>Inwestycje w automatyzację i cyfryzację procesów</li>
-        <li>Budowanie partnerstw strategicznych z wiarygodnymi partnerami w Chinach</li>
-        <li>Rozwój kompetencji w zakresie zarządzania międzykulturowego</li>
-      </ol>
+    if (articleSlug) {
+      fetchArticleData();
+      // Check if bookmarked
+      const bookmarks = JSON.parse(localStorage.getItem('yy_bookmarks') || '[]');
+      setIsBookmarked(bookmarks.includes(articleSlug));
+    }
+  }, [articleSlug, language]);
 
-      <h2>Podsumowanie</h2>
-      <p>Zrozumienie przewag konkurencyjnych chińskich firm jest niezbędne dla każdej europejskiej organizacji planującej działalność na rynku azjatyckim lub konkurującej z podmiotami z tego regionu. Yin Yang oferuje kompleksowe analizy sektorowe, pomagające firmom w podejmowaniu świadomych decyzji strategicznych.</p>
-    `,
+  const handleShare = (platform: 'facebook' | 'linkedin' | 'x') => {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(article?.title || '');
+    
+    let shareUrl = '';
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        break;
+      case 'x':
+        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+        break;
+    }
+    
+    window.open(shareUrl, '_blank', 'width=600,height=400');
   };
 
-  const relatedArticles = [
-    {
-      title: 'Chiński system innowacji',
-      slug: 'chinski-system-innowacji',
-      image: articleInnovation,
-    },
-    {
-      title: 'Automatyzacja w Chinach',
-      slug: 'automatyzacja-robotyzacja-chiny',
-      image: serviceStrategy,
-    },
-  ];
+  const toggleBookmark = () => {
+    if (!articleSlug) return;
+    const bookmarks = JSON.parse(localStorage.getItem('yy_bookmarks') || '[]');
+    let newBookmarks;
+    if (isBookmarked) {
+      newBookmarks = bookmarks.filter((id: string) => id !== articleSlug);
+    } else {
+      newBookmarks = [...bookmarks, articleSlug];
+    }
+    localStorage.setItem('yy_bookmarks', JSON.stringify(newBookmarks));
+    setIsBookmarked(!isBookmarked);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-400">
+        <Loader2 className="w-12 h-12 animate-spin mb-4 text-lime" />
+        <p>Ładowanie artykułu...</p>
+      </div>
+    );
+  }
+
+  if (!article) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-400 px-6 text-center">
+        <h1 className="text-2xl font-bold text-white mb-4">Nie znaleziono artykułu</h1>
+        <Link to="/baza-wiedzy" className="text-lime hover:underline">Wróć do bazy wiedzy</Link>
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -130,12 +215,38 @@ const ArticleDetail = () => {
                 {/* Share buttons */}
                 <div className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700/50">
                   <h3 className="font-semibold text-white mb-4">Udostępnij</h3>
-                  <div className="flex gap-3">
-                    <button className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-lime hover:text-gray-900 text-gray-400 flex items-center justify-center transition-all duration-300">
-                      <Share2 className="w-5 h-5" />
+                  <div className="flex flex-wrap gap-3">
+                    <button 
+                      onClick={() => handleShare('facebook')}
+                      className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-[#1877F2] hover:text-white text-gray-400 flex items-center justify-center transition-all duration-300"
+                      title="Udostępnij na Facebooku"
+                    >
+                      <Facebook className="w-5 h-5" />
                     </button>
-                    <button className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-lime hover:text-gray-900 text-gray-400 flex items-center justify-center transition-all duration-300">
-                      <Bookmark className="w-5 h-5" />
+                    <button 
+                      onClick={() => handleShare('linkedin')}
+                      className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-[#0A66C2] hover:text-white text-gray-400 flex items-center justify-center transition-all duration-300"
+                      title="Udostępnij na LinkedIn"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </button>
+                    <button 
+                      onClick={() => handleShare('x')}
+                      className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-white hover:text-black text-gray-400 flex items-center justify-center transition-all duration-300"
+                      title="Udostępnij na X (Twitter)"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                    <button 
+                      onClick={toggleBookmark}
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                        isBookmarked 
+                          ? 'bg-lime text-gray-900' 
+                          : 'bg-gray-700/50 hover:bg-lime/20 hover:text-lime text-gray-400'
+                      }`}
+                      title={isBookmarked ? "Usuń z zakładek" : "Dodaj do zakładek"}
+                    >
+                      <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current' : ''}`} />
                     </button>
                   </div>
                 </div>

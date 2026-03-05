@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
@@ -9,8 +9,9 @@ import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { uslugiTranslations } from '@/i18n/pageTranslations';
-import { statsTranslations, serviceCategoriesTranslations } from '@/i18n/contentTranslations';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { statsTranslations } from '@/i18n/contentTranslations';
+import { sanityClient } from '@/lib/sanity';
+import { ArrowRight, ChevronDown, Loader2 } from 'lucide-react';
 import statsBg from '@/assets/stats-bg.jpg';
 import worldMap from '@/assets/world-map.jpg';
 
@@ -43,77 +44,40 @@ import uAranzacjaSpotkan from '@/assets/u-aranzacja-spotkan.png';
 import uSzkoleniaSystem from '@/assets/u-szkolenia-system.png';
 import uSzkoleniaKultura from '@/assets/u-szkolenia-kultura.png';
 
-// Sub-service slugs (stable across languages)
-const serviceCategorySlugs = [
-  {
-    slug: 'strategia-wobec-chin',
-    count: 4,
-    subServices: [
-      { slug: 'analiza-wplywu', image: uAnalizaWplywu },
-      { slug: 'decyzje-strategiczne', image: uDecyzjeWejscia },
-      { slug: 'scenariusze-mapy-ryzyk', image: uScenariuszeStrategiczne },
-      { slug: 'briefingi-decyzyjne', image: uBriefingiDecyzyjne },
-    ],
-  },
-  {
-    slug: 'analizy-rynku',
-    count: 4,
-    subServices: [
-      { slug: 'analizy-sektorow-klastrow', image: uAnalizySektorow },
-      { slug: 'analiza-regulacyjna-bariery', image: uAnalizaRegulacyjna },
-      { slug: 'weryfikacja-kontrahenta-desktop', image: uWeryfikacjaKontrahenta },
-      { slug: 'due-diligence-partner', image: uRozszerzonaWeryfikacja },
-    ],
-  },
-  {
-    slug: 'wejscie-na-rynek',
-    count: 5,
-    subServices: [
-      { slug: 'wybor-modelu-wejscia', image: uWyborModelu },
-      { slug: 'wsparcie-formalne-regulacyjne', image: uWsparcieFormalne },
-      { slug: 'identyfikacja-selekcja-partnerow', image: uIdentyfikacjaPartnerow },
-      { slug: 'wsparcie-negocjacyjne-relacyjne', image: uWsparcieNegocjacyjne },
-      { slug: 'struktury-handlowe-partnerskie', image: uPrzygotowanieStruktur },
-    ],
-  },
-  {
-    slug: 'import-eksport',
-    count: 5,
-    subServices: [
-      { slug: 'audyty-weryfikacja-dostawcow', image: uAudytyWeryfikacja },
-      { slug: 'optymalizacja-lancucha-dostaw', image: uProjektowanieLancucha },
-      { slug: 'nadzor-produkcji-jakosc', image: uNadzorProdukcji },
-      { slug: 'transport-miedzynarodowy', image: uOrganizacjaTransportu },
-      { slug: 'realizacja-projekt-end-to-end', image: uKompleksowaRealizacja },
-    ],
-  },
-  {
-    slug: 'marketing-pozycjonowanie',
-    count: 5,
-    subServices: [
-      { slug: 'lokalne-pozycjonowanie-marki', image: uLokalnePozycjonowanie },
-      { slug: 'strategia-komunikacji', image: uStrategieKomunikacji },
-      { slug: 'adaptacja-komunikacji-rynek', image: uAdaptacjaKomunikacji },
-      { slug: 'materialy-sprzedazowe-wizerunkowe', image: uMaterialySprzedazowe },
-      { slug: 'wsparcie-marketing-leady', image: uWsparcieMarketingowe },
-    ],
-  },
-  {
-    slug: 'misje-szkolenia',
-    count: 4,
-    subServices: [
-      { slug: 'misje-biznesowe-technologiczne', image: uOrganizacjaMisji },
-      { slug: 'matchmaking-b2b-partnerow', image: uAranzacjaSpotkan },
-      { slug: 'szkolenia-system-gospodarczy', image: uSzkoleniaSystem },
-      { slug: 'szkolenia-kultura-negocjacje', image: uSzkoleniaKultura },
-    ],
-  },
-];
+// Image mapping by slug
+const serviceImages: Record<string, string> = {
+  'analiza-wplywu': uAnalizaWplywu,
+  'decyzje-wejscia': uDecyzjeWejscia,
+  'scenariusze-strategiczne': uScenariuszeStrategiczne,
+  'briefingi-decyzyjne': uBriefingiDecyzyjne,
+  'analizy-sektorow': uAnalizySektorow,
+  'analiza-regulacyjna': uAnalizaRegulacyjna,
+  'weryfikacja-kontrahenta': uWeryfikacjaKontrahenta,
+  'due-diligence': uRozszerzonaWeryfikacja,
+  'wybor-modelu': uWyborModelu,
+  'wsparcie-formalne': uWsparcieFormalne,
+  'identyfikacja-partnerow': uIdentyfikacjaPartnerow,
+  'wsparcie-negocjacyjne': uWsparcieNegocjacyjne,
+  'struktury-handlowe': uPrzygotowanieStruktur,
+  'audyty-dostawcow': uAudytyWeryfikacja,
+  'optymalizacja-lancucha': uProjektowanieLancucha,
+  'nadzor-produkcji': uNadzorProdukcji,
+  'transport-miedzynarodowy': uOrganizacjaTransportu,
+  'realizacja-end-to-end': uKompleksowaRealizacja,
+  'lokalne-pozycjonowanie': uLokalnePozycjonowanie,
+  'strategia-komunikacji': uStrategieKomunikacji,
+  'adaptacja-komunikacji': uAdaptacjaKomunikacji,
+  'materialy-sprzedazowe': uMaterialySprzedazowe,
+  'wsparcie-marketingowe': uWsparcieMarketingowe,
+  'misje-biznesowe': uOrganizacjaMisji,
+  'matchmaking': uAranzacjaSpotkan,
+  'szkolenia-system': uSzkoleniaSystem,
+  'szkolenia-kultura': uSzkoleniaKultura,
+};
 
 // Polish grammar helper for "usługi/usług"
 const getServicesCountLabel = (count: number, language: string): string => {
   if (language === 'pl') {
-    // 2-4: usługi, 5+: usług
     return count >= 2 && count <= 4 ? 'usługi' : 'usług';
   }
   if (language === 'en') return count === 1 ? 'service' : 'services';
@@ -121,12 +85,83 @@ const getServicesCountLabel = (count: number, language: string): string => {
   return 'usług';
 };
 
+interface SanityService {
+  title: Record<string, string>;
+  subtitle: Record<string, string>;
+  slug: { current: string };
+}
+
+interface ServiceCategory {
+  title: string;
+  slug: string;
+  services: SanityService[];
+}
+
 const Uslugi = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(0);
+  const [categories, setCategories] = useState<ServiceCategory[]>([]);
+  const [loading, setLoading] = useState(true);
   const { language, t } = useLanguage();
-  const pt = uslugiTranslations[language];
-  const stats = statsTranslations[language];
-  const translatedCategories = serviceCategoriesTranslations[language];
+  const pt = uslugiTranslations[language] || uslugiTranslations['pl'];
+  const stats = statsTranslations[language] || statsTranslations['pl'];
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const query = `*[_type == "service"] {
+          title,
+          subtitle,
+          slug
+        }`;
+        const data: SanityService[] = await sanityClient.fetch(query);
+        
+        if (!data || data.length === 0) {
+          setCategories([]);
+          return;
+        }
+
+        // Group by subtitle[language]
+        const grouped = data.reduce((acc: Record<string, SanityService[]>, service) => {
+          const catTitle = service?.subtitle?.[language] || service?.subtitle?.['pl'] || 'Pozostałe';
+          if (!acc[catTitle]) acc[catTitle] = [];
+          acc[catTitle].push(service);
+          return acc;
+        }, {});
+
+        // Sort by fixed order if possible, or just alphabetically
+        const order = [
+          'Strategia wobec Chin',
+          'Analizy rynku i weryfikacja partnerów',
+          'Wejście na rynek Polska ↔ Chiny',
+          'Import, eksport i łańcuch dostaw',
+          'Marketing i pozycjonowanie rynkowe',
+          'Misje biznesowe i szkolenia'
+        ];
+
+        const result: ServiceCategory[] = Object.keys(grouped).map(title => ({
+          title,
+          slug: grouped[title][0]?.slug?.current?.split('-')[0] || 'service',
+          services: grouped[title]
+        })).sort((a, b) => {
+          const idxA = order.indexOf(a.title);
+          const idxB = order.indexOf(b.title);
+          if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+          if (idxA !== -1) return -1;
+          if (idxB !== -1) return 1;
+          return a.title.localeCompare(b.title);
+        });
+
+        setCategories(result);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, [language]);
+
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
@@ -166,77 +201,92 @@ const Uslugi = () => {
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
-          <div className="space-y-0">
-            {serviceCategorySlugs.map((catMeta, index) => {
-              const translated = translatedCategories[index];
-              return (
-                <motion.div
-                  key={catMeta.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="border-b border-gray-800"
-                >
-                  <button
-                    onClick={() => setExpandedCategory(expandedCategory === index ? null : index)}
-                    className="w-full flex items-center justify-between py-6 group"
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 text-gray-400">
+              <Loader2 className="w-12 h-12 animate-spin mb-4 text-lime" />
+              <p>Ładowanie usług...</p>
+            </div>
+          ) : (
+            <div className="space-y-0">
+              {categories.map((category, index) => {
+                const servicesCount = category.services.length;
+                return (
+                  <motion.div
+                    key={category.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="border-b border-gray-800"
                   >
-                    <div className="flex items-center gap-4 md:gap-6">
-                      <span className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white group-hover:text-lime transition-colors duration-300">
-                        {translated.title}
-                      </span>
-                      <span className="px-3 py-1 rounded-full bg-gray-800/50 text-gray-400 text-xs">
-                        {catMeta.count} {getServicesCountLabel(catMeta.count, language)}
-                      </span>
-                    </div>
-                    <ChevronDown className={`w-6 h-6 text-gray-500 group-hover:text-lime transition-all duration-300 ${expandedCategory === index ? 'rotate-180' : ''}`} />
-                  </button>
+                    <button
+                      onClick={() => setExpandedCategory(expandedCategory === index ? null : index)}
+                      className="w-full flex items-center justify-between py-6 group"
+                    >
+                      <div className="flex items-center gap-4 md:gap-6">
+                        <span className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white group-hover:text-lime transition-colors duration-300 text-left">
+                          {category.title}
+                        </span>
+                        <span className="px-3 py-1 rounded-full bg-gray-800/50 text-gray-400 text-xs whitespace-nowrap">
+                          {servicesCount} {getServicesCountLabel(servicesCount, language)}
+                        </span>
+                      </div>
+                      <ChevronDown className={`w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-lime transition-all duration-300 ${expandedCategory === index ? 'rotate-180' : ''}`} />
+                    </button>
 
-                  <AnimatePresence>
-                    {expandedCategory === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
-                          {catMeta.subServices.map((subService, subIndex) => (
-                            <motion.div
-                              key={subService.slug}
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: subIndex * 0.05 }}
-                            >
-                              <Link to={`/uslugi/${catMeta.slug}/${subService.slug}`} className="group relative block h-full">
-                                <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-[#0B0B0B]/80 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
-                                  <div className="aspect-[4/3] relative overflow-hidden">
-                                    <img src={subService.image} alt={translated.subServices[subIndex]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/50 to-[#050608]/10" />
-                                  </div>
-                                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                                    <h3 className="text-white text-base font-semibold leading-tight group-hover:text-lime transition-colors mb-2">
-                                      {translated.subServices[subIndex]}
-                                    </h3>
-                                    <div className="flex items-center gap-2 text-lime">
-                                      <span className="text-sm">{pt.learnMore}</span>
-                                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    <AnimatePresence>
+                      {expandedCategory === index && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
+                            {category.services.map((service, subIndex) => {
+                              const slug = service?.slug?.current || 'service';
+                              const serviceTitle = service?.title?.[language] || service?.title?.['pl'] || 'Bez tytułu';
+                              return (
+                                <motion.div
+                                  key={slug}
+                                  initial={{ opacity: 0, y: 20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: subIndex * 0.05 }}
+                                >
+                                  <Link to={`/uslugi/${category.slug}/${slug}`} className="group relative block h-full">
+                                    <div className="relative h-full rounded-2xl overflow-hidden border border-gray-800/50 bg-[#0B0B0B]/80 hover:border-lime/50 transition-all duration-300 hover:shadow-lg hover:shadow-lime/5">
+                                      <div className="aspect-[4/3] relative overflow-hidden">
+                                        <img 
+                                          src={serviceImages[slug] || uAnalizaWplywu} 
+                                          alt={serviceTitle} 
+                                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/50 to-[#050608]/10" />
+                                      </div>
+                                      <div className="absolute bottom-0 left-0 right-0 p-5">
+                                        <h3 className="text-white text-base font-semibold leading-tight group-hover:text-lime transition-colors mb-2">
+                                          {serviceTitle}
+                                        </h3>
+                                        <div className="flex items-center gap-2 text-lime">
+                                          <span className="text-sm">{pt.learnMore}</span>
+                                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                        </div>
+                                      </div>
                                     </div>
-                                  </div>
-                                </div>
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
-          </div>
+                                  </Link>
+                                </motion.div>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
