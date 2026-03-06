@@ -81,17 +81,20 @@ export function WorldMap() {
           fill="none"
           stroke="url(#line-gradient)"
           strokeWidth="2"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: [0, 1, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
+          initial={{ pathLength: 0, pathOffset: 0 }}
+          animate={{ 
+            pathLength: [0, 1, 0, 1, 0],
+            pathOffset: [0, 0, 1, 0, 0]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
 
         <motion.circle
           r="4"
           fill="#c4ff00"
           initial={{ offsetDistance: "0%" }}
-          animate={{ offsetDistance: ["0%", "100%"] }}
-          transition={{ duration: 4, repeat: Infinity }}
+          animate={{ offsetDistance: ["0%", "100%", "100%", "0%", "0%"] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           style={{
             offsetPath: `path('${curvePath}')`,
           } as React.CSSProperties}
