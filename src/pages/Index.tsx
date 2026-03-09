@@ -14,13 +14,27 @@ import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { statsTranslations, carouselServicesTranslations } from '@/i18n/contentTranslations';
-import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import heroVideo from '@/assets/hero-video.mp4';
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  Globe,
+  Shield,
+  Zap,
+  Users,
+  Plus
+} from 'lucide-react';
 import statsBg from '@/assets/stats-bg.jpg';
 import avatarTeam1 from '@/assets/avatar-team-1.jpg';
 import avatarTeam2 from '@/assets/avatar-team-2.jpg';
 import avatarTeam3 from '@/assets/avatar-team-3.jpg';
 import consultantImg from '@/assets/consultant.png';
+import Hyperspeed from '@/components/Hyperspeed/Hyperspeed';
+import { hyperspeedPresets } from '@/components/Hyperspeed/HyperSpeedPresets';
+import { InteractiveGlobe } from '@/components/ui/interactive-globe';
+import { YinYangLogo3D } from '@/components/ui/YinYangLogo3D';
 
 // Service carousel images
 import sgStrategia from '@/assets/sg-strategia.png';
@@ -30,305 +44,224 @@ import sgImport from '@/assets/sg-import.png';
 import sgMarketing from '@/assets/sg-marketing.png';
 import sgMisje from '@/assets/sg-misje.png';
 
+import { HeroServiceCard } from '@/components/HeroServiceCard';
+
 const carouselImages = [sgStrategia, sgAnalizy, sgWejscie, sgImport, sgMarketing, sgMisje];
 const carouselSlugs = ['strategia-wobec-chin', 'analizy-rynku', 'wejscie-na-rynek', 'import-eksport', 'marketing-pozycjonowanie', 'misje-szkolenia'];
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const isCarouselInView = useInView(carouselRef, { amount: 0.3 });
+  const scrollRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
   const stats = statsTranslations[language];
+  
   const carouselServices = carouselServicesTranslations[language].map((s, i) => ({
     ...s,
     image: carouselImages[i],
     slug: carouselSlugs[i],
   }));
 
-  
+  const handleScroll = (direction: 'next' | 'prev') => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    // Standard scroll amount: card width (380) + gap (32)
+    const scrollAmount = 412; 
+    
+    container.scrollBy({ 
+      left: direction === 'next' ? scrollAmount : -scrollAmount, 
+      behavior: 'smooth' 
+    });
+  };
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
   
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  // Auto-scroll carousel - only when in view, reset on interaction
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const resetAutoplay = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
-    }, 12000);
-  }, [carouselServices.length]);
-
-  useEffect(() => {
-    if (!isCarouselInView) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
-    resetAutoplay();
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [isCarouselInView, resetAutoplay]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carouselServices.length);
-    resetAutoplay();
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + carouselServices.length) % carouselServices.length);
-    resetAutoplay();
-  };
-
-  const getPrevIndex = () => (currentSlide - 1 + carouselServices.length) % carouselServices.length;
-  const getNextIndex = () => (currentSlide + 1) % carouselServices.length;
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
+    <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
       <Navbar />
       
-      {/* Hero Section with Video Background */}
-      <section ref={heroRef} className="relative min-h-screen overflow-hidden">
-        {/* Video Background */}
-        <motion.div 
-          style={{ y: heroY }}
-          className="absolute inset-0"
-        >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/70 via-[#050608]/50 to-[#050608]" />
-          
-          {/* Animated overlay effects */}
-          <motion.div
-            animate={{ 
-              opacity: [0.3, 0.5, 0.3],
-              scale: [1, 1.05, 1]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 bg-gradient-to-br from-lime/5 via-transparent to-lime/10"
-          />
-        </motion.div>
+      {/* Hero Section - Organic Composition */}
+      <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
+        {/* Background Layer - Solid Black */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[#050608]" />
+        </div>
 
-        {/* Glow effects */}
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-lime/10 blur-[150px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-lime/5 blur-[120px] rounded-full pointer-events-none" />
+        {/* Scattered UI Decorations (+) */}
+        <div className="absolute inset-0 z-10 pointer-events-none overflow-visible">
+          <Plus className="absolute top-[15%] left-[45%] text-white/20 w-8 h-8 font-light" />
+          <Plus className="absolute top-[45%] right-[15%] text-white/20 w-12 h-12 font-light" />
+          <Plus className="absolute bottom-[25%] left-[10%] text-white/20 w-6 h-6 font-light" />
+        </div>
 
-        {/* Hero Content - CENTERED */}
-        <motion.div 
-          style={{ opacity: heroOpacity }}
-          className="relative z-10 container mx-auto px-6 lg:px-12 pt-32 lg:pt-40"
-        >
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
-            >
-              {t.hero.title.split(' ')[0]} <TypewriterText words={[t.hero.title.split(' ').slice(1).join(' ')]} pauseDuration={3000} />
-              <br />
-              <span className="text-[#c4ff00]">{t.hero.titleHighlight}</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed px-4"
-            >
-              {t.hero.subtitle}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-col items-center gap-4"
-            >
-              <Link
-                to="/kontakt"
-                className="group inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-sm sm:text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]"
+        <div className="container mx-auto px-6 lg:px-12 relative z-20 flex-grow flex flex-col overflow-visible">
+          {/* Top Layer: Headline & Globe */}
+          <div className="relative flex-grow flex flex-col lg:flex-row items-center lg:items-start justify-between overflow-visible">
+            
+            {/* Left Column: Headline & Stats */}
+            <div className="w-full lg:w-1/2 pt-12 lg:pt-24 z-30">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               >
-                {t.hero.cta}
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-              <div className="flex items-center justify-center gap-3">
-                <div className="flex -space-x-2">
-                  <img src={avatarTeam1} alt="Client" className="w-8 h-8 rounded-full object-cover" />
-                  <img src={avatarTeam2} alt="Client" className="w-8 h-8 rounded-full object-cover" />
-                  <img src={avatarTeam3} alt="Client" className="w-8 h-8 rounded-full object-cover" />
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="text-white/40 text-xs uppercase tracking-[0.3em] font-medium">{t.heroEditorial.strategic}</span>
+                  <div className="h-px w-12 bg-white/20" />
+                  <span className="text-white/40 text-xs uppercase tracking-[0.3em] font-medium">{t.heroEditorial.context}</span>
                 </div>
-                <p className="text-gray-300 text-sm font-medium">
-                  {t.clients.join} <span className="text-[#c4ff00] font-bold">540+</span> {t.clients.satisfied}
+
+                <h1 className="font-display text-6xl md:text-8xl lg:text-[110px] font-light text-white leading-[0.85] tracking-tighter uppercase mb-12">
+                  <span className="opacity-40 block whitespace-nowrap">{t.heroEditorial.mainTitle}</span>
+                  <span className="block italic whitespace-nowrap">{t.heroEditorial.subTitle}</span>
+                  <div className="flex items-center gap-4 mt-4">
+                    <span className="text-[#c4ff00] font-black drop-shadow-[0_0_50px_rgba(196,255,0,0.4)] whitespace-nowrap">
+                      {t.heroEditorial.plcn}
+                    </span>
+                    <Plus className="text-white/20 w-12 h-12 flex-shrink-0" />
+                  </div>
+                </h1>
+                
+                <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center mt-16 group">
+                  <Link
+                    to="/kontakt"
+                    className="flex items-center gap-4 px-10 py-6 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white hover:text-black rounded-full transition-all duration-500 group"
+                  >
+                    <span className="font-bold text-xl text-white group-hover:text-black transition-colors">{t.nav.consultation}</span>
+                    <div className="w-12 h-12 bg-[#c4ff00] text-black rounded-full flex items-center justify-center transition-transform duration-500 group-hover:rotate-0 -rotate-45">
+                      <ArrowRight className="w-6 h-6" />
+                    </div>
+                  </Link>
+                  <p className="text-white/70 text-sm max-w-[260px] leading-relaxed font-light">
+                    {t.heroEditorial.supportText}
+                  </p>
+                </div>
+
+              </motion.div>
+            </div>
+
+
+            {/* Right Column: Editorial & Featured Case */}
+            <div className="w-full lg:w-1/3 flex flex-col items-center lg:items-end justify-center pt-24 lg:pt-48 z-30">
+              <div className="text-right mb-12 hidden lg:block">
+                <p className="text-white/70 text-xs uppercase tracking-widest leading-loose max-w-[220px] ml-auto font-light">
+                  {t.heroEditorial.statement}
                 </p>
               </div>
-            </motion.div>
-          </div>
-        </motion.div>
 
-      </section>
-
-      {/* Services Carousel Section - pulled up to overlap hero */}
-      <section ref={carouselRef} className="relative z-10 -mt-44 pt-4 pb-24" style={{ backgroundColor: 'transparent' }}>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050608]/80 to-[#050608] pointer-events-none" />
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 right-10 w-[400px] h-[400px] rounded-full bg-[#0B0B0B]/60 blur-3xl" />
-        </div>
-
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-          <div className="absolute top-[20%] left-[-5%] font-display text-[18vw] font-bold text-white/[0.02] tracking-wider">
-            PARTNER
-          </div>
-        </div>
-
-        <div className="container mx-auto px-6 lg:px-12 relative z-10">
-
-          {/* Premium Card Carousel with 3D perspective */}
-          <div className="relative">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="flex items-center justify-center gap-4 lg:gap-8 perspective-[1500px]">
-                {/* Previous Card - Left */}
-                <motion.div 
-                  key={`prev-${getPrevIndex()}`}
-                  className="hidden lg:block flex-shrink-0 cursor-pointer"
-                  onClick={prevSlide}
-                  whileHover={{ scale: 1.02 }}
-                  style={{ 
-                    transform: 'perspective(1000px) rotateY(15deg) scale(0.85)',
-                    transformOrigin: 'right center',
-                  }}
-                >
-                  <div className="relative w-[220px] rounded-2xl overflow-hidden aspect-[3/4] opacity-40 hover:opacity-60 transition-opacity border border-gray-800/30">
-                    <img src={carouselServices[getPrevIndex()].image} alt="" className="w-full h-full object-cover grayscale" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/40 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <p className="text-white/60 text-sm font-medium truncate">{carouselServices[getPrevIndex()].title}</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Main Active Card - Center */}
-                <div className="flex-shrink-0 w-full max-w-3xl overflow-hidden">
-                  <AnimatePresence mode="popLayout">
-                  <motion.div
-                    key={currentSlide}
-                    initial={{ x: 300, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -300, opacity: 0 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative rounded-3xl overflow-hidden aspect-[16/10] lg:aspect-[2/1] border border-gray-800/50 shadow-2xl shadow-lime/5 group"
-                  >
-                    <motion.img
-                      initial={{ scale: carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? 1.45 : 1.05 }}
-                      animate={{ scale: carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? 1.4 : 1 }}
-                      transition={{ duration: 0.6 }}
-                      src={carouselServices[currentSlide].image}
-                      alt={carouselServices[currentSlide].title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      style={carouselServices[currentSlide].slug === 'strategia-wobec-chin' ? { objectPosition: '70% 55%' } : undefined}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#050608] via-[#050608]/70 to-transparent" />
-                    
-                    {/* Lime accent glow */}
-                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-lime via-lime/50 to-transparent" />
-                    
-                    {/* Content overlay */}
-                    <div className="absolute inset-0 flex items-center p-8 sm:p-12 lg:p-16">
-                      <motion.div 
-                        key={`content-${currentSlide}`}
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: 0.1 }}
-                        className="max-w-xl"
-                      >
-                        <span className="inline-block px-3 py-1 rounded-full bg-lime/20 text-lime text-xs font-medium mb-4">
-                          {currentSlide + 1} / {carouselServices.length}
-                        </span>
-                        
-                        <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-                          {carouselServices[currentSlide].title}
-                        </h3>
-                        <p className="text-gray-400 text-base lg:text-lg mb-8 hidden sm:block leading-relaxed">
-                          {carouselServices[currentSlide].description}
-                        </p>
-                        <Link
-                          to={`/uslugi#${carouselServices[currentSlide].slug}`}
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-[#c4ff00] text-[#050608] rounded-full font-semibold text-sm hover:scale-105 transition-transform duration-300"
-                        >
-                          <span>{t.services.learnMore}</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                  </AnimatePresence>
+              {/* Vertical Vertical Card */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1.2, delay: 0.8 }}
+                className="relative w-[320px] aspect-[2/3] bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] overflow-hidden p-10 flex flex-col shadow-2xl group"
+              >
+                <div className="w-full aspect-square mb-8">
+                  <YinYangLogo3D />
                 </div>
-
-                {/* Next Card - Right */}
-                <motion.div 
-                  key={`next-${getNextIndex()}`}
-                  className="hidden lg:block flex-shrink-0 cursor-pointer"
-                  onClick={nextSlide}
-                  whileHover={{ scale: 1.02 }}
-                  style={{ 
-                    transform: 'perspective(1000px) rotateY(-15deg) scale(0.85)',
-                    transformOrigin: 'left center',
-                  }}
-                >
-                  <div className="relative w-[220px] rounded-2xl overflow-hidden aspect-[3/4] opacity-40 hover:opacity-60 transition-opacity border border-gray-800/30">
-                    <img src={carouselServices[getNextIndex()].image} alt="" className="w-full h-full object-cover grayscale" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/40 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <p className="text-white/60 text-sm font-medium truncate">{carouselServices[getNextIndex()].title}</p>
-                    </div>
+                <div className="mt-auto">
+                  <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
+                  <span className="text-white/40 text-xs uppercase tracking-[0.2em] font-bold block mb-6">{t.heroEditorial.featuredLabel}</span>
+                  <div className="h-px w-full bg-white/5 mb-6" />
+                  <div className="flex -space-x-3">
+                    <img src={avatarTeam1} className="w-10 h-10 rounded-full border-2 border-[#0B0B0B]" alt="Team" />
+                    <img src={avatarTeam2} className="w-10 h-10 rounded-full border-2 border-[#0B0B0B]" alt="Team" />
+                    <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-white/40">+3</div>
                   </div>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            {/* Carousel Controls */}
-            <div className="flex items-center justify-center mt-10 gap-4 sm:gap-6">
-              <button onClick={prevSlide} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group">
-                <ChevronLeft className="w-5 h-5 text-gray-500 group-hover:text-lime" />
-              </button>
-              <div className="flex gap-2">
-                {carouselServices.map((_, index) => (
-                  <button key={index} onClick={() => setCurrentSlide(index)} className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-8 bg-lime' : 'w-1.5 bg-gray-700 hover:bg-gray-600'}`} />
-                ))}
-              </div>
-              <button onClick={nextSlide} className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0B0B0B] border border-gray-800 flex items-center justify-center hover:border-lime/50 hover:bg-[#111214] transition-all duration-300 group">
-                <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-lime" />
-              </button>
-            </div>
-
-            <div className="text-center mt-8">
-              <Link to="/uslugi" className="inline-flex items-center gap-2 text-gray-500 hover:text-lime transition-colors duration-300 text-sm">
-                {t.services.viewAll}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+                </div>
+              </motion.div>
             </div>
           </div>
+
+          {/* Bottom Section: Sentiment & Cards Layout from Inspiration */}
+          <div className="mt-48 relative z-30 pb-32">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.4fr,2.6fr] gap-12 lg:gap-32 items-start mb-24">
+              {/* Top Left: Tagline */}
+              <div className="flex items-start gap-4 lg:pt-4">
+                <Plus className="w-5 h-5 text-white/20 flex-shrink-0" />
+                <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em] leading-relaxed max-w-[150px]">
+                  {t.serviceSentiment.tagline}
+                </span>
+              </div>
+              
+              {/* Right: Big Headline (Manual Cubic Typography Style - Optimized) */}
+              <h2 className="font-display text-[7vw] lg:text-[88px] font-black text-white leading-[0.88] tracking-[-0.04em] uppercase text-justify [text-justify:inter-character] [text-align-last:justify] lg:max-w-[1000px] w-full hyphens-auto break-words">
+                {t.serviceSentiment.headlinePart1}
+                <span className="text-[#c4ff00]">{t.serviceSentiment.headlineHighlight1}</span>
+                {t.serviceSentiment.headlinePart2}
+                <span className="text-white">{t.serviceSentiment.headlineHighlight2}</span>
+                {t.serviceSentiment.headlinePart3}
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-[0.4fr,2.6fr] gap-12 lg:gap-32 items-end">
+              {/* Bottom Left: Support Text & Arrows */}
+              <div className="flex flex-col gap-12">
+                <p className="text-white/40 text-sm max-w-[240px] leading-relaxed font-light">
+                  {t.serviceSentiment.subText}
+                </p>
+                <div className="flex gap-4 relative z-50 pointer-events-auto">
+                  <button 
+                    onClick={() => handleScroll('prev')}
+                    className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 active:scale-90 transition-all group cursor-pointer"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+                  </button>
+                  <button 
+                    onClick={() => handleScroll('next')}
+                    className="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 active:scale-90 transition-all group cursor-pointer"
+                  >
+                    <ChevronRight className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+                  </button>
+                </div>
+              </div>
+              
+              {/* Right: Cards Slider - Fixed with min-w-0 and right-side screen bleed */}
+              <div className="min-w-0 relative">
+                <div 
+                  ref={scrollRef}
+                  className="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory scroll-smooth px-2 -mx-2 lg:mr-[-100vw] lg:pr-[100vw] relative z-30 no-scrollbar"
+                >
+                  {carouselServices.map((service, index) => (
+                    <div key={index} className="snap-start flex-shrink-0">
+                      <HeroServiceCard
+                        number={`0${index + 1}`}
+                        title={service.title}
+                        description={service.description}
+                        image={service.image}
+                        slug={service.slug}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Accent Line - inspiration style */}
+            <div className="mt-24 h-px w-full bg-white/5 relative">
+              <div className="absolute top-0 left-0 h-full w-1/4 bg-[#c4ff00]/40 shadow-[0_0_20px_rgba(196,255,0,0.2)]" />
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 translate-y-[-5%] overflow-visible">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1.1 }}
+            transition={{ duration: 2, ease: "easeOut" }}
+            className="relative w-screen aspect-square flex items-center justify-center opacity-60 mix-blend-screen overflow-visible"
+          >
+            <InteractiveGlobe size={1800} />
+          </motion.div>
         </div>
       </section>
 
       {/* Stats Section with Parallax */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-32 lg:pt-64 overflow-hidden">
         <motion.div 
           className="absolute inset-0"
           style={{
@@ -377,7 +310,7 @@ const Index = () => {
           </div>
         </div>
         
-        <ChineseCharacters characters="合作关系" position="left" className="top-32" opacity={0.06} />
+        <ChineseCharacters characters="合作关系" position="left" className="top-32 hidden lg:block" opacity={0.06} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/80 via-[#050608]/70 to-[#050608]/80 pointer-events-none" />
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
@@ -454,7 +387,7 @@ const Index = () => {
 
       {/* CTA Section */}
       <section className="relative pt-24 lg:pt-32 pb-16 overflow-visible z-20" style={{ backgroundColor: 'transparent' }}>
-        <ChineseCharacters characters="信任" position="left" className="top-0" opacity={0.05} />
+        <ChineseCharacters characters="信任" position="left" className="top-0 hidden lg:block" opacity={0.05} />
         
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <div className="relative max-w-5xl mx-auto rounded-[1.5rem] overflow-visible border border-gray-800/50" style={{ background: 'linear-gradient(135deg, #0B0B0B 0%, #111214 50%, rgba(196,255,0,0.08) 100%)' }}>

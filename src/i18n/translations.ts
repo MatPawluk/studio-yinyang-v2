@@ -15,6 +15,22 @@ export const translations = {
       cta: 'Umów bezpłatną konsultację',
       scroll: 'Scroll',
     },
+    heroEditorial: {
+      strategic: 'Konsulting Strategiczny',
+      context: 'Kontekst PL i CN',
+      mainTitle: 'Twój przewodnik',
+      subTitle: 'w relacjach',
+      plcn: 'Polska–Chiny',
+      supportText: 'Analizujemy, weryfikujemy i nadzorujemy projekty na linii Polska–Chiny.',
+      statement: 'Bez szumu, bez szablonów — tylko przemyślana strategia, estetyczna precyzja i zespół, który dowozi.',
+      featuredValue: '540+',
+      featuredLabel: 'zadowolonych klientów',
+      stats: {
+        years: 'Lat doświadczenia',
+        projects: 'Zrealizowanych projektów',
+        continents: 'Kontynenty',
+      },
+    },
     heroCards: {
       strategy: {
         title: 'Strategia i decyzje',
@@ -138,6 +154,15 @@ export const translations = {
       gdpr: 'RODO',
       cookies: 'Cookies',
     },
+    serviceSentiment: {
+      tagline: 'Kim jesteśmy i dlaczego klienci nam ufają',
+      headlinePart1: 'Jesteśmy partnerem strategicznym ',
+      headlineHighlight1: 'full-cycle',
+      headlinePart2: ', który zanurza się w Twoim biznesie i ',
+      headlineHighlight2: 'pracuje jako część Twojego zespołu',
+      headlinePart3: '.',
+      subText: 'Łączymy strategię, design i treść, aby tworzyć rozwiązania, które wyglądają świetnie i dowożą wyniki.',
+    },
   },
   en: {
     nav: {
@@ -154,6 +179,22 @@ export const translations = {
       subtitle: 'We analyze, verify, organize and supervise projects on the PL–CN axis',
       cta: 'Book a free consultation',
       scroll: 'Scroll',
+    },
+    heroEditorial: {
+      strategic: 'Strategic Consulting',
+      context: 'PL & CN Context',
+      mainTitle: 'Your guide',
+      subTitle: 'in relations',
+      plcn: 'Poland–China',
+      supportText: 'We analyze, verify, and supervise projects between Poland and China.',
+      statement: 'No noise, no templates — just thoughtful strategy, aesthetic precision, and a team that delivers.',
+      featuredValue: '540+',
+      featuredLabel: 'satisfied clients',
+      stats: {
+        years: 'Years of Experience',
+        projects: 'Projects Delivered',
+        continents: 'Continents',
+      },
     },
     heroCards: {
       strategy: {
@@ -278,6 +319,15 @@ export const translations = {
       gdpr: 'GDPR',
       cookies: 'Cookies',
     },
+    serviceSentiment: {
+      tagline: 'Who we are and why clients trust us',
+      headlinePart1: "We're a ",
+      headlineHighlight1: 'full-cycle',
+      headlinePart2: ' strategic partner that dives deep into your business and ',
+      headlineHighlight2: 'works as part of your team',
+      headlinePart3: '.',
+      subText: 'We combine strategy, design, and content to build solutions that look sharp and deliver results.',
+    },
   },
   cn: {
     nav: {
@@ -294,6 +344,22 @@ export const translations = {
       subtitle: '我们分析、验证、组织和监督波中项目',
       cta: '预约免费咨询',
       scroll: '滚动',
+    },
+    heroEditorial: {
+      strategic: '战略咨询',
+      context: '波中背景',
+      mainTitle: '您的指南',
+      subTitle: '波中关系',
+      plcn: '波兰–中国',
+      supportText: '我们分析、验证和监督波中之间的项目。政策环境、商业准则及供应链稳定。',
+      statement: '拒绝浮躁，拒绝套路——唯有深度的策略、极致的审美，以及交付结果的团队。',
+      featuredValue: '540+',
+      featuredLabel: '满意客户',
+      stats: {
+        years: '年经验',
+        projects: '已交付项目',
+        continents: '个大洲',
+      },
     },
     heroCards: {
       strategy: {
@@ -417,6 +483,15 @@ export const translations = {
       privacy: '隐私政策',
       gdpr: 'GDPR',
       cookies: 'Cookies',
+    },
+    serviceSentiment: {
+      tagline: '我们是谁以及为什么客户信任我们',
+      headlinePart1: '我们是一个',
+      headlineHighlight1: '全周期',
+      headlinePart2: '战略合作伙伴，深入了解您的业务并',
+      headlineHighlight2: '作为您团队的一部分工作',
+      headlinePart3: '。',
+      subText: '我们结合战略、设计和内容，打造外观出众并交付成果的解决方案。',
     },
   },
 };

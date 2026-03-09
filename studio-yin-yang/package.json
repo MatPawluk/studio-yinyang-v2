@@ -17,11 +17,14 @@
   "dependencies": {
     "@sanity/client": "^7.16.0",
     "@sanity/vision": "^5.13.0",
+    "@types/three": "^0.183.1",
     "dotenv": "^17.3.1",
+    "postprocessing": "^6.38.3",
     "react": "^19.1",
     "react-dom": "^19.1",
     "sanity": "^5.13.0",
-    "styled-components": "^6.1.18"
+    "styled-components": "^6.1.18",
+    "three": "^0.167.1"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^6.0.0",
