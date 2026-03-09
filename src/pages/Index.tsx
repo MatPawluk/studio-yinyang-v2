@@ -27,9 +27,6 @@ import {
   Plus
 } from 'lucide-react';
 import statsBg from '@/assets/stats-bg.jpg';
-import avatarTeam1 from '@/assets/avatar-team-1.jpg';
-import avatarTeam2 from '@/assets/avatar-team-2.jpg';
-import avatarTeam3 from '@/assets/avatar-team-3.jpg';
 import consultantImg from '@/assets/consultant.png';
 import Hyperspeed from '@/components/Hyperspeed/Hyperspeed';
 import { hyperspeedPresets } from '@/components/Hyperspeed/HyperSpeedPresets';
@@ -103,40 +100,41 @@ const Index = () => {
           <div className="relative flex-grow flex flex-col lg:flex-row items-center lg:items-start justify-between overflow-visible">
             
             {/* Left Column: Headline & Stats */}
-            <div className="w-full lg:w-1/2 pt-12 lg:pt-24 z-30">
+            <div className="w-full lg:w-1/2 pt-12 lg:pt-24 z-30 flex flex-col items-center lg:items-start text-center lg:text-left">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col items-center lg:items-start w-full"
               >
                 <div className="flex items-center gap-4 mb-8">
-                  <span className="text-white/40 text-xs uppercase tracking-[0.3em] font-medium">{t.heroEditorial.strategic}</span>
-                  <div className="h-px w-12 bg-white/20" />
-                  <span className="text-white/40 text-xs uppercase tracking-[0.3em] font-medium">{t.heroEditorial.context}</span>
+                  <span className="text-white/40 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-medium">{t.heroEditorial.strategic}</span>
+                  <div className="h-px w-8 sm:w-12 bg-white/20" />
+                  <span className="text-white/40 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-medium">{t.heroEditorial.context}</span>
                 </div>
 
-                <h1 className="font-display text-6xl md:text-8xl lg:text-[110px] font-light text-white leading-[0.85] tracking-tighter uppercase mb-12">
-                  <span className="opacity-40 block whitespace-nowrap">{t.heroEditorial.mainTitle}</span>
-                  <span className="block italic whitespace-nowrap">{t.heroEditorial.subTitle}</span>
-                  <div className="flex items-center gap-4 mt-4">
+                <h1 className="font-display text-5xl md:text-8xl lg:text-[110px] font-light text-white leading-[0.9] lg:leading-[0.85] tracking-tighter uppercase mb-12 w-full">
+                  <span className="opacity-40 block lg:whitespace-nowrap">{t.heroEditorial.mainTitle}</span>
+                  <span className="block italic lg:whitespace-nowrap">{t.heroEditorial.subTitle}</span>
+                  <div className="flex items-center justify-center lg:justify-start gap-4 mt-6 lg:mt-4">
                     <span className="text-[#c4ff00] font-black drop-shadow-[0_0_50px_rgba(196,255,0,0.4)] whitespace-nowrap">
                       {t.heroEditorial.plcn}
                     </span>
-                    <Plus className="text-white/20 w-12 h-12 flex-shrink-0" />
+                    <Plus className="hidden lg:block text-white/20 w-8 h-8 lg:w-12 lg:h-12 flex-shrink-0" />
                   </div>
                 </h1>
                 
-                <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center mt-16 group">
+                <div className="flex flex-col sm:flex-row gap-8 items-center lg:items-center mt-12 lg:mt-16 w-full justify-center lg:justify-start">
                   <Link
                     to="/kontakt"
-                    className="flex items-center gap-4 px-10 py-6 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white hover:text-black rounded-full transition-all duration-500 group"
+                    className="flex items-center gap-4 px-8 sm:px-10 py-5 sm:py-6 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white hover:text-black rounded-full transition-all duration-500 group shrink-0"
                   >
-                    <span className="font-bold text-xl text-white group-hover:text-black transition-colors">{t.nav.consultation}</span>
-                    <div className="w-12 h-12 bg-[#c4ff00] text-black rounded-full flex items-center justify-center transition-transform duration-500 group-hover:rotate-0 -rotate-45">
-                      <ArrowRight className="w-6 h-6" />
+                    <span className="font-bold text-lg sm:text-xl text-white group-hover:text-black transition-colors whitespace-nowrap">{t.nav.consultation}</span>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#c4ff00] text-black rounded-full flex items-center justify-center transition-transform duration-500 group-hover:rotate-0 -rotate-45">
+                      <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                   </Link>
-                  <p className="text-white/70 text-sm max-w-[260px] leading-relaxed font-light">
+                  <p className="text-white/90 text-sm sm:text-base max-w-[320px] leading-relaxed font-normal text-center lg:text-left drop-shadow-sm">
                     {t.heroEditorial.supportText}
                   </p>
                 </div>
@@ -166,12 +164,6 @@ const Index = () => {
                 <div className="mt-auto">
                   <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
                   <span className="text-white/40 text-xs uppercase tracking-[0.2em] font-bold block mb-6">{t.heroEditorial.featuredLabel}</span>
-                  <div className="h-px w-full bg-white/5 mb-6" />
-                  <div className="flex -space-x-3">
-                    <img src={avatarTeam1} className="w-10 h-10 rounded-full border-2 border-[#0B0B0B]" alt="Team" />
-                    <img src={avatarTeam2} className="w-10 h-10 rounded-full border-2 border-[#0B0B0B]" alt="Team" />
-                    <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-white/40">+3</div>
-                  </div>
                 </div>
               </motion.div>
             </div>
@@ -179,17 +171,17 @@ const Index = () => {
 
           {/* Bottom Section: Sentiment & Cards Layout from Inspiration */}
           <div className="mt-48 relative z-30 pb-32">
-            <div className="grid grid-cols-1 lg:grid-cols-[0.4fr,2.6fr] gap-12 lg:gap-32 items-start mb-24">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.4fr,2.6fr] gap-8 lg:gap-32 items-start mb-24 text-center lg:text-left">
               {/* Top Left: Tagline */}
-              <div className="flex items-start gap-4 lg:pt-4">
-                <Plus className="w-5 h-5 text-white/20 flex-shrink-0" />
-                <span className="text-white/40 text-[10px] uppercase font-bold tracking-[0.3em] leading-relaxed max-w-[150px]">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:pt-4 justify-center lg:justify-start">
+                <Plus className="w-5 h-5 text-[#c4ff00] flex-shrink-0" />
+                <span className="text-white font-medium text-sm sm:text-base tracking-normal leading-relaxed max-w-[400px]">
                   {t.serviceSentiment.tagline}
                 </span>
               </div>
               
               {/* Right: Big Headline (Manual Cubic Typography Style - Optimized) */}
-              <h2 className="font-display text-[7vw] lg:text-[88px] font-black text-white leading-[0.88] tracking-[-0.04em] uppercase text-justify [text-justify:inter-character] [text-align-last:justify] lg:max-w-[1000px] w-full hyphens-auto break-words">
+              <h2 className="font-display text-4xl md:text-6xl lg:text-[88px] font-black text-white leading-[1.1] lg:leading-[0.88] tracking-tighter uppercase lg:max-w-[1000px] w-full">
                 {t.serviceSentiment.headlinePart1}
                 <span className="text-[#c4ff00]">{t.serviceSentiment.headlineHighlight1}</span>
                 {t.serviceSentiment.headlinePart2}
