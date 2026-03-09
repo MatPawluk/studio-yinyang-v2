@@ -158,7 +158,7 @@ const Index = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.2, delay: 0.8 }}
-                className="relative w-[320px] aspect-[2/3] bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] overflow-hidden p-10 flex flex-col shadow-2xl group"
+                className="relative w-[320px] aspect-[2/3] liquidglass rounded-[2.5rem] overflow-hidden p-10 flex flex-col group"
               >
                 <div className="w-full aspect-square mb-8 flex items-center justify-center bg-white/5 rounded-2xl">
                   <Suspense fallback={<LoadingSpinner size={64} />}>
@@ -256,6 +256,27 @@ const Index = () => {
             </Suspense>
           </motion.div>
         </div>
+
+        {/* Liquid Glass SVG Filter Definition */}
+        <svg className="glass-surface__filter" aria-hidden="true">
+          <defs>
+            <filter id="liquid-filter">
+              <feTurbulence 
+                type="fractalNoise" 
+                baseFrequency="0.015" 
+                numOctaves="3" 
+                result="noise" 
+              />
+              <feDisplacementMap 
+                in="SourceGraphic" 
+                in2="noise" 
+                scale="20" 
+                xChannelSelector="R" 
+                yChannelSelector="G" 
+              />
+            </filter>
+          </defs>
+        </svg>
       </section>
 
       {/* Stats Section with Parallax */}
