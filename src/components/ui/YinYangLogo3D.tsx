@@ -17,7 +17,7 @@ function Model({ url }: { url: string }) {
 }
 
 export function YinYangLogo3D() {
-  const modelUrl = "/src/assets/Yin Yang logo 3D (1).glb";
+  const modelUrl = "/models/yin-yang.glb";
 
   return (
     <div className="w-full h-full">
