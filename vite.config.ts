@@ -17,11 +17,17 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     ViteImageOptimizer({
-      png: { quality: 80 },
-      jpeg: { quality: 80 },
-      jpg: { quality: 80 },
-      webp: { quality: 80 },
-      avif: { quality: 80 },
+      png: { quality: 75 },
+      jpeg: { quality: 75 },
+      jpg: { quality: 75 },
+      webp: { quality: 75 },
+      avif: { quality: 65 },
+      svg: {
+        plugins: [
+          { name: 'removeViewBox' },
+          { name: 'sortAttrs' },
+        ],
+      },
     }),
   ].filter(Boolean),
   resolve: {

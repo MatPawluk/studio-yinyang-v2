@@ -23,6 +23,8 @@ export const HeroServiceCard = ({ number, title, description, image, slug }: Her
       <img
         src={image}
         alt={title}
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60"
       />
       

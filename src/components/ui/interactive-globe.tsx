@@ -350,8 +350,25 @@ export function InteractiveGlobe({ className, size = 600 }: GlobeProps) {
   }, []);
 
   useEffect(() => {
-    animRef.current = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(animRef.current);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animRef.current = requestAnimationFrame(draw);
+        } else {
+          cancelAnimationFrame(animRef.current);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (canvasRef.current) {
+      observer.observe(canvasRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(animRef.current);
+    };
   }, [draw]);
 
   return (

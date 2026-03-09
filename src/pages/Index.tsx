@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
@@ -30,8 +30,9 @@ import statsBg from '@/assets/stats-bg.jpg';
 import consultantImg from '@/assets/consultant.png';
 import Hyperspeed from '@/components/Hyperspeed/Hyperspeed';
 import { hyperspeedPresets } from '@/components/Hyperspeed/HyperSpeedPresets';
-import { InteractiveGlobe } from '@/components/ui/interactive-globe';
-import { YinYangLogo3D } from '@/components/ui/YinYangLogo3D';
+// Lazy load heavy 3D components
+const InteractiveGlobe = lazy(() => import('@/components/ui/interactive-globe').then(module => ({ default: module.InteractiveGlobe })));
+const YinYangLogo3D = lazy(() => import('@/components/ui/YinYangLogo3D').then(module => ({ default: module.YinYangLogo3D })));
 
 // Service carousel images
 import sgStrategia from '@/assets/sg-strategia.png';
@@ -158,8 +159,10 @@ const Index = () => {
                 transition={{ duration: 1.2, delay: 0.8 }}
                 className="relative w-[320px] aspect-[2/3] bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] overflow-hidden p-10 flex flex-col shadow-2xl group"
               >
-                <div className="w-full aspect-square mb-8">
-                  <YinYangLogo3D />
+                <div className="w-full aspect-square mb-8 flex items-center justify-center bg-white/5 rounded-2xl">
+                  <Suspense fallback={<div className="w-full h-full animate-pulse bg-white/5 rounded-2xl" />}>
+                    <YinYangLogo3D />
+                  </Suspense>
                 </div>
                 <div className="mt-auto">
                   <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
@@ -247,7 +250,9 @@ const Index = () => {
             transition={{ duration: 2, ease: "easeOut" }}
             className="relative w-screen aspect-square flex items-center justify-center opacity-60 mix-blend-screen overflow-visible"
           >
-            <InteractiveGlobe size={1800} />
+            <Suspense fallback={<div className="w-32 h-32 rounded-full bg-lime/10 animate-pulse" />}>
+              <InteractiveGlobe size={1800} />
+            </Suspense>
           </motion.div>
         </div>
       </section>
