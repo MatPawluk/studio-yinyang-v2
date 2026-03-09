@@ -12,6 +12,7 @@ import { GradientText } from '@/components/GradientText';
 import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { statsTranslations, carouselServicesTranslations } from '@/i18n/contentTranslations';
 import {
@@ -160,7 +161,7 @@ const Index = () => {
                 className="relative w-[320px] aspect-[2/3] bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] overflow-hidden p-10 flex flex-col shadow-2xl group"
               >
                 <div className="w-full aspect-square mb-8 flex items-center justify-center bg-white/5 rounded-2xl">
-                  <Suspense fallback={<div className="w-full h-full animate-pulse bg-white/5 rounded-2xl" />}>
+                  <Suspense fallback={<LoadingSpinner size={64} />}>
                     <YinYangLogo3D />
                   </Suspense>
                 </div>
@@ -250,7 +251,7 @@ const Index = () => {
             transition={{ duration: 2, ease: "easeOut" }}
             className="relative w-screen aspect-square flex items-center justify-center opacity-60 mix-blend-screen overflow-visible"
           >
-            <Suspense fallback={<div className="w-32 h-32 rounded-full bg-lime/10 animate-pulse" />}>
+            <Suspense fallback={<LoadingSpinner size={80} />}>
               <InteractiveGlobe size={1800} />
             </Suspense>
           </motion.div>
