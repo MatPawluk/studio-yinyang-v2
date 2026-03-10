@@ -162,7 +162,7 @@ export const translations = {
       headlinePart2: ', który zanurza się w Twoim biznesie i ',
       headlineHighlight2: 'pracuje jako część Twojego zespołu',
       headlinePart3: '.',
-      subText: 'Łączymy strategię, design i treść, aby tworzyć rozwiązania, które wyglądają świetnie i dowożą wyniki.',
+      subText: 'Działamy operacyjnie pomiędzy Polską a Chinami, łącząc perspektywę europejskich firm z bezpośrednią obecnością w chińskim systemie gospodarczym.',
     },
   },
   en: {
@@ -328,7 +328,7 @@ export const translations = {
       headlinePart2: ' strategic partner that dives deep into your business and ',
       headlineHighlight2: 'works as part of your team',
       headlinePart3: '.',
-      subText: 'We combine strategy, design, and content to build solutions that look sharp and deliver results.',
+      subText: 'We operate between Poland and China, combining the perspective of European companies with a direct presence in the Chinese economic system.',
     },
   },
   cn: {
@@ -494,7 +494,7 @@ export const translations = {
       headlinePart2: '战略合作伙伴，深入了解您的业务并',
       headlineHighlight2: '作为您团队的一部分工作',
       headlinePart3: '。',
-      subText: '我们结合战略、设计和内容，打造外观出众并交付成果的解决方案。',
+      subText: '我们在中波两地开展务实合作，将欧洲企业的视野与对中国经济体系的深入参与有机结合。',
     },
   },
 };
