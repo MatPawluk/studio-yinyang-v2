@@ -120,7 +120,7 @@ const Index = () => {
                   <span className="opacity-40 block lg:whitespace-nowrap">{t.heroEditorial.mainTitle}</span>
                   <span className="block italic lg:whitespace-nowrap">{t.heroEditorial.subTitle}</span>
                   <div className="flex items-center justify-center lg:justify-start gap-4 mt-6 lg:mt-4">
-                    <span className="bg-gradient-to-r from-[#c4ff00] to-[#00ffa3] bg-clip-text text-transparent font-black whitespace-nowrap">
+                    <span className="bg-gradient-to-r from-[#c4ff00] via-[#00ffa3] to-[#c4ff00] bg-clip-text text-transparent font-black whitespace-nowrap animate-gradient-flow">
                       {t.heroEditorial.plcn}
                     </span>
                     <Plus className="hidden lg:block text-white/20 w-8 h-8 lg:w-12 lg:h-12 flex-shrink-0" />
