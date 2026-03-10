@@ -5,27 +5,42 @@ import DottedMap from "dotted-map";
 export function WorldMap() {
   const svgRef = useRef<SVGSVGElement>(null);
 
-  const map = useMemo(
-    () => new DottedMap({ height: 100, grid: "diagonal" }),
-    []
-  );
+  const { svgMap, startPct, endPct } = useMemo(() => {
+    const mapObj = new DottedMap({ height: 100, grid: "diagonal" });
+    
+    // Add pins to extract their exact SVG coordinates later
+    mapObj.addPin({ lat: 52.2297, lng: 21.0122, svgOptions: { color: "#c4ff00", radius: 0.5 } }); // Warsaw
+    mapObj.addPin({ lat: 31.2304, lng: 121.4737, svgOptions: { color: "#c4ff00", radius: 0.5 } }); // Shanghai
 
-  const svgMap = useMemo(
-    () =>
-      map.getSVG({
-        radius: 0.22,
-        color: "#FFFF7F40",
-        shape: "circle",
-        backgroundColor: "transparent",
-      }),
-    [map]
-  );
+    const points = mapObj.getPoints();
+    const pins = points.filter(p => p.svgOptions?.color === "#c4ff00");
+    
+    // Determine bounds
+    const allX = points.map(p => p.x);
+    const allY = points.map(p => p.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
 
-  const projectPoint = (lat: number, lng: number) => {
-    const x = (lng + 180) * (800 / 360);
-    const y = (90 - lat) * (400 / 180);
-    return { x, y };
-  };
+    const toPct = (x: number, y: number) => ({
+      x: ((x - minX) / (maxX - minX)) * 800, // Scale to our 800x400 viewBox
+      y: ((y - minY) / (maxY - minY)) * 400,
+    });
+
+    const svg = mapObj.getSVG({
+      radius: 0.22,
+      color: "#FFFF7F40",
+      shape: "circle",
+      backgroundColor: "transparent",
+    });
+
+    return {
+      svgMap: svg,
+      startPct: pins[0] ? toPct(pins[0].x, pins[0].y) : { x: 410, y: 110 },
+      endPct: pins[1] ? toPct(pins[1].x, pins[1].y) : { x: 670, y: 160 },
+    };
+  }, []);
 
   const createCurvedPath = (
     start: { x: number; y: number },
@@ -36,21 +51,13 @@ export function WorldMap() {
     return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
   };
 
-  const startPoint = projectPoint(52.2297, 21.0122);
-  const endPoint = projectPoint(31.2304, 121.4737);
-  const curvePath = createCurvedPath(startPoint, endPoint);
+  const curvePath = createCurvedPath(startPct, endPct);
 
   return (
-    <div className="w-full aspect-[2/1] rounded-lg relative font-sans overflow-hidden">
+    <div className="w-full aspect-[2/1] rounded-lg relative font-sans overflow-hidden bg-transparent">
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-        className="h-full w-full pointer-events-none select-none object-cover"
-        style={{
-          maskImage: 'linear-gradient(to bottom, transparent, white 10%, white 90%, transparent), linear-gradient(to right, transparent, white 10%, white 90%, transparent)',
-          maskComposite: 'intersect',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent, white 10%, white 90%, transparent), linear-gradient(to right, transparent, white 10%, white 90%, transparent)',
-          WebkitMaskComposite: 'source-in'
-        }}
+        className="h-full w-full pointer-events-none select-none object-fill opacity-80"
         alt="world map"
         draggable={false}
       />
@@ -58,7 +65,7 @@ export function WorldMap() {
         ref={svgRef}
         viewBox="0 0 800 400"
         className="w-full h-full absolute inset-0 pointer-events-none select-none"
-        preserveAspectRatio="xMidYMid meet"
+        preserveAspectRatio="none"
       >
         <defs>
           <filter id="glow">
@@ -100,7 +107,7 @@ export function WorldMap() {
           } as React.CSSProperties}
         />
 
-        {[startPoint, endPoint].map((point, idx) => (
+        {[startPct, endPct].map((point, idx) => (
           <g key={idx}>
             <circle cx={point.x} cy={point.y} r="4" fill="#c4ff00" filter="url(#glow)" />
             <foreignObject
