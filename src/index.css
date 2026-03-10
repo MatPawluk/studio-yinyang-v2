@@ -164,35 +164,34 @@
     @apply bg-white/70 backdrop-blur-xl border border-white/20;
   }
 
-  /* Advanced Liquid Glass - Premium Polish */
+  /* Advanced Liquid Glass - Premium Polish (Dark Mode Optimized) */
   .liquidglass {
-    --glass-frost: 0.03;
-    --glass-saturation: 1.4;
-    --glass-reflection: 0.15;
+    --glass-frost: 0.15;
+    --glass-saturation: 1.8;
     
     background: linear-gradient(
       135deg, 
-      rgba(255, 255, 255, 0.08) 0%, 
-      rgba(255, 255, 255, 0.03) 100%
+      rgba(0, 0, 0, 0.8) 0%, 
+      rgba(0, 0, 0, 0.4) 100%
     );
     backdrop-filter: url(#liquid-filter) saturate(var(--glass-saturation)) blur(40px);
     -webkit-backdrop-filter: url(#liquid-filter) saturate(var(--glass-saturation)) blur(40px);
     
-    /* Authentic glass shadows and specular highlights */
+    /* Authentic glass shadows and specular highlights on DARK base */
     box-shadow: 
-      /* Inner specular edge (top-left light) */
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+      /* Inner specular edge (top-left light - more defined) */
+      inset 0 1px 2px 0 rgba(255, 255, 255, 0.15),
       /* Inner highlight edge (bottom-right dark refraction) */
-      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3),
+      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
       /* Deep glass volume shadows */
-      inset 0 0 10px 4px rgba(255, 255, 255, 0.05), 
-      inset 0 4px 25px rgba(0, 0, 0, 0.4),
+      inset 0 0 30px 10px rgba(0, 0, 0, 0.5), 
+      inset 0 4px 40px rgba(0, 0, 0, 0.7),
       /* External drop shadow for elevation */
-      0 20px 60px -10px rgba(0, 0, 0, 0.8),
-      /* Subtle outer glow */
-      0 0 40px -10px rgba(196, 255, 0, 0.1);
+      0 30px 70px -15px rgba(0, 0, 0, 0.95),
+      /* Very subtle outer glow (Lime/Green tint) */
+      0 0 50px -10px rgba(196, 255, 0, 0.1);
       
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     position: relative;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -206,9 +205,9 @@
     background: linear-gradient(
       105deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.05) 45%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0.05) 55%,
+      rgba(255, 255, 255, 0.04) 45%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.04) 55%,
       transparent 100%
     );
     transform: translateX(-100%);
@@ -221,16 +220,21 @@
   }
 
   .liquidglass:hover {
-    --glass-frost: 0.05;
-    --glass-saturation: 1.6;
-    border-color: rgba(255, 255, 255, 0.2);
+    --glass-frost: 0.2;
+    --glass-saturation: 2.2;
+    border-color: rgba(196, 255, 0, 0.3);
     box-shadow: 
-      inset 0 1px 2px 0 rgba(255, 255, 255, 0.3),
-      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
-      inset 0 0 15px 6px rgba(196, 255, 0, 0.05), 
-      inset 0 4px 30px rgba(0, 0, 0, 0.5),
-      0 30px 80px -15px rgba(0, 0, 0, 0.9),
-      0 0 50px -5px rgba(196, 255, 0, 0.15);
+      inset 0 1px 3px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.7),
+      inset 0 0 35px 12px rgba(196, 255, 0, 0.08), 
+      inset 0 4px 50px rgba(0, 0, 0, 0.8),
+      0 40px 90px -20px rgba(0, 0, 0, 1),
+      0 0 70px -5px rgba(196, 255, 0, 0.25);
+    background: linear-gradient(
+      135deg, 
+      rgba(0, 0, 0, 0.9) 0%, 
+      rgba(0, 0, 0, 0.5) 100%
+    );
   }
 
   .glass-surface__filter {

@@ -200,13 +200,10 @@ const Index = () => {
                 </p>
               </div>
 
-              <AnimatedBorderGlow 
-                glowColor="#c4ff00" 
-                duration={6}
-                // Fixed: Added rounded-[2.5rem] to before element and removed overflow-visible to ensure proper clipping
-                className="w-[320px] aspect-[2/3] rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"
+              <div 
+                className="w-[320px] aspect-[2/3] rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] border border-white/5 liquidglass overflow-hidden"
               >
-                <div className="relative p-10 flex flex-col h-full z-10 liquidglass">
+                <div className="relative p-10 flex flex-col h-full z-10">
                   {/* YinYang Logo 3D - Now unconstrained by any box */}
                   <div className="w-full aspect-square mb-2 flex items-center justify-center relative">
                     <div className="absolute inset-0 bg-radial-gradient from-lime/5 to-transparent blur-3xl opacity-50" />
@@ -238,7 +235,7 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-              </AnimatedBorderGlow>
+              </div>
             </div>
           </div>
 
