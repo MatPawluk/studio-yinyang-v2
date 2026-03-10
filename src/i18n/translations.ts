@@ -157,8 +157,8 @@ export const translations = {
     },
     serviceSentiment: {
       tagline: 'Kim jesteśmy i dlaczego klienci nam ufają',
-      headlinePart1: 'Jesteśmy partnerem strategicznym ',
-      headlineHighlight1: 'full-cycle',
+      headlinePart1: 'Jesteśmy ',
+      headlineHighlight1: 'Partnerem Strategicznym',
       headlinePart2: ', który zanurza się w Twoim biznesie i ',
       headlineHighlight2: 'pracuje jako część Twojego zespołu',
       headlinePart3: '.',
@@ -324,8 +324,8 @@ export const translations = {
     serviceSentiment: {
       tagline: 'Who we are and why clients trust us',
       headlinePart1: "We're a ",
-      headlineHighlight1: 'full-cycle',
-      headlinePart2: ' strategic partner that dives deep into your business and ',
+      headlineHighlight1: 'Strategic Partner',
+      headlinePart2: ' that dives deep into your business and ',
       headlineHighlight2: 'works as part of your team',
       headlinePart3: '.',
       subText: 'We operate between Poland and China, combining the perspective of European companies with a direct presence in the Chinese economic system.',
@@ -490,8 +490,8 @@ export const translations = {
     serviceSentiment: {
       tagline: '我们是谁以及为什么客户信任我们',
       headlinePart1: '我们是一个',
-      headlineHighlight1: '全周期',
-      headlinePart2: '战略合作伙伴，深入了解您的业务并',
+      headlineHighlight1: '战略合作伙伴',
+      headlinePart2: '，深入了解您的业务并',
       headlineHighlight2: '作为您团队的一部分工作',
       headlinePart3: '。',
       subText: '我们在中波两地开展务实合作，将欧洲企业的视野与对中国经济体系的深入参与有机结合。',

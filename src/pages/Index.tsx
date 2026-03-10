@@ -150,9 +150,9 @@ const Index = () => {
                   </span>
                   <span className="block italic lg:whitespace-nowrap">{t.heroEditorial.subTitle}</span>
                   <div className="flex items-center justify-center lg:justify-start gap-4 mt-6 lg:mt-4">
-                    <span className="bg-gradient-to-r from-[#c4ff00] via-[#00ffa3] to-[#c4ff00] bg-clip-text text-transparent font-black whitespace-nowrap animate-gradient-flow drop-shadow-[0_0_30px_rgba(196,255,0,0.3)]">
+                    <GradientText className="font-black whitespace-nowrap animate-gradient-flow drop-shadow-[0_0_30px_rgba(196,255,0,0.3)]">
                       {t.heroEditorial.plcn}
-                    </span>
+                    </GradientText>
                     <Plus className="hidden lg:block text-white/20 w-8 h-8 lg:w-12 lg:h-12 flex-shrink-0" />
                   </div>
                 </h1>
@@ -247,7 +247,7 @@ const Index = () => {
               {/* Right: Big Headline (Manual Cubic Typography Style - Optimized) */}
               <h2 className="font-display text-4xl md:text-6xl lg:text-[88px] font-black text-white leading-[1.1] lg:leading-[0.88] tracking-tighter uppercase lg:max-w-[1000px] w-full">
                 {t.serviceSentiment.headlinePart1}
-                <span className="text-[#c4ff00]">{t.serviceSentiment.headlineHighlight1}</span>
+                <GradientText>{t.serviceSentiment.headlineHighlight1}</GradientText>
                 {t.serviceSentiment.headlinePart2}
                 <span className="text-white">{t.serviceSentiment.headlineHighlight2}</span>
                 {t.serviceSentiment.headlinePart3}
