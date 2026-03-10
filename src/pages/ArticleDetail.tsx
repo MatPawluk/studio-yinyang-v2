@@ -9,24 +9,9 @@ import { sanityClient } from '@/lib/sanity';
 import { ArrowLeft, Clock, Calendar, Share2, Bookmark, ArrowRight, TrendingUp, Globe, Facebook, Linkedin, X } from 'lucide-react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { translations } from '@/i18n/translations';
-
-// Article images mapping
-import articleCompetition from '@/assets/article-competition.jpg';
-import articleInnovation from '@/assets/article-china-innovation.jpg';
-import serviceStrategy from '@/assets/service-strategy.jpg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { PortableText } from '@portabletext/react';
 
-const articleImages: Record<string, string> = {
-  'gdzie-znika-twoja-marza': articleCompetition,
-  'chinski-nowy-rok-2026': articleInnovation,
-  'przewagi-konkurencyjne-chinskich-firm': articleCompetition,
-  'chinski-system-innowacji': articleInnovation,
-  'przygotowanie-do-wspolpracy': serviceStrategy,
-  'przed-podpisaniem-umowy': articleCompetition,
-  'chiny-konkurent-technologiczny': articleInnovation,
-  'automatyzacja-robotyzacja-chiny': serviceStrategy,
-};
 
 const portableTextComponents = {
   block: {
@@ -108,6 +93,7 @@ const ArticleDetail = () => {
           date,
           readTime,
           author,
+          "imageUrl": image.asset->url,
           category->{
             _id,
             title,
@@ -123,7 +109,7 @@ const ArticleDetail = () => {
             date: data?.date || '',
             readTime: data?.readTime?.[language] || data?.readTime?.['pl'] || '',
             author: data?.author || 'Yin Yang Team',
-            image: articleImages[articleSlug || ''] || articleCompetition,
+            image: data?.imageUrl || '',
             content: data?.content?.[language] || data?.content?.['pl'] || [],
           };
           setArticle(localizedArticle);
@@ -133,7 +119,8 @@ const ArticleDetail = () => {
           if (catId) {
             const relatedQuery = `*[_type == "article" && category._ref == $catId && slug.current != $slug][0...2] {
               title,
-              slug
+              slug,
+              "imageUrl": image.asset->url
             }`;
             const relatedData = await sanityClient.fetch(relatedQuery, { 
               catId, 
@@ -143,7 +130,7 @@ const ArticleDetail = () => {
             setRelatedArticles((relatedData || []).map((r: any) => ({
               title: r?.title?.[language] || r?.title?.['pl'] || t.articleDetail.notFound,
               slug: r?.slug?.current || 'article',
-              image: articleImages[r?.slug?.current || ''] || articleCompetition
+              image: r?.imageUrl || ''
             })));
           } else {
             setRelatedArticles([]);

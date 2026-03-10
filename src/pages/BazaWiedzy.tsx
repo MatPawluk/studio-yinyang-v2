@@ -10,22 +10,8 @@ import { bazaWiedzyTranslations } from '@/i18n/pageTranslations';
 import { sanityClient } from '@/lib/sanity';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import articleCompetition from '@/assets/article-competition.jpg';
-import articleInnovation from '@/assets/article-china-innovation.jpg';
-import serviceStrategy from '@/assets/service-strategy.jpg';
 import worldMap from '@/assets/world-map.jpg';
 
-// Images mapped by slug (stable across languages)
-const articleImages: Record<string, string> = {
-  'gdzie-znika-twoja-marza': articleCompetition,
-  'chinski-nowy-rok-2026': articleInnovation,
-  'przewagi-konkurencyjne-chinskich-firm': articleCompetition,
-  'chinski-system-innowacji': articleInnovation,
-  'przygotowanie-do-wspolpracy': serviceStrategy,
-  'przed-podpisaniem-umowy': articleCompetition,
-  'chiny-konkurent-technologiczny': articleInnovation,
-  'automatyzacja-robotyzacja-chiny': serviceStrategy,
-};
 
 const BazaWiedzy = () => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
@@ -45,6 +31,7 @@ const BazaWiedzy = () => {
           date,
           readTime,
           featured,
+          'imageUrl': image.asset->url,
           category->{
             title,
             slug
@@ -59,6 +46,7 @@ const BazaWiedzy = () => {
           slug: item?.slug?.current || 'article',
           date: item?.date || '',
           readTime: item?.readTime?.[language] || item?.readTime?.['pl'] || '',
+          imageUrl: item?.imageUrl || '',
           category: item?.category?.title?.[language] || item?.category?.title?.['pl'] || '',
         }));
         
@@ -152,7 +140,7 @@ const BazaWiedzy = () => {
                       <Link to={`/baza-wiedzy/${article.slug}`}>
                         <div className="relative aspect-[4/3] overflow-hidden">
                           <img
-                            src={articleImages[article.slug] || articleCompetition}
+                            src={article.imageUrl || ''}
                             alt={article.title}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
