@@ -13,6 +13,7 @@ import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { AnimatedBorderGlow } from '@/components/ui/AnimatedBorderGlow';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { statsTranslations, carouselServicesTranslations } from '@/i18n/contentTranslations';
 import {
@@ -158,17 +159,25 @@ const Index = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.2, delay: 0.8 }}
-                className="relative w-[320px] aspect-[2/3] liquidglass rounded-[2.5rem] overflow-hidden p-10 flex flex-col group"
+                className="relative group p-[2px] rounded-[2.5rem] overflow-hidden"
               >
-                <div className="w-full aspect-square mb-8 flex items-center justify-center">
-                  <Suspense fallback={<LoadingSpinner size={64} />}>
-                    <YinYangLogo3D />
-                  </Suspense>
-                </div>
-                <div className="mt-auto">
-                  <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
-                  <span className="text-white/40 text-xs uppercase tracking-[0.2em] font-bold block mb-6">{t.heroEditorial.featuredLabel}</span>
-                </div>
+                <AnimatedBorderGlow 
+                  glowColor="#c4ff00" 
+                  duration={6}
+                  className="w-[320px] aspect-[2/3] liquidglass rounded-[2.5rem]"
+                >
+                  <div className="absolute inset-0 p-10 flex flex-col h-full">
+                    <div className="w-full aspect-square mb-8 flex items-center justify-center">
+                      <Suspense fallback={<LoadingSpinner size={64} />}>
+                        <YinYangLogo3D />
+                      </Suspense>
+                    </div>
+                    <div className="mt-auto">
+                      <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
+                      <span className="text-white/40 text-xs uppercase tracking-[0.2em] font-bold block mb-6">{t.heroEditorial.featuredLabel}</span>
+                    </div>
+                  </div>
+                </AnimatedBorderGlow>
               </motion.div>
             </div>
           </div>
