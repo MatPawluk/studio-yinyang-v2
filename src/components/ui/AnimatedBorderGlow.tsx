@@ -15,7 +15,7 @@ export const AnimatedBorderGlow = ({
   duration = 4,
 }: AnimatedBorderGlowProps) => {
   return (
-    <div className={cn("relative p-[1px] overflow-hidden rounded-[2.5rem]", className)}>
+    <div className={cn("relative p-[1.5px] overflow-hidden rounded-[2.5rem] group", className)}>
       <motion.div
         animate={{
           rotate: [0, 360],
@@ -25,9 +25,15 @@ export const AnimatedBorderGlow = ({
           repeat: Infinity,
           ease: "linear",
         }}
-        className="absolute inset-[-50%] z-0"
+        className="absolute inset-[-200%] z-0 opacity-100 blur-[2px]"
         style={{
-          background: `conic-gradient(from 0deg, transparent 0deg, transparent 300deg, ${glowColor} 340deg, transparent 360deg)`,
+          background: `conic-gradient(from 0deg, 
+            transparent 0deg, 
+            transparent 300deg, 
+            ${glowColor} 330deg, 
+            #00ffa3 345deg,
+            ${glowColor} 355deg,
+            transparent 360deg)`,
         }}
       />
       <div className="relative z-10 w-full h-full bg-inherit rounded-[calc(2.5rem-1px)] overflow-hidden">
