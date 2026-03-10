@@ -195,9 +195,9 @@ const Index = () => {
                 glowColor="#c4ff00" 
                 duration={6}
                 // Fixed: Added rounded-[2.5rem] to before element and removed overflow-visible to ensure proper clipping
-                className="w-[320px] aspect-[2/3] rounded-[2.5rem] before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none before:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"
+                className="w-[320px] aspect-[2/3] rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"
               >
-                <div className="relative p-10 flex flex-col h-full z-10 backdrop-blur-[20px] bg-white/[0.02]">
+                <div className="relative p-10 flex flex-col h-full z-10 liquidglass">
                   {/* YinYang Logo 3D - Now unconstrained by any box */}
                   <div className="w-full aspect-square mb-2 flex items-center justify-center relative">
                     <div className="absolute inset-0 bg-radial-gradient from-lime/5 to-transparent blur-3xl opacity-50" />
@@ -317,20 +317,20 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Liquid Glass SVG Filter Definition */}
+        {/* Liquid Glass SVG Filter Definition - Fine-tuned for realistic refraction */}
         <svg className="glass-surface__filter" aria-hidden="true">
           <defs>
             <filter id="liquid-filter">
               <feTurbulence 
                 type="fractalNoise" 
-                baseFrequency="0.015" 
-                numOctaves="3" 
+                baseFrequency="0.008" 
+                numOctaves="2" 
                 result="noise" 
               />
               <feDisplacementMap 
                 in="SourceGraphic" 
                 in2="noise" 
-                scale="20" 
+                scale="15" 
                 xChannelSelector="R" 
                 yChannelSelector="G" 
               />
