@@ -11,7 +11,7 @@ import { TeamCarousel } from '@/components/TeamCarousel';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { oNasTranslations } from '@/i18n/pageTranslations';
 import { statsTranslations, oNasFaqTranslations } from '@/i18n/contentTranslations';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronRight, Plus } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
@@ -57,61 +57,166 @@ const ONas = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen overflow-hidden flex items-center">
-        <motion.div style={{ y: heroY }} className="absolute inset-0">
-          <img src={shanghaiHeroBg} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/60 via-[#050608]/80 to-[#050608]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#050608_80%)]" />
+      <section ref={heroRef} className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+        {/* Background Layer */}
+        <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[#050608]" />
+          <div className="absolute inset-0 opacity-40">
+            <img 
+              src={shanghaiHeroBg} 
+              alt="Shanghai Hero Background" 
+              className="w-full h-full object-cover mix-blend-overlay grayscale contrast-125"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050608] via-[#050608]/90 to-[#050608]/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050608] via-transparent to-[#050608]" />
         </motion.div>
-        
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-          <div className="absolute top-[15%] left-[5%] font-display text-[12vw] font-bold text-white/[0.04] blur-[2px] tracking-wider">LOGISTICS</div>
-          <div className="absolute top-[35%] right-[5%] font-display text-[10vw] font-bold text-white/[0.05] blur-[2px] tracking-wider">PL-CN</div>
-          <div className="absolute bottom-[30%] left-[10%] font-display text-[8vw] font-bold text-white/[0.03] blur-[2px] tracking-wider">CONNECTED</div>
-          <div className="absolute bottom-[15%] right-[15%] font-display text-[6vw] font-bold text-white/[0.04] blur-[2px] tracking-wider">BRIDGE</div>
+
+        {/* Scattered UI Decorations (+) */}
+        <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+          <Plus className="absolute top-[20%] left-[45%] text-white/20 w-8 h-8 font-light" />
+          <Plus className="absolute top-[60%] right-[10%] text-white/20 w-12 h-12 font-light" />
+          <Plus className="absolute bottom-[20%] left-[8%] text-white/20 w-6 h-6 font-light" />
+          
+          <div className="absolute top-[15%] left-[5%] font-display text-[12vw] font-bold text-white/[0.02] blur-[2px] tracking-wider whitespace-nowrap">LOGISTICS</div>
+          <div className="absolute bottom-[15%] right-[5%] font-display text-[10vw] font-bold text-white/[0.02] blur-[2px] tracking-wider whitespace-nowrap">PL-CN</div>
         </div>
         
-        <FloatingDots count={40} />
-        
-        {/* Transport elements */}
-        <motion.div initial={{ opacity: 0, x: 100, y: -50 }} animate={{ opacity: 1, x: 0, y: 0 }} transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }} className="absolute top-16 right-[5%] lg:right-[0%] w-[280px] md:w-[380px] lg:w-[460px] pointer-events-none z-20">
-          <img src={heroAirplane} alt="" className="w-full h-auto drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]" style={{ filter: 'drop-shadow(0 0 20px rgba(196, 255, 0, 0.15))' }} />
-        </motion.div>
-        
-        <motion.div initial={{ opacity: 0, z: -100, scale: 0.8 }} animate={{ opacity: 1, z: 0, scale: 1 }} transition={{ delay: 1, duration: 1.2, ease: "easeOut" }} className="absolute bottom-[2%] left-[0%] lg:left-[2%] w-[350px] md:w-[420px] lg:w-[500px] pointer-events-none z-40">
-          <img src={heroTruck} alt="" className="w-full h-auto drop-shadow-[0_30px_80px_rgba(0,0,0,0.9)]" style={{ filter: 'drop-shadow(0 0 20px rgba(196, 255, 0, 0.15))' }} />
-        </motion.div>
-        
-        <motion.div initial={{ opacity: 0, y: -100 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 1.2, ease: "easeOut" }} className="absolute top-[2%] left-[2%] lg:left-[5%] w-[280px] md:w-[380px] lg:w-[480px] pointer-events-none z-10 hidden md:block">
-          <img src={heroContainer} alt="" className="w-full h-auto drop-shadow-[0_40px_100px_rgba(0,0,0,0.9)]" style={{ filter: 'drop-shadow(0 0 30px rgba(196, 255, 0, 0.12))' }} />
-        </motion.div>
+        <FloatingDots count={30} />
 
-        {/* Hero content */}
-        <motion.div style={{ opacity: heroOpacity }} className="relative z-30 container mx-auto px-6 lg:px-12 text-center pt-20">
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lime/20 text-lime text-sm font-medium mb-8">
-              <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
-              {pt.badge}
-            </span>
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight mb-8">
-              {pt.title} <GradientText>{pt.titleHighlight}</GradientText>
-              <br />{pt.subtitle}
-            </h1>
-            <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">{pt.description}</p>
-          </motion.div>
-
-          {/* Stats Row */}
-          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto relative z-20">
-            {stats.map((stat, index) => (
-              <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 + index * 0.1 }} className="p-6 lg:p-8 rounded-2xl bg-[#0B0B0B]/80 backdrop-blur-lg border border-gray-800/50 hover:border-lime/30 transition-all duration-300">
-                <div className="font-display text-3xl lg:text-4xl font-bold text-lime mb-2">
-                  {stat.isText ? <span>{stat.suffix}</span> : <AnimatedCounter end={stat.value} suffix={stat.suffix} />}
+        <div className="container mx-auto px-6 lg:px-12 relative z-30 flex-grow flex flex-col justify-center">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
+            
+            {/* Left Column: Typography & Content */}
+            <div className="w-full lg:w-7/12 flex flex-col items-start text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col items-start w-full"
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="text-white/40 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-medium">O NAS</span>
+                  <div className="h-px w-8 sm:w-12 bg-white/20" />
+                  <span className="text-white/40 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-medium">{pt.badge}</span>
                 </div>
-                <p className="text-gray-400 text-sm">{stat.label}</p>
+
+                <h1 className="font-display text-5xl md:text-7xl lg:text-[90px] font-light text-white leading-[0.9] tracking-tighter uppercase mb-8">
+                  {pt.title}
+                  <br />
+                  <span className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/70" style={{ textShadow: '0 0 40px rgba(196, 255, 0, 0.15)' }}>
+                    {pt.titleHighlight}
+                  </span>
+                  <br />
+                  {pt.subtitle}
+                </h1>
+
+                <p className="text-lg lg:text-xl text-white/60 max-w-2xl leading-relaxed mb-12 font-light">
+                  {pt.description}
+                </p>
+                
+                {/* Stats Grid integrated into content area */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 50 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  transition={{ delay: 0.4, duration: 0.8 }} 
+                  className="grid grid-cols-2 gap-4 w-full max-w-2xl"
+                >
+                  {stats.map((stat, index) => (
+                    <motion.div 
+                      key={stat.label} 
+                      initial={{ opacity: 0, y: 20 }} 
+                      animate={{ opacity: 1, y: 0 }} 
+                      transition={{ delay: 0.5 + index * 0.1 }} 
+                      className="p-5 lg:p-6 rounded-2xl bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] hover:border-lime/30 transition-all duration-500 hover:bg-white/[0.04]"
+                    >
+                      <div className="font-display text-3xl lg:text-4xl font-bold text-[#c4ff00] mb-2 drop-shadow-[0_0_15px_rgba(196,255,0,0.3)]">
+                        {stat.isText ? <span>{stat.suffix}</span> : <AnimatedCounter end={stat.value} suffix={stat.suffix} />}
+                      </div>
+                      <p className="text-white/50 text-xs uppercase tracking-wider font-medium">{stat.label}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
               </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+            </div>
+
+            {/* Right Column: 3D Transport Showcase Composition */}
+            <div className="w-full lg:w-5/12 relative h-[500px] lg:h-[700px] flex items-center justify-center pointer-events-none mt-16 lg:mt-0">
+              {/* Core Glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#c4ff00]/10 blur-[100px] rounded-full" />
+              
+              {/* Glassmorphic Base */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] lg:w-[450px] lg:h-[450px] rounded-full border border-[#c4ff00]/20 bg-[#c4ff00]/[0.02] backdrop-blur-3xl flex items-center justify-center overflow-hidden"
+              >
+                {/* Radar/Grid lines inside glass */}
+                <div className="absolute inset-0" style={{ 
+                  backgroundImage: `linear-gradient(rgba(196, 255, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(196, 255, 0, 0.05) 1px, transparent 1px)`, 
+                  backgroundSize: '40px 40px',
+                  backgroundPosition: 'center center'
+                }} />
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-[#c4ff00]/30 to-transparent absolute top-1/2 -translate-y-1/2" />
+                <div className="h-full w-px bg-gradient-to-b from-transparent via-[#c4ff00]/30 to-transparent absolute left-1/2 -translate-x-1/2" />
+              </motion.div>
+
+              {/* Composition: Airplane (Top) */}
+              <motion.div 
+                initial={{ opacity: 0, x: 50, y: -50 }} 
+                animate={{ opacity: 1, x: 0, y: 0 }} 
+                transition={{ delay: 0.6, duration: 1.2, ease: "easeOut" }} 
+                className="absolute top-[5%] lg:top-[10%] -right-[10%] lg:right-[0%] w-[260px] lg:w-[380px] z-30"
+              >
+                <motion.div animate={{ y: [-10, 10, -10] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}>
+                  <img src={heroAirplane} alt="Air Freight" className="w-full h-auto drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]" style={{ filter: 'drop-shadow(0 0 15px rgba(196, 255, 0, 0.15))' }} />
+                </motion.div>
+              </motion.div>
+
+              {/* Composition: Container (Left / Middle) */}
+              <motion.div 
+                initial={{ opacity: 0, x: -50, y: 0 }} 
+                animate={{ opacity: 1, x: 0, y: 0 }} 
+                transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }} 
+                className="absolute top-[35%] lg:top-[40%] text-white -left-[20%] lg:-left-[15%] w-[240px] lg:w-[320px] z-10"
+              >
+                <motion.div animate={{ y: [-5, 5, -5] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}>
+                  <img src={heroContainer} alt="Sea Freight" className="w-full h-auto drop-shadow-[0_30px_50px_rgba(0,0,0,0.9)]" style={{ filter: 'drop-shadow(0 0 20px rgba(196, 255, 0, 0.08))' }} />
+                </motion.div>
+              </motion.div>
+
+              {/* Composition: Truck (Bottom Front) */}
+              <motion.div 
+                initial={{ opacity: 0, y: 50, scale: 0.9 }} 
+                animate={{ opacity: 1, y: 0, scale: 1 }} 
+                transition={{ delay: 1, duration: 1.2, ease: "easeOut" }} 
+                className="absolute bottom-[0%] lg:-bottom-[5%] left-[10%] w-[320px] lg:w-[450px] z-40"
+              >
+                <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}>
+                  <img src={heroTruck} alt="Land Freight" className="w-full h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.95)]" style={{ filter: 'drop-shadow(0 0 20px rgba(196, 255, 0, 0.12))' }} />
+                </motion.div>
+              </motion.div>
+
+              {/* UI Labels mapping points */}
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="absolute z-50 pointer-events-none w-full h-full">
+                <div className="absolute top-[25%] right-[0%] flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#c4ff00] shadow-[0_0_10px_#c4ff00]" />
+                  <span className="text-[#c4ff00] text-[10px] tracking-widest font-mono uppercase bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded border border-[#c4ff00]/30 hidden md:block">AIR_LINK</span>
+                </div>
+                <div className="absolute top-[50%] left-[-5%] flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_white]" />
+                  <span className="text-white/80 text-[10px] tracking-widest font-mono uppercase bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded border border-white/20 hidden md:block">SEA_ROUTE</span>
+                </div>
+                <div className="absolute bottom-[10%] left-[30%] flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#c4ff00] shadow-[0_0_10px_#c4ff00]" />
+                  <span className="text-[#c4ff00] text-[10px] tracking-widest font-mono uppercase bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded border border-[#c4ff00]/30 hidden md:block">LAND_HUB</span>
+                </div>
+              </motion.div>
+              
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Team Section */}
