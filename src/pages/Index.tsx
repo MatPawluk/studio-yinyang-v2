@@ -193,7 +193,6 @@ const Index = () => {
 
               <AnimatedBorderGlow 
                 glowColor="#c4ff00" 
-                innerClassName="bg-transparent border-none backdrop-blur-none"
                 duration={6}
                 // Fixed: Added rounded-[2.5rem] to before element and removed overflow-visible to ensure proper clipping
                 className="w-[320px] aspect-[2/3] rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"

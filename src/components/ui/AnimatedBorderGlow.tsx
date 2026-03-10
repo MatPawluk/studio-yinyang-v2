@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 interface AnimatedBorderGlowProps {
   children?: React.ReactNode;
   className?: string;
-  innerClassName?: string;
   glowColor?: string;
   duration?: number;
   borderRadius?: string;
@@ -13,7 +12,6 @@ interface AnimatedBorderGlowProps {
 export const AnimatedBorderGlow = ({
   children,
   className,
-  innerClassName,
   glowColor = "#c4ff00",
   duration = 6,
   borderRadius = "2.5rem",
@@ -48,10 +46,7 @@ export const AnimatedBorderGlow = ({
 
       {/* Inner Content Container */}
       <div 
-        className={cn(
-          "relative z-10 w-full h-full bg-[#050608]/90 backdrop-blur-3xl overflow-hidden border border-white/5",
-          innerClassName
-        )}
+        className="relative z-10 w-full h-full bg-[#050608]/90 backdrop-blur-3xl overflow-hidden border border-white/5"
         style={{ borderRadius: `calc(${borderRadius} - 2px)` }}
       >
         {children}
