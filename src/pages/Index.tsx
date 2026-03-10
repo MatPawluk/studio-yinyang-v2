@@ -150,6 +150,7 @@ const Index = () => {
                 <h1 className="font-display text-5xl md:text-8xl lg:text-[110px] font-light text-white leading-[0.9] lg:leading-[0.85] tracking-tighter uppercase mb-12 w-full">
                   <span className="opacity-40 block lg:whitespace-nowrap">
                     {t.heroEditorial.mainTitle}{' '}
+                    <br className="lg:hidden" />
                     <TypewriterText 
                       words={t.heroEditorial.mainTitleAnimated} 
                       typingSpeed={100}
