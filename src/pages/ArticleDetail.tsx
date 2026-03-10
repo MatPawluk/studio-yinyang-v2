@@ -8,6 +8,7 @@ import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { sanityClient } from '@/lib/sanity';
 import { ArrowLeft, Clock, Calendar, Share2, Bookmark, ArrowRight, TrendingUp, Globe, Facebook, Linkedin, X } from 'lucide-react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { translations } from '@/i18n/translations';
 
 // Article images mapping
 import articleCompetition from '@/assets/article-competition.jpg';
@@ -27,9 +28,68 @@ const articleImages: Record<string, string> = {
   'automatyzacja-robotyzacja-chiny': serviceStrategy,
 };
 
+const portableTextComponents = {
+  block: {
+    h2: ({ children }: any) => (
+      <h2 className="font-display text-3xl font-bold text-white mt-12 mb-6 tracking-tight">
+        {children}
+      </h2>
+    ),
+    h3: ({ children }: any) => (
+      <h3 className="font-display text-2xl font-bold text-white mt-8 mb-4 tracking-tight">
+        {children}
+      </h3>
+    ),
+    normal: ({ children }: any) => (
+      <p className="text-gray-300 leading-relaxed mb-6">
+        {children}
+      </p>
+    ),
+  },
+  list: {
+    bullet: ({ children }: any) => (
+      <ul className="space-y-3 mb-8 list-none">
+        {children}
+      </ul>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: any) => (
+      <li className="flex items-start gap-3 text-gray-300">
+        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-lime flex-shrink-0" />
+        <span>{children}</span>
+      </li>
+    ),
+  },
+  types: {
+    image: ({ value }: any) => {
+      const assetRef = value?.asset?._ref;
+      if (!assetRef) return null;
+      
+      // Standard Sanity CDN URL construction from asset reference
+      const parts = assetRef.split('-');
+      const id = parts[1];
+      const dimensions = parts[2];
+      const extension = parts[3];
+      const url = `https://cdn.sanity.io/images/oyjkh63s/production/${id}-${dimensions}.${extension}`;
+      
+      return (
+        <div className="my-12 rounded-3xl overflow-hidden border border-gray-800 shadow-2xl">
+          <img 
+            src={url} 
+            alt="Article content image"
+            className="w-full h-auto"
+          />
+        </div>
+      );
+    },
+  },
+};
+
 const ArticleDetail = () => {
   const { articleSlug } = useParams();
   const { language } = useLanguage();
+  const t = translations[language];
   const [article, setArticle] = useState<any>(null);
   const [relatedArticles, setRelatedArticles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,6 +109,7 @@ const ArticleDetail = () => {
           readTime,
           author,
           category->{
+            _id,
             title,
             slug
           }
@@ -57,7 +118,7 @@ const ArticleDetail = () => {
 
         if (data) {
           const localizedArticle = {
-            title: data?.title?.[language] || data?.title?.['pl'] || 'Bez tytułu',
+            title: data?.title?.[language] || data?.title?.['pl'] || t.articleDetail.notFound,
             category: data?.category?.title?.[language] || data?.category?.title?.['pl'] || '',
             date: data?.date || '',
             readTime: data?.readTime?.[language] || data?.readTime?.['pl'] || '',
@@ -68,19 +129,19 @@ const ArticleDetail = () => {
           setArticle(localizedArticle);
 
           // Fetch related articles (same category, different slug)
-          const catRef = data?.category?._id;
-          if (catRef) {
-            const relatedQuery = `*[_type == "article" && category._ref == $catRef && slug.current != $slug][0...2] {
+          const catId = data?.category?._id;
+          if (catId) {
+            const relatedQuery = `*[_type == "article" && category._ref == $catId && slug.current != $slug][0...2] {
               title,
               slug
             }`;
             const relatedData = await sanityClient.fetch(relatedQuery, { 
-              catRef, 
+              catId, 
               slug: articleSlug 
             });
             
             setRelatedArticles((relatedData || []).map((r: any) => ({
-              title: r?.title?.[language] || r?.title?.['pl'] || 'Bez tytułu',
+              title: r?.title?.[language] || r?.title?.['pl'] || t.articleDetail.notFound,
               slug: r?.slug?.current || 'article',
               image: articleImages[r?.slug?.current || ''] || articleCompetition
             })));
@@ -140,7 +201,7 @@ const ArticleDetail = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-400">
         <LoadingSpinner size={64} />
-        <p className="mt-4">Ładowanie artykułu...</p>
+        <p className="mt-4">{t.articleDetail.loading}</p>
       </div>
     );
   }
@@ -148,8 +209,8 @@ const ArticleDetail = () => {
   if (!article) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-400 px-6 text-center">
-        <h1 className="text-2xl font-bold text-white mb-4">Nie znaleziono artykułu</h1>
-        <Link to="/baza-wiedzy" className="text-lime hover:underline">Wróć do bazy wiedzy</Link>
+        <h1 className="text-2xl font-bold text-white mb-4">{t.articleDetail.notFound}</h1>
+        <Link to="/baza-wiedzy" className="text-lime hover:underline">{t.articleDetail.backToKnowledge}</Link>
       </div>
     );
   }
@@ -176,7 +237,7 @@ const ArticleDetail = () => {
             className="inline-flex items-center gap-2 text-gray-400 hover:text-lime transition-colors duration-300 mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            Wróć do bazy wiedzy
+            {t.articleDetail.backToKnowledge}
           </Link>
 
           <motion.div
@@ -201,7 +262,7 @@ const ArticleDetail = () => {
                 <Clock className="w-4 h-4" />
                 <span>{article.readTime}</span>
               </div>
-              <span>Autor: {article.author}</span>
+              <span>{t.articleDetail.author}: {article.author}</span>
             </div>
           </motion.div>
         </div>
@@ -216,26 +277,26 @@ const ArticleDetail = () => {
               <div className="sticky top-28 space-y-6">
                 {/* Share buttons */}
                 <div className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700/50">
-                  <h3 className="font-semibold text-white mb-4">Udostępnij</h3>
+                  <h3 className="font-semibold text-white mb-4">{t.articleDetail.share}</h3>
                   <div className="flex flex-wrap gap-3">
                     <button 
                       onClick={() => handleShare('facebook')}
                       className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-[#1877F2] hover:text-white text-gray-400 flex items-center justify-center transition-all duration-300"
-                      title="Udostępnij na Facebooku"
+                      title={t.articleDetail.shareFB}
                     >
                       <Facebook className="w-5 h-5" />
                     </button>
                     <button 
                       onClick={() => handleShare('linkedin')}
                       className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-[#0A66C2] hover:text-white text-gray-400 flex items-center justify-center transition-all duration-300"
-                      title="Udostępnij na LinkedIn"
+                      title={t.articleDetail.shareLI}
                     >
                       <Linkedin className="w-5 h-5" />
                     </button>
                     <button 
                       onClick={() => handleShare('x')}
                       className="w-10 h-10 rounded-xl bg-gray-700/50 hover:bg-white hover:text-black text-gray-400 flex items-center justify-center transition-all duration-300"
-                      title="Udostępnij na X (Twitter)"
+                      title={t.articleDetail.shareX}
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -246,7 +307,7 @@ const ArticleDetail = () => {
                           ? 'bg-lime text-gray-900' 
                           : 'bg-gray-700/50 hover:bg-lime/20 hover:text-lime text-gray-400'
                       }`}
-                      title={isBookmarked ? "Usuń z zakładek" : "Dodaj do zakładek"}
+                      title={isBookmarked ? t.articleDetail.removeBookmark : t.articleDetail.addBookmark}
                     >
                       <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current' : ''}`} />
                     </button>
@@ -255,7 +316,7 @@ const ArticleDetail = () => {
 
                 {/* Key Stats - Interactive element */}
                 <div className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700/50">
-                  <h3 className="font-semibold text-white mb-4">Kluczowe dane</h3>
+                  <h3 className="font-semibold text-white mb-4">{t.articleDetail.keyStats}</h3>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
@@ -263,7 +324,7 @@ const ArticleDetail = () => {
                       </div>
                       <div>
                         <p className="text-lime font-bold text-lg">15%+</p>
-                        <p className="text-gray-500 text-xs">Inwestycje w R&D</p>
+                        <p className="text-gray-500 text-xs">{t.articleDetail.statRD}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -272,7 +333,7 @@ const ArticleDetail = () => {
                       </div>
                       <div>
                         <p className="text-lime font-bold text-lg">1.4 mld</p>
-                        <p className="text-gray-500 text-xs">Rynek wewnętrzny</p>
+                        <p className="text-gray-500 text-xs">{t.articleDetail.statMarket}</p>
                       </div>
                     </div>
                   </div>
@@ -280,13 +341,13 @@ const ArticleDetail = () => {
 
                 {/* CTA */}
                 <div className="p-6 bg-lime/10 rounded-2xl border border-lime/20">
-                  <h3 className="font-semibold text-white mb-3">Potrzebujesz analizy?</h3>
-                  <p className="text-gray-400 text-sm mb-4">Przygotujemy dedykowany raport dla Twojej firmy.</p>
+                  <h3 className="font-semibold text-white mb-3">{t.articleDetail.needAnalysis}</h3>
+                  <p className="text-gray-400 text-sm mb-4">{t.articleDetail.dedicatedReport}</p>
                   <Link 
                     to="/kontakt"
                     className="block w-full text-center px-4 py-3 bg-lime text-gray-900 rounded-xl font-semibold text-sm hover:scale-105 transition-transform duration-300"
                   >
-                    Skontaktuj się
+                    {t.articleDetail.contactUs}
                   </Link>
                 </div>
               </div>
@@ -315,7 +376,10 @@ const ArticleDetail = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="prose prose-lg prose-invert max-w-none prose-headings:font-display prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-a:text-lime prose-a:no-underline hover:prose-a:underline prose-strong:text-white"
               >
-                <PortableText value={article.content} />
+                <PortableText 
+                  value={article.content} 
+                  components={portableTextComponents}
+                />
               </motion.div>
 
               {/* Infographic / Visual element */}
@@ -326,10 +390,10 @@ const ArticleDetail = () => {
                 className="mt-12 p-8 bg-gray-800/50 rounded-3xl border border-gray-700/50"
               >
                 <h3 className="font-display font-bold text-xl text-white mb-6 text-center">
-                  Kluczowe przewagi chińskich firm
+                  {t.articleDetail.infographicTitle}
                 </h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {['Skala', 'Innowacje', 'Koszty', 'Szybkość'].map((item, index) => (
+                  {t.articleDetail.infographicStats.map((item, index) => (
                     <div key={item} className="text-center p-4 bg-gray-900/50 rounded-2xl border border-gray-700/50">
                       <div className="font-display text-4xl font-bold text-lime mb-2">
                         {['50%', '15%', '30%', '2x'][index]}
@@ -348,7 +412,7 @@ const ArticleDetail = () => {
                 className="mt-16"
               >
                 <h3 className="font-display font-bold text-2xl text-white mb-8">
-                  Powiązane <GradientText>artykuły</GradientText>
+                  {t.articleDetail.relatedArticles} <GradientText>{t.articleDetail.relatedArticlesBr}</GradientText>
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-6">
                   {relatedArticles.map((related) => (
@@ -368,7 +432,7 @@ const ArticleDetail = () => {
                           {related.title}
                         </h4>
                         <div className="flex items-center gap-2 text-lime opacity-0 group-hover:opacity-100 transition-opacity mt-2">
-                          <span className="text-sm">Czytaj więcej</span>
+                          <span className="text-sm">{t.articleDetail.readMore}</span>
                           <ArrowRight className="w-4 h-4" />
                         </div>
                       </div>
