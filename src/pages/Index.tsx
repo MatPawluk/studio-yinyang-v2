@@ -240,7 +240,7 @@ const Index = () => {
           </div>
 
           {/* Bottom Section: Sentiment & Cards Layout from Inspiration */}
-          <div className="mt-48 relative z-30 pb-32">
+          <div className="mt-24 relative z-30 pb-32">
             <div className="grid grid-cols-1 lg:grid-cols-[0.4fr,2.6fr] gap-8 lg:gap-32 items-start mb-24 text-center lg:text-left">
               {/* Top Left: Tagline */}
               <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:pt-4 justify-center lg:justify-start">
@@ -356,7 +356,10 @@ const Index = () => {
             backgroundAttachment: 'fixed',
           }}
         >
+          {/* Gradient Masks for smooth section transitions */}
+          <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#050608] to-transparent z-10" />
           <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#050608] to-transparent z-10" />
         </motion.div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
