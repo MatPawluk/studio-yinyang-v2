@@ -240,7 +240,7 @@ const Index = () => {
           </div>
 
           {/* Bottom Section: Sentiment & Cards Layout from Inspiration */}
-          <div className="mt-24 relative z-30 pb-32">
+          <div className="mt-24 relative z-30">
             <div className="grid grid-cols-1 lg:grid-cols-[0.4fr,2.6fr] gap-8 lg:gap-32 items-start mb-24 text-center lg:text-left">
               {/* Top Left: Tagline */}
               <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:pt-4 justify-center lg:justify-start">
