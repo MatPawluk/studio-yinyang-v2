@@ -164,40 +164,41 @@
     @apply bg-white/70 backdrop-blur-xl border border-white/20;
   }
 
-  /* Advanced Liquid Glass - Premium Polish (Dark Mode Optimized) */
+  /* Advanced Liquid Glass - Apple Style Refinement */
   .liquidglass {
-    --glass-frost: 0.15;
-    --glass-saturation: 1.8;
+    --glass-frost: 0.1;
+    --glass-saturation: 1.6;
     
     background: linear-gradient(
       135deg, 
-      rgba(0, 0, 0, 0.8) 0%, 
-      rgba(0, 0, 0, 0.4) 100%
+      rgba(15, 15, 15, 0.7) 0%, 
+      rgba(5, 5, 5, 0.5) 100%
     );
-    backdrop-filter: url(#liquid-filter) saturate(var(--glass-saturation)) blur(40px);
-    -webkit-backdrop-filter: url(#liquid-filter) saturate(var(--glass-saturation)) blur(40px);
+    backdrop-filter: url(#liquid-filter) saturate(var(--glass-saturation)) blur(64px);
+    -webkit-backdrop-filter: url(#liquid-filter) saturate(var(--glass-saturation)) blur(64px);
     
-    /* Authentic glass shadows and specular highlights on DARK base */
+    /* Apple-style thin borders and specular edge highlights */
     box-shadow: 
-      /* Inner specular edge (top-left light - more defined) */
-      inset 0 1px 2px 0 rgba(255, 255, 255, 0.15),
-      /* Inner highlight edge (bottom-right dark refraction) */
-      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
-      /* Deep glass volume shadows */
-      inset 0 0 30px 10px rgba(0, 0, 0, 0.5), 
-      inset 0 4px 40px rgba(0, 0, 0, 0.7),
-      /* External drop shadow for elevation */
-      0 30px 70px -15px rgba(0, 0, 0, 0.95),
-      /* Very subtle outer glow (Lime/Green tint) */
-      0 0 50px -10px rgba(196, 255, 0, 0.1);
+      /* Ultra-thin top-left specular edge (simulates 0.5px) */
+      inset 0 0.5px 0 0 rgba(255, 255, 255, 0.25),
+      /* Subtle inner specular glow */
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.05),
+      /* Inner dark refraction edge */
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.5),
+      /* Deep volume shadows (frosted depth) */
+      inset 0 0 40px 0 rgba(0, 0, 0, 0.3),
+      /* External soft drop shadow */
+      0 40px 80px -20px rgba(0, 0, 0, 0.8),
+      /* Micro-luminosity on the edge */
+      0 0 0 1px rgba(255, 255, 255, 0.03);
       
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: none; /* Using box-shadow for ultra-thin border */
     position: relative;
     overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Added subtle refraction shimmer move */
+  /* Refined Apple-style shimmer */
   .liquidglass::after {
     content: '';
     position: absolute;
@@ -205,13 +206,13 @@
     background: linear-gradient(
       105deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.04) 45%,
-      rgba(255, 255, 255, 0.15) 50%,
-      rgba(255, 255, 255, 0.04) 55%,
+      rgba(255, 255, 255, 0.01) 45%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.01) 55%,
       transparent 100%
     );
     transform: translateX(-100%);
-    transition: transform 1.2s ease-in-out;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
   }
 
@@ -220,21 +221,20 @@
   }
 
   .liquidglass:hover {
-    --glass-frost: 0.2;
-    --glass-saturation: 2.2;
-    border-color: rgba(196, 255, 0, 0.3);
-    box-shadow: 
-      inset 0 1px 3px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.7),
-      inset 0 0 35px 12px rgba(196, 255, 0, 0.08), 
-      inset 0 4px 50px rgba(0, 0, 0, 0.8),
-      0 40px 90px -20px rgba(0, 0, 0, 1),
-      0 0 70px -5px rgba(196, 255, 0, 0.25);
+    --glass-frost: 0.15;
+    --glass-saturation: 1.8;
     background: linear-gradient(
       135deg, 
-      rgba(0, 0, 0, 0.9) 0%, 
-      rgba(0, 0, 0, 0.5) 100%
+      rgba(20, 20, 20, 0.8) 0%, 
+      rgba(10, 10, 10, 0.6) 100%
     );
+    box-shadow: 
+      inset 0 0.5px 0 0 rgba(255, 255, 255, 0.35),
+      inset 0 1px 2px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 0 rgba(0, 0, 0, 0.6),
+      inset 0 0 50px 0 rgba(0, 0, 0, 0.4),
+      0 60px 100px -30px rgba(0, 0, 0, 0.9),
+      0 0 0 1.5px rgba(196, 255, 0, 0.15);
   }
 
   .glass-surface__filter {

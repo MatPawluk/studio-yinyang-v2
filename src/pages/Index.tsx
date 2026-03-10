@@ -329,14 +329,14 @@ const Index = () => {
             <filter id="liquid-filter">
               <feTurbulence 
                 type="fractalNoise" 
-                baseFrequency="0.008" 
-                numOctaves="2" 
+                baseFrequency="0.005" 
+                numOctaves="1" 
                 result="noise" 
               />
               <feDisplacementMap 
                 in="SourceGraphic" 
                 in2="noise" 
-                scale="15" 
+                scale="8" 
                 xChannelSelector="R" 
                 yChannelSelector="G" 
               />
