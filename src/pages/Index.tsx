@@ -155,30 +155,23 @@ const Index = () => {
               </div>
 
               {/* Vertical Vertical Card */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1.2, delay: 0.8 }}
-                className="relative group p-[2px] rounded-[2.5rem] overflow-hidden"
+              <AnimatedBorderGlow 
+                glowColor="#c4ff00" 
+                duration={6}
+                className="w-[320px] aspect-[2/3] liquidglass rounded-[2.5rem]"
               >
-                <AnimatedBorderGlow 
-                  glowColor="#c4ff00" 
-                  duration={6}
-                  className="w-[320px] aspect-[2/3] liquidglass rounded-[2.5rem]"
-                >
-                  <div className="absolute inset-0 p-10 flex flex-col h-full">
-                    <div className="w-full aspect-square mb-8 flex items-center justify-center">
-                      <Suspense fallback={<LoadingSpinner size={64} />}>
-                        <YinYangLogo3D />
-                      </Suspense>
-                    </div>
-                    <div className="mt-auto">
-                      <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
-                      <span className="text-white/40 text-xs uppercase tracking-[0.2em] font-bold block mb-6">{t.heroEditorial.featuredLabel}</span>
-                    </div>
+                <div className="relative p-10 flex flex-col h-full z-10">
+                  <div className="w-full aspect-square mb-8 flex items-center justify-center">
+                    <Suspense fallback={<LoadingSpinner size={64} />}>
+                      <YinYangLogo3D />
+                    </Suspense>
                   </div>
-                </AnimatedBorderGlow>
-              </motion.div>
+                  <div className="mt-auto">
+                    <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
+                    <span className="text-white/40 text-xs uppercase tracking-[0.2em] font-bold block mb-6">{t.heroEditorial.featuredLabel}</span>
+                  </div>
+                </div>
+              </AnimatedBorderGlow>
             </div>
           </div>
 
