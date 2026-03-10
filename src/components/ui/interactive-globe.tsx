@@ -60,9 +60,24 @@ function greatCirclePoints(
 
 export function InteractiveGlobe({ className, size = 600 }: GlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const offscreenCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const animRef = useRef<number>(0);
   const timeRef = useRef(0);
+  const targetScrollYRef = useRef(0);
+  const scrollYRef = useRef(0);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      targetScrollYRef.current = window.scrollY;
+      scrollYRef.current = window.scrollY;
+
+      const handleScroll = () => {
+        targetScrollYRef.current = window.scrollY;
+      };
+      
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -74,104 +89,20 @@ export function InteractiveGlobe({ className, size = 600 }: GlobeProps) {
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
     
-    // Only resize if needed to avoid constant clearing/recalculation
-    if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      
-      // Initialize Offscreen Canvas for static dots
-      if (!offscreenCanvasRef.current) {
-        offscreenCanvasRef.current = document.createElement("canvas");
-      }
-      const offCanvas = offscreenCanvasRef.current;
-      offCanvas.width = canvas.width;
-      offCanvas.height = canvas.height;
-      const offCtx = offCanvas.getContext("2d");
-      
-      if (offCtx) {
-        offCtx.scale(dpr, dpr);
-        
-        const cx = w / 2;
-        const cy = h / 2;
-        const radius = Math.min(w, h) * 0.25;
-        const fov = 800;
-
-        // Compute ry to horizontally center midpoint of Warsaw & Shanghai
-        const [wx, , wz] = latLngToXYZ(WARSAW.lat, WARSAW.lng, 1);
-        const [shx, , shz] = latLngToXYZ(SHANGHAI.lat, SHANGHAI.lng, 1);
-        let mx = (wx + shx) / 2, mz = (wz + shz) / 2;
-        const ml2 = Math.sqrt(mx * mx + mz * mz);
-        mx /= ml2; mz /= ml2;
-        const ry = Math.atan2(mx, -mz);
-        const rx = -0.35; // Tilt for nice Europe/Asia view
-
-        // ── ATMOSPHERE GLOW ──
-        const atmoGrad = offCtx.createRadialGradient(cx, cy, radius * 0.8, cx, cy, radius * 1.5);
-        atmoGrad.addColorStop(0, "rgba(196, 255, 0, 0.15)");
-        atmoGrad.addColorStop(0.3, "rgba(196, 255, 0, 0.05)");
-        atmoGrad.addColorStop(0.6, "rgba(196, 255, 0, 0.01)");
-        atmoGrad.addColorStop(1, "rgba(196, 255, 0, 0)");
-        offCtx.fillStyle = atmoGrad;
-        offCtx.beginPath();
-        offCtx.arc(cx, cy, radius * 1.5, 0, Math.PI * 2);
-        offCtx.fill();
-
-        // ── ORGANIC "TENTACLE" LINES ──
-        offCtx.strokeStyle = "rgba(196, 255, 0, 0.08)";
-        offCtx.lineWidth = 1;
-        for (let i = 0; i < 8; i++) {
-          const angle = (Date.now() * 0.0005 + i * Math.PI * 0.25) % (Math.PI * 2);
-          const shift = Math.sin(Date.now() * 0.001 + i) * 20;
-          offCtx.beginPath();
-          offCtx.moveTo(cx + Math.cos(angle) * radius * 0.8, cy + Math.sin(angle) * radius * 0.8);
-          offCtx.bezierCurveTo(
-            cx + Math.cos(angle + 0.2) * radius * 1.2 + shift, cy + Math.sin(angle + 0.2) * radius * 1.2,
-            cx + Math.cos(angle - 0.2) * radius * 1.4, cy + Math.sin(angle - 0.2) * radius * 1.4 + shift,
-            cx + Math.cos(angle) * radius * 1.8, cy + Math.sin(angle) * radius * 1.8
-          );
-          offCtx.stroke();
-        }
-
-        // ── GLOBE EDGE ──
-        offCtx.beginPath();
-        offCtx.arc(cx, cy, radius, 0, Math.PI * 2);
-        offCtx.strokeStyle = "rgba(255, 255, 255, 0.06)";
-        offCtx.lineWidth = 1;
-        offCtx.stroke();
-
-        // ── LAND DOTS (from dotted-map data) ──
-        for (const [lat, lng] of landData as [number, number][]) {
-          let [x, y, z] = latLngToXYZ(lat, lng, radius);
-          [x, y, z] = rotateX(x, y, z, rx);
-          [x, y, z] = rotateY(x, y, z, ry);
-          if (z > 0) continue; // back-face cull
-          const [sx, sy] = project(x, y, z, cx, cy, fov);
-          const depth = 1 - (z + radius) / (2 * radius);
-          const alpha = 0.12 + depth * 0.45;
-          const dotSize = 0.6 + depth * 0.8;
-          
-          offCtx.beginPath();
-          offCtx.arc(sx, sy, dotSize, 0, Math.PI * 2);
-          offCtx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
-          offCtx.fill();
-        }
-      }
-    }
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
 
     // Reset transform to identity before scaling
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear entire physical canvas
     ctx.scale(dpr, dpr);
 
-    // Draw cached static globe
-    if (offscreenCanvasRef.current) {
-      // The offscreen canvas is already sized with dpr applied to its dimensions
-      // When we draw it onto our dpr-scaled ctx, we need to specify the logical bounds (w, h)
-      ctx.drawImage(offscreenCanvasRef.current, 0, 0, w, h);
-    }
-
     timeRef.current += 0.008;
     const time = timeRef.current;
+    
+    // Smooth scroll interpolation
+    scrollYRef.current += (targetScrollYRef.current - scrollYRef.current) * 0.05;
+    const scrollOffset = scrollYRef.current * 0.001; // subtle globe rotation relative to scroll
     
     const cx = w / 2;
     const cy = h / 2;
@@ -184,8 +115,60 @@ export function InteractiveGlobe({ className, size = 600 }: GlobeProps) {
     let mx = (wx + shx) / 2, mz = (wz + shz) / 2;
     const ml2 = Math.sqrt(mx * mx + mz * mz);
     mx /= ml2; mz /= ml2;
-    const ry = Math.atan2(mx, -mz);
-    const rx = -0.35; // Moderate tilt for nice Europe/Asia view
+    const baseRy = Math.atan2(mx, -mz);
+    const ry = baseRy + scrollOffset;
+    const rx = -0.35; // Tilt for nice Europe/Asia view
+
+    // ── ATMOSPHERE GLOW ──
+    const atmoGrad = ctx.createRadialGradient(cx, cy, radius * 0.8, cx, cy, radius * 1.5);
+    atmoGrad.addColorStop(0, "rgba(196, 255, 0, 0.15)");
+    atmoGrad.addColorStop(0.3, "rgba(196, 255, 0, 0.05)");
+    atmoGrad.addColorStop(0.6, "rgba(196, 255, 0, 0.01)");
+    atmoGrad.addColorStop(1, "rgba(196, 255, 0, 0)");
+    ctx.fillStyle = atmoGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius * 1.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // ── ORGANIC "TENTACLE" LINES ──
+    ctx.strokeStyle = "rgba(196, 255, 0, 0.08)";
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 8; i++) {
+      const angle = (Date.now() * 0.0005 + i * Math.PI * 0.25) % (Math.PI * 2);
+      const shift = Math.sin(Date.now() * 0.001 + i) * 20;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(angle) * radius * 0.8, cy + Math.sin(angle) * radius * 0.8);
+      ctx.bezierCurveTo(
+        cx + Math.cos(angle + 0.2) * radius * 1.2 + shift, cy + Math.sin(angle + 0.2) * radius * 1.2,
+        cx + Math.cos(angle - 0.2) * radius * 1.4, cy + Math.sin(angle - 0.2) * radius * 1.4 + shift,
+        cx + Math.cos(angle) * radius * 1.8, cy + Math.sin(angle) * radius * 1.8
+      );
+      ctx.stroke();
+    }
+
+    // ── GLOBE EDGE ──
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // ── LAND DOTS (from dotted-map data) ──
+    for (const [lat, lng] of landData as [number, number][]) {
+      let [x, y, z] = latLngToXYZ(lat, lng, radius);
+      [x, y, z] = rotateX(x, y, z, rx);
+      [x, y, z] = rotateY(x, y, z, ry);
+      if (z > 0) continue; // back-face cull
+      const [sx, sy] = project(x, y, z, cx, cy, fov);
+      const depth = 1 - (z + radius) / (2 * radius);
+      const alpha = 0.12 + depth * 0.45;
+      const dotSize = 0.6 + depth * 0.8;
+      
+      ctx.beginPath();
+      ctx.arc(sx, sy, dotSize, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(3)})`;
+      ctx.fill();
+    }
 
     // ── GREAT CIRCLE ARC ──
     const arcPoints = greatCirclePoints(
