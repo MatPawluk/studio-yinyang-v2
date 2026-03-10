@@ -18,35 +18,11 @@ export const AnimatedBorderGlow = ({
 }: AnimatedBorderGlowProps) => {
   return (
     <div 
-      className={cn("relative p-[2px] overflow-visible group", className)}
+      className={cn("relative p-[2px] overflow-hidden group", className)}
       style={{ borderRadius }}
     >
-      {/* Outer Ambient Aura (Soft glow bleeding outwards) */}
-      <motion.div
-        animate={{
-          rotate: [0, 360],
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute inset-[-20%] z-0 opacity-40 blur-[40px] pointer-events-none"
-        style={{
-          background: `conic-gradient(from 0deg, 
-            transparent 0deg, 
-            transparent 280deg, 
-            ${glowColor} 320deg, 
-            #00ffa3 340deg,
-            ${glowColor} 360deg)`,
-        }}
-      />
-
-      {/* Main Border Glow (Concentrated light on the edge) */}
-      <div 
-        className="absolute inset-0 z-0 overflow-hidden"
-        style={{ borderRadius }}
-      >
+      {/* Main Border Glow (Concentrated light on the edge, clipped) */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
           animate={{
             rotate: [0, 360],
@@ -56,7 +32,7 @@ export const AnimatedBorderGlow = ({
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute inset-[-150%] opacity-100 blur-[10px]"
+          className="absolute inset-[-150%] opacity-100 blur-[8px]"
           style={{
             background: `conic-gradient(from 0deg, 
               transparent 0deg, 
