@@ -30,6 +30,7 @@ import {
   Plus
 } from 'lucide-react';
 import statsBg from '@/assets/stats-bg.jpg';
+import heroImgBg from '@/assets/bghero.png';
 import consultantImg from '@/assets/consultant.png';
 import Hyperspeed from '@/components/Hyperspeed/Hyperspeed';
 import { hyperspeedPresets } from '@/components/Hyperspeed/HyperSpeedPresets';
@@ -108,9 +109,17 @@ const Index = () => {
       
       {/* Hero Section - Organic Composition */}
       <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
-        {/* Background Layer - Solid Black */}
+        {/* Background Layer - Solid Black + Texture/Image */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[#050608]" />
+          <div className="absolute inset-0 opacity-40">
+            <img 
+              src={heroImgBg} 
+              alt="Hero Background" 
+              className="w-full h-full object-cover mix-blend-overlay"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050608]/50 to-[#050608]" />
         </div>
 
         {/* Scattered UI Decorations (+) */}
