@@ -23,7 +23,7 @@ export const translations = {
       subTitle: 'w relacjach',
       plcn: 'Polska-Chiny',
       supportText: 'Łączymy strategię, design i treść, aby tworzyć rozwiązania, które wyglądają świetnie i dowożą wyniki.',
-      statement: 'Bez szumu, bez szablonów - tylko przemyślana strategia, estetyczna precyzja i zespół, który dowozi.',
+      statement: 'Rzetelna analiza, przemyślana strategia i operacyjne wsparcie na każdym etapie projektu.',
       featuredValue: '540+',
       featuredLabel: 'zadowolonych klientów',
       stats: {
@@ -189,7 +189,7 @@ export const translations = {
       subTitle: 'in relations',
       plcn: 'Poland-China',
       supportText: 'We combine strategy, design, and content to create solutions that look great and deliver results.',
-      statement: 'No noise, no templates - just thoughtful strategy, aesthetic precision, and a team that delivers.',
+      statement: 'Reliable analysis, thoughtful strategy, and operational support at every stage of the project.',
       featuredValue: '540+',
       featuredLabel: 'satisfied clients',
       stats: {
@@ -355,7 +355,7 @@ export const translations = {
       subTitle: '波中关系',
       plcn: '波兰-中国',
       supportText: '我们将战略、设计和内容相结合，创造出既美观又能交付成果的解决方案。',
-      statement: '拒绝浮躁，拒绝套路-唯有深度的策略、极致的审美，以及交付结果的团队。',
+      statement: '可靠的分析、周详的策略以及项目每个阶段的运营支持。',
       featuredValue: '540+',
       featuredLabel: '满意客户',
       stats: {
