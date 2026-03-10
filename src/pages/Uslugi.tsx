@@ -11,7 +11,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { uslugiTranslations } from '@/i18n/pageTranslations';
 import { statsTranslations } from '@/i18n/contentTranslations';
 import { sanityClient } from '@/lib/sanity';
-import { ArrowRight, ChevronDown, Loader2 } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import statsBg from '@/assets/stats-bg.jpg';
 import worldMap from '@/assets/world-map.jpg';
 
@@ -203,8 +204,8 @@ const Uslugi = () => {
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-gray-400">
-              <Loader2 className="w-12 h-12 animate-spin mb-4 text-lime" />
-              <p>Ładowanie usług...</p>
+              <LoadingSpinner size={64} />
+              <p className="mt-4">Ładowanie usług...</p>
             </div>
           ) : (
             <div className="space-y-0">

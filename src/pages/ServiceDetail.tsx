@@ -9,7 +9,8 @@ import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { ParallaxSection } from '@/components/ParallaxSection';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { sanityClient } from '@/lib/sanity';
-import { ArrowLeft, ArrowRight, Check, X, FileText, Video, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, X, FileText, Video } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import statsBg from '@/assets/stats-bg.jpg';
 
 // Service cover images
@@ -128,8 +129,8 @@ const ServiceDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#050608] text-gray-400">
-        <Loader2 className="w-12 h-12 animate-spin mb-4 text-lime" />
-        <p>Ładowanie szczegółów usługi...</p>
+        <LoadingSpinner size={64} />
+        <p className="mt-4">Ładowanie szczegółów usługi...</p>
       </div>
     );
   }

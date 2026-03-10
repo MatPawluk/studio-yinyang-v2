@@ -8,7 +8,8 @@ import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { bazaWiedzyTranslations } from '@/i18n/pageTranslations';
 import { sanityClient } from '@/lib/sanity';
-import { Clock, Calendar, ArrowRight, Loader2 } from 'lucide-react';
+import { Clock, Calendar, ArrowRight } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
@@ -128,8 +129,8 @@ const BazaWiedzy = () => {
           {/* Articles Grid */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-gray-400">
-              <Loader2 className="w-12 h-12 animate-spin mb-4 text-lime" />
-              <p>Ładowanie bazy wiedzy...</p>
+              <LoadingSpinner size={64} />
+              <p className="mt-4">Ładowanie bazy wiedzy...</p>
             </div>
           ) : (
             <>

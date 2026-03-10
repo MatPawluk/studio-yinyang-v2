@@ -6,7 +6,8 @@ import { Footer } from '@/components/Footer';
 import { GradientText } from '@/components/GradientText';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { sanityClient } from '@/lib/sanity';
-import { ArrowLeft, Clock, Calendar, Share2, Bookmark, ArrowRight, TrendingUp, Globe, Loader2, Facebook, Linkedin, X } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, Share2, Bookmark, ArrowRight, TrendingUp, Globe, Facebook, Linkedin, X } from 'lucide-react';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 // Article images mapping
 import articleCompetition from '@/assets/article-competition.jpg';
@@ -137,8 +138,8 @@ const ArticleDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-gray-400">
-        <Loader2 className="w-12 h-12 animate-spin mb-4 text-lime" />
-        <p>Ładowanie artykułu...</p>
+        <LoadingSpinner size={64} />
+        <p className="mt-4">Ładowanie artykułu...</p>
       </div>
     );
   }
