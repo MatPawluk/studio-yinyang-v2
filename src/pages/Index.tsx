@@ -47,6 +47,13 @@ import sgMisje from '@/assets/sg-misje.png';
 
 import { HeroServiceCard } from '@/components/HeroServiceCard';
 
+import articleCompetition from '@/assets/article-competition.jpg';
+import articleInnovation from '@/assets/article-china-innovation.jpg';
+import serviceStrategy from '@/assets/service-strategy.jpg';
+import avatarTeam1 from '@/assets/avatar-team-1.jpg';
+import avatarTeam2 from '@/assets/avatar-team-2.jpg';
+import avatarTeam3 from '@/assets/avatar-team-3.jpg';
+
 const carouselImages = [sgStrategia, sgAnalizy, sgWejscie, sgImport, sgMarketing, sgMisje];
 const carouselSlugs = ['strategia-wobec-chin', 'analizy-rynku', 'wejscie-na-rynek', 'import-eksport', 'marketing-pozycjonowanie', 'misje-szkolenia'];
 
@@ -184,21 +191,43 @@ const Index = () => {
                 </p>
               </div>
 
-              {/* Vertical Vertical Card */}
+              {/* Vertical Vertical Card - Redesigned Liquid Glass */}
               <AnimatedBorderGlow 
                 glowColor="#c4ff00" 
                 duration={6}
-                className="w-[320px] aspect-[2/3] liquidglass rounded-[2.5rem]"
+                // Stronger backdrop-blur and glass effect via style for "Liquid Glass" feel
+                className="w-[320px] aspect-[2/3] rounded-[2.5rem] before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:pointer-events-none overflow-visible shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"
               >
-                <div className="relative p-10 flex flex-col h-full z-10">
-                  <div className="w-full aspect-square mb-8 flex items-center justify-center">
+                <div className="relative p-10 flex flex-col h-full z-10 backdrop-blur-[20px] bg-white/[0.02]">
+                  {/* YinYang Logo 3D - Now unconstrained by any box */}
+                  <div className="w-full aspect-square mb-2 flex items-center justify-center relative">
+                    <div className="absolute inset-0 bg-radial-gradient from-lime/5 to-transparent blur-3xl opacity-50" />
                     <Suspense fallback={null}>
                       <YinYangLogo3D />
                     </Suspense>
                   </div>
-                  <div className="mt-auto">
-                    <span className="text-[#c4ff00] font-black text-5xl tracking-tighter block mb-2">{t.heroEditorial.featuredValue}</span>
-                    <span className="text-white/40 text-xs uppercase tracking-[0.2em] font-bold block mb-6">{t.heroEditorial.featuredLabel}</span>
+
+                  <div className="mt-auto relative z-20 pt-4">
+                    {/* Team Avatars Stack */}
+                    <div className="flex -space-x-3 mb-6 items-center">
+                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-all duration-300 ring-2 ring-black/40">
+                        <img src={avatarTeam1} alt="Team 1" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-all duration-300 ring-2 ring-black/40">
+                        <img src={avatarTeam2} alt="Team 2" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-all duration-300 ring-2 ring-black/40">
+                        <img src={avatarTeam3} alt="Team 3" className="w-full h-full object-cover" />
+                      </div>
+                      <div className="pl-6">
+                        <div className="h-px w-8 bg-white/20" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="text-[#c4ff00] font-black text-6xl tracking-tighter block leading-none">{t.heroEditorial.featuredValue}</span>
+                      <span className="text-white/80 text-[10px] uppercase tracking-[0.25em] font-medium block pt-1">{t.heroEditorial.featuredLabel}</span>
+                    </div>
                   </div>
                 </div>
               </AnimatedBorderGlow>
