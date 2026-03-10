@@ -13,6 +13,7 @@ import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { AnimatedBorderGlow } from '@/components/ui/AnimatedBorderGlow';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { statsTranslations, carouselServicesTranslations } from '@/i18n/contentTranslations';
@@ -53,6 +54,7 @@ const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
+  const [isMainLoading, setIsMainLoading] = useState(true);
   const stats = statsTranslations[language];
   
   const carouselServices = carouselServicesTranslations[language].map((s, i) => ({
@@ -82,7 +84,20 @@ const Index = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
-      <Navbar />
+      <AnimatePresence>
+        {isMainLoading && (
+          <LoadingScreen onComplete={() => setIsMainLoading(false)} />
+        )}
+      </AnimatePresence>
+      
+      <motion.div
+        animate={{ 
+          opacity: isMainLoading ? 0 : 1,
+          pointerEvents: isMainLoading ? 'none' : 'auto'
+        }}
+        transition={{ duration: 0.5 }}
+      >
+        <Navbar />
       
       {/* Hero Section - Organic Composition */}
       <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
@@ -169,7 +184,7 @@ const Index = () => {
               >
                 <div className="relative p-10 flex flex-col h-full z-10">
                   <div className="w-full aspect-square mb-8 flex items-center justify-center">
-                    <Suspense fallback={<LoadingSpinner size={64} />}>
+                    <Suspense fallback={null}>
                       <YinYangLogo3D />
                     </Suspense>
                   </div>
@@ -447,6 +462,7 @@ const Index = () => {
       </section>
 
       <Footer />
+      </motion.div>
     </div>
   );
 };
