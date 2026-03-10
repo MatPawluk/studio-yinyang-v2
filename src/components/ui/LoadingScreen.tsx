@@ -9,45 +9,63 @@ interface LoadingScreenProps {
 
 export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const { progress, active } = useProgress();
-  const [isDone, setIsDone] = useState(false);
+  const [shouldReveal, setShouldReveal] = useState(false);
 
   useEffect(() => {
-    // Once progress hits 100 and it's no longer active, wait a moment then trigger split
-    if (progress === 100 && !active) {
+    // Fallback: If it takes too long, reveal anyway
+    const fallbackTimer = setTimeout(() => {
+      setShouldReveal(true);
+    }, 8000);
+
+    // Normal completion: Once progress is high enough and assets are ready
+    if (progress >= 100 && !active) {
       const timer = setTimeout(() => {
-        setIsDone(true);
-        // Notify parent after curtains have split (duration approx 1.2s)
-        setTimeout(() => {
-          onComplete?.();
-        }, 1200);
+        setShouldReveal(true);
       }, 500);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(fallbackTimer);
+      };
     }
-  }, [progress, active, onComplete]);
+
+    return () => clearTimeout(fallbackTimer);
+  }, [progress, active]);
+
+  useEffect(() => {
+    if (shouldReveal) {
+      // Trigger the completion in parent AFTER the curtains have moved
+      const revealTimer = setTimeout(() => {
+        onComplete?.();
+      }, 1500); // Give enough time for the 1.2s animation
+      return () => clearTimeout(revealTimer);
+    }
+  }, [shouldReveal, onComplete]);
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden">
       {/* Background Panels (Curtains) */}
       <motion.div
         initial={{ x: 0 }}
-        animate={{ x: isDone ? '-100%' : 0 }}
-        transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1], delay: 0.2 }}
-        className="absolute inset-y-0 left-0 w-1/2 bg-[#050608] border-r border-white/5 pointer-events-auto"
+        animate={{ x: shouldReveal ? '-100%' : 0 }}
+        transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1], delay: 0.1 }}
+        className="absolute inset-y-0 left-0 w-1/2 bg-[#050608] border-r border-white/5 z-20"
       />
       <motion.div
         initial={{ x: 0 }}
-        animate={{ x: isDone ? '100%' : 0 }}
-        transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1], delay: 0.2 }}
-        className="absolute inset-y-0 right-0 w-1/2 bg-[#050608] border-l border-white/5 pointer-events-auto"
+        animate={{ x: shouldReveal ? '100%' : 0 }}
+        transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1], delay: 0.1 }}
+        className="absolute inset-y-0 right-0 w-1/2 bg-[#050608] border-l border-white/5 z-20"
       />
 
       {/* Center Content */}
       <AnimatePresence>
-        {!isDone && (
+        {!shouldReveal && (
           <motion.div
+            key="loader-content"
+            initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative z-10 flex flex-col items-center gap-8"
+            transition={{ duration: 0.5 }}
+            className="relative z-30 flex flex-col items-center gap-8"
           >
             {/* Logo with pulse/glow */}
             <motion.div
@@ -63,19 +81,11 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
             {/* Glowing Progress Bar Container */}
             <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden relative border border-white/5">
-              {/* Dynamic Progress Fill */}
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 className="absolute inset-y-0 left-0 bg-[#c4ff00] shadow-[0_0_15px_#c4ff00]"
                 transition={{ duration: 0.5 }}
-              />
-              
-              {/* Ambient Glow Trail */}
-              <motion.div 
-                animate={{ x: ['-100%', '200%'] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
               />
             </div>
 
