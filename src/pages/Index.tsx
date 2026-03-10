@@ -160,7 +160,7 @@ const Index = () => {
                 transition={{ duration: 1.2, delay: 0.8 }}
                 className="relative w-[320px] aspect-[2/3] liquidglass rounded-[2.5rem] overflow-hidden p-10 flex flex-col group"
               >
-                <div className="w-full aspect-square mb-8 flex items-center justify-center bg-white/5 rounded-2xl">
+                <div className="w-full aspect-square mb-8 flex items-center justify-center">
                   <Suspense fallback={<LoadingSpinner size={64} />}>
                     <YinYangLogo3D />
                   </Suspense>
