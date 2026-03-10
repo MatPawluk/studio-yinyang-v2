@@ -18,7 +18,8 @@ export const translations = {
     heroEditorial: {
       strategic: 'Konsulting Strategiczny',
       context: 'Kontekst PL i CN',
-      mainTitle: 'Twój przewodnik',
+      mainTitle: 'Twój',
+      mainTitleAnimated: ['przewodnik', 'PARTNER'],
       subTitle: 'w relacjach',
       plcn: 'Polska-Chiny',
       supportText: 'Łączymy strategię, design i treść, aby tworzyć rozwiązania, które wyglądają świetnie i dowożą wyniki.',
@@ -183,7 +184,8 @@ export const translations = {
     heroEditorial: {
       strategic: 'Strategic Consulting',
       context: 'PL & CN Context',
-      mainTitle: 'Your guide',
+      mainTitle: 'Your',
+      mainTitleAnimated: ['guide', 'PARTNER'],
       subTitle: 'in relations',
       plcn: 'Poland-China',
       supportText: 'We combine strategy, design, and content to create solutions that look great and deliver results.',
@@ -348,7 +350,8 @@ export const translations = {
     heroEditorial: {
       strategic: '战略咨询',
       context: '波中背景',
-      mainTitle: '您的指南',
+      mainTitle: '您的',
+      mainTitleAnimated: ['指南', '合作伙伴'],
       subTitle: '波中关系',
       plcn: '波兰-中国',
       supportText: '我们将战略、设计和内容相结合，创造出既美观又能交付成果的解决方案。',

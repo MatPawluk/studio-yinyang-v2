@@ -11,7 +11,7 @@ interface GlobeProps {
 }
 
 const WARSAW = { lat: 52.237, lng: 21.018, label: "Warszawa" };
-const SHANGHAI = { lat: 31.230, lng: 121.474, label: "Szanghaj" };
+const SHANGHAI = { lat: 31.230, lng: 121.474, label: "Shanghai" };
 
 function latLngToXYZ(lat: number, lng: number, radius: number): [number, number, number] {
   const phi = ((90 - lat) * Math.PI) / 180;

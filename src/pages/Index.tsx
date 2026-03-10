@@ -132,7 +132,15 @@ const Index = () => {
                 </div>
 
                 <h1 className="font-display text-5xl md:text-8xl lg:text-[110px] font-light text-white leading-[0.9] lg:leading-[0.85] tracking-tighter uppercase mb-12 w-full">
-                  <span className="opacity-40 block lg:whitespace-nowrap">{t.heroEditorial.mainTitle}</span>
+                  <span className="opacity-40 block lg:whitespace-nowrap">
+                    {t.heroEditorial.mainTitle}{' '}
+                    <TypewriterText 
+                      words={t.heroEditorial.mainTitleAnimated} 
+                      typingSpeed={100}
+                      deletingSpeed={50}
+                      pauseDuration={3000}
+                    />
+                  </span>
                   <span className="block italic lg:whitespace-nowrap">{t.heroEditorial.subTitle}</span>
                   <div className="flex items-center justify-center lg:justify-start gap-4 mt-6 lg:mt-4">
                     <span className="bg-gradient-to-r from-[#c4ff00] via-[#00ffa3] to-[#c4ff00] bg-clip-text text-transparent font-black whitespace-nowrap animate-gradient-flow drop-shadow-[0_0_30px_rgba(196,255,0,0.3)]">

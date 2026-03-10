@@ -272,7 +272,7 @@ export const servicesData: Record<string, ServiceData> = {
     workModel: {
       type: 'Jednorazowy lub Abonament (Kwartalny Update)',
       duration: 'Krótki cykl przygotowawczy (3-5 dni) + Spotkanie',
-      communication: 'Dostarczenie materiałów + Spotkanie wideo/osobiste (Warszawa/Szanghaj)',
+      communication: 'Dostarczenie materiałów + Spotkanie wideo/osobiste (Warszawa/Shanghai)',
     },
     caseStudy: {
       client: 'Polska grupa kapitałowa (branża budowlana).',
