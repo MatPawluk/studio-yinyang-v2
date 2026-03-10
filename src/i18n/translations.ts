@@ -145,7 +145,7 @@ export const translations = {
       button: 'Skontaktuj się',
     },
     footer: {
-      description: 'Twój przewodnik w relacjach Polska–Chiny. Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL–CN.',
+      description: 'Twój przewodnik w relacjach Polska-Chiny. Analizujemy, weryfikujemy, organizujemy i nadzorujemy projekty na linii PL-CN.',
       navigation: 'Nawigacja',
       contact: 'Kontakt',
       locations: 'Lokalizacje',
@@ -310,7 +310,7 @@ export const translations = {
       button: 'Contact us',
     },
     footer: {
-      description: 'Your guide in Poland–China relations. We analyze, verify, organize and supervise projects on the PL–CN axis.',
+      description: 'Your guide in Poland-China relations. We analyze, verify, organize and supervise projects on the PL-CN axis.',
       navigation: 'Navigation',
       contact: 'Contact',
       locations: 'Locations',

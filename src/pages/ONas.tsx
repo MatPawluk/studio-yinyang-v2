@@ -66,7 +66,7 @@ const ONas = () => {
         
         <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
           <div className="absolute top-[15%] left-[5%] font-display text-[12vw] font-bold text-white/[0.04] blur-[2px] tracking-wider">LOGISTICS</div>
-          <div className="absolute top-[35%] right-[5%] font-display text-[10vw] font-bold text-white/[0.05] blur-[2px] tracking-wider">PL—CN</div>
+          <div className="absolute top-[35%] right-[5%] font-display text-[10vw] font-bold text-white/[0.05] blur-[2px] tracking-wider">PL-CN</div>
           <div className="absolute bottom-[30%] left-[10%] font-display text-[8vw] font-bold text-white/[0.03] blur-[2px] tracking-wider">CONNECTED</div>
           <div className="absolute bottom-[15%] right-[15%] font-display text-[6vw] font-bold text-white/[0.04] blur-[2px] tracking-wider">BRIDGE</div>
         </div>
