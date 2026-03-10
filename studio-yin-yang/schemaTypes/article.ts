@@ -60,9 +60,9 @@ export const article = defineType({
     }),
     defineField({
       name: 'content',
-      title: 'Content (HTML)',
-      type: 'localeText',
-      description: 'Treść artykułu (dla 1:1 zachowujemy HTML jako Text)',
+      title: 'Content',
+      type: 'localeBlock',
+      description: 'Treść artykułu (Bogaty edytor tekstu)',
     }),
     defineField({
       name: 'featured',

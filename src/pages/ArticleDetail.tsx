@@ -14,6 +14,7 @@ import articleCompetition from '@/assets/article-competition.jpg';
 import articleInnovation from '@/assets/article-china-innovation.jpg';
 import serviceStrategy from '@/assets/service-strategy.jpg';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { PortableText } from '@portabletext/react';
 
 const articleImages: Record<string, string> = {
   'gdzie-znika-twoja-marza': articleCompetition,
@@ -62,7 +63,7 @@ const ArticleDetail = () => {
             readTime: data?.readTime?.[language] || data?.readTime?.['pl'] || '',
             author: data?.author || 'Yin Yang Team',
             image: articleImages[articleSlug || ''] || articleCompetition,
-            content: data?.content?.[language] || data?.content?.['pl'] || '',
+            content: data?.content?.[language] || data?.content?.['pl'] || [],
           };
           setArticle(localizedArticle);
 
@@ -313,8 +314,9 @@ const ArticleDetail = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="prose prose-lg prose-invert max-w-none prose-headings:font-display prose-headings:text-white prose-p:text-gray-300 prose-li:text-gray-300 prose-a:text-lime prose-a:no-underline hover:prose-a:underline prose-strong:text-white"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
+              >
+                <PortableText value={article.content} />
+              </motion.div>
 
               {/* Infographic / Visual element */}
               <motion.div
