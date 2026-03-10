@@ -11,7 +11,7 @@ export const LoadingSpinner = ({ size = 40 }: { size?: number }) => {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="relative"
+        className="relative flex items-center justify-center font-bold"
         style={{ width: size, height: size }}
       >
         <img 
@@ -19,8 +19,6 @@ export const LoadingSpinner = ({ size = 40 }: { size?: number }) => {
           alt="Loading..." 
           className="w-full h-full object-contain"
         />
-        {/* Ambient glow around the spinner */}
-        <div className="absolute inset-0 bg-[#c4ff00]/20 blur-xl rounded-full -z-10" />
       </motion.div>
     </div>
   );

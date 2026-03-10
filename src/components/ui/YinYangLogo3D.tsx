@@ -23,7 +23,7 @@ export function YinYangLogo3D() {
     <div className="w-full h-full">
       <Canvas shadows camera={{ position: [0, 0, 5], fov: 45 }}>
         <Suspense fallback={null}>
-          <Stage intensity={0.5} environment="city" adjustCamera={false}>
+          <Stage intensity={0.5} environment="city" adjustCamera={false} shadows={false}>
             <PresentationControls
               global
               config={{ mass: 2, tension: 500 }}
