@@ -29,7 +29,7 @@ import {
   Users,
   Plus
 } from 'lucide-react';
-import statsBg from '@/assets/stats-bg.jpg';
+import statsBg from '@/assets/stats-bg.webp';
 import heroImgBg from '@/assets/bghero.png';
 import consultantImg from '@/assets/consultant.png';
 import Hyperspeed from '@/components/Hyperspeed/Hyperspeed';

@@ -11,7 +11,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { sanityClient } from '@/lib/sanity';
 import { ArrowLeft, ArrowRight, Check, X, FileText, Video } from 'lucide-react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import statsBg from '@/assets/stats-bg.jpg';
+import statsBg from '@/assets/stats-bg.webp';
 
 // Service cover images
 import uAnalizaWplywu from '@/assets/u-analiza-wplywu.png';

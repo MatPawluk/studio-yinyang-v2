@@ -13,7 +13,7 @@ import { statsTranslations } from '@/i18n/contentTranslations';
 import { sanityClient } from '@/lib/sanity';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import statsBg from '@/assets/stats-bg.jpg';
+import statsBg from '@/assets/stats-bg.webp';
 import worldMap from '@/assets/world-map.jpg';
 
 // Service cover images
