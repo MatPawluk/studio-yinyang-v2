@@ -128,15 +128,22 @@ const Index = () => {
                 </h1>
                 
                 <div className="flex flex-col sm:flex-row gap-8 items-center lg:items-center mt-12 lg:mt-16 w-full justify-center lg:justify-start">
-                  <Link
-                    to="/kontakt"
-                    className="flex items-center gap-4 px-8 sm:px-10 py-5 sm:py-6 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white hover:text-black rounded-full transition-all duration-500 group shrink-0"
+                  <AnimatedBorderGlow
+                    borderRadius="9999px"
+                    className="shrink-0"
+                    glowColor="#c4ff00"
+                    duration={5}
                   >
-                    <span className="font-bold text-lg sm:text-xl text-white group-hover:text-black transition-colors whitespace-nowrap">{t.nav.consultation}</span>
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#c4ff00] text-black rounded-full flex items-center justify-center transition-transform duration-500 group-hover:rotate-0 -rotate-45">
-                      <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                    </div>
-                  </Link>
+                    <Link
+                      to="/kontakt"
+                      className="flex items-center gap-4 px-8 sm:px-10 py-5 sm:py-6 bg-transparent hover:bg-white hover:text-black transition-all duration-500 group"
+                    >
+                      <span className="font-bold text-lg sm:text-xl text-white group-hover:text-black transition-colors whitespace-nowrap">{t.nav.consultation}</span>
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#c4ff00] text-black rounded-full flex items-center justify-center transition-transform duration-500 group-hover:rotate-0 -rotate-45">
+                        <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                      </div>
+                    </Link>
+                  </AnimatedBorderGlow>
                   <p className="text-white/90 text-sm sm:text-base max-w-[320px] leading-relaxed font-normal text-center lg:text-left drop-shadow-sm">
                     {t.heroEditorial.supportText}
                   </p>

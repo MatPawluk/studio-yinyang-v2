@@ -6,6 +6,7 @@ interface AnimatedBorderGlowProps {
   className?: string;
   glowColor?: string;
   duration?: number;
+  borderRadius?: string;
 }
 
 export const AnimatedBorderGlow = ({
@@ -13,9 +14,13 @@ export const AnimatedBorderGlow = ({
   className,
   glowColor = "#c4ff00",
   duration = 6,
+  borderRadius = "2.5rem",
 }: AnimatedBorderGlowProps) => {
   return (
-    <div className={cn("relative p-[2px] rounded-[2.5rem] overflow-visible group", className)}>
+    <div 
+      className={cn("relative p-[2px] overflow-visible group", className)}
+      style={{ borderRadius }}
+    >
       {/* Outer Ambient Aura (Soft glow bleeding outwards) */}
       <motion.div
         animate={{
@@ -38,7 +43,10 @@ export const AnimatedBorderGlow = ({
       />
 
       {/* Main Border Glow (Concentrated light on the edge) */}
-      <div className="absolute inset-0 z-0 overflow-hidden rounded-[2.5rem]">
+      <div 
+        className="absolute inset-0 z-0 overflow-hidden"
+        style={{ borderRadius }}
+      >
         <motion.div
           animate={{
             rotate: [0, 360],
@@ -61,7 +69,10 @@ export const AnimatedBorderGlow = ({
       </div>
 
       {/* Inner Content Container */}
-      <div className="relative z-10 w-full h-full bg-[#050608]/90 backdrop-blur-3xl rounded-[calc(2.5rem-2px)] overflow-hidden border border-white/5">
+      <div 
+        className="relative z-10 w-full h-full bg-[#050608]/90 backdrop-blur-3xl overflow-hidden border border-white/5"
+        style={{ borderRadius: `calc(${borderRadius} - 2px)` }}
+      >
         {children}
       </div>
     </div>
