@@ -54,7 +54,13 @@ export function WorldMap() {
   const curvePath = createCurvedPath(startPct, endPct);
 
   return (
-    <div className="w-full aspect-[2/1] rounded-lg relative font-sans overflow-hidden bg-transparent">
+    <div 
+      className="w-full aspect-[2/1] rounded-lg relative font-sans overflow-hidden bg-transparent"
+      style={{
+        maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)'
+      }}
+    >
       <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
         className="h-full w-full pointer-events-none select-none object-fill opacity-80"
