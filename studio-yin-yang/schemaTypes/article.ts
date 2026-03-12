@@ -90,6 +90,14 @@ export const article = defineType({
         },
       ],
     }),
+    defineField({
+      name: 'relatedArticles',
+      title: 'Related Articles (Manual Selection)',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'article'}}],
+      validation: (Rule) => Rule.max(2),
+      description: 'Select up to 2 articles to show as related. If empty, articles from the same category will be shown automatically.',
+    }),
   ],
   preview: {
     select: {

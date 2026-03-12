@@ -100,7 +100,12 @@ const ArticleDetail = () => {
             title,
             slug
           },
-          keyStats
+          keyStats,
+          relatedArticles[]-> {
+            title,
+            slug,
+            "imageUrl": image.asset->url
+          }
         }`;
         const data = await sanityClient.fetch(articleQuery, { slug: articleSlug });
 
@@ -118,27 +123,48 @@ const ArticleDetail = () => {
           };
           setArticle(localizedArticle);
 
-          // Fetch related articles (same category, different slug)
-          const catId = data?.category?._id;
-          if (catId) {
-            const relatedQuery = `*[_type == "article" && category._ref == $catId && slug.current != $slug][0...2] {
-              title,
-              slug,
-              "imageUrl": image.asset->url
-            }`;
-            const relatedData = await sanityClient.fetch(relatedQuery, { 
-              catId, 
-              slug: articleSlug 
-            });
-            
-            setRelatedArticles((relatedData || []).map((r: any) => ({
+          // Handle related articles
+          let finalRelated: any[] = [];
+          
+          // 1. If manual related articles exist, use them
+          if (data.relatedArticles && data.relatedArticles.length > 0) {
+            finalRelated = data.relatedArticles.map((r: any) => ({
               title: r?.title?.[language] || r?.title?.['pl'] || t.articleDetail.notFound,
               slug: r?.slug?.current || 'article',
               image: r?.imageUrl || ''
-            })));
-          } else {
-            setRelatedArticles([]);
+            }));
           }
+
+          // 2. If we have less than 2, fill with category-based articles
+          if (finalRelated.length < 2) {
+            const catId = data?.category?._id;
+            if (catId) {
+              const remainingCount = 2 - finalRelated.length;
+              const excludedSlugs = [articleSlug, ...finalRelated.map(r => r.slug)];
+              
+              const fallbackQuery = `*[_type == "article" && category._ref == $catId && !(slug.current in $excludedSlugs)][0...$limit] {
+                title,
+                slug,
+                "imageUrl": image.asset->url
+              }`;
+              
+              const fallbackData = await sanityClient.fetch(fallbackQuery, { 
+                catId, 
+                excludedSlugs,
+                limit: remainingCount
+              });
+              
+              const localizedFallback = (fallbackData || []).map((r: any) => ({
+                title: r?.title?.[language] || r?.title?.['pl'] || t.articleDetail.notFound,
+                slug: r?.slug?.current || 'article',
+                image: r?.imageUrl || ''
+              }));
+              
+              finalRelated = [...finalRelated, ...localizedFallback];
+            }
+          }
+
+          setRelatedArticles(finalRelated.slice(0, 2));
         }
       } catch (error) {
         console.error('Error fetching article:', error);
