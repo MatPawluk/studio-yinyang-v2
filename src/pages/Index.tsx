@@ -309,7 +309,6 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </div>
 
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 translate-y-[-5%] overflow-visible">
           <motion.div 
