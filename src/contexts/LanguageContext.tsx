@@ -10,12 +10,24 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>('pl');
+  const getInitialLanguage = (): Language => {
+    const browserLang = navigator.language.toLowerCase();
+    if (browserLang.startsWith('pl')) return 'pl';
+    if (browserLang.startsWith('zh') || browserLang.startsWith('cn')) return 'cn';
+    return 'en';
+  };
+
+  const [language, setLanguageState] = useState<Language>(getInitialLanguage());
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
     document.documentElement.lang = lang === 'cn' ? 'zh' : lang;
   }, []);
+
+  // Set initial html lang attribute on mount
+  React.useEffect(() => {
+    document.documentElement.lang = language === 'cn' ? 'zh' : language;
+  }, [language]);
 
   const t = translations[language];
 
