@@ -112,7 +112,7 @@ export const Footer = ({ variant = 'dark' }: FooterProps) => {
         <div className="mt-16 pt-8 border-t border-gray-800/30">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-600 text-sm">
-              © 2025 Yin Yang. {t.footer.rights}
+              © {new Date().getFullYear()} Yin Yang. {t.footer.rights}
             </p>
             <div className="flex items-center gap-6">
               {footerLinks.legal.map((link) => (
