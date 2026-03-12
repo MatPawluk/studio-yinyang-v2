@@ -70,6 +70,26 @@ export const article = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'keyStats',
+      title: 'Key Data (Sidebar)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'value', title: 'Value', type: 'localeString' },
+            { name: 'label', title: 'Label', type: 'localeString' },
+          ],
+          preview: {
+            select: {
+              title: 'value.pl',
+              subtitle: 'label.pl',
+            },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

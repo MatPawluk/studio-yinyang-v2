@@ -99,7 +99,8 @@ const ArticleDetail = () => {
             _id,
             title,
             slug
-          }
+          },
+          keyStats
         }`;
         const data = await sanityClient.fetch(articleQuery, { slug: articleSlug });
 
@@ -113,6 +114,7 @@ const ArticleDetail = () => {
             author: data?.author || 'Yin Yang Team',
             image: data?.imageUrl || '',
             content: data?.content?.[language] || data?.content?.['pl'] || [],
+            keyStats: data?.keyStats || [],
           };
           setArticle(localizedArticle);
 
@@ -314,28 +316,47 @@ const ArticleDetail = () => {
                   </div>
                 </div>
 
-                {/* Key Stats - Interactive element */}
                 <div className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700/50">
                   <h3 className="font-semibold text-white mb-4">{t.articleDetail.keyStats}</h3>
                   <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
-                        <TrendingUp className="w-5 h-5 text-lime" />
-                      </div>
-                      <div>
-                        <p className="text-lime font-bold text-lg">15%+</p>
-                        <p className="text-gray-500 text-xs">{t.articleDetail.statRD}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
-                        <Globe className="w-5 h-5 text-lime" />
-                      </div>
-                      <div>
-                        <p className="text-lime font-bold text-lg">1.4 mld</p>
-                        <p className="text-gray-500 text-xs">{t.articleDetail.statMarket}</p>
-                      </div>
-                    </div>
+                    {article.keyStats && article.keyStats.length > 0 ? (
+                      article.keyStats.map((stat: any, idx: number) => (
+                        <div key={idx} className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
+                            {idx % 2 === 0 ? <TrendingUp className="w-5 h-5 text-lime" /> : <Globe className="w-5 h-5 text-lime" />}
+                          </div>
+                          <div>
+                            <p className="text-lime font-bold text-lg">
+                              {stat.value?.[language] || stat.value?.['pl'] || '-'}
+                            </p>
+                            <p className="text-gray-500 text-xs">
+                              {stat.label?.[language] || stat.label?.['pl'] || '-'}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
+                            <TrendingUp className="w-5 h-5 text-lime" />
+                          </div>
+                          <div>
+                            <p className="text-lime font-bold text-lg">15%+</p>
+                            <p className="text-gray-500 text-xs">{t.articleDetail.statRD}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-lime/20 flex items-center justify-center">
+                            <Globe className="w-5 h-5 text-lime" />
+                          </div>
+                          <div>
+                            <p className="text-lime font-bold text-lg">1.4 mld</p>
+                            <p className="text-gray-500 text-xs">{t.articleDetail.statMarket}</p>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -382,27 +403,6 @@ const ArticleDetail = () => {
                 />
               </motion.div>
 
-              {/* Infographic / Visual element */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mt-12 p-8 bg-gray-800/50 rounded-3xl border border-gray-700/50"
-              >
-                <h3 className="font-display font-bold text-xl text-white mb-6 text-center">
-                  {t.articleDetail.infographicTitle}
-                </h3>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {t.articleDetail.infographicStats.map((item, index) => (
-                    <div key={item} className="text-center p-4 bg-[#050608]/50 rounded-2xl border border-gray-700/50">
-                      <div className="font-display text-4xl font-bold text-lime mb-2">
-                        {['50%', '15%', '30%', '2x'][index]}
-                      </div>
-                      <p className="text-gray-400 text-sm">{item}</p>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
 
               {/* Related Articles */}
               <motion.div
