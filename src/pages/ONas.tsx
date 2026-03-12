@@ -95,7 +95,7 @@ const ONas = () => {
           initial={{ opacity: 0, z: -100, scale: 0.8 }} 
           animate={{ opacity: 1, z: 0, scale: 1 }} 
           transition={{ delay: 1, duration: 1.2, ease: "easeOut" }} 
-          className="absolute bottom-[2%] left-[0%] lg:left-[2%] w-[350px] md:w-[420px] lg:w-[500px] pointer-events-none z-40"
+          className="absolute bottom-[2%] left-[0%] lg:left-[2%] w-[350px] md:w-[420px] lg:w-[500px] pointer-events-none z-40 hidden lg:block"
           style={{ willChange: 'transform, opacity' }}
         >
           {/* Lightweight Glow Layer */}
