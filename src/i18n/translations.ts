@@ -83,6 +83,9 @@ export const translations = {
       ctaHighlight: 'Porozmawiajmy',
       ctaSubtitle: 'Bezpłatna konsultacja pomoże określić, jak możemy Ci pomóc.',
       ctaButton: 'Umów rozmowę',
+      loading: 'Ładowanie szczegółów usługi...',
+      notFoundTitle: 'Nie znaleziono usługi',
+      notFoundSubtitle: 'Przepraszamy, ale usługa o podanym adresie nie istnieje lub została tymczasowo przeniesiona.',
     },
     trust: {
       title: 'Zaufali nam',
@@ -187,6 +190,13 @@ export const translations = {
       relatedArticlesBr: 'artykuły',
       readMore: 'Czytaj więcej',
     },
+    bazaWiedzy: {
+      loading: 'Ładowanie bazy wiedzy...',
+      empty: 'Brak artykułów w tej kategorii.',
+    },
+    uslugi: {
+      loading: 'Ładowanie usług...',
+    },
   },
   en: {
     nav: {
@@ -272,6 +282,9 @@ export const translations = {
       ctaHighlight: 'Let\'s talk',
       ctaSubtitle: 'A free consultation will help determine how we can help you.',
       ctaButton: 'Book a call',
+      loading: 'Loading service details...',
+      notFoundTitle: 'Service not found',
+      notFoundSubtitle: 'Sorry, but the service at this address does not exist or has been temporarily moved.',
     },
     trust: {
       title: 'Trusted by',
@@ -376,6 +389,13 @@ export const translations = {
       relatedArticlesBr: 'articles',
       readMore: 'Read more',
     },
+    bazaWiedzy: {
+      loading: 'Loading knowledge base...',
+      empty: 'No articles in this category.',
+    },
+    uslugi: {
+      loading: 'Loading services...',
+    },
   },
   cn: {
     nav: {
@@ -461,6 +481,9 @@ export const translations = {
       ctaHighlight: '联系我们',
       ctaSubtitle: '免费咨询将帮助确定我们如何能帮助您。',
       ctaButton: '预约通话',
+      loading: '正在加载服务详情...',
+      notFoundTitle: '未找到服务',
+      notFoundSubtitle: '抱歉，该地址的服务不存在或已暂时移走。',
     },
     trust: {
       title: '他们信任我们',
@@ -564,6 +587,13 @@ export const translations = {
       relatedArticles: '相关',
       relatedArticlesBr: '文章',
       readMore: '阅读更多',
+    },
+    bazaWiedzy: {
+      loading: '正在加载知识库...',
+      empty: '该类别暂无文章。',
+    },
+    uslugi: {
+      loading: '正在加载服务...',
     },
   },
 };

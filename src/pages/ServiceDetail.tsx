@@ -131,7 +131,7 @@ const ServiceDetail = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#050608] text-gray-400">
         <LoadingSpinner size={64} />
-        <p className="mt-4">Ładowanie szczegółów usługi...</p>
+        <p className="mt-4">{t.serviceDetail.loading}</p>
       </div>
     );
   }
@@ -139,10 +139,10 @@ const ServiceDetail = () => {
   if (!service) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#050608] text-gray-400 px-6 text-center">
-        <h1 className="text-2xl font-bold text-white mb-4">Nie znaleziono usługi</h1>
-        <p className="mb-8 text-gray-500 max-w-md">Przepraszamy, ale usługa o podanym adresie nie istnieje lub została tymczasowo przeniesiona.</p>
+        <h1 className="text-2xl font-bold text-white mb-4">{t.serviceDetail.notFoundTitle}</h1>
+        <p className="mb-8 text-gray-500 max-w-md">{t.serviceDetail.notFoundSubtitle}</p>
         <Link to="/uslugi" className="px-8 py-3 bg-lime text-gray-900 rounded-full font-semibold hover:scale-105 transition-transform">
-          Wróć do usług
+          {t.serviceDetail.backToServices}
         </Link>
       </div>
     );

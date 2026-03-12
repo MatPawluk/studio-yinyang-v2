@@ -210,7 +210,7 @@ const Uslugi = () => {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-gray-400">
               <LoadingSpinner size={64} />
-              <p className="mt-4">Ładowanie usług...</p>
+              <p className="mt-4">{t.uslugi.loading}</p>
             </div>
           ) : (
             <div className="space-y-0">

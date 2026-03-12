@@ -18,7 +18,7 @@ const BazaWiedzy = () => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const [articles, setArticles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const pt = bazaWiedzyTranslations[language] || bazaWiedzyTranslations['pl'];
   const categories = pt?.categories || [];
   
@@ -123,13 +123,13 @@ const BazaWiedzy = () => {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-gray-400">
               <LoadingSpinner size={64} />
-              <p className="mt-4">Ładowanie bazy wiedzy...</p>
+              <p className="mt-4">{t.bazaWiedzy.loading}</p>
             </div>
           ) : (
             <>
               {filteredArticles.length === 0 ? (
                 <div className="text-center py-20">
-                  <p className="text-gray-500 italic">Brak artykułów w tej kategorii.</p>
+                  <p className="text-gray-500 italic">{t.bazaWiedzy.empty}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
