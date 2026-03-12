@@ -13,7 +13,6 @@ import { HomeFAQSection } from '@/components/HomeFAQSection';
 import { ChineseCharacters } from '@/components/ChineseCharacters';
 import { CaseStudiesSection } from '@/components/CaseStudiesSection';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { AnimatedBorderGlow } from '@/components/ui/AnimatedBorderGlow';
 import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -78,7 +77,6 @@ const Index = () => {
   const statsRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
-  const [isMainLoading, setIsMainLoading] = useState(true);
   const stats = statsTranslations[language];
   
   const carouselServices = useMemo(() => 
@@ -118,19 +116,11 @@ const Index = () => {
       <SEO 
         description={language === 'pl' ? 'Twój strategiczny partner w pełnym cyklu relacji biznesowych Polska-Chiny. Kompleksowe doradztwo, design i content.' : undefined} 
       />
-      <AnimatePresence mode="wait">
-        {isMainLoading && (
-          <LoadingScreen key="loading" onComplete={() => setIsMainLoading(false)} />
-        )}
-      </AnimatePresence>
-
-      {/* Concurrent Rendering: Main DOM renders immediately (preloading images & LCP) but visually hidden if loading */}
       <motion.div
         key="content"
         initial={{ opacity: 0 }}
-        animate={{ opacity: isMainLoading ? 0 : 1 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={isMainLoading ? "h-screen overflow-hidden pointer-events-none" : ""}
       >
         <Navbar />
   
