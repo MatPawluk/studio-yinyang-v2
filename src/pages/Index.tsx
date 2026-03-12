@@ -126,19 +126,9 @@ const Index = () => {
   
         {/* Hero Section - Organic Composition */}
         <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
-        {/* Background Layer - Solid Black + Texture/Image */}
+        {/* Background Layer - Solid Black */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[#050608]" />
-          <div className="absolute inset-0 opacity-20">
-            <img 
-              src={heroImgBg} 
-              alt="Hero Background" 
-              className="w-full h-full object-cover mix-blend-overlay"
-              loading="eager"
-              // @ts-ignore
-              fetchpriority="high"
-            />
-          </div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/40 via-[#050608]/60 to-[#050608]" />
         </div>
 
