@@ -19,18 +19,22 @@ export const SEO = ({
   description, 
   canonical, 
   ogType = 'website', 
-  ogImage = 'https://lovable.dev/opengraph-image-p98pqg.png',
+  ogImage,
   articleData 
 }: SEOProps) => {
   const { language } = useLanguage();
   
-  const siteName = 'Studio Yin Yang';
-  const defaultTitle = 'Studio Yin Yang | Strategic Partner Poland-China';
+  const siteName = 'Yin Yang - Strategic Partner PL-CN';
+  const ogUrl = `https://yinyangchina.pl${window.location.pathname}`;
+  const defaultOgImage = "https://yinyangchina.pl/og-image.png";
+  
+  const defaultTitle = 'Yin Yang - Strategic Partner PL-CN';
   const defaultDescription = 'Studio Yin Yang - Your strategic partner for full-cycle business relations between Poland and China. Strategy, design, and content that delivers results.';
   
   const seoTitle = title ? `${title} | ${siteName}` : defaultTitle;
   const seoDescription = description || defaultDescription;
   const seoCanonical = canonical || window.location.origin + window.location.pathname;
+  const finalOgImage = ogImage || defaultOgImage;
 
   // Multi-language alternates
   const alternates = [
@@ -43,18 +47,17 @@ export const SEO = ({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Studio Yin Yang",
-    "url": "https://studioyinyang.pl",
-    "logo": "https://studioyinyang.pl/logo.png",
+    "name": "Yin Yang",
+    "url": "https://yinyangchina.pl",
+    "logo": "https://yinyangchina.pl/logo.png",
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+48-XXX-XXX-XXX",
+      "telephone": "+48-502-062-602",
       "contactType": "customer service",
       "availableLanguage": ["Polish", "English", "Chinese"]
     },
     "sameAs": [
-      "https://www.linkedin.com/company/studio-yin-yang",
-      "https://twitter.com/StudioYinYang"
+      "https://www.linkedin.com/company/yinyangchina",
     ]
   };
 
@@ -78,13 +81,13 @@ export const SEO = ({
       <meta property="og:description" content={seoDescription} />
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={seoCanonical} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:image" content={finalOgImage} />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={seoTitle} />
       <meta name="twitter:description" content={seoDescription} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={finalOgImage} />
 
       {/* Article Specific */}
       {ogType === 'article' && articleData && (
