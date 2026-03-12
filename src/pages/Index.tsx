@@ -74,7 +74,6 @@ const AnimatePingVisibility = () => {
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
   const stats = statsTranslations[language];
@@ -105,11 +104,6 @@ const Index = () => {
   
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
-  const { scrollYProgress: statsScrollProgress } = useScroll({
-    target: statsRef,
-    offset: ["start end", "end start"]
-  });
-  const statsY = useTransform(statsScrollProgress, [0, 1], ["-15%", "15%"]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
@@ -311,9 +305,8 @@ const Index = () => {
                     </div>
                   ))}
                 </div>
+                </div>
               </div>
-            </div>
-
             </div>
           </div>
         </div>
@@ -334,20 +327,20 @@ const Index = () => {
         {/* Liquid Glass SVG Filter Definition - Moved to App.tsx for global availability */}
       </section>
 
-      {/* Stats Section with Parallax */}
-      <section ref={statsRef} className="relative py-24 lg:pt-32 overflow-hidden">
-        <motion.div 
-          className="absolute inset-0 scale-125"
+      {/* Stats Section with Identical Parallax as Uslugi.tsx */}
+      <section className="relative py-24 lg:py-32 overflow-hidden">
+        <div 
+          className="absolute inset-0"
           style={{
             backgroundImage: `url(${statsBg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            y: statsY
+            backgroundAttachment: 'fixed'
           }}
         >
           {/* Match Uslugi.tsx style with blur and 80% opacity */}
           <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
-        </motion.div>
+        </div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
@@ -425,7 +418,7 @@ const Index = () => {
                   </div>
                   
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                    <div className="relative bg-[#0B0B0B]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-[border-color] duration-300 group">
+                    <div className="relative liquidglass rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-[border-color] duration-300 group">
                       <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'}`}>
                         {step.number}
                       </span>
