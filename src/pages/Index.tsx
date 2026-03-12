@@ -305,7 +305,6 @@ const Index = () => {
                     </div>
                   ))}
                 </div>
-                </div>
               </div>
             </div>
           </div>
@@ -329,7 +328,7 @@ const Index = () => {
 
       {/* Stats Section with Identical Parallax as Uslugi.tsx */}
       <section className="relative py-24 lg:py-32 overflow-hidden">
-        <div 
+        <motion.div 
           className="absolute inset-0"
           style={{
             backgroundImage: `url(${statsBg})`,
@@ -340,7 +339,7 @@ const Index = () => {
         >
           {/* Match Uslugi.tsx style with blur and 80% opacity */}
           <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
-        </div>
+        </motion.div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
