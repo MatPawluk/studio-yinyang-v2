@@ -11,6 +11,7 @@ import gmailLogo from '@/assets/gmail-logo.png';
 import whatsappLogo from '@/assets/whatsapp-logo.png';
 import wechatLogo from '@/assets/wechat-logo.png';
 import googleMeetLogo from '@/assets/google-meet-logo.png';
+import { SEO } from '@/components/SEO';
 
 const contactMethods = [
   {
@@ -65,6 +66,10 @@ const Kontakt = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
+      <SEO 
+        title={pt.badge}
+        description={pt.formSubtitle}
+      />
       <Navbar />
       
       {/* Main Content */}

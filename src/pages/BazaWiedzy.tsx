@@ -11,6 +11,7 @@ import { sanityClient } from '@/lib/sanity';
 import { Clock, Calendar, ArrowRight } from 'lucide-react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import worldMap from '@/assets/world-map.jpg';
+import { SEO } from '@/components/SEO';
 
 
 const BazaWiedzy = () => {
@@ -68,6 +69,10 @@ const BazaWiedzy = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
+      <SEO 
+        title={pt.badge}
+        description={pt.subtitle}
+      />
       <Navbar />
       
       {/* Hero Section */}

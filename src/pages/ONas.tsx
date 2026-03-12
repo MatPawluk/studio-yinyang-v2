@@ -14,6 +14,7 @@ import { statsTranslations, oNasFaqTranslations } from '@/i18n/contentTranslatio
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { SEO } from '@/components/SEO';
 
 // Assets
 import onasAdrian from '@/assets/onas-adrian.png';
@@ -54,6 +55,10 @@ const ONas = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
+      <SEO 
+        title={pt.badge}
+        description={pt.description}
+      />
       <Navbar />
       
       {/* Hero Section */}

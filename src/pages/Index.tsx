@@ -15,6 +15,7 @@ import { CaseStudiesSection } from '@/components/CaseStudiesSection';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { AnimatedBorderGlow } from '@/components/ui/AnimatedBorderGlow';
+import { SEO } from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { statsTranslations, carouselServicesTranslations } from '@/i18n/contentTranslations';
 import {
@@ -114,6 +115,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
+      <SEO 
+        description={language === 'pl' ? 'Twój strategiczny partner w pełnym cyklu relacji biznesowych Polska-Chiny. Kompleksowe doradztwo, design i content.' : undefined} 
+      />
       <AnimatePresence mode="wait">
         {isMainLoading && (
           <LoadingScreen key="loading" onComplete={() => setIsMainLoading(false)} />

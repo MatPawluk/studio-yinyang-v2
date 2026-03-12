@@ -72,6 +72,7 @@ const serviceImages: Record<string, string> = {
   'szkolenia-system': uSzkoleniaSystem,
   'szkolenia-kultura': uSzkoleniaKultura,
 };
+import { SEO } from '@/components/SEO';
 
 const ServiceDetail = () => {
   const { subServiceSlug } = useParams();
@@ -150,6 +151,10 @@ const ServiceDetail = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050608' }}>
+      <SEO 
+        title={service.title}
+        description={service.description}
+      />
       <Navbar />
       
       {/* Header */}

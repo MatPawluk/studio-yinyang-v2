@@ -11,6 +11,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { translations } from '@/i18n/translations';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { PortableText } from '@portabletext/react';
+import { SEO } from '@/components/SEO';
 
 
 const portableTextComponents = {
@@ -105,6 +106,7 @@ const ArticleDetail = () => {
         if (data) {
           const localizedArticle = {
             title: data?.title?.[language] || data?.title?.['pl'] || t.articleDetail.notFound,
+            description: data?.description?.[language] || data?.description?.['pl'] || '',
             category: data?.category?.title?.[language] || data?.category?.title?.['pl'] || '',
             date: data?.date || '',
             readTime: data?.readTime?.[language] || data?.readTime?.['pl'] || '',
@@ -205,6 +207,17 @@ const ArticleDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-900">
+      <SEO 
+        title={article.title}
+        description={article.description}
+        ogType="article"
+        ogImage={article.image}
+        articleData={{
+          publishedTime: article.date,
+          author: article.author,
+          tags: [article.category]
+        }}
+      />
       <Navbar />
       
       {/* Header */}
