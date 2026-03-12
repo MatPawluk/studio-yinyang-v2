@@ -74,7 +74,6 @@ const AnimatePingVisibility = () => {
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
   const stats = statsTranslations[language];
@@ -105,11 +104,6 @@ const Index = () => {
   
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
-  const { scrollYProgress: statsScrollProgress } = useScroll({
-    target: statsRef,
-    offset: ["start end", "end start"]
-  });
-  const statsY = useTransform(statsScrollProgress, [0, 1], ["-10%", "10%"]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
@@ -126,19 +120,9 @@ const Index = () => {
   
         {/* Hero Section - Organic Composition */}
         <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
-        {/* Background Layer - Solid Black + Texture/Image */}
+        {/* Background Layer - Solid Black */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[#050608]" />
-          <div className="absolute inset-0 opacity-20">
-            <img 
-              src={heroImgBg} 
-              alt="Hero Background" 
-              className="w-full h-full object-cover mix-blend-overlay"
-              loading="eager"
-              // @ts-ignore
-              fetchpriority="high"
-            />
-          </div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/40 via-[#050608]/60 to-[#050608]" />
         </div>
 
@@ -323,11 +307,6 @@ const Index = () => {
                 </div>
               </div>
             </div>
-
-            {/* Bottom Accent Line - inspiration style */}
-            <div className="mt-24 h-px w-full bg-white/5 relative">
-              <div className="absolute top-0 left-0 h-full w-1/4 bg-[#c4ff00]/40 shadow-[0_0_20px_rgba(196,255,0,0.2)]" />
-            </div>
           </div>
         </div>
 
@@ -347,21 +326,19 @@ const Index = () => {
         {/* Liquid Glass SVG Filter Definition - Moved to App.tsx for global availability */}
       </section>
 
-      {/* Stats Section with Parallax */}
-      <section ref={statsRef} className="relative py-32 lg:pt-64 overflow-hidden">
+      {/* Stats Section with Identical Parallax as Uslugi.tsx */}
+      <section className="relative py-24 lg:py-32 overflow-hidden">
         <motion.div 
-          className="absolute inset-0 scale-110"
+          className="absolute inset-0"
           style={{
             backgroundImage: `url(${statsBg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            y: statsY
+            backgroundAttachment: 'fixed'
           }}
         >
-          {/* Gradient Masks for smooth section transitions */}
-          <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#050608] to-transparent z-10" />
+          {/* Match Uslugi.tsx style with blur and 80% opacity */}
           <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#050608] to-transparent z-10" />
         </motion.div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -440,7 +417,7 @@ const Index = () => {
                   </div>
                   
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                    <div className="relative bg-[#0B0B0B]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-[border-color] duration-300 group">
+                    <div className="relative liquidglass rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-[border-color] duration-300 group">
                       <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'}`}>
                         {step.number}
                       </span>

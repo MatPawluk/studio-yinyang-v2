@@ -4,15 +4,19 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import Index from "./pages/Index";
-import Uslugi from "./pages/Uslugi";
-import BazaWiedzy from "./pages/BazaWiedzy";
-import ONas from "./pages/ONas";
-import Kontakt from "./pages/Kontakt";
-import ServiceDetail from "./pages/ServiceDetail";
-import ArticleDetail from "./pages/ArticleDetail";
-import NotFound from "./pages/NotFound";
+import { Suspense, lazy } from "react";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { LoadingSpinner } from "./components/ui/LoadingSpinner";
+
+// Lazy load pages for better bundle chunking
+const Index = lazy(() => import("./pages/Index"));
+const Uslugi = lazy(() => import("./pages/Uslugi"));
+const BazaWiedzy = lazy(() => import("./pages/BazaWiedzy"));
+const ONas = lazy(() => import("./pages/ONas"));
+const Kontakt = lazy(() => import("./pages/Kontakt"));
+const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
+const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -27,18 +31,24 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/uslugi" element={<Uslugi />} />
-              <Route path="/uslugi/:serviceSlug" element={<ServiceDetail />} />
-              <Route path="/uslugi/:serviceSlug/:subServiceSlug" element={<ServiceDetail />} />
-              <Route path="/baza-wiedzy" element={<BazaWiedzy />} />
-              <Route path="/baza-wiedzy/:articleSlug" element={<ArticleDetail />} />
-              <Route path="/o-nas" element={<ONas />} />
-              <Route path="/kontakt" element={<Kontakt />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={
+              <div className="min-h-screen bg-[#050608] flex items-center justify-center">
+                <LoadingSpinner size={48} />
+              </div>
+            }>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/uslugi" element={<Uslugi />} />
+                <Route path="/uslugi/:serviceSlug" element={<ServiceDetail />} />
+                <Route path="/uslugi/:serviceSlug/:subServiceSlug" element={<ServiceDetail />} />
+                <Route path="/baza-wiedzy" element={<BazaWiedzy />} />
+                <Route path="/baza-wiedzy/:articleSlug" element={<ArticleDetail />} />
+                <Route path="/o-nas" element={<ONas />} />
+                <Route path="/kontakt" element={<Kontakt />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </BrowserRouter>
           
           {/* Global SVG Filters for Liquid Glass effects */}
