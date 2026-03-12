@@ -9,11 +9,11 @@ function Model({ url }: { url: string }) {
 
   useFrame((state) => {
     if (modelRef.current) {
-      modelRef.current.rotation.y = Math.PI + state.clock.getElapsedTime() * 0.5;
+      modelRef.current.rotation.y = state.clock.getElapsedTime() * 0.5;
     }
   });
 
-  return <primitive ref={modelRef} object={scene} scale={2.5} rotation={[0, Math.PI, 0]} />;
+  return <primitive ref={modelRef} object={scene} scale={2.5} />;
 }
 
 export function YinYangLogo3D() {
