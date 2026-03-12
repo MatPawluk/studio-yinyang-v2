@@ -32,10 +32,11 @@ import {
 import statsBg from '@/assets/stats-bg.webp';
 import heroImgBg from '@/assets/bghero.png';
 import consultantImg from '@/assets/consultant.png';
-import Hyperspeed from '@/components/Hyperspeed/Hyperspeed';
 import { hyperspeedPresets } from '@/components/Hyperspeed/HyperSpeedPresets';
-// 3D components - Removed lazy for InteractiveGlobe to avoid layout jump
-import { InteractiveGlobe } from '@/components/ui/interactive-globe';
+
+// Lazy loading heavy 3D components to reduce main bundle size and improve TBT
+const InteractiveGlobe = lazy(() => import('@/components/ui/interactive-globe').then(module => ({ default: module.InteractiveGlobe })));
+const HyperspeedContainer = lazy(() => import('@/components/Hyperspeed/Hyperspeed').then(module => ({ default: module.default })));
 const YinYangLogo3D = lazy(() => import('@/components/ui/YinYangLogo3D').then(module => ({ default: module.YinYangLogo3D })));
 
 // Service carousel images
@@ -114,23 +115,23 @@ const Index = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
       <AnimatePresence mode="wait">
-        {isMainLoading ? (
+        {isMainLoading && (
           <LoadingScreen key="loading" onComplete={() => setIsMainLoading(false)} />
-        ) : (
-          <motion.div
-            key="content"
-            initial={{ 
-              opacity: 0,
-            }}
-            animate={{ 
-              opacity: 1,
-            }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <Navbar />
-      
-      {/* Hero Section - Organic Composition */}
-      <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
+        )}
+      </AnimatePresence>
+
+      {/* Concurrent Rendering: Main DOM renders immediately (preloading images & LCP) but visually hidden if loading */}
+      <motion.div
+        key="content"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isMainLoading ? 0 : 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className={isMainLoading ? "h-screen overflow-hidden pointer-events-none" : ""}
+      >
+        <Navbar />
+  
+        {/* Hero Section - Organic Composition */}
+        <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
         {/* Background Layer - Solid Black + Texture/Image */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[#050608]" />
@@ -514,10 +515,8 @@ const Index = () => {
         </div>
       </section>
 
-            <Footer />
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <Footer />
+      </motion.div>
     </div>
   );
 };
