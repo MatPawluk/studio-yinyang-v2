@@ -37,6 +37,27 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        
+        {/* Global SVG Filters for Liquid Glass effects */}
+        <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
+          <defs>
+            <filter id="liquid-filter">
+              <feTurbulence 
+                type="fractalNoise" 
+                baseFrequency="0.005" 
+                numOctaves="1" 
+                result="noise" 
+              />
+              <feDisplacementMap 
+                in="SourceGraphic" 
+                in2="noise" 
+                scale="8" 
+                xChannelSelector="R" 
+                yChannelSelector="G" 
+              />
+            </filter>
+          </defs>
+        </svg>
       </TooltipProvider>
     </LanguageProvider>
   </QueryClientProvider>

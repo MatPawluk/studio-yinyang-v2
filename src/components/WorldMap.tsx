@@ -1,11 +1,9 @@
-import { useRef, useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import DottedMap from "dotted-map";
 
 export function WorldMap() {
-  const svgRef = useRef<SVGSVGElement>(null);
-
-  const { svgMap, startPct, endPct } = useMemo(() => {
+  const { svgUrl, startPct, endPct } = useMemo(() => {
     const mapObj = new DottedMap({ height: 100, grid: "diagonal" });
     
     // Add pins to extract their exact SVG coordinates later
@@ -15,13 +13,11 @@ export function WorldMap() {
     const points = mapObj.getPoints();
     const pins = points.filter(p => p.svgOptions?.color === "#c4ff00");
     
-    // Determine bounds
-    const allX = points.map(p => p.x);
-    const allY = points.map(p => p.y);
-    const minX = Math.min(...allX);
-    const maxX = Math.max(...allX);
-    const minY = Math.min(...allY);
-    const maxY = Math.max(...allY);
+    // Safe bounds calculation using reduce (avoids stack overflow with spread)
+    const minX = points.reduce((min, p) => p.x < min ? p.x : min, Infinity);
+    const maxX = points.reduce((max, p) => p.x > max ? p.x : max, -Infinity);
+    const minY = points.reduce((min, p) => p.y < min ? p.y : min, Infinity);
+    const maxY = points.reduce((max, p) => p.y > max ? p.y : max, -Infinity);
 
     const toPct = (x: number, y: number) => ({
       x: ((x - minX) / (maxX - minX)) * 800, // Scale to our 800x400 viewBox
@@ -35,12 +31,21 @@ export function WorldMap() {
       backgroundColor: "transparent",
     });
 
+    // Create a Blob URL for the SVG to avoid huge Data URIs in the DOM
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+
     return {
-      svgMap: svg,
+      svgUrl: url,
       startPct: pins[0] ? toPct(pins[0].x, pins[0].y) : { x: 410, y: 110 },
       endPct: pins[1] ? toPct(pins[1].x, pins[1].y) : { x: 670, y: 160 },
     };
   }, []);
+
+  // Cleanup Blob URL on unmount
+  useEffect(() => {
+    return () => URL.revokeObjectURL(svgUrl);
+  }, [svgUrl]);
 
   const createCurvedPath = (
     start: { x: number; y: number },
@@ -62,16 +67,15 @@ export function WorldMap() {
       }}
     >
       <img
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
+        src={svgUrl}
         className="h-full w-full pointer-events-none select-none object-fill opacity-80"
         alt="world map"
         draggable={false}
       />
       <svg
-        ref={svgRef}
         viewBox="0 0 800 400"
         className="w-full h-full absolute inset-0 pointer-events-none select-none"
-        preserveAspectRatio="none"
+        preserveAspectRatio="xMidYMid meet"
       >
         <defs>
           <filter id="glow">
@@ -116,18 +120,27 @@ export function WorldMap() {
         {[startPct, endPct].map((point, idx) => (
           <g key={idx}>
             <circle cx={point.x} cy={point.y} r="4" fill="#c4ff00" filter="url(#glow)" />
-            <foreignObject
-              x={point.x - 50}
-              y={point.y - 35}
-              width="100"
-              height="30"
-            >
-              <div className="flex items-center justify-center h-full">
-                <span className="text-sm font-medium px-2 py-0.5 rounded-md bg-gray-900/95 text-white border border-gray-700 shadow-sm">
-                  {idx === 0 ? "Warszawa" : "Shanghai"}
-                </span>
-              </div>
-            </foreignObject>
+            <g transform={`translate(${point.x}, ${point.y - 25})`}>
+              <rect
+                x="-40"
+                y="-15"
+                width="80"
+                height="22"
+                rx="4"
+                fill="#0B0B0C"
+                fillOpacity="0.95"
+                stroke="#374151"
+                strokeWidth="0.5"
+              />
+              <text
+                textAnchor="middle"
+                dy="0"
+                className="text-[10px] font-medium fill-white"
+                style={{ fontFamily: 'sans-serif' }}
+              >
+                {idx === 0 ? "Warszawa" : "Shanghai"}
+              </text>
+            </g>
           </g>
         ))}
       </svg>

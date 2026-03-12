@@ -14,7 +14,7 @@ export const AnimatedBorderGlow = ({
   className,
   glowColor = "#c4ff00",
   duration = 6,
-  borderRadius = "2.5rem",
+  borderRadius = "2.5rem", // Note: Best used with px or rem for reliable calc() results
 }: AnimatedBorderGlowProps) => {
   return (
     <div 
@@ -32,7 +32,7 @@ export const AnimatedBorderGlow = ({
             repeat: Infinity,
             ease: "linear",
           }}
-          className="absolute inset-[-150%] opacity-100 blur-[8px]"
+          className="absolute w-[200%] h-[200%] top-[-50%] left-[-50%] opacity-100 blur-[8px]"
           style={{
             background: `conic-gradient(from 0deg, 
               transparent 0deg, 
@@ -40,13 +40,15 @@ export const AnimatedBorderGlow = ({
               ${glowColor} 320deg, 
               #00ffa3 340deg,
               ${glowColor} 360deg)`,
+            willChange: 'transform',
+            transformOrigin: 'center center',
           }}
         />
       </div>
 
       {/* Inner Content Container */}
       <div 
-        className="relative z-10 w-full h-full bg-[#050608]/90 backdrop-blur-3xl overflow-hidden border border-white/5"
+        className="relative z-10 w-full h-full bg-[#050608]/95 overflow-hidden border border-white/5"
         style={{ borderRadius: `calc(${borderRadius} - 2px)` }}
       >
         {children}
