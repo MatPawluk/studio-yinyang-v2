@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef, useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { useRef, useState, useEffect, useCallback, lazy, Suspense, useMemo } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LogoMarquee } from '@/components/LogoMarquee';
@@ -34,8 +34,8 @@ import heroImgBg from '@/assets/bghero.png';
 import consultantImg from '@/assets/consultant.png';
 import Hyperspeed from '@/components/Hyperspeed/Hyperspeed';
 import { hyperspeedPresets } from '@/components/Hyperspeed/HyperSpeedPresets';
-// Lazy load heavy 3D components
-const InteractiveGlobe = lazy(() => import('@/components/ui/interactive-globe').then(module => ({ default: module.InteractiveGlobe })));
+// 3D components - Removed lazy for InteractiveGlobe to avoid layout jump
+import { InteractiveGlobe } from '@/components/ui/interactive-globe';
 const YinYangLogo3D = lazy(() => import('@/components/ui/YinYangLogo3D').then(module => ({ default: module.YinYangLogo3D })));
 
 // Service carousel images
@@ -58,18 +58,33 @@ import avatarTeam3 from '@/assets/avatar-team-3.jpg';
 const carouselImages = [sgStrategia, sgAnalizy, sgWejscie, sgImport, sgMarketing, sgMisje];
 const carouselSlugs = ['strategia-wobec-chin', 'analizy-rynku', 'wejscie-na-rynek', 'import-eksport', 'marketing-pozycjonowanie', 'misje-szkolenia'];
 
+const AnimatePingVisibility = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, amount: 0.5 });
+  
+  return (
+    <div ref={ref} className="absolute inset-0">
+      {isInView && (
+        <div className="absolute inset-0 rounded-full bg-lime animate-ping opacity-30" />
+      )}
+    </div>
+  );
+};
+
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
   const [isMainLoading, setIsMainLoading] = useState(true);
   const stats = statsTranslations[language];
   
-  const carouselServices = carouselServicesTranslations[language].map((s, i) => ({
-    ...s,
-    image: carouselImages[i],
-    slug: carouselSlugs[i],
-  }));
+  const carouselServices = useMemo(() => 
+    carouselServicesTranslations[language].map((s, i) => ({
+      ...s,
+      image: carouselImages[i],
+      slug: carouselSlugs[i],
+    })), [language]);
 
   const handleScroll = (direction: 'next' | 'prev') => {
     if (!scrollRef.current) return;
@@ -90,36 +105,46 @@ const Index = () => {
   
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
+  const { scrollYProgress: statsScrollProgress } = useScroll({
+    target: statsRef,
+    offset: ["start end", "end start"]
+  });
+  const statsY = useTransform(statsScrollProgress, [0, 1], ["-10%", "10%"]);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
-      <AnimatePresence>
-        {isMainLoading && (
-          <LoadingScreen onComplete={() => setIsMainLoading(false)} />
-        )}
-      </AnimatePresence>
-      
-      <motion.div
-        animate={{ 
-          opacity: isMainLoading ? 0 : 1,
-          pointerEvents: isMainLoading ? 'none' : 'auto'
-        }}
-        transition={{ duration: 0.5 }}
-      >
-        <Navbar />
+      <AnimatePresence mode="wait">
+        {isMainLoading ? (
+          <LoadingScreen key="loading" onComplete={() => setIsMainLoading(false)} />
+        ) : (
+          <motion.div
+            key="content"
+            initial={{ 
+              opacity: 0,
+            }}
+            animate={{ 
+              opacity: 1,
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Navbar />
       
       {/* Hero Section - Organic Composition */}
       <section ref={heroRef} className="relative min-h-screen flex flex-col py-20 overflow-visible">
         {/* Background Layer - Solid Black + Texture/Image */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[#050608]" />
-          <div className="absolute inset-0 opacity-40">
+          <div className="absolute inset-0 opacity-20">
             <img 
               src={heroImgBg} 
               alt="Hero Background" 
               className="w-full h-full object-cover mix-blend-overlay"
+              loading="eager"
+              // @ts-ignore
+              fetchpriority="high"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050608]/50 to-[#050608]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/40 via-[#050608]/60 to-[#050608]" />
         </div>
 
         {/* Scattered UI Decorations (+) */}
@@ -160,7 +185,7 @@ const Index = () => {
                   </span>
                   <span className="block italic lg:whitespace-nowrap">{t.heroEditorial.subTitle}</span>
                   <div className="flex items-center justify-center lg:justify-start gap-4 mt-6 lg:mt-4">
-                    <GradientText className="font-black whitespace-nowrap animate-gradient-flow drop-shadow-[0_0_30px_rgba(196,255,0,0.3)]">
+                    <GradientText className="font-black whitespace-nowrap animate-gradient-flow">
                       {t.heroEditorial.plcn}
                     </GradientText>
                     <Plus className="hidden lg:block text-white/20 w-8 h-8 lg:w-12 lg:h-12 flex-shrink-0" />
@@ -176,7 +201,7 @@ const Index = () => {
                   >
                     <Link
                       to="/kontakt"
-                      className="flex items-center gap-4 px-8 sm:px-10 py-5 sm:py-6 bg-transparent transition-all duration-500 group"
+                      className="flex items-center gap-4 px-8 sm:px-10 py-5 sm:py-6 bg-transparent transition-[background-color,transform] duration-500 group"
                     >
                       <span className="font-bold text-lg sm:text-xl text-white transition-colors whitespace-nowrap">{t.nav.consultation}</span>
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#c4ff00] text-black rounded-full flex items-center justify-center transition-transform duration-500 group-hover:rotate-0 -rotate-45">
@@ -216,13 +241,13 @@ const Index = () => {
                   <div className="mt-auto relative z-20 pt-4">
                     {/* Team Avatars Stack */}
                     <div className="flex -space-x-3 mb-6 items-center">
-                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-all duration-300 ring-2 ring-black/40">
+                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-transform duration-300 ring-2 ring-black/40">
                         <img src={avatarTeam1} alt="Team 1" className="w-full h-full object-cover" />
                       </div>
-                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-all duration-300 ring-2 ring-black/40">
+                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-transform duration-300 ring-2 ring-black/40">
                         <img src={avatarTeam2} alt="Team 2" className="w-full h-full object-cover" />
                       </div>
-                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-all duration-300 ring-2 ring-black/40">
+                      <div className="w-10 h-10 rounded-full border-2 border-white/10 overflow-hidden shadow-xl transform hover:z-30 hover:scale-110 transition-transform duration-300 ring-2 ring-black/40">
                         <img src={avatarTeam3} alt="Team 3" className="w-full h-full object-cover" />
                       </div>
                       <div className="pl-6">
@@ -270,13 +295,13 @@ const Index = () => {
                 <div className="flex gap-4 relative z-50 pointer-events-auto">
                   <button 
                     onClick={() => handleScroll('prev')}
-                    className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 active:scale-90 transition-all group cursor-pointer"
+                    className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 active:scale-90 transition-[background-color,transform] group cursor-pointer"
                   >
                     <ChevronLeft className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
                   </button>
                   <button 
                     onClick={() => handleScroll('next')}
-                    className="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 active:scale-90 transition-all group cursor-pointer"
+                    className="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-white/20 active:scale-90 transition-[background-color,transform] group cursor-pointer"
                   >
                     <ChevronRight className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
                   </button>
@@ -324,37 +349,18 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Liquid Glass SVG Filter Definition - Fine-tuned for realistic refraction */}
-        <svg className="glass-surface__filter" aria-hidden="true">
-          <defs>
-            <filter id="liquid-filter">
-              <feTurbulence 
-                type="fractalNoise" 
-                baseFrequency="0.005" 
-                numOctaves="1" 
-                result="noise" 
-              />
-              <feDisplacementMap 
-                in="SourceGraphic" 
-                in2="noise" 
-                scale="8" 
-                xChannelSelector="R" 
-                yChannelSelector="G" 
-              />
-            </filter>
-          </defs>
-        </svg>
+        {/* Liquid Glass SVG Filter Definition - Moved to App.tsx for global availability */}
       </section>
 
       {/* Stats Section with Parallax */}
-      <section className="relative py-32 lg:pt-64 overflow-hidden">
+      <section ref={statsRef} className="relative py-32 lg:pt-64 overflow-hidden">
         <motion.div 
-          className="absolute inset-0"
+          className="absolute inset-0 scale-110"
           style={{
             backgroundImage: `url(${statsBg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
+            y: statsY
           }}
         >
           {/* Gradient Masks for smooth section transitions */}
@@ -364,10 +370,11 @@ const Index = () => {
         </motion.div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{ x: ['-20%', '20%', '-20%'], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-lime/20 blur-[100px] rounded-full"
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-30"
+            style={{
+              background: 'radial-gradient(circle, rgba(196,255,0,0.2) 0%, transparent 70%)',
+            }}
           />
         </div>
 
@@ -434,11 +441,11 @@ const Index = () => {
                 >
                   <div className="absolute left-8 md:left-1/2 mt-4 w-4 h-4 rounded-full bg-lime shadow-lg shadow-lime/50 md:-translate-x-1/2 z-10 
                                   transform -translate-y-1/2">
-                    <div className="absolute inset-0 rounded-full bg-lime animate-ping opacity-30" />
+                    <AnimatePingVisibility />
                   </div>
                   
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-40px)] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                    <div className="relative bg-[#0B0B0B]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-all duration-300 group">
+                    <div className="relative bg-[#0B0B0B]/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-800/50 hover:border-lime/30 transition-[border-color] duration-300 group">
                       <span className={`absolute top-4 font-display text-7xl font-bold text-lime/30 group-hover:text-lime/50 transition-colors ${index % 2 === 0 ? 'right-6 md:left-6 md:right-auto' : 'right-6'}`}>
                         {step.number}
                       </span>
@@ -487,7 +494,7 @@ const Index = () => {
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight">{t.cta.title}</h2>
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-5 leading-tight"><GradientText>{t.cta.titleHighlight}</GradientText></h2>
                 <p className="text-gray-400 text-base mb-8 max-w-md">{t.cta.subtitle}</p>
-                <Link to="/kontakt" className="group inline-flex items-center gap-3 px-8 py-4 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]">
+                <Link to="/kontakt" className="group inline-flex items-center gap-3 px-8 py-4 bg-[#c4ff00] text-gray-900 rounded-full font-semibold text-base transition-[transform,box-shadow] duration-300 hover:scale-105 hover:shadow-[0_16px_48px_-12px_rgba(196,255,0,0.5)]">
                   {t.cta.button}
                   <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
@@ -507,8 +514,10 @@ const Index = () => {
         </div>
       </section>
 
-      <Footer />
-      </motion.div>
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

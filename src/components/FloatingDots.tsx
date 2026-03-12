@@ -26,6 +26,7 @@ export const FloatingDots = ({ count = 50, className = '' }: FloatingDotsProps) 
             top: `${dot.y}%`,
             width: dot.size,
             height: dot.size,
+            willChange: 'transform, opacity',
           }}
           animate={{
             y: [0, -30, 0],

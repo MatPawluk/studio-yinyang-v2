@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 
 interface TypewriterTextProps {
   words: string[];
@@ -14,53 +13,93 @@ export const TypewriterText = ({
   deletingSpeed = 50, 
   pauseDuration = 3000 
 }: TypewriterTextProps) => {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const wordsRef = useRef(words);
+  
+  // Sync wordsRef to avoid resetting on parent re-renders with new array literals
+  useEffect(() => {
+    wordsRef.current = words;
+  }, [words]);
+
+  // Use refs for internal state to avoid re-triggering the effect unnecessarily
+  const stateRef = useRef({
+    wordIndex: 0,
+    isDeleting: false,
+    isPaused: false
+  });
 
   useEffect(() => {
-    const currentWord = words[currentWordIndex];
-    
-    if (isPaused) {
-      const pauseTimeout = setTimeout(() => {
-        setIsPaused(false);
-        setIsDeleting(true);
-      }, pauseDuration);
-      return () => clearTimeout(pauseTimeout);
-    }
-    
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        // Typing
-        if (displayText.length < currentWord.length) {
-          setDisplayText(currentWord.slice(0, displayText.length + 1));
-        } else {
-          // Pause before deleting - now 3 seconds
-          setIsPaused(true);
-        }
-      } else {
-        // Deleting
-        if (displayText.length > 0) {
-          setDisplayText(displayText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setCurrentWordIndex((prev) => (prev + 1) % words.length);
-        }
-      }
-    }, isDeleting ? deletingSpeed : typingSpeed);
+    if (!wordsRef.current?.length) return;
 
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, isPaused, currentWordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
+    let timeoutId: NodeJS.Timeout;
+
+    const tick = () => {
+      const { wordIndex, isDeleting } = stateRef.current;
+      const currentFullWord = wordsRef.current[wordIndex];
+      
+      if (!currentFullWord) {
+        stateRef.current.wordIndex = 0;
+        timeoutId = setTimeout(tick, typingSpeed);
+        return;
+      }
+
+      setDisplayText(prev => {
+        if (!isDeleting) {
+          // Typing phase
+          if (prev.length < currentFullWord.length) {
+            const nextText = currentFullWord.slice(0, prev.length + 1);
+            
+            // If we just finished typing the word, set pause for next tick
+            if (nextText.length === currentFullWord.length) {
+              stateRef.current.isPaused = true;
+            }
+            
+            timeoutId = setTimeout(tick, stateRef.current.isPaused ? pauseDuration : typingSpeed);
+            stateRef.current.isPaused = false; // Reset pause flag for use in next tick
+            return nextText;
+          } else {
+            // Should have been handled by pause logic above, but safety fallback
+            stateRef.current.isDeleting = true;
+            timeoutId = setTimeout(tick, deletingSpeed);
+            return prev;
+          }
+        } else {
+          // Deleting phase
+          if (prev.length > 0) {
+            const nextText = prev.slice(0, -1);
+            timeoutId = setTimeout(tick, deletingSpeed);
+            return nextText;
+          } else {
+            // Finished deleting, move to next word
+            stateRef.current.isDeleting = false;
+            stateRef.current.wordIndex = (wordIndex + 1) % wordsRef.current.length;
+            timeoutId = setTimeout(tick, typingSpeed);
+            return prev;
+          }
+        }
+      });
+    };
+
+    timeoutId = setTimeout(tick, typingSpeed);
+
+    return () => clearTimeout(timeoutId);
+  }, [typingSpeed, deletingSpeed, pauseDuration]);
+
+  if (!words?.length) return null;
 
   return (
     <span className="inline-block">
       {displayText}
-      <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-        className="inline-block w-[3px] h-[1em] bg-lime ml-1 align-middle"
-      />
+      <style>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .typewriter-cursor {
+          animation: blink 1s step-end infinite;
+        }
+      `}</style>
+      <span className="typewriter-cursor inline-block w-[3px] h-[1em] bg-lime ml-1 align-middle" />
     </span>
   );
 };
