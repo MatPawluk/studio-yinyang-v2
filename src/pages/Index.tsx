@@ -109,7 +109,7 @@ const Index = () => {
     target: statsRef,
     offset: ["start end", "end start"]
   });
-  const statsY = useTransform(statsScrollProgress, [0, 1], ["-10%", "10%"]);
+  const statsY = useTransform(statsScrollProgress, [0, 1], ["-15%", "15%"]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050608]" id="page-root">
@@ -340,7 +340,7 @@ const Index = () => {
       {/* Stats Section with Parallax */}
       <section ref={statsRef} className="relative py-32 lg:pt-64 overflow-hidden">
         <motion.div 
-          className="absolute inset-0 scale-110"
+          className="absolute inset-0 scale-125"
           style={{
             backgroundImage: `url(${statsBg})`,
             backgroundSize: 'cover',
@@ -348,10 +348,8 @@ const Index = () => {
             y: statsY
           }}
         >
-          {/* Gradient Masks for smooth section transitions */}
-          <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#050608] to-transparent z-10" />
-          <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#050608] to-transparent z-10" />
+          {/* Solid dark overlay without backdrop-blur */}
+          <div className="absolute inset-0 bg-[#050608]/75" />
         </motion.div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
