@@ -348,8 +348,8 @@ const Index = () => {
             y: statsY
           }}
         >
-          {/* Solid dark overlay without backdrop-blur */}
-          <div className="absolute inset-0 bg-[#050608]/75" />
+          {/* Match Uslugi.tsx style with blur and 80% opacity */}
+          <div className="absolute inset-0 bg-[#050608]/80 backdrop-blur-sm" />
         </motion.div>
 
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
