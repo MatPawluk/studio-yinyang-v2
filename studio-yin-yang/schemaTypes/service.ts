@@ -118,6 +118,13 @@ export const service = defineType({
       title: 'Case Study - Result',
       type: 'localeText',
     }),
+    defineField({
+      name: 'caseStudyRef',
+      title: 'Linked Case Study',
+      type: 'reference',
+      to: [{type: 'caseStudy'}],
+      description: 'Select a dedicated case study for this service. If selected, it will override the embedded case study fields above.',
+    }),
   ],
   preview: {
     select: {

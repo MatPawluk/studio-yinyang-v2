@@ -83,7 +83,18 @@ const ServiceDetail = () => {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const query = `*[_type == "service" && slug.current == $slug][0]`;
+        const query = `*[_type == "service" && slug.current == $slug][0] {
+          ...,
+          "imageUrl": image.asset->url,
+          "embeddedCaseStudyImageUrl": caseStudyImage.asset->url,
+          caseStudyRef-> {
+            client,
+            situation,
+            actions,
+            result,
+            "imageUrl": image.asset->url
+          }
+        }`;
         const data = await sanityClient.fetch(query, { slug: subServiceSlug });
         
         if (data) {
@@ -92,7 +103,7 @@ const ServiceDetail = () => {
             title: data?.title?.[language] || data?.title?.['pl'] || '',
             subtitle: data?.subtitle?.[language] || data?.subtitle?.['pl'] || '',
             description: data?.description?.[language] || data?.description?.['pl'] || '',
-            image: serviceImages[subServiceSlug || ''] || uAnalizaWplywu,
+            image: data?.imageUrl || serviceImages[subServiceSlug || ''] || uAnalizaWplywu,
             whenItMakesSense: (data?.whenItMakesSense || []).map((i: any) => i?.[language] || i?.['pl'] || ''),
             problemsSolved: (data?.problemsSolved || []).map((i: any) => i?.[language] || i?.['pl'] || ''),
             scope: {
@@ -105,13 +116,18 @@ const ServiceDetail = () => {
               duration: data?.workModelDuration?.[language] || data?.workModelDuration?.['pl'] || '',
               communication: data?.workModelCommunication?.[language] || data?.workModelCommunication?.['pl'] || '',
             },
-            caseStudy: {
+            caseStudy: data.caseStudyRef ? {
+              client: data.caseStudyRef?.client?.[language] || data.caseStudyRef?.client?.['pl'] || '',
+              situation: data.caseStudyRef?.situation?.[language] || data.caseStudyRef?.situation?.['pl'] || '',
+              actions: data.caseStudyRef?.actions?.[language] || data.caseStudyRef?.actions?.['pl'] || '',
+              result: data.caseStudyRef?.result?.[language] || data.caseStudyRef?.result?.['pl'] || '',
+            } : {
               client: data?.caseStudyClient?.[language] || data?.caseStudyClient?.['pl'] || '',
               situation: data?.caseStudySituation?.[language] || data?.caseStudySituation?.['pl'] || '',
               actions: data?.caseStudyActions?.[language] || data?.caseStudyActions?.['pl'] || '',
               result: data?.caseStudyResult?.[language] || data?.caseStudyResult?.['pl'] || '',
             },
-            caseStudyImage: serviceImages[subServiceSlug || ''] || uAnalizaWplywu, // Placeholder
+            caseStudyImage: data.caseStudyRef?.imageUrl || data?.embeddedCaseStudyImageUrl || serviceImages[subServiceSlug || ''] || uAnalizaWplywu,
           };
           setService(localizedData);
         }

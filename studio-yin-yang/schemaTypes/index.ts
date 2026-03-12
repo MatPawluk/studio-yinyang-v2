@@ -1,6 +1,7 @@
 import { service } from './service'
 import { article } from './article'
 import { category } from './category'
+import { caseStudy } from './caseStudy'
 import { localeString, localeText, localeBlock } from './locale'
 
 export const schemaTypes = [
@@ -10,4 +11,5 @@ export const schemaTypes = [
   category,
   service,
   article,
+  caseStudy,
 ]

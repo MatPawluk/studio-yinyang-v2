@@ -1,28 +1,61 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { GradientText } from './GradientText';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { caseStudiesTranslations } from '@/i18n/contentTranslations';
-
-// Case study images
-import sgCsVektor from '@/assets/sg-cs-vektor.png';
-import sgCsArcom from '@/assets/sg-cs-arcom.png';
-import sgCsAktir from '@/assets/sg-cs-aktir.png';
-import sgCsOrvanta from '@/assets/sg-cs-orvanta.png';
-
-const caseStudyImages: Record<string, string> = {
-  vektor: sgCsVektor,
-  arcom: sgCsArcom,
-  aktir: sgCsAktir,
-  orvanta: sgCsOrvanta,
-};
+import { sanityClient } from '@/lib/sanity';
 
 export const CaseStudiesSection = () => {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const [caseStudies, setCaseStudies] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { t, language } = useLanguage();
-  const caseStudies = caseStudiesTranslations[language];
+
+  useEffect(() => {
+    const fetchCaseStudies = async () => {
+      try {
+        const query = `*[_type == "caseStudy" && isMain == true] {
+          name,
+          category,
+          client,
+          goal,
+          duration,
+          result,
+          "imageUrl": image.asset->url
+        }`;
+        const data = await sanityClient.fetch(query);
+        
+        const localizedData = (data || []).map((study: any) => ({
+          name: study?.name?.[language] || study?.name?.['pl'] || '',
+          category: study?.category?.[language] || study?.category?.['pl'] || '',
+          client: study?.client?.[language] || study?.client?.['pl'] || '',
+          goal: study?.goal?.[language] || study?.goal?.['pl'] || '',
+          duration: study?.duration?.[language] || study?.duration?.['pl'] || '',
+          result: study?.result?.[language] || study?.result?.['pl'] || '',
+          imageUrl: study?.imageUrl
+        }));
+        
+        setCaseStudies(localizedData);
+      } catch (error) {
+        console.error('Error fetching case studies:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCaseStudies();
+  }, [language]);
+
+  if (isLoading) {
+    return (
+      <div className="py-24 flex justify-center items-center" style={{ backgroundColor: '#050608' }}>
+        <div className="w-8 h-8 border-4 border-lime border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (caseStudies.length === 0) return null;
 
   return (
     <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#050608' }}>
@@ -36,7 +69,11 @@ export const CaseStudiesSection = () => {
             <motion.div key={study.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="relative h-[480px] cursor-pointer perspective-1000" onClick={() => setFlippedCard(flippedCard === index ? null : index)}>
               <motion.div animate={{ rotateY: flippedCard === index ? 180 : 0 }} transition={{ duration: 0.6 }} className="relative w-full h-full preserve-3d" style={{ transformStyle: 'preserve-3d' }}>
                 <div className="absolute inset-0 rounded-3xl overflow-hidden backface-hidden" style={{ backfaceVisibility: 'hidden' }}>
-                  <img src={caseStudyImages[study.imageKey]} alt={study.name} className="w-full h-full object-cover" />
+                  {study.imageUrl ? (
+                    <img src={study.imageUrl} alt={study.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-gray-900 flex items-center justify-center text-gray-700">No Image</div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050608] via-[#050608]/50 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <span className="text-lime text-sm font-medium uppercase tracking-wider">{study.category}</span>
