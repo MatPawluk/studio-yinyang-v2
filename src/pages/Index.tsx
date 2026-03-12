@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useRef, useState, useEffect, useCallback, lazy, Suspense, useMemo } from 'react';
 import { Navbar } from '@/components/Navbar';
