@@ -314,9 +314,6 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Bottom Accent Line - inspiration style */}
-            <div className="mt-24 h-px w-full bg-white/5 relative">
-              <div className="absolute top-0 left-0 h-full w-1/4 bg-[#c4ff00]/40 shadow-[0_0_20px_rgba(196,255,0,0.2)]" />
             </div>
           </div>
         </div>
@@ -338,7 +335,7 @@ const Index = () => {
       </section>
 
       {/* Stats Section with Parallax */}
-      <section ref={statsRef} className="relative py-32 lg:pt-64 overflow-hidden">
+      <section ref={statsRef} className="relative py-24 lg:pt-32 overflow-hidden">
         <motion.div 
           className="absolute inset-0 scale-125"
           style={{
