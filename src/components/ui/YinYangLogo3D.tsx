@@ -13,7 +13,7 @@ function Model({ url }: { url: string }) {
     }
   });
 
-  return <primitive ref={modelRef} object={scene} scale={2.5} />;
+  return <primitive ref={modelRef} object={scene} scale={2.5} rotation={[Math.PI, 0, 0]} />;
 }
 
 export function YinYangLogo3D() {
